@@ -31,7 +31,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           path: candidate
           persist-credentials: false
-      - name: Check out the immutable v0.1.0 reference
+      - name: Check out pinned build inputs and negative-control source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: Yonoha/dagger-models-lean
@@ -81,12 +81,12 @@ jobs:
       - name: Build the exporter with the project's Lean version
         working-directory: lean4export
         run: lake build
-      - name: Prepare independent reference, candidate, and negative controls
+      - name: Prepare short trusted Challenges and isolated solution projects
         run: >-
           python3 control/scripts/prepare_comparator.py
           --baseline reference --candidate candidate --control control
           --output "$RUNNER_TEMP/dagger-comparator"
-      - name: Download artifacts using only the trusted reference project
+      - name: Download artifacts using only the trusted dependency pins
         working-directory: ${{ runner.temp }}/dagger-comparator/cache
         run: >-
           lake exe cache get

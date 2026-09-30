@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.ReverseSimplex.Hom.ext",
+    "DaggerModels.ReverseSimplex.reversal_apply",
+    "DaggerModels.ReverseSimplex.reversal_comp_reversal",
+    "DaggerModels.ReverseSimplex.reversal_zero",
+    "DaggerModels.ReverseSimplex.reversal_naturality",
+    "DaggerModels.ReverseSimplex.monotone_antitone_iff_constant"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

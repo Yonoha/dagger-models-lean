@@ -1,6 +1,4 @@
 {
-  "challenge_module": "Challenge",
-  "solution_module": "Solution",
   "theorem_names": [
     "DaggerModels.ReverseSimplex.Hom.ext",
     "DaggerModels.ReverseSimplex.reversal_apply",
@@ -11,8 +9,8 @@
     "DaggerModels.DaggerSSet.dagger_dagger",
     "DaggerModels.DaggerSSet.dagger_vertex",
     "DaggerModels.DaggerSSet.dagger_map",
-    "DaggerModels.DaggerSSet.dagger_δ",
-    "DaggerModels.DaggerSSet.dagger_σ",
+    "DaggerModels.DaggerSSet.dagger_\u03b4",
+    "DaggerModels.DaggerSSet.dagger_\u03c3",
     "DaggerModels.DaggerSSet.selfConjugate_edge_endpoints",
     "DaggerModels.DaggerSSet.dagger_mem_degenerate",
     "DaggerModels.DaggerSSet.dagger_mem_degenerate_iff",
@@ -26,6 +24,5 @@
     "DaggerModels.ComparatorContracts.freeCofibration_definition",
     "DaggerModels.ComparatorContracts.nonDegenerateEquiv_definition",
     "DaggerModels.ComparatorContracts.forget_definition"
-  ],
-  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  ]
 }

@@ -38,6 +38,8 @@ status:
     Partial foundations only. Neither the presheaf equivalence, the cellular
     characterization of free cofibrations, nor the full simplicial
     counterexample is proved. Main theorems A-D remain outside this development.
+  # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
+  # intentional proof placeholders and are not imported by the library.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
@@ -46,31 +48,31 @@ status:
       file: "DaggerModels/ReverseSimplex.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      comparator_config: ".ci/comparator/config.json"
+      comparator_config: ".ci/comparator/reverse_simplex.json"
       literature_dependencies: []
     - declaration: "DaggerModels.ReverseSimplex.monotone_antitone_iff_constant"
       file: "DaggerModels/ReverseSimplex.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      comparator_config: ".ci/comparator/config.json"
+      comparator_config: ".ci/comparator/reverse_simplex.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.dagger_map"
       file: "DaggerModels/SimplicialSet.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      comparator_config: ".ci/comparator/config.json"
+      comparator_config: ".ci/comparator/simplicial_set.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff"
       file: "DaggerModels/SimplicialSet.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      comparator_config: ".ci/comparator/config.json"
+      comparator_config: ".ci/comparator/simplicial_set.json"
       literature_dependencies: []
     - declaration: "DaggerModels.WordObstruction.no_dagger_preserving_section"
       file: "DaggerModels/WordObstruction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
-      comparator_config: ".ci/comparator/config.json"
+      comparator_config: ".ci/comparator/word_obstruction.json"
       literature_dependencies: []
 automation:
   methods:
@@ -86,6 +88,22 @@ automation:
         The author requested a Lean companion to Part I and a dedicated GitHub
         repository, then requested Comparator and formalization.yaml support.
         Mathematics in the manuscript must not be silently changed.
+    - method: "agent"
+      models: ["gpt-6.1-sol"]
+      framework: "Codex subagents (xhigh)"
+      tool_setup: >-
+        Bounded Challenge-specification implementation and a separate read-only
+        manuscript-correspondence review. The lean4 core skill and references
+        from cameronfreer/lean4-skills were installed at revision
+        b6243b85b9b0a0ddff5bb6773889044daf687f8e and read for this work.
+        Lean/Lake and the repository's existing checks supply compiler feedback;
+        optional skill helper executables, hooks, and Lean LSP were not installed.
+      prompting_notes: >-
+        The author requested short, directly reviewable Challenges importing
+        only Mathlib, with existing theorem statements and coverage preserved.
+        GPT-6.1-Sol with xhigh is the implementation/review default; ultra is
+        reserved for identified hard obstacles, and new mathematics is treated
+        separately from translating an existing proof.
   notes: >-
     AI generated the implementation and performed the documented checks.
     The manuscript-to-statement correspondence has been assessed by the agent;
@@ -101,13 +119,19 @@ fidelity:
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
-  reviewers: ["Codex (GPT-6 Astra)"]
+  reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
     checks, not independent human review. Comparator checks 21 named library
-    theorems and three audit-only definition roots against the v0.1.0 commit
-    dce8401a23588ba65b8aa4ca41de26cb0203d444. It cannot establish that the
-    chosen baseline correctly expresses the original mathematical manuscript.
+    theorems and three audit-only definition roots against three self-contained
+    Challenge files in .ci/comparator. Each imports only Mathlib and is limited
+    to 100 physical lines (72, 96, and 22; 190 in total, including comments and
+    blank lines); all three together form the review surface.
+    Challenge proof placeholders are outside the proved library. Dependency pins
+    and negative-control implementations use v0.1.0 commit
+    dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
+    Comparator cannot establish that the chosen specifications correctly express
+    the original manuscript, and no independent human review is claimed.
 alignment:
   namespace: "DaggerModels"
   statements:
@@ -141,4 +165,5 @@ alignment:
       status: "not-formalized"
 acknowledgements: >-
   Lean, mathlib, leanprover/comparator, leanprover/lean4export, Landrun,
-  and the mathlib-initiative/formalization.yaml reporting standard.
+  cameronfreer/lean4-skills, and the mathlib-initiative/formalization.yaml
+  reporting standard.

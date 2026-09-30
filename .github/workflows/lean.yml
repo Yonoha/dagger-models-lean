@@ -35,6 +35,8 @@ jobs:
         run: lake env lean Audit.lean
       - name: Check the audit rejects proof holes and extra axioms
         run: python3 scripts/check_audit.py
+      - name: Check Challenge size, imports, and complete target coverage
+        run: python3 scripts/check_challenges.py
       - name: Install metadata validators
         run: |
           python3 -m venv "$RUNNER_TEMP/metadata-venv"

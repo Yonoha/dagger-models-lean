@@ -1,0 +1,12 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.WordObstruction.dagger_length",
+    "DaggerModels.WordObstruction.dagger_involutive",
+    "DaggerModels.WordObstruction.dagger_append",
+    "DaggerModels.WordObstruction.no_selfAdjoint_length_one",
+    "DaggerModels.WordObstruction.no_dagger_preserving_section"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

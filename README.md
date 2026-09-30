@@ -70,9 +70,17 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares all 21 named library theorems against the
-independently fetched, immutable v0.1.0 commit. Three audit-only roots also
-protect the definitions of `FreeCofibration`, `nonDegenerateEquiv`, and `forget`.
+Linux GitHub Actions job. It compares all 21 named library theorems against three
+short, self-contained problem specifications:
+
+- [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
+- [Dagger simplicial sets](.ci/comparator/SimplicialSetChallenge.lean): 96 lines
+- [Word obstruction](.ci/comparator/WordObstructionChallenge.lean): 22 lines
+
+Each Challenge directly imports only pinned Mathlib modules and contains the
+definitions and theorem statements to review. It does not import this library
+or a copy of the implementation. Three audit-only roots also protect the
+definitions of `FreeCofibration`, `nonDegenerateEquiv`, and `forget`.
 It checks the statement dependencies, permitted axioms, and exported kernel
 proofs. Deliberately weakened statements and changed definitions must be
 rejected. See [.ci/comparator/README.md](.ci/comparator/README.md) for the exact
@@ -94,9 +102,16 @@ lake env lean scripts/ReportAxioms.lean > build/axioms.json
 build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.json
 ```
 
+The intentional `sorry` placeholders in the trusted Challenges mean "prove this
+statement"; they are excluded from the library and are not claimed as proofs.
+The actual library must remain free of proof holes and extra axioms.
+CI checks each Challenge's 100-line budget, direct Mathlib imports, and coverage
+of all 24 registered roots. The 190 lines across all three files are the review
+surface; checking one file is not a review of the entire formalization.
+
 These additional checks were introduced after the immutable v0.1.0 release.
-Comparator preserves the chosen Lean baseline; mathematical review is still
-needed to establish that the baseline expresses the manuscript correctly.
+Comparator verifies agreement with the Challenges; mathematical review must
+still establish that those Challenges express the manuscript correctly.
 
 ## Citing this version
 
@@ -112,6 +127,19 @@ Suggested wording:
 > correspondence with the manuscript are documented there.
 
 ## Development
+
+[`AGENTS.md`](AGENTS.md) records the development policy: use GPT-6.1-Sol with
+`xhigh` effort for implementation from detailed proofs and for a separate
+statement review; reserve `ultra` for a concrete difficult obstacle, and
+distinguish that obstacle from missing mathematics that may call for Astra.
+These are task roles, not a claim that the main chat's model changes itself.
+
+The [lean4 skill](https://github.com/cameronfreer/lean4-skills) supplies
+statement-preservation, mathlib-search, and proof-review guidance. Its core skill
+and references were installed and read during the Challenge redesign; optional
+helper scripts, lifecycle hooks, and Lean LSP integration are not part of that
+installation. The repository's Lean/Lake build and audits are the verification
+commands. See `AGENTS.md` for the pinned skill revision and usage instructions.
 
 The next mathematical milestones are the presheaf equivalence in
 `prop.sSetdag_is_equivalent_to_Fun`, the free dagger completion, and the cellular

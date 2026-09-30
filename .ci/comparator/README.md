@@ -2,20 +2,39 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against **commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`**, the original
-v0.1.0 source. The reference is fetched independently at that full commit hash;
-it is never reconstructed from the candidate's current definitions.
+candidate against three short, self-contained problem specifications:
 
-The checker covers the **21 named library theorems** in `config.json` and their
-statement dependencies. Three additional reflexive statements in
-`Contracts.lean` make `FreeCofibration`, `nonDegenerateEquiv`, and `forget` roots
-of the recursive definition comparison. These statements are audit markers,
-not new mathematical results, and are not imported by `DaggerModels.lean`.
-No definition holes are enabled.
+| Challenge | Physical lines | Configuration | Comparison roots |
+| --- | --- | --- | --- |
+| [ReverseSimplexChallenge.lean](ReverseSimplexChallenge.lean) | 72 | [reverse_simplex.json](reverse_simplex.json) | 6 theorems |
+| [SimplicialSetChallenge.lean](SimplicialSetChallenge.lean) | 96 | [simplicial_set.json](simplicial_set.json) | 10 theorems and 3 definition roots |
+| [WordObstructionChallenge.lean](WordObstructionChallenge.lean) | 22 | [word_obstruction.json](word_obstruction.json) | 5 theorems |
 
-The reference module contains the original definitions and proofs, without
-introducing `sorry`. The candidate module imports the proposed `DaggerModels`
-sources. Comparator checks statement equality, the relevant transitive
+Each file directly imports only pinned Mathlib modules, with its own definitions
+visible. None imports `DaggerModels`, a local reference module, or a snapshot of
+the implementation. The three Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **190 lines in total**, including
+comments and blank lines, are the review surface;
+reviewing one file does not review the other two.
+
+The checker retains the **21 named library theorems** and their statement
+dependencies. Three additional reflexive statements make `FreeCofibration`,
+`nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
+These statements are inline in the simplicial-set Challenge; `Contracts.lean`
+adds matching roots to the solution environment. They are audit markers, not new
+mathematical results, and are not imported by `DaggerModels.lean`.
+No definition holes are enabled. [targets.json](targets.json) records the full
+24-root coverage set; it is a registry, not an executable Comparator config.
+
+The result statements in a Challenge have intentional `sorry` placeholders:
+they specify obligations, not proved results. The data definitions remain
+explicit. Necessary structural proof fields in category/functor constructions
+are also visible: this Comparator version compares full elaborated definitions,
+including embedded proof terms. The library's proofs and axioms are checked
+separately, and Challenge placeholders are never counted as library proofs.
+
+The candidate module imports the proposed `DaggerModels` sources. Comparator
+checks statement equality, the relevant transitive
 definitions, permitted axioms, and replays the exported proof dependencies in
 its Lean kernel. Changing a theorem's type to `True`, or changing
 `FreeCofibration` to the vacuous condition `f = f`, is required to fail with a
@@ -24,13 +43,13 @@ evidence that either negative control worked.
 
 ## Trust boundary
 
-This checks preservation of the chosen Lean baseline. It does **not** establish
-that this baseline faithfully translates the informal manuscript. The reference
-was produced with AI assistance and is recorded as agent-reviewed, not
+This checks agreement with the chosen Lean specifications. It does **not**
+establish that they faithfully translate the informal manuscript. The Challenges
+were produced with AI assistance and are recorded as agent-reviewed, not
 independently human-reviewed, in `formalization.yaml`.
 
 On pull requests, `pull_request_target` executes the **base branch's** control
-files. The candidate checkout is treated as data: only its Lean library sources
+files and uses its Challenges. The candidate checkout is treated as data: only its Lean library sources
 are copied into an isolated project. Its Lake configuration, dependency pins,
 shell/Python scripts, workflows, and prebuilt artifacts are not executed or
 reused. All checkouts disable credential persistence and the workflow has only
@@ -42,13 +61,17 @@ also applied, and comparison runs as the unprivileged runner user. There is no
 fake-landrun fallback. Candidate artifacts are never subsequently loaded outside
 the sandbox. The ordinary build/axiom/metadata job runs on a separate runner.
 
-The baseline hash, comparison target list, contracts, trusted preparer, tool
+The Challenge files, comparison target list, contracts, trusted preparer, tool
 pins, and workflow are trusted inputs. Changes to these files need explicit
 review: a maintainer who changes both the target and its checker can still
 change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
-future declarations.
+future declarations. The source-hygiene check enforces at most 100 physical
+lines per Challenge (including blank lines and comments), plain direct Mathlib
+imports, standard permitted axioms, no definition holes, and exact registration
+of all 24 roots. This check is not a Lean parser or an adversarial security
+boundary; it does not replace review of trusted source files.
 
 ## Pinned tools
 
@@ -64,12 +87,18 @@ toolchain. See the workflow for executable setup and the two deliberate
 negative controls. This Linux check is separate from the macOS-compatible
 `lake build`, axiom audit, and metadata validation commands.
 
-## Updating the mathematical baseline
+The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
+still supplies the trusted Lake configuration, toolchain, dependency manifest,
+and implementations mutated by the two negative controls. It no longer supplies
+the Challenge mathematics. The three positive comparisons use current candidate
+source. Every comparison has independent writable dependency artifacts.
+
+## Updating the mathematical specification
 
 First review the proposed statements, definitions, hypotheses, and manuscript
-correspondence. Then record a new immutable reference revision, update the
-comparison targets and `formalization.yaml`, and rerun both positive and
-negative checks. Do not automatically replace the reference with the candidate
-when Comparator reports a mismatch. Dependency or Lean upgrades may also require
-an explicit reference migration, because Comparator checks the elaborated
+correspondence. Explain any mathematical change, then update the trusted
+Challenges, target registry/configurations, and `formalization.yaml`, and rerun
+both positive and negative checks. Do not automatically replace a Challenge with
+the candidate when Comparator reports a mismatch. Dependency or Lean upgrades
+also require explicit review, because Comparator checks the elaborated
 statements and their definitions, not merely displayed source text.

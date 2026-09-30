@@ -4,9 +4,18 @@ Scope of version 0.1.0, based on the manuscript inspected on 2026-10-01.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
+The current branch supplies three self-contained Comparator Challenges for
+reviewing this same mathematical scope. Each imports only Mathlib; definitions
+are visible in the Challenge rather than imported from this implementation.
+The intentional theorem-proof placeholders are specification markers, not
+unproved library results. A reviewer must inspect all three files to review the
+whole checked scope. Comparator checks correspondence between their Lean
+statements and the implementation, not the translation from the manuscript.
+
 ## The reversal simplex category
 
 File: [DaggerModels/ReverseSimplex.lean](DaggerModels/ReverseSimplex.lean).
+Problem specification: [ReverseSimplexChallenge.lean](.ci/comparator/ReverseSimplexChallenge.lean).
 
 `ReverseSimplex` has an object for each natural number `n`, representing `[n]`.
 Its morphisms are functions `Fin (m + 1) → Fin (n + 1)` together with the
@@ -28,6 +37,7 @@ or any comparison with the appendix's tagged index category.
 ## Dagger simplicial sets
 
 File: [DaggerModels/SimplicialSet.lean](DaggerModels/SimplicialSet.lean).
+Problem specification: [SimplicialSetChallenge.lean](.ci/comparator/SimplicialSetChallenge.lean).
 
 `DaggerSSet` implements `def.dagger_simplicial_sets` using mathlib's `SSet` and
 `SSet.op`. It contains a natural transformation to the opposite simplicial set,
@@ -62,6 +72,7 @@ rigidification, or results about fibrant objects.
 ## The vertex-level word obstruction
 
 File: [DaggerModels/WordObstruction.lean](DaggerModels/WordObstruction.lean).
+Problem specification: [WordObstructionChallenge.lean](.ci/comparator/WordObstructionChallenge.lean).
 
 This file uses only Lean's standard library. In the proof of
 `dj.prop.counterexample`, the two vertices `a` and `b` of the indiscrete groupoid

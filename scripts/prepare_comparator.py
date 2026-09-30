@@ -6,6 +6,8 @@ from pathlib import Path
 import shutil
 import subprocess
 
+from check_challenges import CHALLENGES, validate_challenges
+
 
 BASELINE = "dce8401a23588ba65b8aa4ca41de26cb0203d444"
 MODULES = (
@@ -13,6 +15,13 @@ MODULES = (
     "DaggerModels/SimplicialSet.lean",
     "DaggerModels/WordObstruction.lean",
 )
+CASES = {
+    "weakened-statement": "word_obstruction",
+    "changed-definition": "simplicial_set",
+    "positive-reverse-simplex": "reverse_simplex",
+    "positive-simplicial-set": "simplicial_set",
+    "positive-word-obstruction": "word_obstruction",
+}
 
 
 def copy_sources(source: Path, target: Path) -> None:
@@ -29,11 +38,12 @@ def copy_sources(source: Path, target: Path) -> None:
 
 
 def prepare(baseline: Path, candidate: Path, output: Path, control: Path) -> None:
+    validate_challenges(control)
     revision = subprocess.check_output(
         ["git", "-C", str(baseline), "rev-parse", "HEAD"], text=True
     ).strip()
     if revision != BASELINE:
-        raise ValueError(f"Reference must be the pinned v0.1.0 commit, got {revision}")
+        raise ValueError(f"Build inputs and negative controls must use v0.1.0, got {revision}")
     def reference(name: str) -> str:
         return subprocess.check_output(
             ["git", "-C", str(baseline), "show", f"{BASELINE}:{name}"], text=True
@@ -42,23 +52,22 @@ def prepare(baseline: Path, candidate: Path, output: Path, control: Path) -> Non
         raise ValueError("Use a fresh Comparator output directory")
     output.mkdir(parents=True)
     contracts = (control / ".ci/comparator/Contracts.lean").read_text(encoding="utf-8")
-    challenge = "import Reference\n\n" + contracts
-    configuration = json.loads((control / ".ci/comparator/config.json").read_text())
-    if not configuration["theorem_names"] or configuration.get("definition_names"):
-        raise ValueError("A nonempty theorem list and no definition holes are required")
-    for case in ["cache", "weakened-statement", "changed-definition", "positive"]:
+    for case in ["cache", *CASES]:
         project = output / case
         project.mkdir()
         for name in ["lean-toolchain", "lake-manifest.json", "lakefile.lean"]:
             (project / name).write_text(reference(name), encoding="utf-8")
         with (project / "lakefile.lean").open("a") as handle:
-            handle.write("\nlean_lib Reference\nlean_lib Challenge\nlean_lib Solution\n")
-        (project / "Reference").mkdir()
-        for name in MODULES:
-            (project / "Reference" / Path(name).name).write_text(reference(name), encoding="utf-8")
-        reference_root = reference("DaggerModels.lean").replace("import DaggerModels.", "import Reference.")
-        (project / "Reference.lean").write_text(reference_root, encoding="utf-8")
-        if case == "positive":
+            handle.write("\nlean_lib Challenge\nlean_lib Solution\n")
+        if case == "cache":
+            continue
+        group = CASES[case]
+        challenge_path, config_path = CHALLENGES[group]
+        # These specifications come from the trusted control checkout (the PR
+        # base), never from candidate sources or the old implementation snapshot.
+        challenge = (control / challenge_path).read_text(encoding="utf-8")
+        configuration = json.loads((control / config_path).read_text())
+        if case.startswith("positive-"):
             copy_sources(candidate, project)
         else:
             for name in ["DaggerModels.lean", *MODULES]:
@@ -87,14 +96,15 @@ def prepare(baseline: Path, candidate: Path, output: Path, control: Path) -> Non
         "  f = f\n"
     ) + text[end:]
     path.write_text(text, encoding="utf-8")
-    print(f"Prepared 24 comparison roots against {BASELINE}.")
+    print("Prepared three independent statement specifications and two negative controls.")
+    print(f"Dependency pins and negative-control implementations remain fixed at {BASELINE}.")
 
 
 def copy_cache(output: Path) -> None:
     cache = output / "cache/.lake"
     if not cache.is_dir():
         raise ValueError("Fetch the trusted mathlib cache before copying it")
-    for case in ["weakened-statement", "changed-definition", "positive"]:
+    for case in CASES:
         # Independent copies: an untrusted build cannot modify another case's
         # dependency artifacts through shared writable package directories.
         shutil.copytree(cache, output / case / ".lake", symlinks=False)

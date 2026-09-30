@@ -1,6 +1,7 @@
 """Run the real Linux sandbox and require specific mismatch diagnostics."""
 
 import argparse
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -25,9 +26,11 @@ def main() -> None:
             "Const does not match between challenge and target "
             "'DaggerModels.DaggerSSet.FreeCofibration'"
         ),
-        "positive": None,
+        "positive-reverse-simplex": None,
+        "positive-simplicial-set": None,
+        "positive-word-obstruction": None,
     }
-    # The real candidate runs last. Never load its writable .lake artifacts
+    # Real candidates run last. Never load their writable .lake artifacts
     # outside Comparator's sandbox, including after the comparison finishes.
     for case, expected_error in cases.items():
         project = (args.projects / case).resolve()
@@ -48,7 +51,8 @@ def main() -> None:
         if expected_error is None:
             if result.returncode != 0 or "Your solution is okay!" not in output:
                 raise RuntimeError(f"Candidate failed Comparator:\n{output}")
-            print("Comparator accepted all 24 comparison roots and replayed their proof dependencies.")
+            count = len(json.loads((project / "config.json").read_text())["theorem_names"])
+            print(f"Comparator accepted {case}: {count} roots and replayed proof dependencies.")
         elif result.returncode == 0 or expected_error not in output:
             raise RuntimeError(f"Negative control did not fail for the expected reason:\n{output}")
         else:
