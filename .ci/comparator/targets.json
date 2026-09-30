@@ -83,6 +83,8 @@
     "DaggerModels.FreeSimplicialPaths.inclusion_dagger",
     "DaggerModels.FreeSimplicialPaths.id_dagger",
     "DaggerModels.exists_freeDaggerSimplicialCategory",
-    "DaggerModels.FreeSimplicialPaths.comp_dagger"
+    "DaggerModels.FreeSimplicialPaths.comp_dagger",
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms",
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
   ]
 }

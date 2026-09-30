@@ -53,6 +53,8 @@ jobs:
           Mathlib.CategoryTheory.Enriched.Opposite
           Mathlib.CategoryTheory.PathCategory.Basic
           Mathlib.Combinatorics.Quiver.Symmetric
+          Mathlib.CategoryTheory.Limits.Shapes.SplitCoequalizer
+          Mathlib.CategoryTheory.Monad.Monadicity
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

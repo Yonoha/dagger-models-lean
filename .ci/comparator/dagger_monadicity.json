@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms",
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

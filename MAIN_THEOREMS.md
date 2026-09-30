@@ -77,8 +77,17 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   proves extension and uniqueness. `FreeDaggerSimplicialCategory.lean` builds
   the actual free–forgetful adjunction, identifies its unit with singleton
   inclusion, and proves the full bijective restriction property, at every
-  common universe `u`. No cancellation quotient is used. The monadicity and
-  local finite presentability asserted by `bg.lem.presentable` remain unproved.
+  common universe `u`. No cancellation quotient is used.
+- The monadicity assertion of `bg.lem.presentable`:
+  `DaggerGraphReflection.lean` lifts actual graph inverses and proves reflection
+  of isomorphisms. `DaggerSplitCoequalizer.lean` constructs identity, composition
+  and dagger on each graph-split quotient, with arbitrary object maps.
+  `DaggerGraphDescent.lean` and `DaggerGraphCoequalizer.lean` prove the full
+  coequalizer universal property and preservation. `DaggerSimplicialMonadicity.lean`
+  then applies Mathlib's Beck theorem to the actual free adjunction. Thus the
+  original graph forgetful functor is monadic, at every common universe `u`.
+  Finitarity of the word monad, presentability of dagger graphs, and the local
+  finite presentability conclusion of `bg.lem.presentable` remain to prove.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -91,8 +100,9 @@ Required chain:
 1. Dagger simplicial categories (`bg.def.dagger-scat`), dagger graphs,
    free categories, limits/colimits, and local presentability.
    The categories, graphs, concrete free construction and adjunction are now
-   implemented. Limits/colimits (`bg.lem.creation`), monadicity and local finite
-   presentability (`bg.lem.presentable`) are still required.
+   implemented, and monadicity over dagger graphs is proved. Limits/colimits
+   (`bg.lem.creation`) and local finite presentability (`bg.lem.presentable`)
+   are still required.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

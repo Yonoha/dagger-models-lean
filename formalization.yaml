@@ -20,8 +20,9 @@ project:
     dagger orbits in positive degrees, at arbitrary value universe.
     It also constructs genuine dagger simplicial categories and graphs, the
     actual finite-path free category, and its free-forgetful adjunction with
-    singleton-edge unit and full universal property. Monadicity and local
-    finite presentability of dagger simplicial categories remain unproved.
+    singleton-edge unit and full universal property. The graph forgetful functor
+    is monadic by constructed graph-split coequalizers and Beck's theorem.
+    Local finite presentability of dagger simplicial categories remains unproved.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -47,8 +48,9 @@ sources:
       equality is proved.
       It also formalizes bg.def.dagger-scat, bg.def.dagger-graph, and the free
       word construction with its universal property at the start of
-      bg.lem.presentable; that lemma's monadicity and presentability
-      conclusions are not yet proved.
+      bg.lem.presentable, and the monadicity assertion of that lemma using
+      constructed graph-split coequalizers. Its local finite presentability
+      conclusion is not yet proved.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -75,8 +77,10 @@ status:
     equals the original class, proving both conclusions of dj.lem.free-cof.
     The actual category of dagger simplicial categories, graph category,
     finite-path free construction, free-forgetful adjunction and singleton
-    unit are proved. Their monadicity, local finite presentability and
-    creation of limits/colimits remain unproved.
+    unit are proved. Monadicity of the graph forgetful functor is proved by
+    constructing the actual split quotient enrichment, quotient functor and
+    coequalizer universal property, followed by Beck's theorem. Local finite
+    presentability and creation of limits/colimits remain unproved.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -320,6 +324,18 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_universal.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms"
+      file: "DaggerModels/DaggerGraphReflection.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_monadicity.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
+      file: "DaggerModels/DaggerSimplicialMonadicity.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_monadicity.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -400,19 +416,30 @@ fidelity:
     is proved to be singleton insertion. The short universal Challenge fixes
     bijective restriction on all functors for every target, without fixing
     the free witness. A separate concrete-word Challenge fixes the path
-    operations. Monadicity and local finite presentability are not inferred.
+    operations. The graph forgetful functor is proved to reflect isomorphisms.
+    Split quotient identities and composition are constructed from the graph
+    section and original operations, with endpoint transports. The split
+    equations imply preservation by the quotient map; actual lifted tuples
+    prove category and dagger laws. The given quotient graph and map are
+    definitionally retained. The section is never assumed to preserve operations.
+    Graph descent gives the coequalizer universal property and preservation,
+    and Beck's theorem gives actual monadicity. Local finite presentability
+    remains unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 81 selected library
-    theorems and three audit-only definition roots against fifteen self-contained
-    Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
-    73, 100, and 83; 1054 in total, including comments and blank lines); all fifteen together
-    form the review surface. New proof/Challenge correspondence was separately
+    checks, not independent human review. Comparator checks 83 selected library
+    theorems and three audit-only definition roots against sixteen self-contained
+    Challenge files in .ci/comparator. Each imports only Mathlib. The original
+    fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
+    73, 100, and 83 lines). The literal monadicity specification has 153 lines
+    with a reviewed 160-line exception to keep both actual category structures
+    and the forgetful functor visible. All sixteen total 1207 physical lines,
+    including comments and blank lines, and together form the review surface.
+    New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
     Challenge proof placeholders are outside the proved library. Dependency pins
     and negative-control implementations use v0.1.0 commit
@@ -438,8 +465,17 @@ alignment:
       status: "proved"
       note: >-
         Concrete finite paths, actual adjunction, singleton-edge unit and full
-        universal property. Monadicity, local finite presentability and creation
-        of limits/colimits remain unproved.
+        universal property. Local finite presentability and creation of
+        limits/colimits remain unproved; monadicity is recorded separately below.
+    - source: "Monadicity assertion in bg.lem.presentable"
+      lean: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
+      module: "DaggerModels/DaggerSimplicialMonadicity.lean"
+      status: "proved"
+      note: >-
+        Actual graph forgetful functor is monadic by isomorphism reflection,
+        constructed graph-split quotient categories and coequalizers, and
+        Mathlib's Beck theorem. Arbitrary common universe u and all object maps
+        are retained. Local finite presentability remains unproved.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

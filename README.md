@@ -16,7 +16,10 @@ their saturation equals the original free-cofibration class. The construction
 attaches individual new vertices in degree zero and free dagger orbits in
 positive degrees, at every value universe. It also constructs genuine dagger
 simplicial categories and graphs, their concrete finite-path free category,
-and the free–forgetful adjunction with singleton-edge unit. Two concrete
+and the free–forgetful adjunction with singleton-edge unit. The graph forgetful
+functor is proved monadic by constructing its split coequalizers and applying
+Beck's theorem; local finite presentability of dagger simplicial categories
+remains to prove. Two concrete
 comparison obstructions and the first release's elementary foundations are retained.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
@@ -42,7 +45,8 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Parts (1)–(2) of `pointset.prop.weak-counterexample` | [`UnitaryObstruction`](DaggerModels/UnitaryObstruction.lean) | The actual integer dagger groupoid inclusion is an ordinary equivalence but is not unitarily essentially surjective |
 | `bg.def.dagger-scat` | [`DaggerSimplicialCategory`](DaggerModels/DaggerSimplicialCategory.lean) | Full simplicial mapping spaces, the identity-on-objects dagger and its inverse enriched opposite functor, and the category of dagger enriched functors |
 | `bg.def.dagger-graph` and the word construction in `bg.lem.presentable` | [`DaggerSimplicialGraph`](DaggerModels/DaggerSimplicialGraph.lean), [`FreeSimplicialPaths`](DaggerModels/FreeSimplicialPaths.lean) | Actual finite paths, including empty and singleton paths; edgewise simplicial operators and reversal with edge dagger |
-| Free universal property at the start of `bg.lem.presentable` | [`FreeDaggerSimplicialCategory`](DaggerModels/FreeDaggerSimplicialCategory.lean) | Actual free–forgetful adjunction, singleton-edge unit, and bijective restriction for every target; monadicity and local finite presentability remain unproved |
+| Free universal property at the start of `bg.lem.presentable` | [`FreeDaggerSimplicialCategory`](DaggerModels/FreeDaggerSimplicialCategory.lean) | Actual free–forgetful adjunction, singleton-edge unit, and bijective restriction for every target |
+| Monadicity in `bg.lem.presentable` | [`DaggerSimplicialMonadicity`](DaggerModels/DaggerSimplicialMonadicity.lean) | Actual graph forgetful functor is monadic, using constructed graph-split coequalizers and isomorphism reflection; local finite presentability remains unproved |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -85,7 +89,9 @@ lake exe cache get \
   Mathlib.AlgebraicTopology.SimplicialSet.Monoidal \
   Mathlib.CategoryTheory.Enriched.Opposite \
   Mathlib.CategoryTheory.PathCategory.Basic \
-  Mathlib.Combinatorics.Quiver.Symmetric
+  Mathlib.Combinatorics.Quiver.Symmetric \
+  Mathlib.CategoryTheory.Limits.Shapes.SplitCoequalizer \
+  Mathlib.CategoryTheory.Monad.Monadicity
 lake build
 lake env lean Audit.lean
 python3 scripts/check_audit.py
@@ -121,8 +127,8 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 81 selected library theorems against fifteen
-short, self-contained problem specifications:
+Linux GitHub Actions job. It compares 83 selected library theorems against sixteen
+self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
 - [Dagger simplicial sets](.ci/comparator/SimplicialSetChallenge.lean): 96 lines
@@ -139,6 +145,7 @@ short, self-contained problem specifications:
 - [Dagger simplicial categories and their opposite functors](.ci/comparator/DaggerSimplicialCategoryChallenge.lean): 73 lines
 - [Concrete free paths and their simplicial dagger](.ci/comparator/FreeSimplicialPathsChallenge.lean): 100 lines
 - [Free dagger simplicial category universal property](.ci/comparator/FreeDaggerUniversalChallenge.lean): 83 lines
+- [Actual graph forgetful functor: reflection and monadicity](.ci/comparator/DaggerMonadicityChallenge.lean): 153 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -168,9 +175,13 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks each Challenge's 100-line budget, direct Mathlib imports, and coverage
-of all 84 registered roots. The 1,054 lines across all fifteen files are the review
-surface; checking one file is not a review of the entire formalization.
+CI checks direct Mathlib imports and coverage of all 86 registered roots.
+The original fifteen Challenges retain their 100-line budgets. The monadicity
+Challenge has a reviewed 160-line budget because its literal statement needs
+both full category structures and the actual forgetful functor; these definitions
+are visible, including structural proofs. The 1,207 lines across all sixteen
+files are the review surface; checking one file is not a review of the entire
+formalization.
 
 These additional checks were introduced after the immutable v0.1.0 release.
 Comparator verifies agreement with the Challenges; mathematical review must
@@ -190,6 +201,9 @@ dagger, the concrete word operations, and free universality for all graph maps
 and all target categories. The last specification fixes the bijective restriction
 property, not the implementation's choice of its free object. The library also
 constructs the actual adjunction and identifies its unit with singleton inclusion.
+The monadicity Challenge directly asks for Mathlib's `MonadicRightAdjoint` for
+the original graph forgetful functor. This includes a comparison equivalence
+with a category of monad algebras, not just the existence of a left adjoint.
 
 ## Citing this version
 
@@ -222,9 +236,9 @@ helper scripts, lifecycle hooks, and Lean LSP integration are not part of that
 installation. The repository's Lean/Lake build and audits are the verification
 commands. See `AGENTS.md` for the pinned skill revision and usage instructions.
 
-The cellular characterization and the free dagger simplicial-category adjunction
-are complete. The next stages toward A–D include monadicity and presentability
-for dagger simplicial categories, their limits and colimits, ordinary
+The cellular characterization, free dagger simplicial-category adjunction and
+monadicity over dagger graphs are complete. The next stages toward A–D include
+local finite presentability for dagger simplicial categories, their limits and colimits, ordinary
 rigidification and coherent nerve, their lifted adjunction, and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
@@ -244,7 +258,7 @@ pushout・超限合成・レトラクト等による閉性を検証していま�
 次数 0 では新しい頂点ごと、正次数では dagger 軌道ごとにセルを貼り付けます。
 また、dagger simplicial category と graph、具体的な有限の道による自由圏、
 および自由・忘却随伴と singleton-edge unit を構成しました。
-この自由構成から monadicity や dagger simplicial category の局所有限可呈示性まで
-証明したわけではなく、その部分は引き続き未完了です。
+さらに、実際の分裂余等化子を構成し、graph への忘却関手の monadicity を証明しました。
+dagger simplicial category の局所有限可呈示性は引き続き未完了です。
 論文の主定理全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

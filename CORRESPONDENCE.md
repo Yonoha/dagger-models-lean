@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies fifteen self-contained Comparator Challenges for
+The current branch supplies sixteen self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all fifteen files to review the
+unproved library results. A reviewer must inspect all sixteen files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -379,12 +379,56 @@ path operations. The actual adjunction and its unit are included in the library
 axiom audit, but are not additional roots of this short universal specification.
 
 This completes the free construction and adjunction used at the start of
-`bg.lem.presentable`. The lemma's **monadicity and local finite presentability
-conclusions remain unproved**, as does creation of limits and colimits in
-`bg.lem.creation`. The model-categorical conclusions of A–D do not follow from
-the currently proved results alone. The new implementation and Challenge
-correspondence received separate GPT-6.1-Sol/xhigh agent reviews; this is not
-independent human review. No manuscript statement was edited.
+`bg.lem.presentable`. Its monadicity assertion is proved in the next section.
+The local finite presentability conclusion and creation of limits and colimits
+in `bg.lem.creation` remain unproved. The model-categorical conclusions of A–D
+do not follow from the currently proved results alone. The implementation and
+Challenge correspondence received separate GPT-6.1-Sol/xhigh agent reviews;
+this is not independent human review. No manuscript statement was edited.
+
+## Monadicity over dagger simplicial graphs
+
+Files: [DaggerGraphReflection.lean](DaggerModels/DaggerGraphReflection.lean),
+[DaggerSplitCoequalizer.lean](DaggerModels/DaggerSplitCoequalizer.lean),
+[DaggerGraphDescent.lean](DaggerModels/DaggerGraphDescent.lean),
+[DaggerGraphCoequalizer.lean](DaggerModels/DaggerGraphCoequalizer.lean), and
+[DaggerSimplicialMonadicity.lean](DaggerModels/DaggerSimplicialMonadicity.lean).
+Problem specification: [DaggerMonadicityChallenge.lean](.ci/comparator/DaggerMonadicityChallenge.lean).
+
+`forgetGraph_reflectsIsomorphisms` proves the reflection sentence in the second
+paragraph of `bg.lem.presentable`. Given an actual inverse graph map, its unit
+and composition laws follow by cancellation along the original functor's hom
+maps. Their monicity is derived from that inverse. All endpoint transports are
+explicit; no restriction to identity object maps is introduced.
+
+For a graph-split diagram, `GraphSplitData` contains exactly the six fields of
+Mathlib's `IsSplitCoequalizer`. The adapter `GraphSplitData.ofMathlib` copies
+those fields unchanged. The quotient graph is only a graph at this point.
+`quotientId` and `quotientComp` lift through the graph section, use the actual
+operations in the source, and return through the quotient map with explicit
+endpoint transports. The split equations and the two original functors' laws
+prove preservation by the quotient map. Lifting complete composable tuples
+then gives unit and associativity laws. The given graph dagger supplies the
+involution and, using the actual graph-map compatibility, the unit and
+anti-composition laws. `quotientCategory` and `quotientFunctor` retain the
+original quotient graph and map definitionally. A graph section is never
+assumed to preserve composition or identity.
+
+`GraphDescent.lift` proves that graph factorization through this quotient is an
+enriched dagger functor. `GraphCoequalizer.isColimit` proves existence and
+uniqueness of the factorization for every target. Its split graph cofork is
+also a colimit, giving preservation by `forgetGraph`. Together with the actual
+free adjunction and reflection of isomorphisms, Mathlib's Beck theorem yields
+`forgetGraph_monadic : Nonempty (MonadicRightAdjoint forgetGraph)`. This is the
+full first assertion of `bg.lem.presentable`, at every common universe `u`.
+The finitary and local finite presentability arguments remain unproved.
+
+The Challenge directly protects the literal reflection and monadicity types.
+It shows the full category structures and the original forgetful functor, and
+imports only Mathlib. Its 153 physical lines have a reviewed 160-line budget;
+the other fifteen Challenges keep their 100-line budgets. This explicit
+exception avoids hiding definitions or replacing monadicity by an easier
+existence statement. All prior comparison roots remain registered.
 
 ## Main-result status
 
@@ -398,7 +442,8 @@ independent human review. No manuscript statement was edited.
 | `dj.not.adjunctions` (simplicial sets) | Free–forgetful adjunction | Actual adjunction, zero-skeleton pushout, unit and swap proved |
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
 | `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
-| Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved; monadicity and local finite presentability remain unproved |
+| Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |
+| First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck; local finite presentability remains unproved |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

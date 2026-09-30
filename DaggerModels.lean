@@ -38,3 +38,8 @@ import DaggerModels.FreeSimplicialPaths
 import DaggerModels.DaggerSimplicialForget
 import DaggerModels.FreeSimplicialLift
 import DaggerModels.FreeDaggerSimplicialCategory
+import DaggerModels.DaggerGraphReflection
+import DaggerModels.DaggerGraphDescent
+import DaggerModels.DaggerGraphCoequalizer
+import DaggerModels.DaggerSplitCoequalizer
+import DaggerModels.DaggerSimplicialMonadicity

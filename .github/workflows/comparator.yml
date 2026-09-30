@@ -116,6 +116,8 @@ jobs:
           Mathlib.CategoryTheory.Enriched.Opposite
           Mathlib.CategoryTheory.PathCategory.Basic
           Mathlib.Combinatorics.Quiver.Symmetric
+          Mathlib.CategoryTheory.Limits.Shapes.SplitCoequalizer
+          Mathlib.CategoryTheory.Monad.Monadicity
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"
