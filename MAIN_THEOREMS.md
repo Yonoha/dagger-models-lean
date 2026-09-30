@@ -23,8 +23,19 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   presentability assertion as well.
 - The free–forgetful adjunction in `dj.not.adjunctions`: `FreeDagger.lean`
   constructs a left Kan extension and an actual adjunction to the original
-  `DaggerSSet.forget` at every universe. Its identification with the explicit
-  pushout $A \amalg_{\operatorname{sk}_0 A} A^{\mathrm{op}}$ remains to prove.
+  `DaggerSSet.forget` at every universe. `FreeDaggerPushout.lean` constructs the
+  explicit pushout with swap dagger, proves its adjunction, and identifies it
+  naturally with the original free functor, preserving the unit. `Vertices.lean`
+  and `FreeDaggerSkeleton.lean` identify the common vertices with the actual
+  zero-skeleton and prove the literal displayed pushout formula. The general
+  result pins the unit, natural right coprojection, and both swap equations.
+- The elementary closure arguments for `dj.def.free-cof` and `dj.lem.free-cof`:
+  `FreeCofibration.lean` proves the equivalence of categorical and underlying
+  monicity, identity and composition closure, and the actual arrow-retract
+  closure. `FreeCofibrationPushout.lean` proves closure under any genuine
+  pushout square. The original predicate, including its positive-degree restriction,
+  is unchanged. `FreeDagger.lean` also proves that forgetting the dagger
+  preserves all small limits and colimits in the value universe.
 - The underlying cofibration obstruction in `pointset.cor.cofibrant-obstruction`:
   `NormalCofibrationObstruction.lean` proves that the initial-to-point dagger
   map satisfies `FreeCofibration` but its anti-involutive image is not normal.
@@ -66,13 +77,16 @@ Targets: `dj.thm.main` (line 1810), `dj.thm.equivalence` (line 1848).
 
 Required chain:
 
-1. The presheaf equivalence, local presentability, and free–forgetful adjunction
-   (implemented above); the explicit pushout description of free dagger
-   completion (`dj.not.adjunctions`) remains to prove.
+1. The presheaf equivalence, local presentability, and free–forgetful adjunction,
+   including the explicit pushout description (`dj.not.adjunctions`), are
+   implemented above.
 2. Ordinary rigidification and coherent nerve, compatibility with opposites,
    and the concrete lifted adjunction (`dj.lem.lift`).
 3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
    preservation by rigidification, and accessibility of weak equivalences.
+   Identity, composition, pushout, and retract closure are implemented;
+   coproducts, transfinite composition, the free boundary generators, and the
+   actual relative-cell presentation remain to prove.
 4. The recognition theorem with `W = C†⁻¹(W†)` and the exact `FreeCofibration`
    class, followed by the fibrant counit and Quillen-equivalence criterion.
 

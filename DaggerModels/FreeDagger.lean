@@ -1,6 +1,8 @@
 import DaggerModels.Presheaf
 import Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
 import Mathlib.CategoryTheory.Limits.Types.Colimits
+import Mathlib.CategoryTheory.Adjunction.Limits
+import Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
 
 /-!
 # The free dagger simplicial-set adjunction
@@ -55,5 +57,22 @@ noncomputable def freeDaggerAdjunction : freeDagger.{u} ⊣ DaggerSSet.forget.{u
 theorem exists_freeDaggerAdjunction :
     ∃ F : SSet.{u} ⥤ DaggerSSet.{u}, Nonempty (F ⊣ DaggerSSet.forget.{u}) :=
   ⟨freeDagger, ⟨freeDaggerAdjunction⟩⟩
+
+namespace DaggerSSet
+
+/-- The forgetful functor preserves all `u`-small limits as a right adjoint. -/
+theorem forget_preservesLimits : Limits.PreservesLimits forget.{u} :=
+  Adjunction.rightAdjoint_preservesLimits freeDaggerAdjunction
+
+/-- Forgetting the dagger preserves `u`-small colimits, since restriction of
+presheaves computes them pointwise. -/
+theorem forget_preservesColimits : Limits.PreservesColimits forget.{u} := by
+  let : Limits.PreservesColimits toPresheaf.{u} :=
+    Adjunction.leftAdjoint_preservesColimits daggerSSetEquivalencePresheaf.toAdjunction
+  let : Limits.PreservesColimits presheafRestriction.{u} :=
+    whiskeringLeft_preservesColimit ReverseSimplex.inclusion.op
+  exact Limits.preservesColimits_of_natIso extensionRestrictionIso
+
+end DaggerSSet
 
 end DaggerModels

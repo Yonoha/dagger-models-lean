@@ -1,0 +1,9 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.freeDagger_pushout",
+    "DaggerModels.freeDagger_skeleton_pushout"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

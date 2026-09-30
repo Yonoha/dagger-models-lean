@@ -33,6 +33,18 @@
     "DaggerModels.DaggerSSet.not_normalMono_of_missing_vertex",
     "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono",
     "DaggerModels.map_isUnitary",
-    "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
+    "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective",
+    "DaggerModels.DaggerSSet.mono_iff_mono_hom",
+    "DaggerModels.DaggerSSet.freeCofibration_id",
+    "DaggerModels.DaggerSSet.FreeCofibration.comp",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_retract",
+    "DaggerModels.SSetVertices.mono_inclusion",
+    "DaggerModels.SSetVertices.range_inclusion",
+    "DaggerModels.SSetVertices.exists_skeletonIso",
+    "DaggerModels.DaggerSSet.forget_preservesLimits",
+    "DaggerModels.DaggerSSet.forget_preservesColimits",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout",
+    "DaggerModels.freeDagger_pushout",
+    "DaggerModels.freeDagger_skeleton_pushout"
   ]
 }

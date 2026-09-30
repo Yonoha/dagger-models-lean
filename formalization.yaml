@@ -6,11 +6,13 @@ project:
     A partial formalization of foundational constructions from Models for dagger
     (infinity,1)-categories I. It constructs the reversal simplex category and
     dagger simplicial sets, proves their presheaf equivalence and presentability,
-    constructs the actual free-forgetful adjunction, and proves elementary
+    constructs the actual free-forgetful adjunction and its zero-skeleton pushout
+    presentation with the unit and swap dagger, and proves elementary
     reversal and nondegeneracy lemmas, the vertex-level word obstruction,
     the free-versus-normal cofibration obstruction, and the integer dagger
     groupoid example separating ordinary equivalence from unitary essential
-    surjectivity.
+    surjectivity. Free cofibrations are proved closed under identities,
+    composition, pushouts, and retracts.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -29,6 +31,8 @@ sources:
       the simplicial-set free-forgetful adjunction in dj.not.adjunctions;
       the explicit predicate obstruction in pointset.cor.cofibrant-obstruction;
       parts (1)-(2) of pointset.prop.weak-counterexample.
+      The explicit zero-skeleton pushout in dj.not.adjunctions and the
+      pushout/retract closure arguments in dj.lem.free-cof are also formalized.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -46,8 +50,9 @@ status:
   scope: >-
     Partial formalization toward A-D. Presheaf equivalence and local finite
     presentability are proved at every value universe, as is existence of the
-    actual free-forgetful adjunction. The explicit free-completion pushout,
-    cellular characterization, full simplicial counterexamples, model structures,
+    actual free-forgetful adjunction and its explicit free-completion pushout,
+    with the genuine universal property, unit and swap dagger. The cellular
+    characterization, full simplicial counterexamples, model structures,
     unitary-core recognition and main theorems A-D remain unproved. The new
     concrete comparison obstructions do not by themselves establish Theorem D.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
@@ -110,6 +115,48 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/presheaf.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.SSetVertices.exists_skeletonIso"
+      file: "DaggerModels/Vertices.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/vertices.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeDagger_pushout"
+      file: "DaggerModels/FreeDaggerPushout.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_dagger_pushout.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeDagger_skeleton_pushout"
+      file: "DaggerModels/FreeDaggerSkeleton.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_dagger_pushout.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.mono_iff_mono_hom"
+      file: "DaggerModels/FreeCofibration.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
+      file: "DaggerModels/FreeCofibration.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
+      file: "DaggerModels/FreeCofibrationPushout.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.forget_preservesColimits"
+      file: "DaggerModels/FreeDagger.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
       file: "DaggerModels/NormalCofibrationObstruction.lean"
       sorry_count: 0
@@ -169,10 +216,16 @@ fidelity:
     the two objects of the integer dagger groupoid; their simplicial nerve
     and model-categorical consequences are not formalized.
     The definition of FreeCofibration uses Mono in the dagger category.
-    The free functor is constructed via actual left Kan extension, with no
-    claimed identification with the explicit pushout formula yet. All category
-    equivalence, presentability and free-adjunction results retain arbitrary
-    value universe u. The new existential Challenge goals do not fix a chosen
+    The original free functor is constructed via actual left Kan extension.
+    A second, explicit pushout construction with swap dagger is proved left
+    adjoint to the same forgetful functor and naturally isomorphic to the
+    original free functor,
+    compatibly with the unit. The canonical common-vertices identification
+    uses mathlib skeleton 1, whose generators have dimension less than 1;
+    this is exactly the manuscript's sk_0. The pushout, unit and swap are
+    proved for every choice of the free adjunction. All category equivalence,
+    presentability and free-adjunction results retain arbitrary value universe u.
+    The existential Challenge goals do not fix a chosen
     witness implementation; the library supplies the manuscript's concrete
     counterexamples and actual equivalence/adjunction data.
     See CORRESPONDENCE.md for the complete scope discussion.
@@ -181,11 +234,11 @@ review:
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 31 selected library
-    theorems and three audit-only definition roots against six self-contained
+    checks, not independent human review. Comparator checks 43 selected library
+    theorems and three audit-only definition roots against nine self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, 22, 92, 88, and 44; 414 in total, including comments and
-    blank lines); all three together form the review surface.
+    to 100 physical lines (72, 96, 22, 92, 88, 44, 65, 28, and 88; 595 in total,
+    including comments and blank lines); all nine together form the review surface.
     Challenge proof placeholders are outside the proved library. Dependency pins
     and negative-control implementations use v0.1.0 commit
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
@@ -228,7 +281,30 @@ alignment:
       lean: "DaggerModels.exists_freeDaggerAdjunction"
       module: "DaggerModels/FreeDagger.lean"
       status: "proved"
-      note: "Actual adjunction existence; the displayed pushout identification remains unproved."
+      note: >-
+        Actual adjunction existence. The explicit pushout, swap and unit
+        identification are also proved in FreeDaggerPushout.lean and
+        FreeDaggerSkeleton.lean.
+    - source: "Zero-skeleton common subcomplex in dj.not.adjunctions"
+      lean: "DaggerModels.SSetVertices.exists_skeletonIso"
+      module: "DaggerModels/Vertices.lean"
+      status: "proved"
+      note: "The isomorphism preserves inclusion; mathlib skeleton 1 is the manuscript's sk_0."
+    - source: "Explicit simplicial-set free-completion pushout in dj.not.adjunctions"
+      lean: "DaggerModels.freeDagger_skeleton_pushout"
+      module: "DaggerModels/FreeDaggerSkeleton.lean"
+      status: "proved"
+      note: "Genuine pushout universal property, adjunction unit, natural right leg and both swap equations."
+    - source: "Retract closure argument in dj.lem.free-cof"
+      lean: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
+      module: "DaggerModels/FreeCofibration.lean"
+      status: "proved"
+      note: "The cellular characterization and transfinite composition argument remain unproved."
+    - source: "Pushout closure argument in dj.lem.free-cof"
+      lean: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
+      module: "DaggerModels/FreeCofibrationPushout.lean"
+      status: "proved"
+      note: "Any genuine dagger-category pushout square; no additional monicity assumption on the other leg."
     - source: "Explicit predicate obstruction in pointset.cor.cofibrant-obstruction"
       lean: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
       module: "DaggerModels/NormalCofibrationObstruction.lean"

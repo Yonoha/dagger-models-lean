@@ -4,5 +4,10 @@ import DaggerModels.WordObstruction
 import DaggerModels.Presheaf
 import DaggerModels.Presentable
 import DaggerModels.FreeDagger
+import DaggerModels.FreeCofibration
+import DaggerModels.Vertices
+import DaggerModels.FreeDaggerPushout
+import DaggerModels.FreeDaggerSkeleton
+import DaggerModels.FreeCofibrationPushout
 import DaggerModels.NormalCofibrationObstruction
 import DaggerModels.UnitaryObstruction

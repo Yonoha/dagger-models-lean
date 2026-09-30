@@ -28,6 +28,15 @@ CHALLENGES = {
     "unitary_obstruction": (
         ".ci/comparator/UnitaryObstructionChallenge.lean", ".ci/comparator/unitary_obstruction.json"
     ),
+    "free_cofibration": (
+        ".ci/comparator/FreeCofibrationChallenge.lean", ".ci/comparator/free_cofibration.json"
+    ),
+    "vertices": (
+        ".ci/comparator/VerticesChallenge.lean", ".ci/comparator/vertices.json"
+    ),
+    "free_dagger_pushout": (
+        ".ci/comparator/FreeDaggerPushoutChallenge.lean", ".ci/comparator/free_dagger_pushout.json"
+    ),
 }
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 

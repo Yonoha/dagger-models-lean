@@ -36,6 +36,11 @@ jobs:
           Mathlib.CategoryTheory.Presentable.Adjunction
           Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
           Mathlib.CategoryTheory.Limits.Types.Colimits
+          Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+          Mathlib.CategoryTheory.Adjunction.Unique
+          Mathlib.CategoryTheory.Limits.Types.Pushouts
+          Mathlib.CategoryTheory.MorphismProperty.Retract
+          Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

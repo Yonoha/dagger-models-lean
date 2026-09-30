@@ -1,0 +1,14 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.DaggerSSet.mono_iff_mono_hom",
+    "DaggerModels.DaggerSSet.freeCofibration_id",
+    "DaggerModels.DaggerSSet.FreeCofibration.comp",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_retract",
+    "DaggerModels.DaggerSSet.forget_preservesLimits",
+    "DaggerModels.DaggerSSet.forget_preservesColimits",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

@@ -1,0 +1,10 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.SSetVertices.mono_inclusion",
+    "DaggerModels.SSetVertices.range_inclusion",
+    "DaggerModels.SSetVertices.exists_skeletonIso"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

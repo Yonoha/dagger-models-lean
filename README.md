@@ -7,8 +7,10 @@ A **partial formalization** accompanying Keima Akasaka's *Models for dagger
 $(\infty,1)$-categories I: Dagger simplicial sets and unitary cores*.
 
 The current development proves the presheaf equivalence and presentability,
-constructs the free–forgetful adjunction, and verifies two concrete comparison
-obstructions, in addition to the first release's elementary foundations.
+constructs the free–forgetful adjunction with its explicit zero-skeleton pushout,
+unit and swap dagger, and proves identity/composition/pushout/retract closure
+of free cofibrations. It also verifies two concrete comparison obstructions,
+in addition to the first release's elementary foundations.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
 structures, the rigidification Quillen equivalence, the intrinsic recognition
@@ -21,10 +23,11 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | The reversal simplex category before `prop.sSetdag_is_equivalent_to_Fun` | [`ReverseSimplex`](DaggerModels/ReverseSimplex.lean) | Category of actual monotone or antitone functions, reversal involution, inclusion of the simplex category, reversal relation, and the ambiguity only on constant functions |
 | `def.dagger_simplicial_sets` and the following simplicial identities | [`DaggerSSet`](DaggerModels/SimplicialSet.lean) | Definition, dagger morphisms and their category, faithful forgetful functor, and reversal identities for face and degeneracy maps |
 | The opening nondegeneracy argument of `dj.lem.free-cof` | `dagger_mem_nonDegenerate_iff`, `nonDegenerateEquiv` | Dagger preserves and reflects nondegeneracy |
-| `dj.def.free-cof` | `FreeCofibration` | The definition only; no cellular characterization |
+| `dj.def.free-cof` and closure arguments of `dj.lem.free-cof` | [`FreeCofibration`](DaggerModels/FreeCofibration.lean), [`FreeCofibrationPushout`](DaggerModels/FreeCofibrationPushout.lean) | Original definition, underlying monicity comparison, identity/composition/pushout/retract closure; no cellular characterization |
 | The last obstruction in the proof of `dj.prop.counterexample` | [`WordObstruction`](DaggerModels/WordObstruction.lean) | The algebraic vertex-level argument: no self-adjoint word of length one, hence no dagger-preserving section of the length map |
 | `prop.sSetdag_is_equivalent_to_Fun` | [`Presheaf`](DaggerModels/Presheaf.lean), [`Presentable`](DaggerModels/Presentable.lean) | Actual category equivalence, all small limits and colimits, and local finite presentability, at every value universe |
-| Free–forgetful adjunction in `dj.not.adjunctions` | [`FreeDagger`](DaggerModels/FreeDagger.lean) | Actual left adjoint to `DaggerSSet.forget`, constructed by left Kan extension; explicit pushout formula remains to prove |
+| Free–forgetful adjunction in `dj.not.adjunctions` | [`FreeDagger`](DaggerModels/FreeDagger.lean), [`FreeDaggerPushout`](DaggerModels/FreeDaggerPushout.lean), [`FreeDaggerSkeleton`](DaggerModels/FreeDaggerSkeleton.lean) | Actual left adjoint, naturally identified with the explicit zero-skeleton pushout; unit, swap and all small limits/colimits preservation by forget proved |
+| The common zero-skeleton in `dj.not.adjunctions` | [`Vertices`](DaggerModels/Vertices.lean) | Constant vertices identify with the actual zero-skeleton, preserving its inclusion; mathlib uses `skeleton 1` for the paper's `sk₀` |
 | Cofibration obstruction in `pointset.cor.cofibrant-obstruction` | [`NormalCofibrationObstruction`](DaggerModels/NormalCofibrationObstruction.lean) | Initial-to-point map is free but its anti-involutive image is not normal; model structures and Quillen claims are not assumed |
 | Parts (1)–(2) of `pointset.prop.weak-counterexample` | [`UnitaryObstruction`](DaggerModels/UnitaryObstruction.lean) | The actual integer dagger groupoid inclusion is an ordinary equivalence but is not unitarily essentially surjective |
 
@@ -52,7 +55,12 @@ lake exe cache get \
   Mathlib.CategoryTheory.Presentable.Type \
   Mathlib.CategoryTheory.Presentable.Adjunction \
   Mathlib.CategoryTheory.Functor.KanExtension.Adjunction \
-  Mathlib.CategoryTheory.Limits.Types.Colimits
+  Mathlib.CategoryTheory.Limits.Types.Colimits \
+  Mathlib.AlgebraicTopology.SimplicialSet.Skeleton \
+  Mathlib.CategoryTheory.Adjunction.Unique \
+  Mathlib.CategoryTheory.Limits.Types.Pushouts \
+  Mathlib.CategoryTheory.MorphismProperty.Retract \
+  Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
 lake build
 lake env lean Audit.lean
 python3 scripts/check_audit.py
@@ -88,7 +96,7 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 31 selected library theorems against six
+Linux GitHub Actions job. It compares 43 selected library theorems against nine
 short, self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
@@ -97,6 +105,9 @@ short, self-contained problem specifications:
 - [Presheaf equivalence, presentability, and free adjunction](.ci/comparator/PresheafChallenge.lean): 92 lines
 - [Free versus normal cofibration obstruction](.ci/comparator/NormalCofibrationChallenge.lean): 88 lines
 - [Ordinary versus unitary equivalence obstruction](.ci/comparator/UnitaryObstructionChallenge.lean): 44 lines
+- [Free-cofibration closure and the forgetful functor](.ci/comparator/FreeCofibrationChallenge.lean): 65 lines
+- [Vertices and the actual zero-skeleton](.ci/comparator/VerticesChallenge.lean): 28 lines
+- [Explicit free-completion pushout, unit and swap](.ci/comparator/FreeDaggerPushoutChallenge.lean): 88 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -127,7 +138,7 @@ The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
 CI checks each Challenge's 100-line budget, direct Mathlib imports, and coverage
-of all 34 registered roots. The 414 lines across all six files are the review
+of all 46 registered roots. The 595 lines across all nine files are the review
 surface; checking one file is not a review of the entire formalization.
 
 These additional checks were introduced after the immutable v0.1.0 release.
@@ -139,6 +150,10 @@ requires actual groupoids and a dagger functor with the stated categorical
 properties; it does not require duplicating the integer construction in the
 problem statement. Auxiliary implementation lemmas are not all separate
 Comparator roots, but the library audit includes every loaded declaration.
+The explicit free-completion targets retain the actual adjunction unit,
+natural right coprojection, pushout universal property, and both swap equations.
+They apply to every free–forgetful adjunction, including the original Kan
+construction. The zero-skeleton target also pins its canonical inclusion.
 
 ## Citing this version
 
@@ -170,10 +185,10 @@ helper scripts, lifecycle hooks, and Lean LSP integration are not part of that
 installation. The repository's Lean/Lake build and audits are the verification
 commands. See `AGENTS.md` for the pinned skill revision and usage instructions.
 
-The next mathematical milestones are the explicit pushout description of free
-dagger completion, dagger simplicial categories, and the cellular description
-in `dj.lem.free-cof`. The presheaf equivalence, presentability, and existence of
-the free adjunction are now proved. Extending to A–D also requires ordinary
+The next mathematical milestones are coproduct and transfinite closure,
+the actual boundary-cell presentation in `dj.lem.free-cof`, and dagger
+simplicial categories. The presheaf equivalence, presentability, and explicit
+free adjunction are proved. Extending to A–D also requires ordinary
 simplicial and homotopical infrastructure; see [MAIN_THEOREMS.md](MAIN_THEOREMS.md).
 
 This companion was developed with AI assistance. The source, precise scope, and
@@ -183,6 +198,7 @@ Original project code and documentation are distributed under Apache-2.0; see
 apply to the separately maintained manuscript.
 
 日本語: 現在の開発版では、基礎的な定義・補題に加え、前層の圏同値と局所可呈示性、
-自由・忘却随伴の存在、比較の障害となる二つの具体例を検証しています。
+自由・忘却随伴とその零次骨格に沿う pushout 表示、自由 cofibration の恒等射・合成・
+pushout・レトラクトに関する閉性、比較の障害となる二つの具体例を検証しています。
 論文の主定理全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

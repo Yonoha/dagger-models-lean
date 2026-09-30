@@ -99,6 +99,11 @@ jobs:
           Mathlib.CategoryTheory.Presentable.Adjunction
           Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
           Mathlib.CategoryTheory.Limits.Types.Colimits
+          Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+          Mathlib.CategoryTheory.Adjunction.Unique
+          Mathlib.CategoryTheory.Limits.Types.Pushouts
+          Mathlib.CategoryTheory.MorphismProperty.Retract
+          Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"
