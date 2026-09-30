@@ -33,9 +33,24 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   `FreeCofibration.lean` proves the equivalence of categorical and underlying
   monicity, identity and composition closure, and the actual arrow-retract
   closure. `FreeCofibrationPushout.lean` proves closure under any genuine
-  pushout square. The original predicate, including its positive-degree restriction,
-  is unchanged. `FreeDagger.lean` also proves that forgetting the dagger
-  preserves all small limits and colimits in the value universe.
+  pushout square. `FreeCofibrationCoproduct.lean` and
+  `FreeCofibrationTransfinite.lean` prove coproduct and continuous transfinite
+  closure. `FreeCofibrationClosure.lean` packages the full saturation operations
+  for the original class. Its positive-degree restriction is unchanged.
+  Forgetting dagger preserves all small limits/colimits and reflects colimits
+  and isomorphisms (`FreeDagger.lean`, `ForgetfulReflection.lean`).
+- `dj.cor.Fdag-free`: `FreeDaggerCofibration.lean` proves that the actual free
+  functor, and indeed any adjoint to the original forgetful functor, sends
+  simplicial monomorphisms to free cofibrations. `FreeBoundary.lean` defines
+  the genuine free boundary generators, proves their saturation is contained
+  in free cofibrations, and gives the exact underlying boundary lifting
+  condition by the adjunction. The reverse inclusion is still open.
+- The filtration in `dj.lem.free-cof`: `RelativeSkeleton.lean` constructs the
+  actual dagger-stable image-plus-skeleton stages, the original source at
+  stage zero, and the actual target colimit. `RelativeCellBoundary.lean`
+  proves the ordinary characteristic-map boundary preimage and the exact
+  unique nondegenerate/epi normal forms for each stage difference. These are
+  ingredients for the missing dagger boundary-attachment squares.
 - The underlying cofibration obstruction in `pointset.cor.cofibrant-obstruction`:
   `NormalCofibrationObstruction.lean` proves that the initial-to-point dagger
   map satisfies `FreeCofibration` but its anti-involutive image is not normal.
@@ -84,18 +99,21 @@ Required chain:
    and the concrete lifted adjunction (`dj.lem.lift`).
 3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
    preservation by rigidification, and accessibility of weak equivalences.
-   Identity, composition, pushout, and retract closure are implemented;
-   coproducts, transfinite composition, the free boundary generators, and the
-   actual relative-cell presentation remain to prove.
+   All the stated closure operations and the free boundary generators are
+   implemented, proving the saturation-to-free inclusion. The actual skeletal
+   filtration and its ordinary boundary/complement analysis are implemented.
+   Dagger-orbit representatives, actual attachment pushouts, and the resulting
+   relative-cell presentation of every free cofibration remain to construct.
 4. The recognition theorem with `W = C†⁻¹(W†)` and the exact `FreeCofibration`
    class, followed by the fibrant counit and Quillen-equivalence criterion.
 
 The `FreeCofibration` class requires freeness of new nondegenerate simplices
 only in positive degrees. Replacing it by all monomorphisms would change B.
 Mathlib has the coherent nerve's definition but not the required ordinary
-Joyal–Bergner adjunction/equivalence. Relative skeletons and their successor
-formula are available; the boundary-cell pushout decomposition still needs
-proof at the pinned revision.
+Joyal–Bergner adjunction/equivalence. Mathlib supplies relative skeletons and
+their successor formula. This companion now adds boundary preimages and exact
+relative-cell normal forms; the actual dagger-cell pushout decomposition still
+needs proof.
 
 ## C — recognition using the unitary core
 

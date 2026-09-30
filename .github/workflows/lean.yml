@@ -41,6 +41,13 @@ jobs:
           Mathlib.CategoryTheory.Limits.Types.Pushouts
           Mathlib.CategoryTheory.MorphismProperty.Retract
           Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
+          Mathlib.CategoryTheory.MorphismProperty.TransfiniteComposition
+          Mathlib.CategoryTheory.MorphismProperty.FunctorCategory
+          Mathlib.CategoryTheory.Types.Monomorphisms
+          Mathlib.AlgebraicTopology.SimplicialSet.Boundary
+          Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
+          Mathlib.CategoryTheory.LiftingProperties.Adjunction
+          Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

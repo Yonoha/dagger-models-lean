@@ -1,0 +1,15 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.RelativeCellBoundary.mem_of_epi_pullback_iff",
+    "DaggerModels.RelativeCellBoundary.characteristic_preimage_relativeSkeleton",
+    "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff",
+    "DaggerModels.RelativeCellBoundary.relative_stage_normal_form_unique"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

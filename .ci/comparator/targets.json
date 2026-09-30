@@ -45,6 +45,24 @@
     "DaggerModels.DaggerSSet.forget_preservesColimits",
     "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout",
     "DaggerModels.freeDagger_pushout",
-    "DaggerModels.freeDagger_skeleton_pushout"
+    "DaggerModels.freeDagger_skeleton_pushout",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_coproduct",
+    "DaggerModels.DaggerSSet.FreeCofibration.sigma_map",
+    "DaggerModels.DaggerSSet.forget_reflectsIsomorphisms",
+    "DaggerModels.DaggerSSet.forget_reflectsColimits",
+    "DaggerModels.DaggerSSet.daggerStable_range",
+    "DaggerModels.DaggerSSet.daggerStable_skeleton",
+    "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_transfiniteCompositionOfShape",
+    "DaggerModels.DaggerSSet.freeCofibrations_saturated",
+    "DaggerModels.freeDagger_nonDegenerate_not_fixed",
+    "DaggerModels.freeDagger_map_freeCofibration",
+    "DaggerModels.freeBoundarySaturation_le",
+    "DaggerModels.freeCofibration_of_relativeCellComplex",
+    "DaggerModels.freeBoundary_rlp_iff",
+    "DaggerModels.RelativeCellBoundary.mem_of_epi_pullback_iff",
+    "DaggerModels.RelativeCellBoundary.characteristic_preimage_relativeSkeleton",
+    "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff",
+    "DaggerModels.RelativeCellBoundary.relative_stage_normal_form_unique"
   ]
 }

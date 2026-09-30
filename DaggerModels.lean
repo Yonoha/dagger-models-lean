@@ -9,5 +9,13 @@ import DaggerModels.Vertices
 import DaggerModels.FreeDaggerPushout
 import DaggerModels.FreeDaggerSkeleton
 import DaggerModels.FreeCofibrationPushout
+import DaggerModels.FreeCofibrationCoproduct
+import DaggerModels.FreeCofibrationTransfinite
+import DaggerModels.FreeCofibrationClosure
+import DaggerModels.FreeDaggerCofibration
+import DaggerModels.FreeBoundary
+import DaggerModels.ForgetfulReflection
+import DaggerModels.RelativeSkeleton
+import DaggerModels.RelativeCellBoundary
 import DaggerModels.NormalCofibrationObstruction
 import DaggerModels.UnitaryObstruction

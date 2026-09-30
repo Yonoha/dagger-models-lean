@@ -8,7 +8,17 @@
     "DaggerModels.DaggerSSet.FreeCofibration.of_retract",
     "DaggerModels.DaggerSSet.forget_preservesLimits",
     "DaggerModels.DaggerSSet.forget_preservesColimits",
-    "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
+    "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_coproduct",
+    "DaggerModels.DaggerSSet.FreeCofibration.sigma_map",
+    "DaggerModels.DaggerSSet.forget_reflectsIsomorphisms",
+    "DaggerModels.DaggerSSet.forget_reflectsColimits",
+    "DaggerModels.DaggerSSet.FreeCofibration.of_transfiniteCompositionOfShape",
+    "DaggerModels.DaggerSSet.freeCofibrations_saturated"
   ],
-  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
 }

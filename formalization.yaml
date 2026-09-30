@@ -12,7 +12,11 @@ project:
     the free-versus-normal cofibration obstruction, and the integer dagger
     groupoid example separating ordinary equivalence from unitary essential
     surjectivity. Free cofibrations are proved closed under identities,
-    composition, pushouts, and retracts.
+    composition, coproducts, pushouts, continuous transfinite composition, and
+    retracts. The genuine free boundary generators and their saturation are
+    free cofibrations. The actual relative skeletal filtration and colimit,
+    ordinary boundary preimages, and unique cell normal forms are proved;
+    the converse dagger-cell presentation remains open.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -32,7 +36,9 @@ sources:
       the explicit predicate obstruction in pointset.cor.cofibrant-obstruction;
       parts (1)-(2) of pointset.prop.weak-counterexample.
       The explicit zero-skeleton pushout in dj.not.adjunctions and the
-      pushout/retract closure arguments in dj.lem.free-cof are also formalized.
+      closure arguments in dj.lem.free-cof are also formalized, together with
+      dj.cor.Fdag-free and the skeletal/boundary/normal-form ingredients of
+      the relative-cell construction. The complete cell presentation is open.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -51,8 +57,11 @@ status:
     Partial formalization toward A-D. Presheaf equivalence and local finite
     presentability are proved at every value universe, as is existence of the
     actual free-forgetful adjunction and its explicit free-completion pushout,
-    with the genuine universal property, unit and swap dagger. The cellular
-    characterization, full simplicial counterexamples, model structures,
+    with the genuine universal property, unit and swap dagger. All stated free
+    cofibration closure operations and the saturation-to-free direction for
+    genuine boundary generators are proved. The actual skeletal filtration,
+    its colimit, boundary preimages and unique normal forms are proved. The
+    reverse cell presentation, full simplicial counterexamples, model structures,
     unitary-core recognition and main theorems A-D remain unproved. The new
     concrete comparison obstructions do not by themselves establish Theorem D.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
@@ -169,6 +178,84 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/unitary_obstruction.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_coproduct"
+      file: "DaggerModels/FreeCofibrationCoproduct.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_transfiniteCompositionOfShape"
+      file: "DaggerModels/FreeCofibrationTransfinite.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.freeCofibrations_saturated"
+      file: "DaggerModels/FreeCofibrationClosure.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.forget_reflectsColimits"
+      file: "DaggerModels/ForgetfulReflection.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeDagger_nonDegenerate_not_fixed"
+      file: "DaggerModels/FreeDaggerCofibration.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeDagger_map_freeCofibration"
+      file: "DaggerModels/FreeDaggerCofibration.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeBoundarySaturation_le"
+      file: "DaggerModels/FreeBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeCofibration_of_relativeCellComplex"
+      file: "DaggerModels/FreeBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeBoundary_rlp_iff"
+      file: "DaggerModels/FreeBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration"
+      file: "DaggerModels/RelativeSkeleton.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/relative_skeleton.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.RelativeCellBoundary.characteristic_preimage_relativeSkeleton"
+      file: "DaggerModels/RelativeCellBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/relative_cell_boundary.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff"
+      file: "DaggerModels/RelativeCellBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/relative_cell_boundary.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.RelativeCellBoundary.relative_stage_normal_form_unique"
+      file: "DaggerModels/RelativeCellBoundary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/relative_cell_boundary.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -225,6 +312,12 @@ fidelity:
     this is exactly the manuscript's sk_0. The pushout, unit and swap are
     proved for every choice of the free adjunction. All category equivalence,
     presentability and free-adjunction results retain arbitrary value universe u.
+    Coproduct/transfinite closure uses index types in that value universe.
+    The relative filtration is literally image plus mathlib skeleton n,
+    corresponding to the manuscript stage B_{le n-1}; its inclusion and colimit
+    are fixed by the Challenge. Boundary characteristic maps are not assumed
+    monic, and degree zero is included. Saturation-to-free is proved, while
+    choosing dagger orbits and constructing every attachment pushout remain open.
     The existential Challenge goals do not fix a chosen
     witness implementation; the library supplies the manuscript's concrete
     counterexamples and actual equivalence/adjunction data.
@@ -234,11 +327,13 @@ review:
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 43 selected library
-    theorems and three audit-only definition roots against nine self-contained
+    checks, not independent human review. Comparator checks 61 selected library
+    theorems and three audit-only definition roots against twelve self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, 22, 92, 88, 44, 65, 28, and 88; 595 in total,
-    including comments and blank lines); all nine together form the review surface.
+    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 82, and 29;
+    787 in total, including comments and blank lines); all twelve together
+    form the review surface. New proof/Challenge correspondence was separately
+    reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
     Challenge proof placeholders are outside the proved library. Dependency pins
     and negative-control implementations use v0.1.0 commit
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
@@ -299,7 +394,7 @@ alignment:
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
       module: "DaggerModels/FreeCofibration.lean"
       status: "proved"
-      note: "The cellular characterization and transfinite composition argument remain unproved."
+      note: "The full cellular characterization remains unproved; transfinite closure is proved separately."
     - source: "Pushout closure argument in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
       module: "DaggerModels/FreeCofibrationPushout.lean"
@@ -315,8 +410,38 @@ alignment:
       module: "DaggerModels/UnitaryObstruction.lean"
       status: "proved"
       note: "Actual integer dagger groupoid witness; part (3) and Quillen consequences remain unproved."
+    - source: "Coproduct and transfinite closure in dj.lem.free-cof"
+      lean: "DaggerModels.DaggerSSet.freeCofibrations_saturated"
+      module: "DaggerModels/FreeCofibrationClosure.lean"
+      status: "proved"
+      note: "Closure of the original predicate under all stated saturation operations, at arbitrary u."
+    - source: "dj.cor.Fdag-free"
+      lean: "DaggerModels.freeDagger_map_freeCofibration"
+      module: "DaggerModels/FreeDaggerCofibration.lean"
+      status: "proved"
+      note: "Every simplicial mono is sent to a free cofibration by any actual free adjunction."
+    - source: "Saturation-to-free direction in dj.lem.free-cof"
+      lean: "DaggerModels.freeBoundarySaturation_le"
+      module: "DaggerModels/FreeBoundary.lean"
+      status: "proved"
+      note: "The generators are the actual F(boundary n).ι images; the reverse inclusion is open."
+    - source: "Relative skeletal filtration and colimit in dj.lem.free-cof"
+      lean: "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration"
+      module: "DaggerModels/RelativeSkeleton.lean"
+      status: "proved"
+      note: "Actual image-plus-skeleton stages with specified inclusions, source map and colimit."
+    - source: "Boundary preimage and Eilenberg-Zilber step in dj.lem.free-cof"
+      lean: "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff"
+      module: "DaggerModels/RelativeCellBoundary.lean"
+      status: "proved"
+      note: "All degrees including zero; characteristic map is not assumed mono; ancestor and epi are unique."
     - source: "dj.lem.free-cof (cellular characterization)"
       status: "not-formalized"
+      note: >-
+        Closure and saturation-to-free are proved, as are the actual relative
+        filtration, its colimit, and ordinary boundary/complement normal forms.
+        The reverse inclusion requires dagger-orbit attachment pushouts and
+        an actual relative cell presentation of every free cofibration.
     - source: "Main theorems A-D"
       status: "not-formalized"
 acknowledgements: >-

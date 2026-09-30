@@ -104,6 +104,13 @@ jobs:
           Mathlib.CategoryTheory.Limits.Types.Pushouts
           Mathlib.CategoryTheory.MorphismProperty.Retract
           Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
+          Mathlib.CategoryTheory.MorphismProperty.TransfiniteComposition
+          Mathlib.CategoryTheory.MorphismProperty.FunctorCategory
+          Mathlib.CategoryTheory.Types.Monomorphisms
+          Mathlib.AlgebraicTopology.SimplicialSet.Boundary
+          Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
+          Mathlib.CategoryTheory.LiftingProperties.Adjunction
+          Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"

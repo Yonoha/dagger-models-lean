@@ -37,6 +37,17 @@ CHALLENGES = {
     "free_dagger_pushout": (
         ".ci/comparator/FreeDaggerPushoutChallenge.lean", ".ci/comparator/free_dagger_pushout.json"
     ),
+    "relative_skeleton": (
+        ".ci/comparator/RelativeSkeletonChallenge.lean", ".ci/comparator/relative_skeleton.json"
+    ),
+    "free_dagger_cofibration": (
+        ".ci/comparator/FreeDaggerCofibrationChallenge.lean",
+        ".ci/comparator/free_dagger_cofibration.json"
+    ),
+    "relative_cell_boundary": (
+        ".ci/comparator/RelativeCellBoundaryChallenge.lean",
+        ".ci/comparator/relative_cell_boundary.json"
+    ),
 }
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 

@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against nine short, self-contained problem specifications:
+candidate against twelve short, self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -12,18 +12,21 @@ candidate against nine short, self-contained problem specifications:
 | [PresheafChallenge.lean](PresheafChallenge.lean) | 92 | [presheaf.json](presheaf.json) | 6 theorems: equivalence, limits/colimits, presentability, free adjunction |
 | [NormalCofibrationChallenge.lean](NormalCofibrationChallenge.lean) | 88 | [normal_cofibration.json](normal_cofibration.json) | 2 theorems |
 | [UnitaryObstructionChallenge.lean](UnitaryObstructionChallenge.lean) | 44 | [unitary_obstruction.json](unitary_obstruction.json) | 2 theorems |
-| [FreeCofibrationChallenge.lean](FreeCofibrationChallenge.lean) | 65 | [free_cofibration.json](free_cofibration.json) | 7 theorems: monicity, closure, limits/colimits preservation |
+| [FreeCofibrationChallenge.lean](FreeCofibrationChallenge.lean) | 91 | [free_cofibration.json](free_cofibration.json) | 13 theorems: monicity, saturation closure, preservation and reflection |
 | [VerticesChallenge.lean](VerticesChallenge.lean) | 28 | [vertices.json](vertices.json) | 3 theorems identifying the common vertices with the zero-skeleton |
 | [FreeDaggerPushoutChallenge.lean](FreeDaggerPushoutChallenge.lean) | 88 | [free_dagger_pushout.json](free_dagger_pushout.json) | 2 theorems: pushout, unit and swap, including the literal zero-skeleton span |
+| [RelativeSkeletonChallenge.lean](RelativeSkeletonChallenge.lean) | 55 | [relative_skeleton.json](relative_skeleton.json) | 3 theorems: stable skeleta and actual filtration with inclusions and colimit |
+| [FreeDaggerCofibrationChallenge.lean](FreeDaggerCofibrationChallenge.lean) | 82 | [free_dagger_cofibration.json](free_dagger_cofibration.json) | 5 theorems: free monos, genuine boundary generators, saturation inclusion and lifting |
+| [RelativeCellBoundaryChallenge.lean](RelativeCellBoundaryChallenge.lean) | 29 | [relative_cell_boundary.json](relative_cell_boundary.json) | 4 theorems: epi membership, exact boundary preimage, complement and normal-form uniqueness |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The nine Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **595 lines in total**, including
+the implementation. The twelve Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **787 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 22
+The checker retains the original **21 named library theorems** and adds 40
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -31,7 +34,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-46-root coverage set; it is a registry, not an executable Comparator config.
+64-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -48,6 +51,17 @@ uses the actual zero-skeleton subcomplex, with its canonical inclusion
 preserved. Together with the separate vertices specification, this protects
 the paper's precise gluing formula, not merely an arbitrary isomorphic object
 or the existence of an unspecified left adjoint.
+
+The relative-filtration target retains actual transfinite-composition data,
+including the source map and colimit, and identifies each stage with the exact
+image-plus-skeleton subobject while preserving its inclusion in the target.
+The free-boundary target defines its generators as actual images of ordinary
+boundary inclusions. Its saturation assertion has only the proved direction
+from generated maps to free cofibrations; the converse is still open. The
+ordinary cell specification fixes both the exact boundary preimage and the
+unique nondegenerate ancestor/epi map. These new obligations add 18 roots to
+the preceding 46, all of which are retained. Tool and dependency pins and both
+negative-control definitions are unchanged.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
@@ -97,7 +111,7 @@ registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces at most 100 physical
 lines per Challenge (including blank lines and comments), plain direct Mathlib
 imports, standard permitted axioms, no definition holes, and exact registration
-of all 46 roots. This check is not a Lean parser or an adversarial security
+of all 64 roots. This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
 ## Pinned tools
@@ -117,7 +131,7 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The nine positive comparisons use current candidate
+the Challenge mathematics. The twelve positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
 
