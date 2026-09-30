@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.nonempty_daggerSSetEquivalencePresheaf",
+    "DaggerModels.daggerSSetHasLimits",
+    "DaggerModels.daggerSSetHasColimits",
+    "DaggerModels.daggerSSetLocallyFinitelyPresentable",
+    "DaggerModels.daggerSSetLocallyPresentable",
+    "DaggerModels.exists_freeDaggerAdjunction"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

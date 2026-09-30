@@ -5,8 +5,12 @@ project:
   description: >-
     A partial formalization of foundational constructions from Models for dagger
     (infinity,1)-categories I. It constructs the reversal simplex category and
-    dagger simplicial sets, proves elementary reversal and nondegeneracy lemmas,
-    defines free cofibrations, and proves the vertex-level word obstruction.
+    dagger simplicial sets, proves their presheaf equivalence and presentability,
+    constructs the actual free-forgetful adjunction, and proves elementary
+    reversal and nondegeneracy lemmas, the vertex-level word obstruction,
+    the free-versus-normal cofibration obstruction, and the integer dagger
+    groupoid example separating ordinary equivalence from unitary essential
+    surjectivity.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -21,7 +25,10 @@ sources:
       def.dagger_simplicial_sets; the index-category definition before
       prop.sSetdag_is_equivalent_to_Fun; dj.def.free-cof; the opening
       nondegeneracy argument in dj.lem.free-cof; the vertex-level obstruction
-      in the proof of dj.prop.counterexample.
+      in the proof of dj.prop.counterexample; prop.sSetdag_is_equivalent_to_Fun;
+      the simplicial-set free-forgetful adjunction in dj.not.adjunctions;
+      the explicit predicate obstruction in pointset.cor.cofibrant-obstruction;
+      parts (1)-(2) of pointset.prop.weak-counterexample.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -32,12 +39,17 @@ sources:
 related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4"
     relationship: "builds-on"
-    note: "Uses simplicial sets, opposites, simplex reversal, and degenerate simplices."
+    note: >-
+      Uses simplicial sets, opposites, simplex reversal, nondegenerate simplices,
+      category equivalences, presentability, Kan extensions, and groupoids.
 status:
   scope: >-
-    Partial foundations only. Neither the presheaf equivalence, the cellular
-    characterization of free cofibrations, nor the full simplicial
-    counterexample is proved. Main theorems A-D remain outside this development.
+    Partial formalization toward A-D. Presheaf equivalence and local finite
+    presentability are proved at every value universe, as is existence of the
+    actual free-forgetful adjunction. The explicit free-completion pushout,
+    cellular characterization, full simplicial counterexamples, model structures,
+    unitary-core recognition and main theorems A-D remain unproved. The new
+    concrete comparison obstructions do not by themselves establish Theorem D.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
   # intentional proof placeholders and are not imported by the library.
   sorry_count: 0
@@ -74,6 +86,42 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/word_obstruction.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.nonempty_daggerSSetEquivalencePresheaf"
+      file: "DaggerModels/Presheaf.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/presheaf.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerSSetLocallyFinitelyPresentable"
+      file: "DaggerModels/Presentable.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/presheaf.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerSSetLocallyPresentable"
+      file: "DaggerModels/Presentable.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/presheaf.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.exists_freeDaggerAdjunction"
+      file: "DaggerModels/FreeDagger.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/presheaf.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
+      file: "DaggerModels/NormalCofibrationObstruction.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/normal_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
+      file: "DaggerModels/UnitaryObstruction.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/unitary_obstruction.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -92,8 +140,9 @@ automation:
       models: ["gpt-6.1-sol"]
       framework: "Codex subagents (xhigh)"
       tool_setup: >-
-        Bounded Challenge-specification implementation and a separate read-only
-        manuscript-correspondence review. The lean4 core skill and references
+        Bounded proof implementation from the manuscript, short Challenge
+        specifications, and a separate read-only manuscript-correspondence review.
+        The lean4 core skill and references
         from cameronfreer/lean4-skills were installed at revision
         b6243b85b9b0a0ddff5bb6773889044daf687f8e and read for this work.
         Lean/Lake and the repository's existing checks supply compiler feedback;
@@ -103,7 +152,10 @@ automation:
         only Mathlib, with existing theorem statements and coverage preserved.
         GPT-6.1-Sol with xhigh is the implementation/review default; ultra is
         reserved for identified hard obstacles, and new mathematics is treated
-        separately from translating an existing proof.
+        separately from translating an existing proof. The author subsequently
+        requested formalization of the main theorems; MAIN_THEOREMS.md retains
+        that complete objective and distinguishes the proved dependencies from
+        the still unproved model-categorical conclusions.
   notes: >-
     AI generated the implementation and performed the documented checks.
     The manuscript-to-statement correspondence has been assessed by the agent;
@@ -113,19 +165,26 @@ fidelity:
     This is a partial formalization. Fin (n+1) represents the ordinal [n],
     and monotone-or-antitone is a property rather than an orientation tag.
     The strict dagger involution is expressed degreewise using SSet.opObjEquiv.
-    Bool represents the two vertices only in the algebraic word obstruction;
-    the simplicial nerve and Kan-fibration argument are not formalized.
+    Bool represents the two vertices in the algebraic word obstruction and
+    the two objects of the integer dagger groupoid; their simplicial nerve
+    and model-categorical consequences are not formalized.
     The definition of FreeCofibration uses Mono in the dagger category.
+    The free functor is constructed via actual left Kan extension, with no
+    claimed identification with the explicit pushout formula yet. All category
+    equivalence, presentability and free-adjunction results retain arbitrary
+    value universe u. The new existential Challenge goals do not fix a chosen
+    witness implementation; the library supplies the manuscript's concrete
+    counterexamples and actual equivalence/adjunction data.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 21 named library
-    theorems and three audit-only definition roots against three self-contained
+    checks, not independent human review. Comparator checks 31 selected library
+    theorems and three audit-only definition roots against six self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, and 22; 190 in total, including comments and
+    to 100 physical lines (72, 96, 22, 92, 88, and 44; 414 in total, including comments and
     blank lines); all three together form the review surface.
     Challenge proof placeholders are outside the proved library. Dependency pins
     and negative-control implementations use v0.1.0 commit
@@ -158,7 +217,28 @@ alignment:
       status: "proved"
       note: "This does not prove the full model-categorical counterexample."
     - source: "prop.sSetdag_is_equivalent_to_Fun"
-      status: "not-formalized"
+      lean: "DaggerModels.nonempty_daggerSSetEquivalencePresheaf"
+      module: "DaggerModels/Presheaf.lean"
+      status: "proved"
+      note: >-
+        The actual equivalence data are constructed. Presentable.lean additionally
+        proves all small limits and colimits and local finite presentability,
+        hence the source proposition's local presentability clause.
+    - source: "Free-forgetful adjunction on simplicial sets in dj.not.adjunctions"
+      lean: "DaggerModels.exists_freeDaggerAdjunction"
+      module: "DaggerModels/FreeDagger.lean"
+      status: "proved"
+      note: "Actual adjunction existence; the displayed pushout identification remains unproved."
+    - source: "Explicit predicate obstruction in pointset.cor.cofibrant-obstruction"
+      lean: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
+      module: "DaggerModels/NormalCofibrationObstruction.lean"
+      status: "proved"
+      note: "The initial-to-point witness is proved; model cofibrancy and Theorem D are not."
+    - source: "Parts (1)-(2) of pointset.prop.weak-counterexample"
+      lean: "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
+      module: "DaggerModels/UnitaryObstruction.lean"
+      status: "proved"
+      note: "Actual integer dagger groupoid witness; part (3) and Quillen consequences remain unproved."
     - source: "dj.lem.free-cof (cellular characterization)"
       status: "not-formalized"
     - source: "Main theorems A-D"

@@ -4,8 +4,11 @@ import argparse
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+
+from check_challenges import CHALLENGES
 
 
 def main() -> None:
@@ -26,14 +29,16 @@ def main() -> None:
             "Const does not match between challenge and target "
             "'DaggerModels.DaggerSSet.FreeCofibration'"
         ),
-        "positive-reverse-simplex": None,
-        "positive-simplicial-set": None,
-        "positive-word-obstruction": None,
+        **{f"positive-{group.replace('_', '-')}": None for group in CHALLENGES},
     }
     # Real candidates run last. Never load their writable .lake artifacts
     # outside Comparator's sandbox, including after the comparison finishes.
     for case, expected_error in cases.items():
         project = (args.projects / case).resolve()
+        # A fresh independent copy for every case, staged just before use.
+        # Discarding it afterwards keeps disk usage bounded as the coverage grows.
+        # Never reuse artifacts that have been writable by a candidate build.
+        shutil.copytree(args.projects / "cache/.lake", project / ".lake", symlinks=False)
         command = [
             "systemd-run", "--user", "--quiet", "--wait", "--collect", "--pipe",
             "--property=RestrictAddressFamilies=~AF_UNIX",
@@ -57,6 +62,9 @@ def main() -> None:
             raise RuntimeError(f"Negative control did not fail for the expected reason:\n{output}")
         else:
             print(f"Negative control passed: {expected_error}", flush=True)
+        # shutil.rmtree does not follow symlinks and refuses a symlink root.
+        # Keep the source and log, but never load the candidate's artifacts again.
+        shutil.rmtree(project / ".lake")
 
 
 if __name__ == "__main__":

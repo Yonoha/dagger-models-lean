@@ -29,6 +29,13 @@ jobs:
           lake exe cache get
           Mathlib.AlgebraicTopology.SimplicialSet.Op
           Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
+          Mathlib.CategoryTheory.Groupoid
+          Mathlib.Data.Int.Basic
+          Mathlib.CategoryTheory.Presentable.Presheaf
+          Mathlib.CategoryTheory.Presentable.Type
+          Mathlib.CategoryTheory.Presentable.Adjunction
+          Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
+          Mathlib.CategoryTheory.Limits.Types.Colimits
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

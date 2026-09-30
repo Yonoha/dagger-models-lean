@@ -1,0 +1,9 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.map_isUnitary",
+    "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

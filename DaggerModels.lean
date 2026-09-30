@@ -1,3 +1,8 @@
 import DaggerModels.ReverseSimplex
 import DaggerModels.SimplicialSet
 import DaggerModels.WordObstruction
+import DaggerModels.Presheaf
+import DaggerModels.Presentable
+import DaggerModels.FreeDagger
+import DaggerModels.NormalCofibrationObstruction
+import DaggerModels.UnitaryObstruction

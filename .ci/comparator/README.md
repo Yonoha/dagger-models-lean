@@ -2,29 +2,40 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against three short, self-contained problem specifications:
+candidate against six short, self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
 | [ReverseSimplexChallenge.lean](ReverseSimplexChallenge.lean) | 72 | [reverse_simplex.json](reverse_simplex.json) | 6 theorems |
 | [SimplicialSetChallenge.lean](SimplicialSetChallenge.lean) | 96 | [simplicial_set.json](simplicial_set.json) | 10 theorems and 3 definition roots |
 | [WordObstructionChallenge.lean](WordObstructionChallenge.lean) | 22 | [word_obstruction.json](word_obstruction.json) | 5 theorems |
+| [PresheafChallenge.lean](PresheafChallenge.lean) | 92 | [presheaf.json](presheaf.json) | 6 theorems: equivalence, limits/colimits, presentability, free adjunction |
+| [NormalCofibrationChallenge.lean](NormalCofibrationChallenge.lean) | 88 | [normal_cofibration.json](normal_cofibration.json) | 2 theorems |
+| [UnitaryObstructionChallenge.lean](UnitaryObstructionChallenge.lean) | 44 | [unitary_obstruction.json](unitary_obstruction.json) | 2 theorems |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The three Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **190 lines in total**, including
+the implementation. The six Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **414 lines in total**, including
 comments and blank lines, are the review surface;
-reviewing one file does not review the other two.
+reviewing one file does not review the others.
 
-The checker retains the **21 named library theorems** and their statement
+The checker retains the original **21 named library theorems** and adds ten
+selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
 These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-24-root coverage set; it is a registry, not an executable Comparator config.
+34-root coverage set; it is a registry, not an executable Comparator config.
+
+The new existential statements require actual categories, equivalences,
+adjunctions, and counterexamples. They let the implementation choose the proof
+and witnesses without duplicating those constructions in the problem file.
+The integer-groupoid and initial-to-point witnesses are implemented in the
+library; the Challenges protect the stated existence conclusions and their
+definitions, not a unique choice of witness. All earlier roots remain intact.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
@@ -53,7 +64,11 @@ files and uses its Challenges. The candidate checkout is treated as data: only i
 are copied into an isolated project. Its Lake configuration, dependency pins,
 shell/Python scripts, workflows, and prebuilt artifacts are not executed or
 reused. All checkouts disable credential persistence and the workflow has only
-read permission. Separate writable artifact directories are used for each case.
+read permission. Every case receives a fresh independent copy of the trusted
+dependency cache immediately before its sandboxed build. That writable copy is
+discarded after the comparison, keeping disk usage bounded as coverage grows.
+Only source files and logs are retained; candidate artifacts are never reused
+by a later case or loaded outside the sandbox.
 
 Comparator builds and exports the candidate with the actual Linux Landrun
 sandbox. The upstream-recommended systemd restriction on AF_UNIX sockets is
@@ -70,7 +85,7 @@ registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces at most 100 physical
 lines per Challenge (including blank lines and comments), plain direct Mathlib
 imports, standard permitted axioms, no definition holes, and exact registration
-of all 24 roots. This check is not a Lean parser or an adversarial security
+of all 34 roots. This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
 ## Pinned tools
@@ -90,8 +105,9 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The three positive comparisons use current candidate
-source. Every comparison has independent writable dependency artifacts.
+the Challenge mathematics. The six positive comparisons use current candidate
+source. Every comparison has independent writable dependency artifacts, staged
+and discarded sequentially by `run_comparator.py`.
 
 ## Updating the mathematical specification
 

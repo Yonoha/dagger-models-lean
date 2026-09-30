@@ -18,9 +18,7 @@ MODULES = (
 CASES = {
     "weakened-statement": "word_obstruction",
     "changed-definition": "simplicial_set",
-    "positive-reverse-simplex": "reverse_simplex",
-    "positive-simplicial-set": "simplicial_set",
-    "positive-word-obstruction": "word_obstruction",
+    **{f"positive-{group.replace('_', '-')}": group for group in CHALLENGES},
 }
 
 
@@ -96,18 +94,8 @@ def prepare(baseline: Path, candidate: Path, output: Path, control: Path) -> Non
         "  f = f\n"
     ) + text[end:]
     path.write_text(text, encoding="utf-8")
-    print("Prepared three independent statement specifications and two negative controls.")
+    print(f"Prepared {len(CHALLENGES)} independent statement specifications and two negative controls.")
     print(f"Dependency pins and negative-control implementations remain fixed at {BASELINE}.")
-
-
-def copy_cache(output: Path) -> None:
-    cache = output / "cache/.lake"
-    if not cache.is_dir():
-        raise ValueError("Fetch the trusted mathlib cache before copying it")
-    for case in CASES:
-        # Independent copies: an untrusted build cannot modify another case's
-        # dependency artifacts through shared writable package directories.
-        shutil.copytree(cache, output / case / ".lake", symlinks=False)
 
 
 def main() -> None:
@@ -116,14 +104,10 @@ def main() -> None:
     parser.add_argument("--candidate", type=Path)
     parser.add_argument("--control", type=Path)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--copy-cache", action="store_true")
     args = parser.parse_args()
-    if args.copy_cache:
-        copy_cache(args.output)
-    else:
-        if any(value is None for value in [args.baseline, args.candidate, args.control]):
-            parser.error("--baseline, --candidate, and --control are required when preparing")
-        prepare(args.baseline, args.candidate, args.output, args.control)
+    if any(value is None for value in [args.baseline, args.candidate, args.control]):
+        parser.error("--baseline, --candidate, and --control are required when preparing")
+    prepare(args.baseline, args.candidate, args.output, args.control)
 
 
 if __name__ == "__main__":

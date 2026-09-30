@@ -1,0 +1,9 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.DaggerSSet.not_normalMono_of_missing_vertex",
+    "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

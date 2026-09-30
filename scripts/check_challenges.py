@@ -19,6 +19,15 @@ CHALLENGES = {
     "word_obstruction": (
         ".ci/comparator/WordObstructionChallenge.lean", ".ci/comparator/word_obstruction.json"
     ),
+    "presheaf": (
+        ".ci/comparator/PresheafChallenge.lean", ".ci/comparator/presheaf.json"
+    ),
+    "normal_cofibration": (
+        ".ci/comparator/NormalCofibrationChallenge.lean", ".ci/comparator/normal_cofibration.json"
+    ),
+    "unitary_obstruction": (
+        ".ci/comparator/UnitaryObstructionChallenge.lean", ".ci/comparator/unitary_obstruction.json"
+    ),
 }
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
@@ -52,7 +61,7 @@ def validate_challenges(root: Path) -> None:
         covered.extend(config["theorem_names"])
         print(f"{source_path}: {len(lines)} lines, {len(config['theorem_names'])} comparison roots")
     if len(covered) != len(set(covered)) or set(covered) != set(registered):
-        raise ValueError("The three Comparator configurations must cover the registry exactly once")
+        raise ValueError("The Comparator configurations must cover the registry exactly once")
     print(f"Total review surface: {total_lines} lines; {len(covered)} comparison roots.")
 
 

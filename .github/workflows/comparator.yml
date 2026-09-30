@@ -92,10 +92,13 @@ jobs:
           lake exe cache get
           Mathlib.AlgebraicTopology.SimplicialSet.Op
           Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
-      - name: Give each comparison its own writable artifacts
-        run: >-
-          python3 control/scripts/prepare_comparator.py
-          --copy-cache --output "$RUNNER_TEMP/dagger-comparator"
+          Mathlib.CategoryTheory.Groupoid
+          Mathlib.Data.Int.Basic
+          Mathlib.CategoryTheory.Presentable.Presheaf
+          Mathlib.CategoryTheory.Presentable.Type
+          Mathlib.CategoryTheory.Presentable.Adjunction
+          Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
+          Mathlib.CategoryTheory.Limits.Types.Colimits
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"

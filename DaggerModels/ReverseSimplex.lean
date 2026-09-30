@@ -6,7 +6,7 @@ import Mathlib.AlgebraicTopology.SimplexCategory.Rev
 The category used in Part I has actual monotone or antitone functions as
 morphisms. In particular, a constant function has only one representation
 as a morphism. This is not the tagged category from the appendix.
-The presheaf equivalence is not yet proved in this file.
+The presheaf equivalence is proved in `DaggerModels.Presheaf`.
 -/
 
 open CategoryTheory

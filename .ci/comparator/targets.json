@@ -23,6 +23,16 @@
     "DaggerModels.WordObstruction.no_dagger_preserving_section",
     "DaggerModels.ComparatorContracts.freeCofibration_definition",
     "DaggerModels.ComparatorContracts.nonDegenerateEquiv_definition",
-    "DaggerModels.ComparatorContracts.forget_definition"
+    "DaggerModels.ComparatorContracts.forget_definition",
+    "DaggerModels.nonempty_daggerSSetEquivalencePresheaf",
+    "DaggerModels.daggerSSetHasLimits",
+    "DaggerModels.daggerSSetHasColimits",
+    "DaggerModels.daggerSSetLocallyFinitelyPresentable",
+    "DaggerModels.daggerSSetLocallyPresentable",
+    "DaggerModels.exists_freeDaggerAdjunction",
+    "DaggerModels.DaggerSSet.not_normalMono_of_missing_vertex",
+    "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono",
+    "DaggerModels.map_isUnitary",
+    "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
   ]
 }
