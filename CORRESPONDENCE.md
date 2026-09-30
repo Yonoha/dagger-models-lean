@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies twelve self-contained Comparator Challenges for
+The current branch supplies fifteen self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all twelve files to review the
+unproved library results. A reviewer must inspect all fifteen files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -329,6 +329,63 @@ contractible Kan fibers, free simplicial monoid, local trivial fibration,
 Bergner cofibration, and identification of rigidification with the self-adjoint
 monoid are not constructed in this release.
 
+## Dagger simplicial categories and their free construction
+
+Files: [DaggerSimplicialCategory.lean](DaggerModels/DaggerSimplicialCategory.lean),
+[DaggerSimplicialGraph.lean](DaggerModels/DaggerSimplicialGraph.lean),
+[FreeSimplicialPaths.lean](DaggerModels/FreeSimplicialPaths.lean),
+[FreeSimplicialLift.lean](DaggerModels/FreeSimplicialLift.lean), and
+[FreeDaggerSimplicialCategory.lean](DaggerModels/FreeDaggerSimplicialCategory.lean).
+The three new problem specifications are
+[DaggerSimplicialCategoryChallenge.lean](.ci/comparator/DaggerSimplicialCategoryChallenge.lean),
+[FreeSimplicialPathsChallenge.lean](.ci/comparator/FreeSimplicialPathsChallenge.lean), and
+[FreeDaggerUniversalChallenge.lean](.ci/comparator/FreeDaggerUniversalChallenge.lean).
+
+`DaggerSimplicialStructure` implements the hom-level formulation in the remark
+after `bg.def.dagger-scat`. Each dagger is an ordinary SSet morphism between
+the reversed mapping spaces, preserves enriched identity, reverses composition
+using the canonical Cartesian braiding, and squares to identity. The actual
+enriched functor to the opposite and its typed inverse are constructed, and
+both composites are proved equal to identity. Objects and mapping spaces have
+independent universes. There is no reversal of the simplex operator and no
+condition fixing every vertex of a mapping space. The bundled category uses
+actual enriched dagger-preserving functors. The ordinary dagger category on
+underlying generalized elements is also constructed.
+
+`DaggerSimplicialGraph` implements `bg.def.dagger-graph` at every common universe
+`u`, with arbitrary vertex maps and natural edge maps commuting with dagger.
+`DaggerSimplicialCat.forgetGraph` retains the original objects, mapping spaces,
+dagger, and functor components. `FreeSimplicialPaths` implements the opening
+construction in the proof of `bg.lem.presentable`: its objects are the original
+vertices and its degreewise morphisms are actual Mathlib `Quiver.Path` values.
+Empty words give identities, singleton words insert edges, and concatenation
+gives composition. Simplicial operators act on every edge; dagger reverses the
+word and applies graph dagger to every letter. There is no cancellation or
+quotient by inverse relations. The free enrichment is used locally in the
+construction; it cannot override the enrichment of an arbitrary target category.
+
+`FreeSimplicialExtension.extend` composes assigned edges and proves naturality
+in the simplicial degree, restriction on singleton edges, and uniqueness for
+every enriched functor. Dagger compatibility then gives `homEquiv`, an actual
+bijection between all dagger simplicial functors out of the free category and
+all graph maps into the target. Its target naturality constructs the actual
+free functor and `adjunction`; `adjunction_unit` identifies the unit with
+singleton insertion. `exists_freeDaggerSimplicialCategory` exposes the full
+universal property through the raw `restrictGraph` operation so that the
+problem statement fits in 83 lines. This specification quantifies over all
+targets and all object maps. It protects universality without prescribing the
+choice of free witness; the separate word specification protects the concrete
+path operations. The actual adjunction and its unit are included in the library
+axiom audit, but are not additional roots of this short universal specification.
+
+This completes the free construction and adjunction used at the start of
+`bg.lem.presentable`. The lemma's **monadicity and local finite presentability
+conclusions remain unproved**, as does creation of limits and colimits in
+`bg.lem.creation`. The model-categorical conclusions of A–D do not follow from
+the currently proved results alone. The new implementation and Challenge
+correspondence received separate GPT-6.1-Sol/xhigh agent reviews; this is not
+independent human review. No manuscript statement was edited.
+
 ## Main-result status
 
 | Manuscript label | Result | Status |
@@ -340,6 +397,8 @@ monoid are not constructed in this release.
 | `prop.sSetdag_is_equivalent_to_Fun` | Presheaf equivalence and presentability | Proved, with arbitrary value universe |
 | `dj.not.adjunctions` (simplicial sets) | Free–forgetful adjunction | Actual adjunction, zero-skeleton pushout, unit and swap proved |
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
+| `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
+| Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved; monadicity and local finite presentability remain unproved |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

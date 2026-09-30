@@ -1,0 +1,22 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.FreeSimplicialPaths.map_cons",
+    "DaggerModels.FreeSimplicialPaths.map_id",
+    "DaggerModels.FreeSimplicialPaths.map_comp",
+    "DaggerModels.FreeSimplicialPaths.map_pathComp",
+    "DaggerModels.FreeSimplicialPaths.reverse_comp",
+    "DaggerModels.FreeSimplicialPaths.reverse_involutive",
+    "DaggerModels.FreeSimplicialPaths.map_reverse",
+    "DaggerModels.FreeSimplicialPaths.dagger_involutive",
+    "DaggerModels.FreeSimplicialPaths.inclusion_dagger",
+    "DaggerModels.FreeSimplicialPaths.id_dagger",
+    "DaggerModels.FreeSimplicialPaths.comp_dagger"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

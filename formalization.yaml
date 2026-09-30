@@ -18,6 +18,10 @@ project:
     free-cofibration class. The construction uses the genuine relative skeletal
     filtration and colimit, individual new vertices in degree zero, and free
     dagger orbits in positive degrees, at arbitrary value universe.
+    It also constructs genuine dagger simplicial categories and graphs, the
+    actual finite-path free category, and its free-forgetful adjunction with
+    singleton-edge unit and full universal property. Monadicity and local
+    finite presentability of dagger simplicial categories remain unproved.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -41,6 +45,10 @@ sources:
       together with dj.cor.Fdag-free. Every free cofibration has an actual
       relative presentation by free boundary cells, and the stated saturation
       equality is proved.
+      It also formalizes bg.def.dagger-scat, bg.def.dagger-graph, and the free
+      word construction with its universal property at the start of
+      bg.lem.presentable; that lemma's monadicity and presentability
+      conclusions are not yet proved.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -54,6 +62,8 @@ related_formalizations:
     note: >-
       Uses simplicial sets, opposites, simplex reversal, nondegenerate simplices,
       category equivalences, presentability, Kan extensions, and groupoids.
+      The free dagger simplicial-category construction uses actual enriched
+      categories and functors, Cartesian SSet tensor, quivers, and finite paths.
 status:
   scope: >-
     Partial formalization toward A-D. Presheaf equivalence and local finite
@@ -63,6 +73,10 @@ status:
     cofibration closure operations are proved. Every free cofibration has an
     actual relative free-boundary-cell presentation, and the stated saturation
     equals the original class, proving both conclusions of dj.lem.free-cof.
+    The actual category of dagger simplicial categories, graph category,
+    finite-path free construction, free-forgetful adjunction and singleton
+    unit are proved. Their monadicity, local finite presentability and
+    creation of limits/colimits remain unproved.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -270,6 +284,42 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialStructure.daggerSimplex_map"
+      file: "DaggerModels/DaggerSimplicialCategory.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_simplicial_category.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialStructure.daggerFunctor_comp_inverse"
+      file: "DaggerModels/DaggerSimplicialCategory.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_simplicial_category.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.FreeSimplicialPaths.reverse_involutive"
+      file: "DaggerModels/FreeSimplicialPaths.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_simplicial_paths.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.FreeSimplicialPaths.map_reverse"
+      file: "DaggerModels/FreeSimplicialPaths.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_simplicial_paths.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.FreeSimplicialPaths.comp_dagger"
+      file: "DaggerModels/FreeSimplicialPaths.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_simplicial_paths.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.exists_freeDaggerSimplicialCategory"
+      file: "DaggerModels/FreeDaggerSimplicialCategory.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_universal.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -312,7 +362,7 @@ fidelity:
   divergences: >-
     This is a partial formalization. Fin (n+1) represents the ordinal [n],
     and monotone-or-antitone is a property rather than an orientation tag.
-    The strict dagger involution is expressed degreewise using SSet.opObjEquiv.
+    The dagger simplicial-set involution is expressed degreewise using SSet.opObjEquiv.
     Bool represents the two vertices in the algebraic word obstruction and
     the two objects of the integer dagger groupoid; their simplicial nerve
     and model-categorical consequences are not formalized.
@@ -339,17 +389,29 @@ fidelity:
     The existential Challenge goals do not fix a chosen
     witness implementation; the library supplies the manuscript's concrete
     counterexamples and actual equivalence/adjunction data.
+    Dagger simplicial categories use ordinary SSet morphisms on the reversed
+    mapping spaces, with enriched identity and composition laws; they do not
+    use simplex reversal or a fixed-vertex condition on mapping spaces.
+    Their definition has independent object and hom universes. The graph and
+    free-category constructions use any common universe u. Actual finite
+    paths give the mapping spaces, with empty identity, concatenation, and
+    graph dagger applied in reverse word order. No cancellation quotient is
+    used. Extension and uniqueness construct the genuine adjunction; its unit
+    is proved to be singleton insertion. The short universal Challenge fixes
+    bijective restriction on all functors for every target, without fixing
+    the free witness. A separate concrete-word Challenge fixes the path
+    operations. Monadicity and local finite presentability are not inferred.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 63 selected library
-    theorems and three audit-only definition roots against twelve self-contained
+    checks, not independent human review. Comparator checks 81 selected library
+    theorems and three audit-only definition roots against fifteen self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, and 29;
-    798 in total, including comments and blank lines); all twelve together
+    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
+    73, 100, and 83; 1054 in total, including comments and blank lines); all fifteen together
     form the review surface. New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
     Challenge proof placeholders are outside the proved library. Dependency pins
@@ -360,6 +422,24 @@ review:
 alignment:
   namespace: "DaggerModels"
   statements:
+    - source: "bg.def.dagger-scat"
+      lean: "DaggerModels.DaggerSimplicialStructure"
+      module: "DaggerModels/DaggerSimplicialCategory.lean"
+      status: "definition-and-elementary-lemmas"
+      note: "Full mapping-space dagger and actual enriched opposite functors, with independent universes."
+    - source: "bg.def.dagger-graph"
+      lean: "DaggerModels.DaggerSimplicialGraph"
+      module: "DaggerModels/DaggerSimplicialGraph.lean"
+      status: "definition-and-elementary-lemmas"
+      note: "Actual graph category with arbitrary vertex maps and dagger-compatible SSet edge maps."
+    - source: "Free construction at the start of bg.lem.presentable"
+      lean: "DaggerModels.exists_freeDaggerSimplicialCategory"
+      module: "DaggerModels/FreeDaggerSimplicialCategory.lean"
+      status: "proved"
+      note: >-
+        Concrete finite paths, actual adjunction, singleton-edge unit and full
+        universal property. Monadicity, local finite presentability and creation
+        of limits/colimits remain unproved.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

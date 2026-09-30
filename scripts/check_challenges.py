@@ -48,6 +48,18 @@ CHALLENGES = {
         ".ci/comparator/RelativeCellBoundaryChallenge.lean",
         ".ci/comparator/relative_cell_boundary.json"
     ),
+    "dagger_simplicial_category": (
+        ".ci/comparator/DaggerSimplicialCategoryChallenge.lean",
+        ".ci/comparator/dagger_simplicial_category.json"
+    ),
+    "free_simplicial_paths": (
+        ".ci/comparator/FreeSimplicialPathsChallenge.lean",
+        ".ci/comparator/free_simplicial_paths.json"
+    ),
+    "free_dagger_universal": (
+        ".ci/comparator/FreeDaggerUniversalChallenge.lean",
+        ".ci/comparator/free_dagger_universal.json"
+    ),
 }
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 

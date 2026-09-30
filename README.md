@@ -14,8 +14,10 @@ The full cellular characterization `dj.lem.free-cof` is proved: every free
 cofibration has an actual relative presentation by free boundary cells, and
 their saturation equals the original free-cofibration class. The construction
 attaches individual new vertices in degree zero and free dagger orbits in
-positive degrees, at every value universe. Two concrete comparison obstructions
-and the first release's elementary foundations are retained.
+positive degrees, at every value universe. It also constructs genuine dagger
+simplicial categories and graphs, their concrete finite-path free category,
+and the free–forgetful adjunction with singleton-edge unit. Two concrete
+comparison obstructions and the first release's elementary foundations are retained.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
 structures, the rigidification Quillen equivalence, the intrinsic recognition
@@ -38,6 +40,9 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | The common zero-skeleton in `dj.not.adjunctions` | [`Vertices`](DaggerModels/Vertices.lean) | Constant vertices identify with the actual zero-skeleton, preserving its inclusion; mathlib uses `skeleton 1` for the paper's `sk₀` |
 | Cofibration obstruction in `pointset.cor.cofibrant-obstruction` | [`NormalCofibrationObstruction`](DaggerModels/NormalCofibrationObstruction.lean) | Initial-to-point map is free but its anti-involutive image is not normal; model structures and Quillen claims are not assumed |
 | Parts (1)–(2) of `pointset.prop.weak-counterexample` | [`UnitaryObstruction`](DaggerModels/UnitaryObstruction.lean) | The actual integer dagger groupoid inclusion is an ordinary equivalence but is not unitarily essentially surjective |
+| `bg.def.dagger-scat` | [`DaggerSimplicialCategory`](DaggerModels/DaggerSimplicialCategory.lean) | Full simplicial mapping spaces, the identity-on-objects dagger and its inverse enriched opposite functor, and the category of dagger enriched functors |
+| `bg.def.dagger-graph` and the word construction in `bg.lem.presentable` | [`DaggerSimplicialGraph`](DaggerModels/DaggerSimplicialGraph.lean), [`FreeSimplicialPaths`](DaggerModels/FreeSimplicialPaths.lean) | Actual finite paths, including empty and singleton paths; edgewise simplicial operators and reversal with edge dagger |
+| Free universal property at the start of `bg.lem.presentable` | [`FreeDaggerSimplicialCategory`](DaggerModels/FreeDaggerSimplicialCategory.lean) | Actual free–forgetful adjunction, singleton-edge unit, and bijective restriction for every target; monadicity and local finite presentability remain unproved |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -76,7 +81,11 @@ lake exe cache get \
   Mathlib.AlgebraicTopology.SimplicialSet.Boundary \
   Mathlib.AlgebraicTopology.RelativeCellComplex.Basic \
   Mathlib.CategoryTheory.LiftingProperties.Adjunction \
-  Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
+  Mathlib.CategoryTheory.MorphismProperty.LiftingProperty \
+  Mathlib.AlgebraicTopology.SimplicialSet.Monoidal \
+  Mathlib.CategoryTheory.Enriched.Opposite \
+  Mathlib.CategoryTheory.PathCategory.Basic \
+  Mathlib.Combinatorics.Quiver.Symmetric
 lake build
 lake env lean Audit.lean
 python3 scripts/check_audit.py
@@ -112,7 +121,7 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 63 selected library theorems against twelve
+Linux GitHub Actions job. It compares 81 selected library theorems against fifteen
 short, self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
@@ -127,6 +136,9 @@ short, self-contained problem specifications:
 - [Actual relative skeletal filtration](.ci/comparator/RelativeSkeletonChallenge.lean): 55 lines
 - [Free monomorphisms, cellular characterization and lifting](.ci/comparator/FreeDaggerCofibrationChallenge.lean): 93 lines
 - [Boundary preimages and relative-cell normal forms](.ci/comparator/RelativeCellBoundaryChallenge.lean): 29 lines
+- [Dagger simplicial categories and their opposite functors](.ci/comparator/DaggerSimplicialCategoryChallenge.lean): 73 lines
+- [Concrete free paths and their simplicial dagger](.ci/comparator/FreeSimplicialPathsChallenge.lean): 100 lines
+- [Free dagger simplicial category universal property](.ci/comparator/FreeDaggerUniversalChallenge.lean): 83 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -157,7 +169,7 @@ The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
 CI checks each Challenge's 100-line budget, direct Mathlib imports, and coverage
-of all 66 registered roots. The 798 lines across all twelve files are the review
+of all 84 registered roots. The 1,054 lines across all fifteen files are the review
 surface; checking one file is not a review of the entire formalization.
 
 These additional checks were introduced after the immutable v0.1.0 release.
@@ -173,6 +185,11 @@ The explicit free-completion targets retain the actual adjunction unit,
 natural right coprojection, pushout universal property, and both swap equations.
 They apply to every free–forgetful adjunction, including the original Kan
 construction. The zero-skeleton target also pins its canonical inclusion.
+The new simplicial-category specifications separately protect full mapping-space
+dagger, the concrete word operations, and free universality for all graph maps
+and all target categories. The last specification fixes the bijective restriction
+property, not the implementation's choice of its free object. The library also
+constructs the actual adjunction and identifies its unit with singleton inclusion.
 
 ## Citing this version
 
@@ -180,7 +197,7 @@ Use the [v0.1.0 release](https://github.com/Yonoha/dagger-models-lean/releases/t
 and its tagged source when citing the first version. GitHub citation metadata is
 provided in [CITATION.cff](CITATION.cff). For an immutable reference, record the
 full commit hash shown in the release notes as well.
-The presheaf, free-adjunction, cellular, and comparison-obstruction developments
+The presheaf, free-adjunction, cellular, dagger simplicial-category, and comparison-obstruction developments
 described above are newer than v0.1.0; cite the corresponding development commit
 when referring to them.
 
@@ -205,9 +222,10 @@ helper scripts, lifecycle hooks, and Lean LSP integration are not part of that
 installation. The repository's Lean/Lake build and audits are the verification
 commands. See `AGENTS.md` for the pinned skill revision and usage instructions.
 
-The cellular characterization is complete. The next stage toward A–D requires
-actual dagger simplicial categories, ordinary rigidification and coherent
-nerve, their lifted adjunction, and the model structures themselves. These
+The cellular characterization and the free dagger simplicial-category adjunction
+are complete. The next stages toward A–D include monadicity and presentability
+for dagger simplicial categories, their limits and colimits, ordinary
+rigidification and coherent nerve, their lifted adjunction, and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
 
@@ -224,5 +242,9 @@ pushout・超限合成・レトラクト等による閉性を検証していま�
 全ての自由 cofibration に対して実際の相対境界セル複体を構成し、
 自由境界生成射の飽和閉包と自由 cofibration 全体の一致を示しています。
 次数 0 では新しい頂点ごと、正次数では dagger 軌道ごとにセルを貼り付けます。
+また、dagger simplicial category と graph、具体的な有限の道による自由圏、
+および自由・忘却随伴と singleton-edge unit を構成しました。
+この自由構成から monadicity や dagger simplicial category の局所有限可呈示性まで
+証明したわけではなく、その部分は引き続き未完了です。
 論文の主定理全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

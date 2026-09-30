@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against twelve short, self-contained problem specifications:
+candidate against fifteen short, self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -18,15 +18,18 @@ candidate against twelve short, self-contained problem specifications:
 | [RelativeSkeletonChallenge.lean](RelativeSkeletonChallenge.lean) | 55 | [relative_skeleton.json](relative_skeleton.json) | 3 theorems: stable skeleta and actual filtration with inclusions and colimit |
 | [FreeDaggerCofibrationChallenge.lean](FreeDaggerCofibrationChallenge.lean) | 93 | [free_dagger_cofibration.json](free_dagger_cofibration.json) | 7 theorems: free monos, genuine boundary generators, relative cell presentation, saturation equality and lifting |
 | [RelativeCellBoundaryChallenge.lean](RelativeCellBoundaryChallenge.lean) | 29 | [relative_cell_boundary.json](relative_cell_boundary.json) | 4 theorems: epi membership, exact boundary preimage, complement and normal-form uniqueness |
+| [DaggerSimplicialCategoryChallenge.lean](DaggerSimplicialCategoryChallenge.lean) | 73 | [dagger_simplicial_category.json](dagger_simplicial_category.json) | 6 theorems: full mapping-space dagger and inverse enriched opposite functors |
+| [FreeSimplicialPathsChallenge.lean](FreeSimplicialPathsChallenge.lean) | 100 | [free_simplicial_paths.json](free_simplicial_paths.json) | 11 theorems: actual finite words, edgewise simplicial operators, reverse and empty/singleton dagger laws |
+| [FreeDaggerUniversalChallenge.lean](FreeDaggerUniversalChallenge.lean) | 83 | [free_dagger_universal.json](free_dagger_universal.json) | 1 theorem: existence of a free dagger simplicial category with bijective restriction for every target |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The twelve Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **798 lines in total**, including
+the implementation. The fifteen Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **1,054 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 42
+The checker retains the original **21 named library theorems** and adds 60
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -34,7 +37,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-66-root coverage set; it is a registry, not an executable Comparator config.
+84-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -64,6 +67,20 @@ cell specification fixes both the exact boundary preimage and the unique
 nondegenerate ancestor/epi map. These two obligations extend the preceding 64
 roots to 66; all earlier roots are retained. Tool and dependency pins and both
 negative-control definitions are unchanged.
+
+Eighteen further roots protect the new dagger simplicial-category development.
+The core specification uses actual SSet-enriched mapping spaces and enriched
+opposite functors; dagger commutes with the same simplex operator. It has
+independent object and hom universes. The word specification fixes actual
+`Quiver.Path` data, edgewise simplicial maps, singleton inclusion, empty-path
+identity, and reversal by the original graph dagger. The universal specification
+visibly defines both raw bundles and their morphisms, and requires restriction
+along a single graph map to be bijective for every target dagger simplicial
+category. It quantifies over all object maps and all enriched dagger functors.
+It leaves the free witness free; the library supplies the concrete word witness
+and an actual adjunction with its unit. This split keeps each problem below
+100 lines without importing implementation data or reducing the universal
+property. It does not assert monadicity or presentability.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
@@ -113,7 +130,7 @@ registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces at most 100 physical
 lines per Challenge (including blank lines and comments), plain direct Mathlib
 imports, standard permitted axioms, no definition holes, and exact registration
-of all 66 roots. This check is not a Lean parser or an adversarial security
+of all 84 roots. This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
 ## Pinned tools
@@ -133,7 +150,7 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The twelve positive comparisons use current candidate
+the Challenge mathematics. The fifteen positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
 

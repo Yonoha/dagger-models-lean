@@ -1,0 +1,17 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.DaggerSimplicialStructure.daggerSimplex_involutive",
+    "DaggerModels.DaggerSimplicialStructure.daggerSimplex_map",
+    "DaggerModels.DaggerSimplicialStructure.dagger_id_app",
+    "DaggerModels.DaggerSimplicialStructure.dagger_comp_app",
+    "DaggerModels.DaggerSimplicialStructure.daggerFunctor_comp_inverse",
+    "DaggerModels.DaggerSimplicialStructure.daggerInverse_comp_functor"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

@@ -30,3 +30,11 @@ import DaggerModels.BoundaryCellTransport
 import DaggerModels.RelativeCellPresentation
 import DaggerModels.NormalCofibrationObstruction
 import DaggerModels.UnitaryObstruction
+import DaggerModels.SimplicialCat
+import DaggerModels.SimplicialEnrichment
+import DaggerModels.DaggerSimplicialCategory
+import DaggerModels.DaggerSimplicialGraph
+import DaggerModels.FreeSimplicialPaths
+import DaggerModels.DaggerSimplicialForget
+import DaggerModels.FreeSimplicialLift
+import DaggerModels.FreeDaggerSimplicialCategory

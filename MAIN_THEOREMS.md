@@ -68,6 +68,17 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   and its full subgroupoid on `0`. The inclusion is a fully faithful dagger
   functor and an ordinary equivalence, but is not unitarily essentially
   surjective. The nerve and weak-equivalence assertions in part (3) remain open.
+- `bg.def.dagger-scat`, `bg.def.dagger-graph`, and the free construction at the
+  start of `bg.lem.presentable`: `DaggerSimplicialCategory.lean` constructs the
+  actual enriched dagger and opposite functors, with independent object and
+  mapping-space universes. `DaggerSimplicialGraph.lean` and
+  `FreeSimplicialPaths.lean` construct graphs and genuine finite-path mapping
+  spaces with ordinary edgewise simplicial operators. `FreeSimplicialLift.lean`
+  proves extension and uniqueness. `FreeDaggerSimplicialCategory.lean` builds
+  the actual free–forgetful adjunction, identifies its unit with singleton
+  inclusion, and proves the full bijective restriction property, at every
+  common universe `u`. No cancellation quotient is used. The monadicity and
+  local finite presentability asserted by `bg.lem.presentable` remain unproved.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -79,6 +90,9 @@ Required chain:
 
 1. Dagger simplicial categories (`bg.def.dagger-scat`), dagger graphs,
    free categories, limits/colimits, and local presentability.
+   The categories, graphs, concrete free construction and adjunction are now
+   implemented. Limits/colimits (`bg.lem.creation`), monadicity and local finite
+   presentability (`bg.lem.presentable`) are still required.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

@@ -112,6 +112,10 @@ jobs:
           Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
           Mathlib.CategoryTheory.LiftingProperties.Adjunction
           Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
+          Mathlib.AlgebraicTopology.SimplicialSet.Monoidal
+          Mathlib.CategoryTheory.Enriched.Opposite
+          Mathlib.CategoryTheory.PathCategory.Basic
+          Mathlib.Combinatorics.Quiver.Symmetric
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"

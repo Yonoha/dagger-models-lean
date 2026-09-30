@@ -49,6 +49,10 @@ jobs:
           Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
           Mathlib.CategoryTheory.LiftingProperties.Adjunction
           Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
+          Mathlib.AlgebraicTopology.SimplicialSet.Monoidal
+          Mathlib.CategoryTheory.Enriched.Opposite
+          Mathlib.CategoryTheory.PathCategory.Basic
+          Mathlib.Combinatorics.Quiver.Symmetric
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

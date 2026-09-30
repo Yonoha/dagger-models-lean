@@ -65,6 +65,24 @@
     "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff",
     "DaggerModels.RelativeCellBoundary.relative_stage_normal_form_unique",
     "DaggerModels.exists_relativeFreeBoundaryCellComplex",
-    "DaggerModels.freeBoundarySaturation_eq"
+    "DaggerModels.freeBoundarySaturation_eq",
+    "DaggerModels.DaggerSimplicialStructure.daggerSimplex_involutive",
+    "DaggerModels.DaggerSimplicialStructure.daggerSimplex_map",
+    "DaggerModels.DaggerSimplicialStructure.dagger_id_app",
+    "DaggerModels.DaggerSimplicialStructure.dagger_comp_app",
+    "DaggerModels.DaggerSimplicialStructure.daggerFunctor_comp_inverse",
+    "DaggerModels.DaggerSimplicialStructure.daggerInverse_comp_functor",
+    "DaggerModels.FreeSimplicialPaths.map_cons",
+    "DaggerModels.FreeSimplicialPaths.map_id",
+    "DaggerModels.FreeSimplicialPaths.map_comp",
+    "DaggerModels.FreeSimplicialPaths.map_pathComp",
+    "DaggerModels.FreeSimplicialPaths.reverse_comp",
+    "DaggerModels.FreeSimplicialPaths.reverse_involutive",
+    "DaggerModels.FreeSimplicialPaths.map_reverse",
+    "DaggerModels.FreeSimplicialPaths.dagger_involutive",
+    "DaggerModels.FreeSimplicialPaths.inclusion_dagger",
+    "DaggerModels.FreeSimplicialPaths.id_dagger",
+    "DaggerModels.exists_freeDaggerSimplicialCategory",
+    "DaggerModels.FreeSimplicialPaths.comp_dagger"
   ]
 }
