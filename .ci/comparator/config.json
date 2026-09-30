@@ -1,0 +1,31 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.ReverseSimplex.Hom.ext",
+    "DaggerModels.ReverseSimplex.reversal_apply",
+    "DaggerModels.ReverseSimplex.reversal_comp_reversal",
+    "DaggerModels.ReverseSimplex.reversal_zero",
+    "DaggerModels.ReverseSimplex.reversal_naturality",
+    "DaggerModels.ReverseSimplex.monotone_antitone_iff_constant",
+    "DaggerModels.DaggerSSet.dagger_dagger",
+    "DaggerModels.DaggerSSet.dagger_vertex",
+    "DaggerModels.DaggerSSet.dagger_map",
+    "DaggerModels.DaggerSSet.dagger_δ",
+    "DaggerModels.DaggerSSet.dagger_σ",
+    "DaggerModels.DaggerSSet.selfConjugate_edge_endpoints",
+    "DaggerModels.DaggerSSet.dagger_mem_degenerate",
+    "DaggerModels.DaggerSSet.dagger_mem_degenerate_iff",
+    "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff",
+    "DaggerModels.DaggerSSet.Hom.ext",
+    "DaggerModels.WordObstruction.dagger_length",
+    "DaggerModels.WordObstruction.dagger_involutive",
+    "DaggerModels.WordObstruction.dagger_append",
+    "DaggerModels.WordObstruction.no_selfAdjoint_length_one",
+    "DaggerModels.WordObstruction.no_dagger_preserving_section",
+    "DaggerModels.ComparatorContracts.freeCofibration_definition",
+    "DaggerModels.ComparatorContracts.nonDegenerateEquiv_definition",
+    "DaggerModels.ComparatorContracts.forget_definition"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

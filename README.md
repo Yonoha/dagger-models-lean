@@ -1,6 +1,7 @@
 # Dagger models in Lean
 
 [![Lean verification](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml)
+[![Comparator](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml)
 
 A **partial formalization** accompanying Keima Akasaka's *Models for dagger
 $(\infty,1)$-categories I: Dagger simplicial sets and unitary cores*.
@@ -64,6 +65,38 @@ rejects both a deliberately incomplete proof and a new axiom in temporary files.
 These files are not part of the library. A successful build checks the encoded
 statements, with the usual trust in Lean and the pinned dependency artifacts;
 matching those statements to the paper remains a mathematical review task.
+
+## Preserving the intended statements
+
+The current development branch additionally runs
+[leanprover/comparator](https://github.com/leanprover/comparator) in a separate
+Linux GitHub Actions job. It compares all 21 named library theorems against the
+independently fetched, immutable v0.1.0 commit. Three audit-only roots also
+protect the definitions of `FreeCofibration`, `nonDegenerateEquiv`, and `forget`.
+It checks the statement dependencies, permitted axioms, and exported kernel
+proofs. Deliberately weakened statements and changed definitions must be
+rejected. See [.ci/comparator/README.md](.ci/comparator/README.md) for the exact
+scope, trusted inputs, sandbox, and reference-update procedure.
+
+[`formalization.yaml`](formalization.yaml) follows the
+[mathlib-initiative reporting standard](https://github.com/mathlib-initiative/formalization.yaml).
+It records the source, partial scope, AI assistance, proof status, axioms, and
+source-to-Lean correspondence. Review status is **agent-reviewed**; no independent
+human review is claimed. CI checks it against the vendored upstream v0.4 schema
+and compares its reported axioms with the dependencies collected from Lean.
+
+To run the metadata check on this development version after `lake build`:
+
+```sh
+python3 -m venv build/metadata-venv
+build/metadata-venv/bin/python -m pip install -r .ci/requirements.txt
+lake env lean scripts/ReportAxioms.lean > build/axioms.json
+build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.json
+```
+
+These additional checks were introduced after the immutable v0.1.0 release.
+Comparator preserves the chosen Lean baseline; mathematical review is still
+needed to establish that the baseline expresses the manuscript correctly.
 
 ## Citing this version
 

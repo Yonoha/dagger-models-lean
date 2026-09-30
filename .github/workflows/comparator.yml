@@ -1,0 +1,111 @@
+name: Comparator
+
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+    steps:
+      # On PRs, only the base branch's trusted checker is executed outside the
+      # sandbox. Candidate Lake files, scripts, and workflows are never run here.
+      - name: Check out the trusted control files
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: control
+          persist-credentials: false
+      - name: Check out the candidate as data
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Check out the immutable v0.1.0 reference
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: Yonoha/dagger-models-lean
+          ref: dce8401a23588ba65b8aa4ca41de26cb0203d444
+          path: reference
+          persist-credentials: false
+      - name: Check out Comparator
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: leanprover/comparator
+          ref: fd5d5bcf14177b187f66d4502071268d877887c3
+          path: comparator
+          persist-credentials: false
+      - name: Check out the Lean 4.27 exporter
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: leanprover/lean4export
+          ref: 590dec59d93ab6becdf16fdd8aee5abbb99cb856
+          path: lean4export
+          persist-credentials: false
+      - name: Check out Landrun
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: Zouuup/landrun
+          ref: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+          path: landrun
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: landrun/go.mod
+          cache-dependency-path: landrun/go.sum
+      - name: Build the Linux sandbox
+        working-directory: landrun
+        run: go build -o landrun cmd/landrun/main.go
+      - name: Install Lean tooling
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          lake-package-directory: comparator
+          auto-config: "false"
+          build: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+      - name: Build Comparator with its own pinned toolchain
+        working-directory: comparator
+        run: lake build comparator
+      - name: Build the exporter with the project's Lean version
+        working-directory: lean4export
+        run: lake build
+      - name: Prepare independent reference, candidate, and negative controls
+        run: >-
+          python3 control/scripts/prepare_comparator.py
+          --baseline reference --candidate candidate --control control
+          --output "$RUNNER_TEMP/dagger-comparator"
+      - name: Download artifacts using only the trusted reference project
+        working-directory: ${{ runner.temp }}/dagger-comparator/cache
+        run: >-
+          lake exe cache get
+          Mathlib.AlgebraicTopology.SimplicialSet.Op
+          Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
+      - name: Give each comparison its own writable artifacts
+        run: >-
+          python3 control/scripts/prepare_comparator.py
+          --copy-cache --output "$RUNNER_TEMP/dagger-comparator"
+      - name: Enable the unprivileged systemd sandbox wrapper
+        run: |
+          sudo loginctl enable-linger "$(id -un)"
+          sudo systemctl start "user@$(id -u).service"
+          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
+      - name: Compare statements, definitions, axioms, and kernel proofs
+        env:
+          COMPARATOR_LANDRUN: ${{ github.workspace }}/landrun/landrun
+          COMPARATOR_LEAN4EXPORT: ${{ github.workspace }}/lean4export/.lake/build/bin/lean4export
+        run: >-
+          python3 control/scripts/run_comparator.py
+          --projects "$RUNNER_TEMP/dagger-comparator"
+          --comparator "$GITHUB_WORKSPACE/comparator/.lake/build/bin/comparator"

@@ -35,3 +35,12 @@ jobs:
         run: lake env lean Audit.lean
       - name: Check the audit rejects proof holes and extra axioms
         run: python3 scripts/check_audit.py
+      - name: Install metadata validators
+        run: |
+          python3 -m venv "$RUNNER_TEMP/metadata-venv"
+          "$RUNNER_TEMP/metadata-venv/bin/python" -m pip install -r .ci/requirements.txt
+      - name: Validate formalization metadata against Lean and the upstream schema
+        run: |
+          mkdir -p build
+          lake env lean scripts/ReportAxioms.lean > build/axioms.json
+          "$RUNNER_TEMP/metadata-venv/bin/python" scripts/check_metadata.py --axioms build/axioms.json

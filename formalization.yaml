@@ -1,0 +1,144 @@
+# yaml-language-server: $schema=./.ci/schema/formalization-v0.4.schema.json
+version: "v0.4"
+project:
+  name: "Dagger models in Lean"
+  description: >-
+    A partial formalization of foundational constructions from Models for dagger
+    (infinity,1)-categories I. It constructs the reversal simplex category and
+    dagger simplicial sets, proves elementary reversal and nondegeneracy lemmas,
+    defines free cofibrations, and proves the vertex-level word obstruction.
+    The main model-categorical theorems A-D are not formalized.
+  authors:
+    - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
+  responsible_maintainers:
+    - "Keima Akasaka"
+  license: "Apache-2.0"
+sources:
+  - title: "Models for dagger (infinity,1)-categories I: Dagger simplicial sets and unitary cores"
+    authors: ["Keima Akasaka"]
+    type: "article"
+    location: >-
+      def.dagger_simplicial_sets; the index-category definition before
+      prop.sSetdag_is_equivalent_to_Fun; dj.def.free-cof; the opening
+      nondegeneracy argument in dj.lem.free-cof; the vertex-level obstruction
+      in the proof of dj.prop.counterexample.
+    relationship: "formalizes"
+    author_endorsement: "participated"
+    note: >-
+      Based on the author's working manuscript inspected on 2026-10-01.
+      The author commissioned the project and its public repository.
+      This participation does not assert that the author has reviewed the Lean
+      statements or independently verified the source-to-Lean correspondence.
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4"
+    relationship: "builds-on"
+    note: "Uses simplicial sets, opposites, simplex reversal, and degenerate simplices."
+status:
+  scope: >-
+    Partial foundations only. Neither the presheaf equivalence, the cellular
+    characterization of free cofibrations, nor the full simplicial
+    counterexample is proved. Main theorems A-D remain outside this development.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "DaggerModels.ReverseSimplex.reversal_comp_reversal"
+      file: "DaggerModels/ReverseSimplex.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/config.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.ReverseSimplex.monotone_antitone_iff_constant"
+      file: "DaggerModels/ReverseSimplex.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/config.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.dagger_map"
+      file: "DaggerModels/SimplicialSet.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/config.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff"
+      file: "DaggerModels/SimplicialSet.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/config.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.WordObstruction.no_dagger_preserving_section"
+      file: "DaggerModels/WordObstruction.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/config.json"
+      literature_dependencies: []
+automation:
+  methods:
+    - method: "agent"
+      models: ["gpt-6-astra"]
+      framework: "Codex"
+      tool_setup: >-
+        Local Lean/Lake proof development with mathlib, GitHub Actions,
+        a transitive axiom audit, and leanprover/comparator in a separate
+        Linux verification job. No external model-categorical theorem is
+        postulated as an axiom to make the proofs pass.
+      prompting_notes: >-
+        The author requested a Lean companion to Part I and a dedicated GitHub
+        repository, then requested Comparator and formalization.yaml support.
+        Mathematics in the manuscript must not be silently changed.
+  notes: >-
+    AI generated the implementation and performed the documented checks.
+    The manuscript-to-statement correspondence has been assessed by the agent;
+    no independent human mathematical review is claimed.
+fidelity:
+  divergences: >-
+    This is a partial formalization. Fin (n+1) represents the ordinal [n],
+    and monotone-or-antitone is a property rather than an orientation tag.
+    The strict dagger involution is expressed degreewise using SSet.opObjEquiv.
+    Bool represents the two vertices only in the algebraic word obstruction;
+    the simplicial nerve and Kan-fibration argument are not formalized.
+    The definition of FreeCofibration uses Mono in the dagger category.
+    See CORRESPONDENCE.md for the complete scope discussion.
+review:
+  status: "agent-reviewed"
+  reviewers: ["Codex (GPT-6 Astra)"]
+  notes: >-
+    Build, axiom audit, metadata consistency, and Comparator are executable
+    checks, not independent human review. Comparator checks 21 named library
+    theorems and three audit-only definition roots against the v0.1.0 commit
+    dce8401a23588ba65b8aa4ca41de26cb0203d444. It cannot establish that the
+    chosen baseline correctly expresses the original mathematical manuscript.
+alignment:
+  namespace: "DaggerModels"
+  statements:
+    - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
+      lean: "DaggerModels.ReverseSimplex"
+      module: "DaggerModels/ReverseSimplex.lean"
+      status: "definition-and-elementary-lemmas"
+    - source: "def.dagger_simplicial_sets"
+      lean: "DaggerModels.DaggerSSet"
+      module: "DaggerModels/SimplicialSet.lean"
+      status: "definition-and-elementary-lemmas"
+    - source: "Opening nondegeneracy argument in dj.lem.free-cof"
+      lean: "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff"
+      module: "DaggerModels/SimplicialSet.lean"
+      status: "proved"
+      note: "This is a subargument, not the whole cellular characterization."
+    - source: "dj.def.free-cof"
+      lean: "DaggerModels.DaggerSSet.FreeCofibration"
+      module: "DaggerModels/SimplicialSet.lean"
+      status: "definition-only"
+    - source: "Vertex-level obstruction in dj.prop.counterexample"
+      lean: "DaggerModels.WordObstruction.no_dagger_preserving_section"
+      module: "DaggerModels/WordObstruction.lean"
+      status: "proved"
+      note: "This does not prove the full model-categorical counterexample."
+    - source: "prop.sSetdag_is_equivalent_to_Fun"
+      status: "not-formalized"
+    - source: "dj.lem.free-cof (cellular characterization)"
+      status: "not-formalized"
+    - source: "Main theorems A-D"
+      status: "not-formalized"
+acknowledgements: >-
+  Lean, mathlib, leanprover/comparator, leanprover/lean4export, Landrun,
+  and the mathlib-initiative/formalization.yaml reporting standard.
