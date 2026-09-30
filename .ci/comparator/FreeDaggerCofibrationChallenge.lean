@@ -6,7 +6,7 @@ import Mathlib.CategoryTheory.MorphismProperty.TransfiniteComposition
 import Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
 import Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
 
-/-! Part I `dj.cor.Fdag-free` and the closure direction of `dj.lem.free-cof`. -/
+/-! Part I `dj.cor.Fdag-free` and the full cellular characterization `dj.lem.free-cof`. -/
 set_option warningAsError false
 open CategoryTheory Simplicial Opposite HomotopicalAlgebra
 universe u
@@ -78,5 +78,16 @@ theorem freeBoundary_rlp_iff (F : SSet.{u} ⥤ DaggerSSet.{u})
     (adj : F ⊣ DaggerSSet.forget) {X Y : DaggerSSet.{u}} (p : X ⟶ Y) :
     (freeBoundaryGenerators F).rlp p ↔
       ∀ n : ℕ, HasLiftingProperty (SSet.boundary.{u} n).ι p.hom := by sorry
+
+theorem exists_relativeFreeBoundaryCellComplex
+    (F : SSet.{u} ⥤ DaggerSSet.{u}) (adj : F ⊣ DaggerSSet.forget)
+    {X Y : DaggerSSet.{u}} (i : X ⟶ Y) (hi : DaggerSSet.FreeCofibration i) :
+    Nonempty (RelativeCellComplex.{u}
+      (fun (_ : ℕ) ↦ fun n : ℕ ↦ F.map (SSet.boundary.{u} n).ι) i) := by sorry
+theorem freeBoundarySaturation_eq
+    (F : SSet.{u} ⥤ DaggerSSet.{u}) (adj : F ⊣ DaggerSSet.forget) :
+    (MorphismProperty.transfiniteCompositions.{u}
+      (MorphismProperty.coproducts.{u} (freeBoundaryGenerators F)).pushouts).retracts =
+        DaggerSSet.freeCofibrations := by sorry
 
 end DaggerModels

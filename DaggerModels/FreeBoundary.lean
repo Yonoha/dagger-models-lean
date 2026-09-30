@@ -9,8 +9,8 @@ import Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
 # The actual free dagger boundary generators
 
 These are the generators in Part I, `dj.lem.free-cof`. Their saturation is
-contained in the original free-cofibration class. The converse, which requires
-constructing boundary attachments for every free cofibration, is not assumed.
+contained in the original free-cofibration class. The converse is constructed
+in `DaggerModels.RelativeCellPresentation` using actual relative boundary attachments.
 The adjunction also gives the exact underlying boundary lifting condition.
 -/
 

@@ -44,13 +44,19 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   simplicial monomorphisms to free cofibrations. `FreeBoundary.lean` defines
   the genuine free boundary generators, proves their saturation is contained
   in free cofibrations, and gives the exact underlying boundary lifting
-  condition by the adjunction. The reverse inclusion is still open.
-- The filtration in `dj.lem.free-cof`: `RelativeSkeleton.lean` constructs the
+  condition by the adjunction. The reverse inclusion is proved below.
+- Both conclusions of `dj.lem.free-cof`: `RelativeSkeleton.lean` constructs the
   actual dagger-stable image-plus-skeleton stages, the original source at
   stage zero, and the actual target colimit. `RelativeCellBoundary.lean`
   proves the ordinary characteristic-map boundary preimage and the exact
-  unique nondegenerate/epi normal forms for each stage difference. These are
-  ingredients for the missing dagger boundary-attachment squares.
+  unique nondegenerate/epi normal forms for each stage difference.
+  `RelativeCellOrbits.lean` selects individual new vertices in degree zero
+  and genuine dagger-orbit representatives in positive degrees.
+  `RelativeCellPresentation.lean` combines the boundary intersection, coverage,
+  and interior uniqueness into actual attachment pushouts at every stage.
+  It constructs a `RelativeCellComplex` for every free cofibration, then proves
+  equality with the stated saturation of free boundary inclusions. The result
+  applies to every actual free adjunction and every value universe `u`.
 - The underlying cofibration obstruction in `pointset.cor.cofibrant-obstruction`:
   `NormalCofibrationObstruction.lean` proves that the initial-to-point dagger
   map satisfies `FreeCofibration` but its anti-involutive image is not normal.
@@ -99,11 +105,10 @@ Required chain:
    and the concrete lifted adjunction (`dj.lem.lift`).
 3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
    preservation by rigidification, and accessibility of weak equivalences.
-   All the stated closure operations and the free boundary generators are
-   implemented, proving the saturation-to-free inclusion. The actual skeletal
-   filtration and its ordinary boundary/complement analysis are implemented.
-   Dagger-orbit representatives, actual attachment pushouts, and the resulting
-   relative-cell presentation of every free cofibration remain to construct.
+   The cellular characterization is complete: every free cofibration has an
+   actual relative free-boundary-cell presentation, and saturation equality
+   is proved. Preservation by rigidification and accessibility of the weak
+   equivalences remain to prove.
 4. The recognition theorem with `W = C†⁻¹(W†)` and the exact `FreeCofibration`
    class, followed by the fibrant counit and Quillen-equivalence criterion.
 
@@ -111,9 +116,9 @@ The `FreeCofibration` class requires freeness of new nondegenerate simplices
 only in positive degrees. Replacing it by all monomorphisms would change B.
 Mathlib has the coherent nerve's definition but not the required ordinary
 Joyal–Bergner adjunction/equivalence. Mathlib supplies relative skeletons and
-their successor formula. This companion now adds boundary preimages and exact
-relative-cell normal forms; the actual dagger-cell pushout decomposition still
-needs proof.
+their successor formula. This companion now proves the actual dagger-cell
+pushout decomposition as well. The ordinary Joyal–Bergner machinery and its
+dagger-compatible lift are still required.
 
 ## C — recognition using the unitary core
 

@@ -13,10 +13,11 @@ project:
     groupoid example separating ordinary equivalence from unitary essential
     surjectivity. Free cofibrations are proved closed under identities,
     composition, coproducts, pushouts, continuous transfinite composition, and
-    retracts. The genuine free boundary generators and their saturation are
-    free cofibrations. The actual relative skeletal filtration and colimit,
-    ordinary boundary preimages, and unique cell normal forms are proved;
-    the converse dagger-cell presentation remains open.
+    retracts. Every free cofibration is an actual relative free-boundary-cell
+    complex, and the saturation of those generators equals the original
+    free-cofibration class. The construction uses the genuine relative skeletal
+    filtration and colimit, individual new vertices in degree zero, and free
+    dagger orbits in positive degrees, at arbitrary value universe.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -36,9 +37,10 @@ sources:
       the explicit predicate obstruction in pointset.cor.cofibrant-obstruction;
       parts (1)-(2) of pointset.prop.weak-counterexample.
       The explicit zero-skeleton pushout in dj.not.adjunctions and the
-      closure arguments in dj.lem.free-cof are also formalized, together with
-      dj.cor.Fdag-free and the skeletal/boundary/normal-form ingredients of
-      the relative-cell construction. The complete cell presentation is open.
+      full cellular characterization in dj.lem.free-cof are also formalized,
+      together with dj.cor.Fdag-free. Every free cofibration has an actual
+      relative presentation by free boundary cells, and the stated saturation
+      equality is proved.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -58,11 +60,11 @@ status:
     presentability are proved at every value universe, as is existence of the
     actual free-forgetful adjunction and its explicit free-completion pushout,
     with the genuine universal property, unit and swap dagger. All stated free
-    cofibration closure operations and the saturation-to-free direction for
-    genuine boundary generators are proved. The actual skeletal filtration,
-    its colimit, boundary preimages and unique normal forms are proved. The
-    reverse cell presentation, full simplicial counterexamples, model structures,
-    unitary-core recognition and main theorems A-D remain unproved. The new
+    cofibration closure operations are proved. Every free cofibration has an
+    actual relative free-boundary-cell presentation, and the stated saturation
+    equals the original class, proving both conclusions of dj.lem.free-cof.
+    Full simplicial counterexamples, model structures, unitary-core recognition
+    and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
   # intentional proof placeholders and are not imported by the library.
@@ -256,6 +258,18 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/relative_cell_boundary.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.exists_relativeFreeBoundaryCellComplex"
+      file: "DaggerModels/RelativeCellPresentation.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.freeBoundarySaturation_eq"
+      file: "DaggerModels/RelativeCellPresentation.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/free_dagger_cofibration.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -316,8 +330,12 @@ fidelity:
     The relative filtration is literally image plus mathlib skeleton n,
     corresponding to the manuscript stage B_{le n-1}; its inclusion and colimit
     are fixed by the Challenge. Boundary characteristic maps are not assumed
-    monic, and degree zero is included. Saturation-to-free is proved, while
-    choosing dagger orbits and constructing every attachment pushout remain open.
+    monic, and degree zero is included. The full relative-cell presentation
+    constructs actual orbit representatives and attachment pushouts: individual
+    new vertices in degree zero and free dagger orbits in positive degrees.
+    The countable stage order is transported to ULift Nat for saturation at
+    arbitrary universe u. The result applies to any actual left adjoint of
+    the original forgetful functor, including the canonical free functor.
     The existential Challenge goals do not fix a chosen
     witness implementation; the library supplies the manuscript's concrete
     counterexamples and actual equivalence/adjunction data.
@@ -327,11 +345,11 @@ review:
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 61 selected library
+    checks, not independent human review. Comparator checks 63 selected library
     theorems and three audit-only definition roots against twelve self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib and is limited
-    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 82, and 29;
-    787 in total, including comments and blank lines); all twelve together
+    to 100 physical lines (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, and 29;
+    798 in total, including comments and blank lines); all twelve together
     form the review surface. New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
     Challenge proof placeholders are outside the proved library. Dependency pins
@@ -394,7 +412,7 @@ alignment:
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
       module: "DaggerModels/FreeCofibration.lean"
       status: "proved"
-      note: "The full cellular characterization remains unproved; transfinite closure is proved separately."
+      note: "Retract closure is an ingredient of the full cellular characterization proved separately."
     - source: "Pushout closure argument in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
       module: "DaggerModels/FreeCofibrationPushout.lean"
@@ -424,7 +442,7 @@ alignment:
       lean: "DaggerModels.freeBoundarySaturation_le"
       module: "DaggerModels/FreeBoundary.lean"
       status: "proved"
-      note: "The generators are the actual F(boundary n).ι images; the reverse inclusion is open."
+      note: "The generators are the actual F(boundary n).ι images; the reverse inclusion is proved separately."
     - source: "Relative skeletal filtration and colimit in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration"
       module: "DaggerModels/RelativeSkeleton.lean"
@@ -436,12 +454,23 @@ alignment:
       status: "proved"
       note: "All degrees including zero; characteristic map is not assumed mono; ancestor and epi are unique."
     - source: "dj.lem.free-cof (cellular characterization)"
-      status: "not-formalized"
+      lean: "DaggerModels.freeBoundarySaturation_eq"
+      module: "DaggerModels/RelativeCellPresentation.lean"
+      status: "proved"
       note: >-
-        Closure and saturation-to-free are proved, as are the actual relative
-        filtration, its colimit, and ordinary boundary/complement normal forms.
-        The reverse inclusion requires dagger-orbit attachment pushouts and
-        an actual relative cell presentation of every free cofibration.
+        The stated saturation of the actual free boundary inclusions equals
+        the original free-cofibration class, for any actual free adjunction
+        and every value universe u. The canonical free functor is a proved
+        specialization.
+    - source: "dj.lem.free-cof (every free cofibration is a relative cell complex)"
+      lean: "DaggerModels.exists_relativeFreeBoundaryCellComplex"
+      module: "DaggerModels/RelativeCellPresentation.lean"
+      status: "proved"
+      note: >-
+        Actual RelativeCellComplex data with the original map and target
+        colimit, constructed from genuine orbit representatives and attachment
+        pushouts. Degree zero attaches individual new vertices. No cellularity
+        premise or monicity of characteristic maps is assumed.
     - source: "Main theorems A-D"
       status: "not-formalized"
 acknowledgements: >-

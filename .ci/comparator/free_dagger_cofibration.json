@@ -6,7 +6,9 @@
     "DaggerModels.freeDagger_map_freeCofibration",
     "DaggerModels.freeBoundarySaturation_le",
     "DaggerModels.freeCofibration_of_relativeCellComplex",
-    "DaggerModels.freeBoundary_rlp_iff"
+    "DaggerModels.freeBoundary_rlp_iff",
+    "DaggerModels.exists_relativeFreeBoundaryCellComplex",
+    "DaggerModels.freeBoundarySaturation_eq"
   ],
   "permitted_axioms": [
     "propext",

@@ -16,17 +16,17 @@ candidate against twelve short, self-contained problem specifications:
 | [VerticesChallenge.lean](VerticesChallenge.lean) | 28 | [vertices.json](vertices.json) | 3 theorems identifying the common vertices with the zero-skeleton |
 | [FreeDaggerPushoutChallenge.lean](FreeDaggerPushoutChallenge.lean) | 88 | [free_dagger_pushout.json](free_dagger_pushout.json) | 2 theorems: pushout, unit and swap, including the literal zero-skeleton span |
 | [RelativeSkeletonChallenge.lean](RelativeSkeletonChallenge.lean) | 55 | [relative_skeleton.json](relative_skeleton.json) | 3 theorems: stable skeleta and actual filtration with inclusions and colimit |
-| [FreeDaggerCofibrationChallenge.lean](FreeDaggerCofibrationChallenge.lean) | 82 | [free_dagger_cofibration.json](free_dagger_cofibration.json) | 5 theorems: free monos, genuine boundary generators, saturation inclusion and lifting |
+| [FreeDaggerCofibrationChallenge.lean](FreeDaggerCofibrationChallenge.lean) | 93 | [free_dagger_cofibration.json](free_dagger_cofibration.json) | 7 theorems: free monos, genuine boundary generators, relative cell presentation, saturation equality and lifting |
 | [RelativeCellBoundaryChallenge.lean](RelativeCellBoundaryChallenge.lean) | 29 | [relative_cell_boundary.json](relative_cell_boundary.json) | 4 theorems: epi membership, exact boundary preimage, complement and normal-form uniqueness |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
 the implementation. The twelve Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **787 lines in total**, including
+under the logical module name `Challenge`. Their **798 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 40
+The checker retains the original **21 named library theorems** and adds 42
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -34,7 +34,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-64-root coverage set; it is a registry, not an executable Comparator config.
+66-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -56,11 +56,13 @@ The relative-filtration target retains actual transfinite-composition data,
 including the source map and colimit, and identifies each stage with the exact
 image-plus-skeleton subobject while preserving its inclusion in the target.
 The free-boundary target defines its generators as actual images of ordinary
-boundary inclusions. Its saturation assertion has only the proved direction
-from generated maps to free cofibrations; the converse is still open. The
-ordinary cell specification fixes both the exact boundary preimage and the
-unique nondegenerate ancestor/epi map. These new obligations add 18 roots to
-the preceding 46, all of which are retained. Tool and dependency pins and both
+boundary inclusions. Its two new conclusions require an actual relative cell
+complex for every map satisfying the original `FreeCofibration` condition,
+and equality of the stated saturation with that class. No chosen orbit
+representatives or cellularity assumption are provided as input. The ordinary
+cell specification fixes both the exact boundary preimage and the unique
+nondegenerate ancestor/epi map. These two obligations extend the preceding 64
+roots to 66; all earlier roots are retained. Tool and dependency pins and both
 negative-control definitions are unchanged.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
@@ -111,7 +113,7 @@ registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces at most 100 physical
 lines per Challenge (including blank lines and comments), plain direct Mathlib
 imports, standard permitted axioms, no definition holes, and exact registration
-of all 64 roots. This check is not a Lean parser or an adversarial security
+of all 66 roots. This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
 ## Pinned tools

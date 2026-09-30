@@ -94,6 +94,7 @@ jobs:
           Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
           Mathlib.CategoryTheory.Groupoid
           Mathlib.Data.Int.Basic
+          Mathlib.Data.Quot
           Mathlib.CategoryTheory.Presentable.Presheaf
           Mathlib.CategoryTheory.Presentable.Type
           Mathlib.CategoryTheory.Presentable.Adjunction

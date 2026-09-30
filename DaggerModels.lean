@@ -17,5 +17,16 @@ import DaggerModels.FreeBoundary
 import DaggerModels.ForgetfulReflection
 import DaggerModels.RelativeSkeleton
 import DaggerModels.RelativeCellBoundary
+import DaggerModels.FreeInvolution
+import DaggerModels.RelativeCellOrbits
+import DaggerModels.FreeDaggerCell
+import DaggerModels.RelativeCellMaps
+import DaggerModels.RelativeCellIntersection
+import DaggerModels.RelativeCellSeparation
+import DaggerModels.DegreewisePushout
+import DaggerModels.CoproductAttachment
+import DaggerModels.RelativeCellCoverage
+import DaggerModels.BoundaryCellTransport
+import DaggerModels.RelativeCellPresentation
 import DaggerModels.NormalCofibrationObstruction
 import DaggerModels.UnitaryObstruction
