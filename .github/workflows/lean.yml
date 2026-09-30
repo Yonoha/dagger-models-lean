@@ -1,0 +1,37 @@
+name: Lean verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install the pinned Lean toolchain
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          auto-config: "false"
+          build: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+      - name: Fetch the required mathlib artifacts
+        run: >-
+          lake exe cache get
+          Mathlib.AlgebraicTopology.SimplicialSet.Op
+          Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
+      - name: Check all library proofs
+        run: lake build
+      - name: Audit transitive axiom dependencies
+        run: lake env lean Audit.lean
+      - name: Check the audit rejects proof holes and extra axioms
+        run: python3 scripts/check_audit.py

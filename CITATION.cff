@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite the versioned companion repository when using this partial formalization."
+type: software
+title: "Dagger models in Lean: a partial formalization of Part I"
+authors:
+  - family-names: Akasaka
+    given-names: Keima
+version: 0.1.0
+date-released: 2026-10-01
+url: "https://github.com/Yonoha/dagger-models-lean"
+repository-code: "https://github.com/Yonoha/dagger-models-lean"
+license: Apache-2.0
+abstract: >-
+  A partial Lean 4 formalization accompanying Models for dagger (infinity,1)-categories I:
+  Dagger simplicial sets and unitary cores. Version 0.1.0 covers the reversal simplex
+  category, dagger simplicial sets and elementary reversal lemmas, the definition of
+  free cofibrations, and the vertex-level word obstruction. It does not formalize the
+  main model-categorical theorems.

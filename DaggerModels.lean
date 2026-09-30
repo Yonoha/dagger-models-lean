@@ -1,0 +1,3 @@
+import DaggerModels.ReverseSimplex
+import DaggerModels.SimplicialSet
+import DaggerModels.WordObstruction
