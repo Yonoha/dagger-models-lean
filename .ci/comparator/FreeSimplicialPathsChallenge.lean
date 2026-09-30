@@ -4,9 +4,9 @@ import Mathlib.Combinatorics.Quiver.Symmetric
 Proof placeholders specify obligations; the data definitions are fixed explicitly. -/
 set_option warningAsError false
 open CategoryTheory MonoidalCategory BraidedCategory
-universe u
+universe u v
 namespace DaggerModels
-noncomputable instance sSetBraidedCategory : BraidedCategory SSet.{u} :=
+noncomputable instance sSetBraidedCategory : BraidedCategory SSet.{v} :=
   .ofCartesianMonoidalCategory
 structure DaggerSimplicialGraph where
   Obj : Type u
