@@ -64,6 +64,10 @@ CHALLENGES = {
         ".ci/comparator/DaggerMonadicityChallenge.lean",
         ".ci/comparator/dagger_monadicity.json"
     ),
+    "dagger_graph_presentable": (
+        ".ci/comparator/DaggerGraphPresentableChallenge.lean",
+        ".ci/comparator/dagger_graph_presentable.json"
+    ),
 }
 # The literal monadicity statement needs both complete category structures and
 # the actual forgetful functor. This reviewed exception keeps that context visible.

@@ -22,6 +22,8 @@ project:
     actual finite-path free category, and its free-forgetful adjunction with
     singleton-edge unit and full universal property. The graph forgetful functor
     is monadic by constructed graph-split coequalizers and Beck's theorem.
+    The graph category has an actual small-index presheaf equivalence, all small
+    limits and colimits, and local finite presentability at every value universe.
     Local finite presentability of dagger simplicial categories remains unproved.
     The main model-categorical theorems A-D are not formalized.
   authors:
@@ -49,8 +51,9 @@ sources:
       It also formalizes bg.def.dagger-scat, bg.def.dagger-graph, and the free
       word construction with its universal property at the start of
       bg.lem.presentable, and the monadicity assertion of that lemma using
-      constructed graph-split coequalizers. Its local finite presentability
-      conclusion is not yet proved.
+      constructed graph-split coequalizers. The graph-LFP ingredient is proved via
+      an actual small-index presheaf equivalence. The lemma's local finite
+      presentability conclusion for dagger simplicial categories is not yet proved.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -79,8 +82,11 @@ status:
     finite-path free construction, free-forgetful adjunction and singleton
     unit are proved. Monadicity of the graph forgetful functor is proved by
     constructing the actual split quotient enrichment, quotient functor and
-    coequalizer universal property, followed by Beck's theorem. Local finite
-    presentability and creation of limits/colimits remain unproved.
+    coequalizer universal property, followed by Beck's theorem. The graph category
+    is proved equivalent to a concrete small-index presheaf category, with all
+    small limits/colimits and local finite presentability at each value universe.
+    Local finite presentability and creation of limits/colimits for dagger
+    simplicial categories remain unproved.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -336,6 +342,36 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_monadicity.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.exists_daggerGraphPresheafEquivalence"
+      file: "DaggerModels/DaggerGraphPresheaf.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_graph_presentable.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerGraphHasLimits"
+      file: "DaggerModels/DaggerGraphPresentable.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_graph_presentable.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerGraphHasColimits"
+      file: "DaggerModels/DaggerGraphPresentable.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_graph_presentable.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerGraphLocallyFinitelyPresentable"
+      file: "DaggerModels/DaggerGraphPresentable.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_graph_presentable.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.daggerGraphLocallyPresentable"
+      file: "DaggerModels/DaggerGraphPresentable.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_graph_presentable.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -423,21 +459,29 @@ fidelity:
     prove category and dagger laws. The given quotient graph and map are
     definitionally retained. The section is never assumed to preserve operations.
     Graph descent gives the coequalizer universal property and preservation,
-    and Beck's theorem gives actual monadicity. Local finite presentability
-    remains unproved.
+    and Beck's theorem gives actual monadicity. Dagger graphs are proved equivalent
+    to presheaves on a small index with vertex and simplex-edge objects. The
+    dagger involution commutes with ordinary simplex operators. Endpoint fibers
+    and total edges give both functors, natural unit/counit and the triangle.
+    Local finite presentability of the presheaf category and all small
+    limits/colimits transport to the original graph category. The Challenge
+    protects this actual equivalence's existence and graph LFP/LP while leaving
+    the indexing witness free. Local finite presentability of dagger simplicial
+    categories remains unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 83 selected library
-    theorems and three audit-only definition roots against sixteen self-contained
+    checks, not independent human review. Comparator checks 88 selected library
+    theorems and three audit-only definition roots against seventeen self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib. The original
     fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
     73, 100, and 83 lines). The literal monadicity specification has 153 lines
     with a reviewed 160-line exception to keep both actual category structures
-    and the forgetful functor visible. All sixteen total 1207 physical lines,
+    and the forgetful functor visible. The graph presentability
+    Challenge adds 74 lines. All seventeen total 1281 physical lines,
     including comments and blank lines, and together form the review surface.
     New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
@@ -475,7 +519,18 @@ alignment:
         Actual graph forgetful functor is monadic by isomorphism reflection,
         constructed graph-split quotient categories and coequalizers, and
         Mathlib's Beck theorem. Arbitrary common universe u and all object maps
-        are retained. Local finite presentability remains unproved.
+        are retained. Local finite presentability of dagger simplicial
+        categories remains unproved.
+    - source: "Graph presentability ingredient in the proof of bg.lem.presentable"
+      lean: "DaggerModels.daggerGraphLocallyFinitelyPresentable"
+      module: "DaggerModels/DaggerGraphPresentable.lean"
+      status: "proved"
+      note: >-
+        The complete original graph category is equivalent to presheaves on a
+        concrete small index. Both functors, natural unit/counit and triangle
+        are proved. All small limits/colimits and LFP hold at every common
+        value universe u. This does not yet give dagger-category LFP or
+        finitarity of the word monad.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

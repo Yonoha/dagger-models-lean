@@ -421,14 +421,59 @@ also a colimit, giving preservation by `forgetGraph`. Together with the actual
 free adjunction and reflection of isomorphisms, Mathlib's Beck theorem yields
 `forgetGraph_monadic : Nonempty (MonadicRightAdjoint forgetGraph)`. This is the
 full first assertion of `bg.lem.presentable`, at every common universe `u`.
-The finitary and local finite presentability arguments remain unproved.
+Finitarity of the word monad and local finite presentability of dagger
+simplicial categories remain unproved. The graph presentability ingredient is
+proved below.
 
 The Challenge directly protects the literal reflection and monadicity types.
 It shows the full category structures and the original forgetful functor, and
 imports only Mathlib. Its 153 physical lines have a reviewed 160-line budget;
-the other fifteen Challenges keep their 100-line budgets. This explicit
+the other Challenges keep their 100-line budgets. This explicit
 exception avoids hiding definitions or replacing monadicity by an easier
 existence statement. All prior comparison roots remain registered.
+
+## Dagger graph presheaves and presentability
+
+Files: [DaggerGraphIndex.lean](DaggerModels/DaggerGraphIndex.lean),
+[DaggerGraphTotalSpace.lean](DaggerModels/DaggerGraphTotalSpace.lean),
+[DaggerGraphPresheaf.lean](DaggerModels/DaggerGraphPresheaf.lean), and
+[DaggerGraphPresentable.lean](DaggerModels/DaggerGraphPresentable.lean).
+Problem specification:
+[DaggerGraphPresentableChallenge.lean](.ci/comparator/DaggerGraphPresentableChallenge.lean).
+
+This proves the graph-LFP ingredient in the last paragraph of
+`bg.lem.presentable`, with the graph category of `bg.def.dagger-graph` unchanged.
+The concrete small index has one vertex object and an edge object for each
+simplex. Its two endpoint maps are exchanged by an involution. The involution
+commutes with ordinary simplex maps; it does not reverse their order.
+
+The forward functor uses the original vertex set and the total edge spaces
+`Σ x, Σ y, (G.Hom x y).obj n`. A graph map acts on both endpoints and the edge
+simplex. The inverse functor takes the exact fibers of both endpoint maps,
+with the index involution supplying dagger. Arbitrary presheaf natural
+transformations induce the full graph maps, including their vertex functions.
+The unit reinserts endpoint labels; its inverse uses their equalities to
+recover the original typed edge. The counit forgets redundant fiber labels,
+with inverse supplied by the actual source and target of an edge. Naturality,
+both inverse laws, and the equivalence triangle are proved.
+
+Presheaves on this index are locally finitely presentable in every value
+universe `u`: free representables on the singleton type form a small strong
+generator of finitely presentable objects. The actual equivalence transports
+this assertion and all `u`-small limits and colimits to the original graph
+category. There is no restriction to a fixed vertex set or to degree-zero
+graphs, and no finitary-monad premise is needed for this graph result.
+
+The 74-line Challenge displays the complete original graph category and asks
+for an actual equivalence with presheaves on some small category, as well as
+`HasLimits`, `HasColimits`, `IsLocallyFinitelyPresentable`, and
+`IsLocallyPresentable`. It does not fix the proof's choice of indexing category
+or duplicate the intermediate equivalence. Comparator replays their proof
+dependencies, and the namespace-wide axiom audit includes those constructions.
+The five targets extend the prior 86 roots to 91 without changing any prior
+Challenge, tool pin, permitted axiom, or negative control. The resulting 17
+Challenges total 1,281 physical lines. This result does not yet prove local
+finite presentability of dagger simplicial categories or the main theorems A–D.
 
 ## Main-result status
 
@@ -443,7 +488,8 @@ existence statement. All prior comparison roots remain registered.
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
 | `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
 | Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |
-| First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck; local finite presentability remains unproved |
+| First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck; local finite presentability of dagger simplicial categories remains unproved |
+| Graph ingredient in the proof of `bg.lem.presentable` | Dagger graphs are locally finitely presentable | Actual presheaf equivalence, all small limits/colimits, and LFP proved at every common value universe |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

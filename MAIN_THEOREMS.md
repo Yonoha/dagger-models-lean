@@ -86,8 +86,18 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   coequalizer universal property and preservation. `DaggerSimplicialMonadicity.lean`
   then applies Mathlib's Beck theorem to the actual free adjunction. Thus the
   original graph forgetful functor is monadic, at every common universe `u`.
-  Finitarity of the word monad, presentability of dagger graphs, and the local
-  finite presentability conclusion of `bg.lem.presentable` remain to prove.
+  Finitarity of the word monad and the local finite presentability conclusion
+  for dagger simplicial categories in `bg.lem.presentable` remain to prove.
+- The graph presentability ingredient in the proof of `bg.lem.presentable`:
+  `DaggerGraphIndex.lean` gives a small index with a vertex object, simplex
+  edge objects, endpoint maps, and an involution commuting with ordinary
+  simplex maps. `DaggerGraphPresheaf.lean` constructs an actual equivalence
+  between dagger simplicial graphs and presheaves on this index, including
+  arbitrary graph maps, natural unit/counit isomorphisms and the triangle law.
+  `DaggerGraphPresentable.lean` transports all small limits and colimits and
+  proves local finite presentability at the graph's value universe `u`.
+  This is a property of the graph category, not yet of dagger simplicial
+  categories or of the word monad.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -100,9 +110,10 @@ Required chain:
 1. Dagger simplicial categories (`bg.def.dagger-scat`), dagger graphs,
    free categories, limits/colimits, and local presentability.
    The categories, graphs, concrete free construction and adjunction are now
-   implemented, and monadicity over dagger graphs is proved. Limits/colimits
-   (`bg.lem.creation`) and local finite presentability (`bg.lem.presentable`)
-   are still required.
+   implemented, monadicity over dagger graphs is proved, and the graph category
+   is locally finitely presentable by an actual presheaf equivalence.
+   Limits/colimits (`bg.lem.creation`) and local finite presentability
+   (`bg.lem.presentable`) for dagger simplicial categories are still required.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

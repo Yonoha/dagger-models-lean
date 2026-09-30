@@ -43,3 +43,11 @@ import DaggerModels.DaggerGraphDescent
 import DaggerModels.DaggerGraphCoequalizer
 import DaggerModels.DaggerSplitCoequalizer
 import DaggerModels.DaggerSimplicialMonadicity
+import DaggerModels.DaggerGraphIndex
+import DaggerModels.DaggerGraphTotalSpace
+import DaggerModels.DaggerGraphPresheafForward
+import DaggerModels.DaggerGraphPresheafInverse
+import DaggerModels.DaggerGraphPresheafUnit
+import DaggerModels.DaggerGraphPresheafCounit
+import DaggerModels.DaggerGraphPresheaf
+import DaggerModels.DaggerGraphPresentable

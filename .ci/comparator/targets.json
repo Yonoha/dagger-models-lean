@@ -85,6 +85,11 @@
     "DaggerModels.exists_freeDaggerSimplicialCategory",
     "DaggerModels.FreeSimplicialPaths.comp_dagger",
     "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms",
-    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic",
+    "DaggerModels.daggerGraphHasLimits",
+    "DaggerModels.daggerGraphHasColimits",
+    "DaggerModels.daggerGraphLocallyFinitelyPresentable",
+    "DaggerModels.daggerGraphLocallyPresentable",
+    "DaggerModels.exists_daggerGraphPresheafEquivalence"
   ]
 }
