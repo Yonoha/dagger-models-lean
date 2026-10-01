@@ -72,11 +72,18 @@ CHALLENGES = {
         ".ci/comparator/DaggerSimplicialPresentableChallenge.lean",
         ".ci/comparator/dagger_simplicial_presentable.json"
     ),
+    "dagger_ordinary_creation": (
+        ".ci/comparator/DaggerOrdinaryCreationChallenge.lean",
+        ".ci/comparator/dagger_ordinary_creation.json"
+    ),
 }
-# The literal monadicity statement needs both complete category structures and
-# the actual forgetful functor. This reviewed exception keeps that context visible.
+# Literal monadicity and ordinary creation need both complete category structures
+# and the actual forgetful functors. These reviewed exceptions keep them visible.
 # All other Challenges retain the original 100-line budget.
-LINE_BUDGET_EXCEPTIONS = {".ci/comparator/DaggerMonadicityChallenge.lean": 160}
+LINE_BUDGET_EXCEPTIONS = {
+    ".ci/comparator/DaggerMonadicityChallenge.lean": 160,
+    ".ci/comparator/DaggerOrdinaryCreationChallenge.lean": 116,
+}
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
 

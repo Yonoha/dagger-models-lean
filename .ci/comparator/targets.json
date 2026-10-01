@@ -95,6 +95,8 @@
     "DaggerModels.daggerSimplicialCatHasLimits",
     "DaggerModels.daggerSimplicialCatHasColimits",
     "DaggerModels.daggerSimplicialCatLocallyFinitelyPresentable",
-    "DaggerModels.daggerSimplicialCatLocallyPresentable"
+    "DaggerModels.daggerSimplicialCatLocallyPresentable",
+    "DaggerModels.DaggerSimplicialCat.forget_createsLimits",
+    "DaggerModels.DaggerSimplicialCat.forget_createsColimits"
   ]
 }

@@ -25,7 +25,9 @@ all small limits and creates filtered colimits over graphs, with no remaining
 finitarity premise. Actual hom quotients of free categories on graph colimits
 give all small colimits. A small strong generator of finitely presentable
 objects then proves local finite presentability of dagger simplicial categories,
-completing `bg.lem.presentable` at every common universe. Two concrete
+completing `bg.lem.presentable` at every common universe. The ordinary
+simplicial-category forgetful functor also creates all small limits and colimits
+(`bg.lem.creation`), with independent object, hom, and diagram universes. Two concrete
 comparison obstructions and the first release's elementary foundations are retained.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
@@ -55,8 +57,9 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Monadicity in `bg.lem.presentable` | [`DaggerSimplicialMonadicity`](DaggerModels/DaggerSimplicialMonadicity.lean) | Actual graph forgetful functor is monadic, using constructed graph-split coequalizers and isomorphism reflection |
 | Graph presentability in the proof of `bg.lem.presentable` | [`DaggerGraphPresheaf`](DaggerModels/DaggerGraphPresheaf.lean), [`DaggerGraphPresentable`](DaggerModels/DaggerGraphPresentable.lean) | Actual small-index presheaf equivalence, all small limits/colimits, and local finite presentability at every common value universe |
 | Word finitarity in the proof of `bg.lem.presentable` | [`FreeWordFinitary`](DaggerModels/FreeWordFinitary.lean) | The original free/forgetful endofunctor preserves all small filtered colimits; fixed-length endpoint fibers identify naturally with actual paths |
-| Consequences of monadicity and word finitarity | [`DaggerSimplicialLimits`](DaggerModels/DaggerSimplicialLimits.lean), [`DaggerSimplicialFilteredColimits`](DaggerModels/DaggerSimplicialFilteredColimits.lean) | All small limits and filtered colimits exist; the graph forgetful functor creates them. This does not prove the different ordinary-category forgetful claim in `bg.lem.creation` |
+| Consequences of monadicity and word finitarity | [`DaggerSimplicialLimits`](DaggerModels/DaggerSimplicialLimits.lean), [`DaggerSimplicialFilteredColimits`](DaggerModels/DaggerSimplicialFilteredColimits.lean) | All small limits and filtered colimits exist; the graph forgetful functor creates them. The different ordinary-category forgetful functor is treated separately below |
 | Final assertion of `bg.lem.presentable` | [`DaggerSemanticColimit`](DaggerModels/DaggerSemanticColimit.lean), [`DaggerFiniteGenerators`](DaggerModels/DaggerFiniteGenerators.lean), [`DaggerSimplicialPresentable`](DaggerModels/DaggerSimplicialPresentable.lean) | Actual small colimits and a small strong generator of finitely presentable objects give unconditional local finite presentability of the full dagger simplicial category at every common universe |
+| `bg.lem.creation` | [`DaggerOrdinaryCreation`](DaggerModels/DaggerOrdinaryCreation.lean) | The actual ordinary simplicial-category forgetful functor creates all small limits and colimits, with no existence premise or restriction on object maps |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -142,7 +145,7 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 93 selected library theorems against eighteen
+Linux GitHub Actions job. It compares 95 selected library theorems against nineteen
 self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
@@ -163,6 +166,7 @@ self-contained problem specifications:
 - [Graph forgetful functor: reflection, monadicity and word finitarity](.ci/comparator/DaggerMonadicityChallenge.lean): 160 lines
 - [Graph presheaf equivalence and presentability](.ci/comparator/DaggerGraphPresentableChallenge.lean): 74 lines
 - [Dagger simplicial category limits, colimits and presentability](.ci/comparator/DaggerSimplicialPresentableChallenge.lean): 93 lines
+- [Creation over ordinary simplicial categories](.ci/comparator/DaggerOrdinaryCreationChallenge.lean): 116 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -192,11 +196,12 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks direct Mathlib imports and coverage of all 96 registered roots.
-Seventeen Challenges have 100-line budgets. The monadicity
-Challenge has a reviewed 160-line budget because its literal statement needs
-both full category structures and the actual forgetful functor; these definitions
-are visible, including structural proofs. The 1,381 lines across all eighteen
+CI checks direct Mathlib imports and coverage of all 98 registered roots.
+Seventeen Challenges have 100-line budgets. The monadicity and ordinary-creation
+Challenges have reviewed 160-line and 116-line budgets respectively. Both need
+the two full category structures and actual forgetful functor visible, including
+structural proofs. The ordinary-creation file still has 101 nonblank lines; its
+116-line format preserves readability. The 1,497 lines across all nineteen
 files are the review surface; checking one file is not a review of the entire
 formalization.
 
@@ -234,6 +239,12 @@ and all enriched dagger functors, with the full category structure visible.
 Its four targets state small limits, small colimits, LFP and LP directly,
 without premises assuming cocompleteness or a strong generator. It adds 93
 physical lines and four roots while retaining all preceding 92 targets.
+The ordinary-creation Challenge then adds two roots for the actual forgetful
+functor to ordinary simplicial categories. It directly requires Mathlib
+`CreatesLimitsOfSize` and `CreatesColimitsOfSize` for arbitrary diagram sizes,
+with independent object and hom universes. `Nonempty` expresses existence of
+the full creation data, including lifting and reflection. All 96 preceding
+roots and eighteen Challenges remain unchanged.
 
 ## Citing this version
 
@@ -270,8 +281,9 @@ The cellular characterization, free dagger simplicial-category adjunction and
 monadicity over dagger graphs, and graph presheaf equivalence/presentability
 are complete. The original word monad is finitary, and dagger simplicial categories
 have all small limits and colimits and are locally finitely presentable.
-The next stages toward A–D include the ordinary-category forgetful assertion
-in `bg.lem.creation`, ordinary rigidification and coherent nerve, their lifted
+The ordinary-category forgetful assertion in `bg.lem.creation` is also proved.
+The next stages toward A–D include the two-object free cells and their finite
+presentability, ordinary rigidification and coherent nerve, their lifted
 adjunction, and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
@@ -299,6 +311,8 @@ graph の圏についても、実際の前層圏との圏同値、全ての小�
 さらに、自由圏の hom の商として一般の小余極限を構成し、有限可呈示な対象からなる
 小さい強生成系と合わせて、dagger simplicial category の局所有限可呈示性を証明しました。
 これにより `bg.lem.presentable` の結論全体を証明しました。
-通常の simplicial category への忘却関手に関する `bg.lem.creation` は未完了です。
+通常の simplicial category への忘却関手が全ての小極限・小余極限を創出する
+`bg.lem.creation` も証明しました。対象・hom・図式の universe は独立で、
+対象写像を固定する条件や極限・余極限の存在を仮定する条件は追加していません。
 論文の主定理全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies eighteen self-contained Comparator Challenges for
+The current branch supplies nineteen self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all eighteen files to review the
+unproved library results. A reviewer must inspect all nineteen files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -381,7 +381,8 @@ axiom audit, but are not additional roots of this short universal specification.
 This completes the free construction and adjunction used at the start of
 `bg.lem.presentable`. Its monadicity assertion is proved in the next section.
 The local finite presentability conclusion is proved below. Creation of limits
-and colimits in `bg.lem.creation` remains unproved. The model-categorical conclusions of A–D
+and colimits in `bg.lem.creation` are proved in the final construction below.
+The model-categorical conclusions of A–D
 do not follow from the currently proved results alone. The implementation and
 Challenge correspondence received separate GPT-6.1-Sol/xhigh agent reviews;
 this is not independent human review. No manuscript statement was edited.
@@ -471,8 +472,8 @@ for an actual equivalence with presheaves on some small category, as well as
 or duplicate the intermediate equivalence. Comparator replays their proof
 dependencies, and the namespace-wide axiom audit includes those constructions.
 The five graph targets and all preceding 86 roots remain registered. Word
-finitarity and the dagger-category presentability targets below bring the total
-to 18 Challenges, 96 roots and 1,381 physical lines. Tool pins, permitted axioms
+finitarity, dagger-category presentability, and ordinary-creation targets below
+bring the total to 19 Challenges, 98 roots and 1,497 physical lines. Tool pins, permitted axioms
 and negative controls are unchanged. Local finite presentability of dagger
 simplicial categories requires the further constructions below; the main
 theorems A–D remain unproved.
@@ -587,8 +588,66 @@ these four targets bring the total to 96. The proof and statement correspondence
 received separate agent reviews; this is not independent human review.
 
 Together with the preceding monadicity proof, this completes `bg.lem.presentable`.
-It does not prove creation by the distinct forgetful functor to ordinary
-simplicial categories in `bg.lem.creation`, or any of the main theorems A–D.
+Creation by the distinct forgetful functor to ordinary simplicial categories
+in `bg.lem.creation` is proved next. The main theorems A–D remain unproved.
+
+## Creation over ordinary simplicial categories
+
+Files: [SimplicialOpposite.lean](DaggerModels/SimplicialOpposite.lean),
+[SimplicialObjectAdjunctions.lean](DaggerModels/SimplicialObjectAdjunctions.lean),
+[DaggerStructureFromOpposite.lean](DaggerModels/DaggerStructureFromOpposite.lean),
+[DaggerOppositeHom.lean](DaggerModels/DaggerOppositeHom.lean),
+[DaggerLimitOpposite.lean](DaggerModels/DaggerLimitOpposite.lean),
+[DaggerColimitOpposite.lean](DaggerModels/DaggerColimitOpposite.lean),
+[DaggerOrdinaryLimitCreation.lean](DaggerModels/DaggerOrdinaryLimitCreation.lean),
+[DaggerOrdinaryColimitCreation.lean](DaggerModels/DaggerOrdinaryColimitCreation.lean), and
+[DaggerOrdinaryCreation.lean](DaggerModels/DaggerOrdinaryCreation.lean).
+Problem specification:
+[DaggerOrdinaryCreationChallenge.lean](.ci/comparator/DaggerOrdinaryCreationChallenge.lean).
+
+This proves `bg.lem.creation` for the original `DaggerSimplicialCat.forget`
+into ordinary `SimplicialCat`. It is a different functor from `forgetGraph`.
+The result has no `HasLimits`, `HasColimits`, fullness, or fixed-object premise.
+Object universe `o`, mapping-space universe `v`, and diagram object/hom
+universes `w, w'` remain independent.
+
+The ordinary opposite functor is an actual autoequivalence, with canonical
+double-opposite unit/counit and triangle identity. Discrete and codiscrete
+simplicial categories give left and right adjoints to the actual object functor.
+It therefore preserves limits and colimits of any size that exist.
+The discrete enrichment uses constant simplicial sets on lifted equality proofs;
+this does not force the object and mapping-space universes to coincide.
+
+Given any ordinary limit cone or colimit cocone of the forgotten diagram, its
+universal property induces a functor from the apex to its ordinary opposite.
+The diagram equations and double-opposite naturality prove involutivity.
+Preservation by the object functor proves that this induced functor fixes
+objects. `ofOppositeFunctor` then supplies exactly the original mapping-space
+dagger, whose enriched opposite functor is proved equal to the induced functor.
+The original apex and entire cone/cocone are retained after forgetting.
+
+An enriched functor commuting with these daggers lifts to the actual dagger
+Hom type. Isomorphism reflection is proved by lifting the ordinary inverse,
+without assuming fullness. The ordinary universal map commutes with dagger by
+the same limit/colimit equations, so it lifts with its full universal property.
+These constructions supply Mathlib's actual `LiftsToLimit` / `LiftsToColimit`
+and `CreatesLimitsOfSize` / `CreatesColimitsOfSize` data, including reflection.
+
+The two public conclusions are `Nonempty (CreatesLimitsOfSize ... forget)` and
+`Nonempty (CreatesColimitsOfSize ... forget)`. These classes are Type-valued;
+`Nonempty` states existence of their complete data without prescribing a witness.
+It does not reduce creation to preservation or conditional existence.
+
+The Mathlib-only Challenge visibly includes both complete category structures,
+all enriched dagger functors, and this exact ordinary forgetful functor.
+Its 116 physical lines form an explicit reviewed budget exception; even without
+blank lines it has 101 lines. Readability is retained rather than hiding local
+definitions or compressing proof fields. Its two root types and all 92 local
+constants were compared directly in separate Lean environments, with only the
+two root proof bodies omitted. The existing 18 Challenges/configurations and
+96 roots are retained, giving 19 Challenges, 98 roots and 1,497 physical lines.
+The implementation and statement correspondence received separate agent reviews;
+no independent human review is claimed. The main theorems A–D remain unproved.
 
 ## Main-result status
 
@@ -606,8 +665,9 @@ simplicial categories in `bg.lem.creation`, or any of the main theorems A–D.
 | First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck |
 | Graph ingredient in the proof of `bg.lem.presentable` | Dagger graphs are locally finitely presentable | Actual presheaf equivalence, all small limits/colimits, and LFP proved at every common value universe |
 | Word ingredient in the proof of `bg.lem.presentable` | The original word monad is finitary | Proved by exact finite endpoint pullbacks, disjoint sums and their natural identification with the actual free functor |
-| Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; the ordinary-category forgetful claim remains unproved |
+| Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; ordinary-category forgetting is treated separately |
 | Final assertion of `bg.lem.presentable` | Dagger simplicial categories are locally finitely presentable | Proved using constructed small colimits and a small strong generator of finitely presentable objects, at every common universe |
+| `bg.lem.creation` | Ordinary simplicial-category forgetting creates all small limits and colimits | Full Mathlib creation data proved, with independent object, hom, and diagram universes and arbitrary object maps |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

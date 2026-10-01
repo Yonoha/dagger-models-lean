@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against eighteen self-contained problem specifications:
+candidate against nineteen self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -24,15 +24,16 @@ candidate against eighteen self-contained problem specifications:
 | [DaggerMonadicityChallenge.lean](DaggerMonadicityChallenge.lean) | 160 | [dagger_monadicity.json](dagger_monadicity.json) | 3 theorems: literal isomorphism reflection, monadicity and finitarity of a free/forgetful composite for the actual graph forgetful functor |
 | [DaggerGraphPresentableChallenge.lean](DaggerGraphPresentableChallenge.lean) | 74 | [dagger_graph_presentable.json](dagger_graph_presentable.json) | 5 theorems: actual small-index presheaf equivalence, limits/colimits, and graph LFP/LP |
 | [DaggerSimplicialPresentableChallenge.lean](DaggerSimplicialPresentableChallenge.lean) | 93 | [dagger_simplicial_presentable.json](dagger_simplicial_presentable.json) | 4 theorems: unconditional small limits/colimits and LFP/LP of the actual dagger simplicial category |
+| [DaggerOrdinaryCreationChallenge.lean](DaggerOrdinaryCreationChallenge.lean) | 116 | [dagger_ordinary_creation.json](dagger_ordinary_creation.json) | 2 theorems: creation of all small limits and colimits by the actual ordinary-category forgetful functor |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The eighteen Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,381 lines in total**, including
+the implementation. The nineteen Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **1,497 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 72
+The checker retains the original **21 named library theorems** and adds 74
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -40,7 +41,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-96-root coverage set; it is a registry, not an executable Comparator config.
+98-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -90,8 +91,9 @@ The monadicity specification adds the literal `ReflectsIsomorphisms` and
 structures, their full enriched dagger functors/graph maps, and the original
 forgetful functor are visible. Mathlib's monadicity class includes a comparison
 equivalence with monad algebras. Its 160 physical lines are covered by a
-reviewed, file-specific 160-line budget: this is the only exception to the
-100-line budget. It keeps required definitions visible instead of importing
+reviewed, file-specific 160-line budget. The ordinary-creation specification
+below has a separate 116-line exception to the 100-line budget. These keep
+required definitions visible instead of importing
 candidate files or weakening the monadicity statement. All preceding 84 roots
 remain intact, and the tool/dependency pins and negative controls are unchanged.
 
@@ -125,6 +127,16 @@ The 93-line Mathlib-only specification adds four roots to the preceding 92;
 every prior Challenge, target and axiom policy is unchanged. Its conclusions
 complete `bg.lem.presentable`, but do not assert creation by the ordinary-category
 forgetful functor in `bg.lem.creation` or any main model-categorical theorem.
+
+The ordinary-creation specification requires the separate `bg.lem.creation`
+assertion, proved by the library. Both original categories and their complete category structures are
+visible, along with the exact ordinary forgetful functor. Its two targets are
+`Nonempty` of full Mathlib `CreatesLimitsOfSize` and `CreatesColimitsOfSize`
+data, for independent object, hom, and diagram universes. There is no existence
+or fixed-object premise. The 116-line exception preserves readability and full
+definitions; removing blank lines alone still leaves 101 lines. It retains all
+preceding 96 roots and eighteen specifications byte-for-byte, for 98 total roots.
+This registration changes no tool pins, axiom policy, or negative controls.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
@@ -172,9 +184,10 @@ change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
-the seventeen ordinary Challenges and the explicit 160-line monadicity exception
-(including blank lines and comments), plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 96 roots.
+the seventeen ordinary Challenges and the explicit 160-line monadicity and
+116-line ordinary-creation exceptions (including blank lines and comments),
+plain direct Mathlib imports, standard
+permitted axioms, no definition holes, and exact registration of all 98 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
@@ -195,7 +208,7 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The eighteen positive comparisons use current candidate
+the Challenge mathematics. The nineteen positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
 

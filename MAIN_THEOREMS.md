@@ -110,7 +110,7 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   `DaggerSimplicialLimits.lean` derives creation and existence of all small
   limits from monadicity. These results concern the graph forgetful functor;
   the different ordinary-category forgetful assertion in `bg.lem.creation`
-  is still required. General colimits are constructed below.
+  is proved separately below. General colimits are constructed next.
 - The final local finite presentability assertion of `bg.lem.presentable`:
   `DaggerHomQuotient.lean` constructs actual enriched hom quotients, retaining
   ordinary simplicial maps, dagger, arbitrary object maps, and the full
@@ -128,13 +128,23 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   strong generator with the constructed colimits to prove unconditional local
   finite presentability at every common universe `u`. The complete conclusion
   of `bg.lem.presentable` is now proved, without postulating the manuscript's
-  cited general finitary-monad theorem. This does not assert `bg.lem.creation`.
+  cited general finitary-monad theorem.
+- `bg.lem.creation`: `SimplicialOpposite.lean` constructs the actual ordinary
+  opposite equivalence, and `SimplicialObjectAdjunctions.lean` proves both
+  adjoints to the object functor, hence its preservation of limits and colimits.
+  The opposite constructions induce an involutive functor on any given ordinary
+  limit or colimit apex; object-functor preservation proves it fixes objects.
+  `DaggerOrdinaryLimitCreation.lean` and `DaggerOrdinaryColimitCreation.lean`
+  retain the original apex and cone/cocone, lift the actual universal maps,
+  and construct full Mathlib creation data using proved isomorphism reflection.
+  `DaggerOrdinaryCreation.lean` states both conclusions without existence
+  premises, for independent object, hom, and diagram universes.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
 ## A — dagger Bergner model structure
 
-Targets: `bg.thm.main` (line 1117), `bg.thm.left-proper` (line 1141).
+Targets: `bg.thm.main` (line 1119), `bg.thm.left-proper` (line 1143).
 
 Required chain:
 
@@ -146,7 +156,9 @@ Required chain:
    monad is finitary. All small limits and colimits and local finite
    presentability of dagger simplicial categories are now proved, completing
    `bg.lem.presentable`. Creation of limits and colimits by the different
-   ordinary-category forgetful functor (`bg.lem.creation`) is still required.
+   ordinary-category forgetful functor (`bg.lem.creation`) is now also proved.
+   Two-object free cells and their finite presentability (`bg.not.cells`,
+   `bg.eq.A-univ`) remain to be integrated.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

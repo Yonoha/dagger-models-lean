@@ -67,3 +67,12 @@ import DaggerModels.DaggerHomQuotient
 import DaggerModels.DaggerColimitKernel
 import DaggerModels.DaggerSemanticColimit
 import DaggerModels.DaggerSimplicialPresentable
+import DaggerModels.SimplicialOpposite
+import DaggerModels.SimplicialObjectAdjunctions
+import DaggerModels.DaggerStructureFromOpposite
+import DaggerModels.DaggerOppositeHom
+import DaggerModels.DaggerLimitOpposite
+import DaggerModels.DaggerColimitOpposite
+import DaggerModels.DaggerOrdinaryLimitCreation
+import DaggerModels.DaggerOrdinaryColimitCreation
+import DaggerModels.DaggerOrdinaryCreation

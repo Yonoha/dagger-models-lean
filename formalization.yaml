@@ -29,6 +29,8 @@ project:
     Hom quotients of free categories on graph colimits construct all small
     colimits. Together with a small strong generator of finitely presentable
     objects, this proves local finite presentability of dagger simplicial categories.
+    The ordinary-category forgetful functor creates all small limits and colimits,
+    with independent object, hom, and diagram universes.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -61,6 +63,7 @@ sources:
       sum, naturally identified with the original free functor. Actual small colimits
       and a small strong generator of finitely presentable objects prove the lemma's
       complete local finite presentability conclusion for dagger simplicial categories.
+      The ordinary forgetful creation assertion of bg.lem.creation is also proved.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -100,7 +103,8 @@ status:
     give a small strong generator of finitely presentable objects, proving local
     finite presentability without a remaining colimit premise. This completes
     bg.lem.presentable. The different ordinary-category forgetful assertion in
-    bg.lem.creation remains unproved.
+    bg.lem.creation is also proved, with actual creation data, independent
+    object, hom, and diagram universes, and no existence premise.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -416,6 +420,18 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_presentable.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialCat.forget_createsLimits"
+      file: "DaggerModels/DaggerOrdinaryCreation.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_ordinary_creation.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialCat.forget_createsColimits"
+      file: "DaggerModels/DaggerOrdinaryCreation.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_ordinary_creation.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -527,15 +543,22 @@ fidelity:
     generator by faithfulness and isomorphism reflection, without a fullness
     premise. Small representatives and finite presentability give unconditional
     local finite presentability at every common universe u. This completes
-    bg.lem.presentable, but not the distinct bg.lem.creation or the main theorems.
+    bg.lem.presentable. The distinct bg.lem.creation is also proved: the actual
+    ordinary opposite is an autoequivalence and the object functor has both
+    adjoints. The given ordinary limit or colimit induces an involutive functor
+    to the opposite, and object-functor preservation proves it fixes objects.
+    The apex and cone/cocone are retained exactly after forgetting. Actual
+    universal maps and ordinary inverses lift by dagger commutation, yielding
+    full Mathlib creation data without existence or fullness premises. Object,
+    hom, and diagram universes remain independent. The main theorems remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 93 selected library
-    theorems and three audit-only definition roots against eighteen self-contained
+    checks, not independent human review. Comparator checks 95 selected library
+    theorems and three audit-only definition roots against nineteen self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib. The original
     fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
     73, 100, and 83 lines). The literal monadicity/word-finitarity specification has 160 lines
@@ -543,7 +566,11 @@ review:
     and the forgetful functor visible. The graph presentability
     Challenge adds 74 lines. The complete dagger simplicial category
     limits/colimits/LFP/LP Challenge adds 93 lines and four unconditional targets.
-    All eighteen total 1381 physical lines,
+    The ordinary-creation Challenge adds 116 lines and two unconditional
+    creation targets, with both full categories and actual forgetful functor
+    visible. Its reviewed 116-line exception preserves readability; it has 101
+    nonblank lines. All preceding 96 roots and eighteen specifications remain
+    unchanged. All nineteen total 1497 physical lines,
     including comments and blank lines, and together form the review surface.
     New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
@@ -573,7 +600,7 @@ alignment:
         Concrete finite paths, actual adjunction, singleton-edge unit and full
         universal property. Monadicity and word finitarity are recorded below.
         General colimits and local finite presentability are proved below.
-        The ordinary-category forgetful assertion in bg.lem.creation remains unproved.
+        The ordinary-category forgetful assertion in bg.lem.creation is recorded separately below.
     - source: "Monadicity assertion in bg.lem.presentable"
       lean: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
       module: "DaggerModels/DaggerSimplicialMonadicity.lean"
@@ -616,7 +643,28 @@ alignment:
         LP for the original dagger simplicial category at every common universe
         u. All object maps are allowed, and no colimit or fullness premise is
         left in the four protected limits/colimits/LFP/LP conclusions.
-        This completes the lemma, not bg.lem.creation or the main theorems A-D.
+        This completes the lemma; bg.lem.creation is recorded separately below.
+        The main theorems A-D remain unproved.
+    - source: "bg.lem.creation (limits)"
+      lean: "DaggerModels.DaggerSimplicialCat.forget_createsLimits"
+      module: "DaggerModels/DaggerOrdinaryCreation.lean"
+      status: "proved"
+      note: >-
+        Full Mathlib CreatesLimitsOfSize data for the actual ordinary forgetful
+        functor. The given ordinary apex and cone are retained, its induced
+        dagger fixes objects, and the actual universal lift preserves dagger.
+        No HasLimits or fixed-object premise; all four universes are independent.
+        Nonempty states existence of the complete Type-valued creation data.
+    - source: "bg.lem.creation (colimits)"
+      lean: "DaggerModels.DaggerSimplicialCat.forget_createsColimits"
+      module: "DaggerModels/DaggerOrdinaryCreation.lean"
+      status: "proved"
+      note: >-
+        Full Mathlib CreatesColimitsOfSize data for the actual ordinary forgetful
+        functor. The given ordinary apex and cocone are retained, its induced
+        dagger fixes objects, and the actual universal descent preserves dagger.
+        No HasColimits or fixed-object premise; all four universes are independent.
+        Actual isomorphism reflection supplies the required creation reflection.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"
