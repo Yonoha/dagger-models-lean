@@ -21,17 +21,17 @@ candidate against seventeen self-contained problem specifications:
 | [DaggerSimplicialCategoryChallenge.lean](DaggerSimplicialCategoryChallenge.lean) | 73 | [dagger_simplicial_category.json](dagger_simplicial_category.json) | 6 theorems: full mapping-space dagger and inverse enriched opposite functors |
 | [FreeSimplicialPathsChallenge.lean](FreeSimplicialPathsChallenge.lean) | 100 | [free_simplicial_paths.json](free_simplicial_paths.json) | 11 theorems: actual finite words, edgewise simplicial operators, reverse and empty/singleton dagger laws |
 | [FreeDaggerUniversalChallenge.lean](FreeDaggerUniversalChallenge.lean) | 83 | [free_dagger_universal.json](free_dagger_universal.json) | 1 theorem: existence of a free dagger simplicial category with bijective restriction for every target |
-| [DaggerMonadicityChallenge.lean](DaggerMonadicityChallenge.lean) | 153 | [dagger_monadicity.json](dagger_monadicity.json) | 2 theorems: literal isomorphism reflection and monadicity of the actual graph forgetful functor |
+| [DaggerMonadicityChallenge.lean](DaggerMonadicityChallenge.lean) | 160 | [dagger_monadicity.json](dagger_monadicity.json) | 3 theorems: literal isomorphism reflection, monadicity and finitarity of a free/forgetful composite for the actual graph forgetful functor |
 | [DaggerGraphPresentableChallenge.lean](DaggerGraphPresentableChallenge.lean) | 74 | [dagger_graph_presentable.json](dagger_graph_presentable.json) | 5 theorems: actual small-index presheaf equivalence, limits/colimits, and graph LFP/LP |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
 the implementation. The seventeen Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,281 lines in total**, including
+under the logical module name `Challenge`. Their **1,288 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 67
+The checker retains the original **21 named library theorems** and adds 68
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -39,7 +39,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-91-root coverage set; it is a registry, not an executable Comparator config.
+92-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -88,11 +88,21 @@ The monadicity specification adds the literal `ReflectsIsomorphisms` and
 `Nonempty (MonadicRightAdjoint forgetGraph)` conclusions. Both actual category
 structures, their full enriched dagger functors/graph maps, and the original
 forgetful functor are visible. Mathlib's monadicity class includes a comparison
-equivalence with monad algebras. Its 153 physical lines are covered by a
+equivalence with monad algebras. Its 160 physical lines are covered by a
 reviewed, file-specific 160-line budget: this is the only exception to the
 100-line budget. It keeps required definitions visible instead of importing
 candidate files or weakening the monadicity statement. All preceding 84 roots
 remain intact, and the tool/dependency pins and negative controls are unchanged.
+
+This specification also requires a left adjoint to the same `forgetGraph`
+whose free/forgetful composite is `ℵ₀`-accessible. The concrete library witness
+is the original finite-path adjunction. Its word decomposition uses exact
+endpoint pullbacks, and the proof identifies both objects and arbitrary graph
+maps with the original free functor. Choosing a left adjoint existentially
+preserves the assertion: left adjoints to a fixed functor are naturally
+isomorphic, and accessibility is invariant under natural isomorphism.
+The seven added physical lines leave every preceding definition and target
+unchanged. The registry retains its preceding 91 entries and appends this target.
 
 The graph presentability specification adds five targets with the complete
 original graph category visible. It asks for an actual equivalence with
@@ -151,7 +161,7 @@ registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
 the sixteen ordinary Challenges and the explicit 160-line monadicity exception
 (including blank lines and comments), plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 91 roots.
+permitted axioms, no definition holes, and exact registration of all 92 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 

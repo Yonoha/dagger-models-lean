@@ -421,13 +421,13 @@ also a colimit, giving preservation by `forgetGraph`. Together with the actual
 free adjunction and reflection of isomorphisms, Mathlib's Beck theorem yields
 `forgetGraph_monadic : Nonempty (MonadicRightAdjoint forgetGraph)`. This is the
 full first assertion of `bg.lem.presentable`, at every common universe `u`.
-Finitarity of the word monad and local finite presentability of dagger
-simplicial categories remain unproved. The graph presentability ingredient is
-proved below.
+The graph presentability and word-finitarity ingredients are proved below.
+Local finite presentability of dagger simplicial categories remains unproved.
 
 The Challenge directly protects the literal reflection and monadicity types.
 It shows the full category structures and the original forgetful functor, and
-imports only Mathlib. Its 153 physical lines have a reviewed 160-line budget;
+imports only Mathlib. With the word-finitarity target below it has 160 physical
+lines, within its reviewed 160-line budget;
 the other Challenges keep their 100-line budgets. This explicit
 exception avoids hiding definitions or replacing monadicity by an easier
 existence statement. All prior comparison roots remain registered.
@@ -470,10 +470,63 @@ for an actual equivalence with presheaves on some small category, as well as
 `IsLocallyPresentable`. It does not fix the proof's choice of indexing category
 or duplicate the intermediate equivalence. Comparator replays their proof
 dependencies, and the namespace-wide axiom audit includes those constructions.
-The five targets extend the prior 86 roots to 91 without changing any prior
-Challenge, tool pin, permitted axiom, or negative control. The resulting 17
-Challenges total 1,281 physical lines. This result does not yet prove local
+The five graph targets and all preceding 86 roots remain registered. With the
+word-finitarity target below, the 17 Challenges have 92 roots and total 1,288
+physical lines. Tool pins, permitted axioms and negative controls are unchanged.
+These graph results do not yet prove local
 finite presentability of dagger simplicial categories or the main theorems A–D.
+
+## Finitary words and limits over dagger graphs
+
+Files: [DaggerGraphFiniteWords.lean](DaggerModels/DaggerGraphFiniteWords.lean),
+[FreeSimplicialMap.lean](DaggerModels/FreeSimplicialMap.lean),
+[FreeWordFinitary.lean](DaggerModels/FreeWordFinitary.lean),
+[DaggerSimplicialLimits.lean](DaggerModels/DaggerSimplicialLimits.lean), and
+[DaggerSimplicialFilteredColimits.lean](DaggerModels/DaggerSimplicialFilteredColimits.lean).
+Problem specification:
+[DaggerMonadicityChallenge.lean](.ci/comparator/DaggerMonadicityChallenge.lean).
+
+This proves the assertion that the word monad is finitary in the last paragraph
+of `bg.lem.presentable`. At each simplex degree, length zero consists of the
+original vertices. Each successor length is the fiber product of the prefix's
+target and the next total edge's source. The resulting type is proved equivalent
+to the original finite paths of that exact length, preserving both endpoints.
+The equivalence is natural under arbitrary vertex functions and edge maps,
+including ordinary simplex operators. No fixed-object or injectivity premise
+is introduced.
+
+The actual vertex and total-edge functors preserve small colimits by the
+proved graph presheaf equivalence. Each fixed word length is finitely accessible
+because filtered colimits of types commute with finite limits. The library
+constructs the literal pullback functor and its limiting cone before applying
+Mathlib's accessibility theorem. It also constructs the literal disjoint-sum
+functor and identifies it with the categorical coproduct, proving accessibility
+of the sum over all finite lengths.
+
+`wordsIso` identifies this sum with the actual total edges of
+`FreeDaggerSimplicialCategory.functor ⋙ forgetGraph`. Its naturality uses the
+proved equality between that original free functor's maps and edgewise path
+extension. All vertex maps are retained. The graph evaluations jointly detect
+accessibility through the actual presheaf equivalence, so the conclusion is
+finitarity of the original word endofunctor at every common universe `u`.
+
+The new Challenge statement requires an actual left adjoint `F` to the original
+graph forgetful functor and finite accessibility of `F ⋙ forgetGraph`.
+The implementation witnesses this with its original free adjunction. A fixed
+right adjoint determines its left adjoint up to natural isomorphism, and finite
+accessibility is invariant under that isomorphism; leaving the witness free
+does not weaken the mathematical assertion. The seven-line addition retains
+the previous complete definitions, category structures and two targets.
+
+Monadicity now proves that the graph forgetful functor creates all small limits
+and all small filtered colimits. Graph limits/colimits supply their existence
+in dagger simplicial categories, and the graph forgetful functor itself is
+finitely accessible. The finitarity premise in the filtered argument is
+discharged by the new theorem. These consequences are checked by Lean and
+the full namespace axiom audit; they are not additional Comparator roots.
+They do not assert general colimits or the different claim in `bg.lem.creation`,
+whose forgetful functor goes to ordinary simplicial categories. The category's
+local finite presentability and the main theorems A–D remain unproved.
 
 ## Main-result status
 
@@ -490,6 +543,8 @@ finite presentability of dagger simplicial categories or the main theorems A–D
 | Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |
 | First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck; local finite presentability of dagger simplicial categories remains unproved |
 | Graph ingredient in the proof of `bg.lem.presentable` | Dagger graphs are locally finitely presentable | Actual presheaf equivalence, all small limits/colimits, and LFP proved at every common value universe |
+| Word ingredient in the proof of `bg.lem.presentable` | The original word monad is finitary | Proved by exact finite endpoint pullbacks, disjoint sums and their natural identification with the actual free functor |
+| Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; general colimits and the ordinary-category forgetful claim remain unproved |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

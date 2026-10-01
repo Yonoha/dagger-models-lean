@@ -90,6 +90,7 @@
     "DaggerModels.daggerGraphHasColimits",
     "DaggerModels.daggerGraphLocallyFinitelyPresentable",
     "DaggerModels.daggerGraphLocallyPresentable",
-    "DaggerModels.exists_daggerGraphPresheafEquivalence"
+    "DaggerModels.exists_daggerGraphPresheafEquivalence",
+    "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
   ]
 }

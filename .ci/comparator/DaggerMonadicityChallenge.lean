@@ -1,11 +1,13 @@
 import Mathlib.AlgebraicTopology.SimplicialSet.Monoidal
 import Mathlib.CategoryTheory.Enriched.Opposite
 import Mathlib.CategoryTheory.Monad.Monadicity
+import Mathlib.CategoryTheory.Presentable.Basic
 
 /-! Part I `bg.lem.presentable`: the exact graph forgetful functor is monadic.
 All underlying data and both category structures are explicit in this specification. -/
 set_option warningAsError false
 open CategoryTheory MonoidalCategory
+attribute [local instance] Cardinal.fact_isRegular_aleph0
 universe o v u
 namespace DaggerModels
 
@@ -148,6 +150,11 @@ def forgetGraph : DaggerSimplicialCat.{u, u} ⥤ DaggerSimplicialGraph.{u} where
 theorem forgetGraph_reflectsIsomorphisms : forgetGraph.{u}.ReflectsIsomorphisms := by sorry
 
 theorem forgetGraph_monadic : Nonempty (MonadicRightAdjoint forgetGraph.{u}) := by sorry
+
+theorem exists_finitary_freeDaggerSimplicialCategoryAdjunction :
+    ∃ F : DaggerSimplicialGraph.{u} ⥤ DaggerSimplicialCat.{u, u},
+      Nonempty (F ⊣ forgetGraph) ∧
+        (F ⋙ forgetGraph).IsCardinalAccessible Cardinal.aleph0.{u} := by sorry
 
 end DaggerSimplicialCat
 end DaggerModels

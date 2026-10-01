@@ -55,6 +55,10 @@ jobs:
           Mathlib.Combinatorics.Quiver.Symmetric
           Mathlib.CategoryTheory.Limits.Shapes.SplitCoequalizer
           Mathlib.CategoryTheory.Monad.Monadicity
+          Mathlib.CategoryTheory.Monad.Limits
+          Mathlib.CategoryTheory.Presentable.Limits
+          Mathlib.CategoryTheory.Limits.Types.Pullbacks
+          Mathlib.CategoryTheory.Limits.Types.Coproducts
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

@@ -24,6 +24,8 @@ project:
     is monadic by constructed graph-split coequalizers and Beck's theorem.
     The graph category has an actual small-index presheaf equivalence, all small
     limits and colimits, and local finite presentability at every value universe.
+    The actual finite-word monad is finitary; all small limits and filtered
+    colimits exist for dagger simplicial categories and are created over graphs.
     Local finite presentability of dagger simplicial categories remains unproved.
     The main model-categorical theorems A-D are not formalized.
   authors:
@@ -52,7 +54,9 @@ sources:
       word construction with its universal property at the start of
       bg.lem.presentable, and the monadicity assertion of that lemma using
       constructed graph-split coequalizers. The graph-LFP ingredient is proved via
-      an actual small-index presheaf equivalence. The lemma's local finite
+      an actual small-index presheaf equivalence. The actual word monad's
+      finitarity is proved by exact finite endpoint pullbacks and their disjoint
+      sum, naturally identified with the original free functor. The lemma's local finite
       presentability conclusion for dagger simplicial categories is not yet proved.
     relationship: "formalizes"
     author_endorsement: "participated"
@@ -85,8 +89,12 @@ status:
     coequalizer universal property, followed by Beck's theorem. The graph category
     is proved equivalent to a concrete small-index presheaf category, with all
     small limits/colimits and local finite presentability at each value universe.
-    Local finite presentability and creation of limits/colimits for dagger
-    simplicial categories remain unproved.
+    The actual word monad is finitary, with arbitrary graph maps and common
+    value universe. Monadicity creates all small limits and filtered colimits
+    over graphs, and those colimits and limits exist, with no remaining
+    finitarity premise. General colimits, local finite presentability, and the
+    different ordinary-category forgetful assertion in bg.lem.creation remain
+    unproved for dagger simplicial categories.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -372,6 +380,12 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
+      file: "DaggerModels/FreeWordFinitary.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_monadicity.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -466,22 +480,29 @@ fidelity:
     Local finite presentability of the presheaf category and all small
     limits/colimits transport to the original graph category. The Challenge
     protects this actual equivalence's existence and graph LFP/LP while leaving
-    the indexing witness free. Local finite presentability of dagger simplicial
-    categories remains unproved.
+    the indexing witness free. Exact finite endpoint pullbacks are naturally
+    equivalent to actual paths of each length. Their disjoint sum is naturally
+    identified with the original free-category total edges, including arbitrary
+    vertex maps. This proves finitarity of the original word composite. The new
+    target requires an actual left adjoint to the same graph forgetful functor
+    with finitely accessible composite; the original free adjunction witnesses it.
+    The graph forgetful functor creates all small limits and filtered colimits,
+    which exist, and is itself finitely accessible. General colimits and local
+    finite presentability of dagger simplicial categories remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 88 selected library
+    checks, not independent human review. Comparator checks 89 selected library
     theorems and three audit-only definition roots against seventeen self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib. The original
     fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
-    73, 100, and 83 lines). The literal monadicity specification has 153 lines
+    73, 100, and 83 lines). The literal monadicity/word-finitarity specification has 160 lines
     with a reviewed 160-line exception to keep both actual category structures
     and the forgetful functor visible. The graph presentability
-    Challenge adds 74 lines. All seventeen total 1281 physical lines,
+    Challenge adds 74 lines. All seventeen total 1288 physical lines,
     including comments and blank lines, and together form the review surface.
     New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
@@ -509,8 +530,9 @@ alignment:
       status: "proved"
       note: >-
         Concrete finite paths, actual adjunction, singleton-edge unit and full
-        universal property. Local finite presentability and creation of
-        limits/colimits remain unproved; monadicity is recorded separately below.
+        universal property. Monadicity and word finitarity are recorded below.
+        General colimits, local finite presentability, and bg.lem.creation's
+        ordinary-category forgetful assertion remain unproved.
     - source: "Monadicity assertion in bg.lem.presentable"
       lean: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
       module: "DaggerModels/DaggerSimplicialMonadicity.lean"
@@ -529,8 +551,20 @@ alignment:
         The complete original graph category is equivalent to presheaves on a
         concrete small index. Both functors, natural unit/counit and triangle
         are proved. All small limits/colimits and LFP hold at every common
-        value universe u. This does not yet give dagger-category LFP or
-        finitarity of the word monad.
+        value universe u. Word finitarity is recorded separately below;
+        dagger-category LFP remains unproved.
+    - source: "Word finitarity ingredient in the proof of bg.lem.presentable"
+      lean: "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
+      module: "DaggerModels/FreeWordFinitary.lean"
+      status: "proved"
+      note: >-
+        The original free/forgetful composite preserves all small filtered
+        colimits, proved using exact finite endpoint pullbacks, their disjoint
+        sum, and a natural identification with actual paths. The Challenge
+        keeps the original forgetful functor and requires an actual left
+        adjoint with this finitarity property. No finitarity premise remains.
+        Monadicity also gives all small limits and filtered colimits, created
+        over graphs. General colimits and category LFP remain unproved.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

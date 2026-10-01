@@ -51,3 +51,12 @@ import DaggerModels.DaggerGraphPresheafUnit
 import DaggerModels.DaggerGraphPresheafCounit
 import DaggerModels.DaggerGraphPresheaf
 import DaggerModels.DaggerGraphPresentable
+import DaggerModels.DaggerGraphEvaluation
+import DaggerModels.DaggerGraphAccessibility
+import DaggerModels.TypeFunctorPullback
+import DaggerModels.TypeFunctorSigma
+import DaggerModels.DaggerGraphFiniteWords
+import DaggerModels.FreeSimplicialMap
+import DaggerModels.FreeWordFinitary
+import DaggerModels.DaggerSimplicialLimits
+import DaggerModels.DaggerSimplicialFilteredColimits

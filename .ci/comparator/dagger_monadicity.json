@@ -3,7 +3,8 @@
   "solution_module": "Solution",
   "theorem_names": [
     "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms",
-    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
+    "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic",
+    "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
   ],
   "permitted_axioms": [
     "propext",
