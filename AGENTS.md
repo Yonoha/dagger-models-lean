@@ -32,6 +32,21 @@ Do not claim that helper scripts, hooks, or Lean LSP tools are installed merely
 because the core skill is installed. Use available Lean/Lake tooling and this
 repository's audits when those optional capabilities are unavailable.
 
+## Reuse before new implementation
+
+- Follow [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md). Before a
+  substantial new proof, record the exact existing Mathlib or external results
+  searched, their hypotheses, and the remaining manuscript-specific gap.
+- Prefer applying a compatible existing theorem or proving a small bridge.
+  A version mismatch is a compatibility task, not evidence of mathematical
+  absence. Investigate high-value existing dependencies before reconstructing
+  their standard theory.
+- The author permits retaining already checked custom implementations. Do not
+  replace them merely to remove overlap, and do not create a second copy.
+- Distinguish source discovery, compatibility testing, integration, and full
+  verification. Never label an upstream result as checked here without the
+  actual import closure and transitive axiom audit.
+
 ## Challenge and verification
 
 - A Challenge contains the problem's definitions and statement skeletons.

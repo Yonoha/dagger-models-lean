@@ -131,6 +131,8 @@ jobs:
           Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
           Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms
           Mathlib.CategoryTheory.SmallObject.Basic
+          Mathlib.AlgebraicTopology.SimplicialNerve
+          Mathlib.CategoryTheory.Limits.Presheaf
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"

@@ -45,6 +45,11 @@ object argument and functorial factorization in `I†.rlp.llp` and `I†.rlp`.
 The weak homotopy equivalence comparison, trivial Kan characterization, and
 unitary-interval part of `J†` remain unproved. Two concrete comparison obstructions
 and the first release's elementary foundations are retained.
+The ordinary rigidification adjunction in `dj.not.adjunctions` now uses Mathlib's
+standard simplicial thickening, coherent nerve, and Yoneda-extension adjunction.
+The constructed right adjoint is naturally isomorphic to Mathlib's actual nerve,
+and rigidification sends the standard simplex diagram to the standard thickening.
+The dagger lift and the Quillen-equivalence claims remain unproved.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
 structures, the rigidification Quillen equivalence, the intrinsic recognition
@@ -84,6 +89,7 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Section and homotopy input to `bg.lem.I-inj` | [`SSetMonoRLPRetraction`](DaggerModels/SSetMonoRLPRetraction.lean), [`SSetBoundaryRetraction`](DaggerModels/SSetBoundaryRetraction.lean) | The same section and cylinder homotopy satisfy all four equations for mono-RLP or boundary-RLP, with no Kan-object premise or weak-equivalence conclusion |
 | Local lifting in `bg.def.IJ` and `bg.lem.Iinj-in-Jinj` | [`DaggerLocalFibrations`](DaggerModels/DaggerLocalFibrations.lean) | Actual `J†loc` RLP is all-hom Mathlib Kan fibrations; actual `I†` RLP implies object surjectivity and this local condition; interval lifting remains open |
 | Small-object input to `bg.thm.main` | [`SmallObjectFiniteDomains`](DaggerModels/SmallObjectFiniteDomains.lean), [`DaggerSmallObject`](DaggerModels/DaggerSmallObject.lean) | General finite-domain bridge with explicit smallness/colimit premises; unconditional actual `I†` application and functorial factorization data; no model structure asserted |
+| Ordinary adjunction in `dj.not.adjunctions`, input to `dj.lem.lift` | [`OrdinaryRigidification`](DaggerModels/OrdinaryRigidification.lean) | Mathlib's actual thickening and coherent nerve, the left Kan extension adjunction, full natural comparison of nerves, and standard-simplex comparison, at every common universe |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -91,6 +97,12 @@ on 2026-10-01; they are used instead of potentially changing theorem numbers.
 [MAIN_THEOREMS.md](MAIN_THEOREMS.md) records the complete A–D objective, its
 remaining proof dependencies, and a malformed source statement found during
 formalization. These remaining results are not postulated as axioms.
+
+[EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md) maps existing library
+results to the manuscript, records reuse decisions and compatibility work,
+and distinguishes source discovery from verified integration. Already checked
+custom proofs may be retained; missing standard theory should first be sought
+in existing libraries.
 
 ## Reproduce the verification
 
@@ -140,7 +152,9 @@ lake exe cache get \
   Mathlib.CategoryTheory.LiftingProperties.Limits \
   Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting \
   Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms \
-  Mathlib.CategoryTheory.SmallObject.Basic
+  Mathlib.CategoryTheory.SmallObject.Basic \
+  Mathlib.AlgebraicTopology.SimplicialNerve \
+  Mathlib.CategoryTheory.Limits.Presheaf
 lake build
 lake env lean Audit.lean
 python3 scripts/check_audit.py
@@ -176,7 +190,7 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 106 selected mathematical results against
+Linux GitHub Actions job. It compares 109 selected mathematical results against
 twenty-seven self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
@@ -200,7 +214,7 @@ twenty-seven self-contained problem specifications:
 - [Creation over ordinary simplicial categories](.ci/comparator/DaggerOrdinaryCreationChallenge.lean): 116 lines
 - [Two-object dagger cell universal property](.ci/comparator/TwoObjectDaggerCellChallenge.lean): 57 lines
 - [Finite presentability of the same universal cell](.ci/comparator/FiniteTwoObjectCellChallenge.lean): 95 lines
-- [Ordinary simplicial-category colimits](.ci/comparator/SimplicialColimitsChallenge.lean): 40 lines
+- [Ordinary colimits and rigidification adjunction](.ci/comparator/SimplicialColimitsChallenge.lean): 99 lines
 - [Initial-to-point object generator](.ci/comparator/DaggerObjectGeneratorChallenge.lean): 91 lines
 - [Boundary lifting implies actual Kan fibrations](.ci/comparator/SSetBoundaryFibrationChallenge.lean): 15 lines
 - [Ordinary relative boundary cells and lifting-class equality](.ci/comparator/SSetBoundaryCellsChallenge.lean): 27 lines
@@ -235,13 +249,13 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks direct Mathlib imports and coverage of all 109 registered roots
-(106 mathematical results and three definition markers). Twenty-five Challenges
+CI checks direct Mathlib imports and coverage of all 112 registered roots
+(109 mathematical results and three definition markers). Twenty-five Challenges
 have 100-line budgets. The monadicity and ordinary-creation
 Challenges have reviewed 160-line and 116-line budgets respectively. Both need
 the two full category structures and actual forgetful functor visible, including
 structural proofs. The ordinary-creation file still has 101 nonblank lines; its
-116-line format preserves readability. The 1,870 lines across all twenty-seven
+116-line format preserves readability. The 1,929 lines across all twenty-seven
 files are the review surface; checking one file is not a review of the entire
 formalization.
 
@@ -360,7 +374,8 @@ all ordinary monos have actual relative boundary-cell presentations. The actual
 ordinary input is the comparison with actual weak homotopy equivalences and
 trivial Kan fibrations. The next stages toward A–D also include unitary interval
 lifting, the rest of the ordinary Kan–Quillen comparison,
-rigidification and coherent nerve, their lifted adjunction, and the model structures. These
+opposite compatibility of rigidification and coherent nerve, their dagger lift,
+and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
 
@@ -402,8 +417,13 @@ underlying 自由セルの二つの通常セルによる pushout 分解と、忘
 同じ section と cylinder homotopy が、両端と元の target 上の四式を満たすことも証明しました。
 実 `J†loc` の RLP は全ての hom が Kan fibration であることに同値です。
 実 `I†` の small object argument と、`I†.rlp.llp`・`I†.rlp` による関手的分解も証明しました。
-今回の４ Challenges は 15・27・27・21 行で、既存23本と102 rootsをそのまま保持します。
-全体は27本・1,870行・109 roots（数学106、定義marker3）です。
+通常の rigidification 随伴は、Mathlib の標準 thickening、coherent nerve と
+Kan 拡張の随伴定理を再利用して構成しました。nerve 全体の自然同型と、
+標準単体上で標準 thickening に一致する自然同型も証明しています。
+既存の余極限 Challenge を 40 行から 99 行へ拡張し、３ roots を追加しました。
+ほかの26本とその設定、および従来の109 rootsは保持しています。
+全体は27本・1,929行・112 roots（数学109、定義marker3）です。
+opposite との整合性と dagger への随伴の持ち上げは未完了です。
 弱ホモトピー同値・trivial Kan fibration との同定と `J†` の interval 部分は未完了で、
 論文の主定理 A–D 全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

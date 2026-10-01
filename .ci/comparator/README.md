@@ -27,7 +27,7 @@ candidate against twenty-seven self-contained problem specifications:
 | [DaggerOrdinaryCreationChallenge.lean](DaggerOrdinaryCreationChallenge.lean) | 116 | [dagger_ordinary_creation.json](dagger_ordinary_creation.json) | 2 theorems: creation of all small limits and colimits by the actual ordinary-category forgetful functor |
 | [TwoObjectDaggerCellChallenge.lean](TwoObjectDaggerCellChallenge.lean) | 57 | [two_object_dagger_cell.json](two_object_dagger_cell.json) | 1 theorem: unrestricted universal property of a two-object dagger cell |
 | [FiniteTwoObjectCellChallenge.lean](FiniteTwoObjectCellChallenge.lean) | 95 | [finite_two_object_cell.json](finite_two_object_cell.json) | 1 theorem: the same universal cell is finitely presentable for finite simplicial sets |
-| [SimplicialColimitsChallenge.lean](SimplicialColimitsChallenge.lean) | 40 | [simplicial_colimits.json](simplicial_colimits.json) | 1 theorem: unconditional small colimits of the full ordinary simplicial category |
+| [SimplicialColimitsChallenge.lean](SimplicialColimitsChallenge.lean) | 99 | [simplicial_colimits.json](simplicial_colimits.json) | 4 theorems: unconditional small colimits, actual ordinary rigidification adjunction, natural Mathlib-nerve comparison, and standard-simplex comparison |
 | [DaggerObjectGeneratorChallenge.lean](DaggerObjectGeneratorChallenge.lean) | 91 | [dagger_object_generator.json](dagger_object_generator.json) | 1 theorem: the same actual initial-to-terminal arrow detects object surjectivity for every target functor |
 | [SSetBoundaryFibrationChallenge.lean](SSetBoundaryFibrationChallenge.lean) | 15 | [sset_boundary_fibration.json](sset_boundary_fibration.json) | 1 theorem: actual ordinary boundary RLP implies the existing Mathlib Kan fibration property |
 | [SSetBoundaryCellsChallenge.lean](SSetBoundaryCellsChallenge.lean) | 27 | [sset_boundary_cells.json](sset_boundary_cells.json) | 3 theorems: every mono has actual relative boundary cells, boundary-cell closure equals monos, and actual right lifting classes agree |
@@ -37,11 +37,11 @@ candidate against twenty-seven self-contained problem specifications:
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
 the implementation. The twenty-seven Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,870 lines in total**, including
+under the logical module name `Challenge`. Their **1,929 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 85
+The checker retains the original **21 named library theorems** and adds 88
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -49,9 +49,21 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-109-root coverage set (106 mathematics and three markers); it is a registry,
+112-root coverage set (109 mathematics and three markers); it is a registry,
 not an executable Comparator config. Counts in the milestone paragraphs below
 are historical; the table and totals above describe the current coverage.
+
+The ordinary-colimits Challenge is extended from 40 to 99 lines for three
+ordinary-rigidification roots. It displays Mathlib's actual standard thickening,
+its restricted Yoneda nerve, the actual coherent nerve with postcomposition,
+and the literal chosen left Kan extension. It requires their adjunction and
+both full natural comparisons, including the standard simplex diagram.
+The original colimit theorem remains one of its four configured targets;
+its proof marker is not an unconfigured helper or a definition hole.
+All 109 preceding ordered roots and the other 26 specifications/configurations
+are retained. Dependency pins, line-budget exceptions, permitted axioms and
+negative controls are unchanged. These are ordinary-category assertions and
+do not claim the dagger lift or Quillen properties.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -251,7 +263,7 @@ future declarations. The source-hygiene check enforces the 100-line budget for
 the twenty-five standard-budget Challenges and the explicit 160-line monadicity and
 116-line ordinary-creation exceptions (including blank lines and comments),
 plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 109 roots.
+permitted axioms, no definition holes, and exact registration of all 112 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 

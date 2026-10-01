@@ -108,6 +108,9 @@
     "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp",
     "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy",
     "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp",
-    "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
+    "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument",
+    "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction",
+    "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib",
+    "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
   ]
 }

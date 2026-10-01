@@ -166,7 +166,8 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   to the actual cells and their dagger attachment. The resulting isomorphism
   respects all three comparison legs and uses exactly the attachments along
   the given edge and its dagger. No pushout-existence premise remains. Thus
-  the full reduction lemma is proved; ordinary colimits have a 40-line Challenge.
+  the full reduction lemma is proved. Ordinary colimits retain their root in
+  the 99-line Challenge extended below for ordinary rigidification.
 - Generator lifting in `bg.lem.I-inj`: `DaggerDiscreteObjects.lean` constructs
   discrete dagger categories with constant lifted equality homs, their full
   Hom/object-function equivalence, the actual initial empty category and
@@ -207,12 +208,15 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   with left class `I†.rlp.llp` and right class `I†.rlp`. It does not identify
   either class with a model-structure predicate or treat `J†` interval cells.
 
-The four new 15/27/27/21-line Challenges protect seven results: four ordinary
+The four 15/27/27/21-line Challenges protect seven results: four ordinary
 lifting/cell conclusions, two simultaneous section/homotopy conclusions, and
 one generic finite-domain theorem. Local `J†loc` and the actual `I†` application
-are separately reviewed and audited auxiliary results. All 102 prior roots and
-23 prior specifications/configurations are retained. Current coverage is 27
-Challenges, 1,870 physical lines and 109 roots (106 mathematics plus three
+are separately reviewed and audited auxiliary results. That stage retained
+102 prior roots and 23 prior specifications/configurations. The ordinary
+rigidification adjunction and its two natural comparisons add three roots by
+extending the colimits Challenge from 40 to 99 lines, retaining all 109 preceding
+roots and the other 26 specifications/configurations. Current coverage is 27
+Challenges, 1,929 physical lines and 112 roots (109 mathematics plus three
 markers), with the two existing 160/116-line exceptions unchanged.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
@@ -274,8 +278,11 @@ Required chain:
 1. The presheaf equivalence, local presentability, and free–forgetful adjunction,
    including the explicit pushout description (`dj.not.adjunctions`), are
    implemented above.
-2. Ordinary rigidification and coherent nerve, compatibility with opposites,
-   and the concrete lifted adjunction (`dj.lem.lift`).
+2. Ordinary rigidification and coherent nerve are constructed in
+   `OrdinaryRigidification.lean` using Mathlib's actual standard thickening and
+   Yoneda-extension adjunction. The full natural comparison with Mathlib's
+   nerve and the standard-simplex comparison are proved. Compatibility with
+   opposites and the concrete dagger lifted adjunction (`dj.lem.lift`) remain.
 3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
    preservation by rigidification, and accessibility of weak equivalences.
    The cellular characterization is complete: every free cofibration has an
@@ -287,11 +294,14 @@ Required chain:
 
 The `FreeCofibration` class requires freeness of new nondegenerate simplices
 only in positive degrees. Replacing it by all monomorphisms would change B.
-Mathlib has the coherent nerve's definition but not the required ordinary
-Joyal–Bergner adjunction/equivalence. Mathlib supplies relative skeletons and
-their successor formula. This companion now proves the actual dagger-cell
-pushout decomposition as well. The ordinary Joyal–Bergner machinery and its
-dagger-compatible lift are still required.
+Mathlib supplies the coherent nerve, standard thickening and general presheaf
+adjunction used in the constructed ordinary rigidification adjunction. The
+ordinary Joyal–Bergner model structures and Quillen equivalence, and the
+dagger-compatible lift, remain required. Mathlib also supplies relative
+skeletons and their successor formula; this companion proves the actual
+dagger-cell pushout decomposition. The reuse inventory in
+[EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md) separates exact reused
+theorems from source candidates and remaining gaps.
 
 ## C — recognition using the unitary core
 
@@ -354,7 +364,17 @@ the README's broader claim is not used as an instantiated theorem here.
 Its pins are Lean `v4.25.0-rc2` and mathlib
 `6c193806481aaf608f1396601b6dc95277ddcfe8`. This companion uses Lean `v4.27.0`
 and mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`.
-The external source was inspected, not imported or compiled in this project.
+The external source was inspected and its unchanged import closure was tested
+in an isolated compatibility probe against this project's pin. After preparing
+the pinned caches, 44 of 183 modules compiled, 13 had source/API failures, and
+126 were blocked by failed prerequisites. The full model structure and target
+comparison theorems did not compile; no verified dependency is claimed.
+A bounded compatibility adaptation subsequently obtained 61 compiled modules,
+with five direct failures and 117 modules not compiled at their traversal
+positions. Fourteen changed modules pass strict compilation; 439 declarations
+in those modules and signature bridges pass transitive standard-axiom checks.
+These counts are not full-model verification. Exact coverage and remaining
+failures are recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
 No applicable repository-level license was established at that exact commit:
 no LICENSE/COPYING file was found and GitHub metadata reported no license.
 A few unrelated files have Apache headers; these do not resolve the license of

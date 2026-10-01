@@ -47,6 +47,11 @@ project:
     supply an actual section and cylinder homotopy over the original target.
     A finite-domain small-object bridge gives the actual I-dagger unconditional
     small object argument and functorial factorization in its two lifting classes.
+    The ordinary rigidification adjunction uses Mathlib's standard thickening
+    and general Yoneda-extension adjunction. Its nerve is naturally isomorphic
+    to the actual Mathlib coherent nerve, and its standard-simplex values are
+    naturally the standard thickening. Opposite compatibility and the dagger
+    lift remain unproved.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
   responsible_maintainers:
@@ -92,6 +97,10 @@ sources:
       The actual local horn family in bg.def.IJ has RLP exactly on local Kan
       fibrations. The actual I-dagger small-object argument and functorial
       factorization implement the corresponding input to bg.thm.main.
+      The ordinary rigidification adjunction recalled in dj.not.adjunctions is
+      constructed from existing Mathlib results, with the full natural nerve
+      comparison and standard-simplex comparison. This is an ordinary input
+      to dj.lem.lift, not a proof of the dagger lifted adjunction.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -107,6 +116,8 @@ related_formalizations:
       category equivalences, presentability, Kan extensions, and groupoids.
       The free dagger simplicial-category construction uses actual enriched
       categories and functors, Cartesian SSet tensor, quivers, and finite paths.
+      Ordinary rigidification reuses the existing simplicial thickening,
+      coherent nerve, restricted Yoneda functor and left Kan extension adjunction.
 status:
   scope: >-
     Partial formalization toward A-D. Presheaf equivalence and local finite
@@ -547,6 +558,24 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/small_object_finite_domains.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction"
+      file: "DaggerModels/OrdinaryRigidification.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/simplicial_colimits.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib"
+      file: "DaggerModels/OrdinaryRigidification.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/simplicial_colimits.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
+      file: "DaggerModels/OrdinaryRigidification.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/simplicial_colimits.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -705,21 +734,30 @@ fidelity:
     the original boundary and empty-to-point family. Both functorial factorization
     classes are the literal I-dagger.rlp.llp and I-dagger.rlp. The weak-homotopy
     equivalence comparison and main theorems remain unproved.
+    Ordinary rigidification is the literal left Kan extension of Mathlib's
+    standard simplicial thickening along uliftYoneda, which is Mathlib's
+    standard simplex diagram. The restricted Yoneda nerve is naturally
+    isomorphic to the actual SimplicialNerve on the canonical ForgetEnrichment
+    type synonym, retaining the full enrichment. The comparison is natural
+    both in simplices and in all enriched target functors. Objects and mapping
+    spaces lie in arbitrary common universe u; no fibrancy or model premise
+    is imposed. The same rigidification is left adjoint to the actual Mathlib
+    nerve, and its representable values are naturally the standard thickening.
+    Opposite coherence, the dagger lift and Quillen claims remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator compares 106 selected
+    checks, not independent human review. Comparator compares 109 selected
     library theorems and three audit-only definition roots against twenty-seven
     self-contained Mathlib-only Challenges. Twenty-five retain 100-line budgets;
     the existing monadicity and ordinary-creation exceptions retain 160 and
     116 physical lines so both full categories and actual forgetful functors
-    stay visible. The complete review surface is 1870 physical lines, including
-    comments and blanks. The four new specifications have 15, 27, 27 and 21
-    lines and append seven roots to the preceding 102, retaining all twenty-three
-    preceding specifications and configurations byte-for-byte. They protect
+    stay visible. The complete review surface is 1929 physical lines, including
+    comments and blanks. The ordinary-lifting specifications have 15, 27, 27 and
+    21 lines. They protect
     actual boundary-to-Kan lifting; ordinary relative cell presentation, boundary
     closure and mono-RLP equality; both section/cylinder-homotopy conclusions;
     and the general finite-domain small-object bridge. The actual local horn
@@ -727,6 +765,13 @@ review:
     separately reviewed, axiom-audited auxiliary results rather than additional
     Comparator roots. New proofs and their specifications received separate
     GPT-6.1-Sol/xhigh agent reviews; no independent human review is claimed.
+    The ordinary-colimits Challenge is extended from 40 to 99 lines, keeping
+    its original root and adding three roots for the exact rigidification
+    adjunction, full natural comparison with Mathlib's coherent nerve, and
+    standard-simplex comparison. All preceding 109 ordered roots and the other
+    twenty-six Challenges and their configurations are retained. The new
+    specification exposes the actual thickening, both nerves and chosen left
+    Kan extension, with no definition holes or hidden candidate imports.
     Challenge proof markers are outside the proved library. Dependency pins and
     negative-control implementations retain the v0.1.0 reference commit
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
@@ -867,7 +912,7 @@ alignment:
         Actual arbitrary-diagram colimits from Type object colimits, tagged edge
         generators, free paths, and semantic hom quotients. All enriched functors
         and object maps are retained, at every common universe u. No ordinary
-        colimit or model-structure premise. Protected by a 40-line Challenge.
+        colimit or model-structure premise. Original root retained in the 99-line Challenge extended for ordinary rigidification.
     - source: "bg.lem.reduction"
       lean: "DaggerModels.TwoObjectCellReduction.exists_reduction"
       module: "DaggerModels/TwoObjectCellReductionResolved.lean"
@@ -1072,6 +1117,24 @@ alignment:
       status: "proved"
       note: >-
         Unconditional actual functorial factorization in I-dagger.rlp.llp and I-dagger.rlp, with actual factorization data for every morphism; no weak-equivalence or model-category assertion. Auxiliary audited result.
+    - source: "Ordinary rigidification adjunction in dj.not.adjunctions"
+      lean: "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction"
+      module: "DaggerModels/OrdinaryRigidification.lean"
+      status: "proved"
+      note: >-
+        Actual left Kan extension of Mathlib's standard thickening is left adjoint to its restricted Yoneda nerve, using the proved ordinary colimits; arbitrary common universe, no existence or model premise.
+    - source: "Coherent nerve in dj.not.adjunctions, ordinary input to dj.lem.lift"
+      lean: "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib"
+      module: "DaggerModels/OrdinaryRigidification.lean"
+      status: "proved"
+      note: >-
+        Full natural isomorphism to Mathlib's actual SimplicialNerve with postcomposition on all enriched functors; the same left adjoint is transported to this nerve. Opposite coherence and the dagger lift remain unproved.
+    - source: "Standard-simplex values of ordinary rigidification in dj.not.adjunctions"
+      lean: "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
+      module: "DaggerModels/OrdinaryRigidification.lean"
+      status: "proved"
+      note: >-
+        The standard simplex diagram followed by the same rigidification is naturally isomorphic to Mathlib's original thickening diagram; uliftYoneda is definitionally SSet.stdSimplex.
     - source: "Main theorems A-D"
       status: "not-formalized"
 acknowledgements: >-

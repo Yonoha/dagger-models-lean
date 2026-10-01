@@ -106,3 +106,4 @@ import DaggerModels.SSetMonoRLPRetraction
 import DaggerModels.SSetBoundaryRetraction
 import DaggerModels.SmallObjectFiniteDomains
 import DaggerModels.DaggerSmallObject
+import DaggerModels.OrdinaryRigidification

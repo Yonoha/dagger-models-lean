@@ -67,6 +67,8 @@ jobs:
           Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
           Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms
           Mathlib.CategoryTheory.SmallObject.Basic
+          Mathlib.AlgebraicTopology.SimplicialNerve
+          Mathlib.CategoryTheory.Limits.Presheaf
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

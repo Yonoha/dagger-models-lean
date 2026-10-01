@@ -2,7 +2,10 @@
   "challenge_module": "Challenge",
   "solution_module": "Solution",
   "theorem_names": [
-    "DaggerModels.simplicialCatHasColimits"
+    "DaggerModels.simplicialCatHasColimits",
+    "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction",
+    "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib",
+    "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
   ],
   "permitted_axioms": [
     "propext",

@@ -12,7 +12,7 @@ The intentional theorem-proof placeholders are specification markers, not
 unproved library results. A reviewer must inspect all twenty-seven files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
-The current total is 1,870 physical lines and 109 roots: 106 mathematical results
+The current total is 1,929 physical lines and 112 roots: 109 mathematical results
 and three definition markers. Twenty-five files have the standard 100-line
 budget; the existing 160-line and 116-line exceptions are unchanged. Smaller
 counts below describe earlier milestones, not the current coverage.
@@ -479,7 +479,8 @@ The five graph targets and all preceding 86 roots remain registered. Word
 finitarity, dagger-category presentability, ordinary creation, two-object cells,
 ordinary colimits and object generation below brought that stage to 23 Challenges,
 102 roots and 1,780 physical lines. The ordinary-lifting and small-object stage
-below extends this to the current 27 Challenges, 109 roots and 1,870 lines.
+below extended this to 27 Challenges, 109 roots and 1,870 lines. The subsequent
+ordinary-rigidification extension brings the totals to 112 roots and 1,929 lines.
 Tool pins, permitted axioms
 and negative controls are unchanged. Local finite presentability of dagger
 simplicial categories requires the further constructions below; the main
@@ -757,9 +758,11 @@ proves their identities, composition and naturality with both endpoint
 transports, and proves the complete colimit universal property.
 
 `DaggerModels.simplicialCatHasColimits` is an unconditional theorem at every
-common universe. Its 40-line Mathlib-only Challenge exposes the full ordinary
+common universe. Its Mathlib-only Challenge exposes the full ordinary
 category and all enriched functors. No prospective model structure, cocompleteness
 premise, dagger, or restriction on object maps appears in the statement.
+Originally 40 lines, the same Challenge is now 99 lines with the ordinary
+rigidification extension described below; the original colimit root is retained.
 
 `TwoCopyPushoutReduction.lean` proves the general two-copy pasting lemma in an
 arbitrary category. The three `TwoObjectCellReduction` modules instantiate it
@@ -902,7 +905,7 @@ conclusions; one protects the general finite-domain bridge with its explicit
 hypotheses. The actual local horn equivalence and unconditional `I†`
 factorization are audited, separately agent-reviewed auxiliary applications,
 not separate Comparator roots. All 23 prior Challenges and their 23 configs
-(46 files), and all 102 ordered roots, remain unchanged. The current total is
+(46 files), and all 102 ordered roots, remained unchanged at that stage, with
 27 Challenges, 1,870 lines and 109 roots (106 mathematical and three markers).
 The nine-module tranche passed local fresh compilation, seven exact root-header
 comparisons and a transitive audit of all 2,544 loaded `DaggerModels`
@@ -911,6 +914,66 @@ declarations, including generated declarations; only `propext`,
 without a claim of independent human review. Exact-commit Linux checks remain
 separate from these local results. Weak homotopy equivalences, trivial Kan
 fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D remain unproved.
+
+## Ordinary rigidification using existing Mathlib results
+
+The ordinary adjunction recalled in `dj.not.adjunctions` is constructed in
+[`OrdinaryRigidification.lean`](DaggerModels/OrdinaryRigidification.lean).
+It supplies an input to `dj.lem.lift`; the latter's opposite coherence and
+dagger lift are not asserted here. The reuse search and version decisions are
+recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
+
+At every common universe `u`, `cosimplicialThickening` is a functor
+`SimplexCategory ⥤ SimplicialCat.{u,u}`. Its object at `n` is exactly Mathlib's
+`SimplicialThickening (ULift.{u} (Fin (n.len + 1)))`, bundled with its original
+enrichment. Its mapping spaces are the original nerves of interval-subset
+posets, and its simplex operators are the original
+`SimplicialThickening.functor` applied to the lifted order homomorphisms.
+Existing `functor_id` and `functor_comp` supply the functor laws.
+
+`coherentNerve` is literally `Presheaf.restrictedULiftYoneda` of this diagram.
+`rigidification` is its literal chosen left Kan extension along `uliftYoneda`.
+The previously proved `simplicialCatHasColimits` supplies the necessary
+colimits; their existence is not an extra hypothesis of the result.
+`Presheaf.uliftYonedaAdjunction` gives the actual adjunction data, including
+unit, counit and triangle identities.
+
+Mathlib's `SimplicialNerve (ForgetEnrichment SSet C.Obj)` retains the full
+enrichment of `C`. It is bundled into `mathlibCoherentNerve`, with enriched
+functors acting by postcomposition. Removing the outer restricted-Yoneda
+`ULift` gives `coherentNerveIsoMathlib`, a natural isomorphism both in simplex
+operators and in arbitrary enriched target functors. This is a full natural
+isomorphism, not just a bijection on each set of simplices. Transporting the
+adjunction gives `rigidificationMathlibCoherentNerveAdjunction`, with the same
+left adjoint and Mathlib's actual nerve as right adjoint.
+
+`Presheaf.isExtensionAlongULiftYoneda` also gives `rigidificationSimplexIso`:
+the standard simplex diagram followed by this rigidification is naturally
+isomorphic to the original thickening diagram. In the pinned Mathlib source,
+`SSet.stdSimplex` is definitionally `uliftYoneda`, so this statement uses the
+actual standard simplices and all their operators. No fibrancy, nonemptiness,
+fixed-object, or model-structure premise is imposed.
+
+The existing ordinary-colimits Challenge grows from 40 to 99 physical lines.
+It retains the original colimit root and exposes the full category, standard
+thickening, both nerves, and actual left Kan extension. Three new roots protect
+the adjunction, natural nerve comparison and standard-simplex comparison.
+The old colimit proof marker remains a configured target: it is not a hidden
+definition hole. Every import is directly from pinned Mathlib. The other 26
+Challenges and their configurations remain byte-for-byte unchanged, and all
+109 ordered preceding roots are retained, giving 27 Challenges, 1,929 physical
+lines and 112 roots (109 mathematical results and three audit markers).
+
+The 144-line implementation passes strict Lean compilation. Its 32 declarations,
+including generated private auxiliaries, have transitive axiom dependencies
+only on `propext`, `Classical.choice` and `Quot.sound`. The integrated project
+build and transitive audit of all 2,576 loaded project declarations pass, as do
+the audit's two negative controls, Challenge registration and metadata checks.
+Literal comparison of all 42 Challenge declarations has zero differences,
+excluding only the four configured theorem-proof bodies. Linux Comparator
+execution remains a separate check; no independent human review is claimed. This ordinary
+adjunction does not establish opposite compatibility, the dagger lifted
+adjunction, preservation of model classes, or any Quillen-equivalence claim.
 
 ## Main-result status
 
@@ -922,6 +985,7 @@ fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D remain un
 | `pointset.cor.no-naive-quillen` | Comparison obstruction with the DCH model; Theorem D | Not formalized |
 | `prop.sSetdag_is_equivalent_to_Fun` | Presheaf equivalence and presentability | Proved, with arbitrary value universe |
 | `dj.not.adjunctions` (simplicial sets) | Free–forgetful adjunction | Actual adjunction, zero-skeleton pushout, unit and swap proved |
+| `dj.not.adjunctions` (ordinary rigidification) | Ordinary rigidification and coherent nerve | Actual Mathlib-based adjunction, full natural nerve comparison, and standard-simplex comparison proved; opposite coherence and the dagger lift remain unproved |
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
 | `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
 | Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |
