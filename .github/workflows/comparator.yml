@@ -12,8 +12,9 @@ permissions:
 jobs:
   compare:
     runs-on: ubuntu-24.04
-    # Allow all 27 comparison groups and both negative controls to finish.
-    timeout-minutes: 60
+    # The isolated proof replays take about 2.3 minutes per positive group.
+    # Allow all 27 groups and both negative controls to finish with setup margin.
+    timeout-minutes: 90
     env:
       MATHLIB_NO_CACHE_ON_UPDATE: "1"
     steps:

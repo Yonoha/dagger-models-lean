@@ -119,6 +119,30 @@ uncompiled and unaudited. The immutable original sources, exact adaptation
 diff, source/artifact hashes and logs are preserved; local diagnostic copies
 are under `build/reuse-20261001/topcat-compatibility/phase1/`.
 
+Subsequent bounded passes retain the same dependency pins and upstream archive.
+The fourth joint pass has 94 compiled modules, seven direct compilation failures,
+and 82 modules blocked by prerequisites. These are compilation counts, not a
+percentage of the target theorem proved. The key comparison in `SSet/KeyLemma`
+and the final `ModelCategorySSet` module remain uncompiled and unaudited.
+
+The latest six adapted modules reuse Mathlib's actual dimension classes,
+standard-simplex face isomorphisms, endpoint inclusions and closed-category
+classes. Twenty-nine named SSet duplicates and three duplicate instances were
+replaced by their existing Mathlib declarations. Explicit checks retain the
+original types and, for the constructed isomorphisms and inclusions, the full
+data by `rfl` equalities. Nonduplicate helpers and unrestricted universes are
+retained. The two convenient-category adaptations preserve the chosen internal
+hom adjunction and the underlying open-immersion lifts.
+
+Strict compilation and transitive audits cover all owned/generated declarations
+and explicit compatibility checks: 308 declarations for the four SSet modules
+and 131 for the two convenient-category modules. Independent agent/root source
+review and diagnostic replay found no weakening of statements or data. This is
+not independent human review or an exhaustive audit of all 94 compiled modules.
+Frozen local evidence is under
+`build/reuse-20261001/topcat-compatibility/phase4-{sset,core,joint}/`;
+no external proof bodies have been integrated into the published companion.
+
 **Decision:** prioritize a compatible pinned dependency or documented
 compatibility adaptation before independently proving this standard theory.
 Preserve attribution. Repository-level licensing was not established for the
@@ -164,8 +188,16 @@ all 2,576 project declarations' transitive axiom audit, both audit negative
 controls, Challenge registration checks and formalization metadata checks pass.
 The 99-line expanded Challenge has 42 literal declaration comparisons with zero
 differences, excluding only the four configured theorem-proof bodies.
-Linux Comparator execution remains a separate required check; local checks do
-not claim its success or independent human review.
+The real Linux Comparator
+[run 36859605890](https://github.com/Yonoha/dagger-models-lean/actions/runs/36859605890)
+accepted all four simplicial-colimit/rigidification roots and 24 of the 27
+registered groups overall (106 roots), and both negative controls passed.
+GitHub then terminated the job at its configured 60-minute limit while the
+boundary-cell group was running. This is not a successful complete Comparator
+run. The job allowance is now 90 minutes, based on the observed roughly
+2.3-minute positive-group replays; all 27 groups and both negative controls
+remain required. The full green CI gate and independent human review are not
+claimed by these partial-run results.
 
 ## Other primary sources checked
 
