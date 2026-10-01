@@ -31,9 +31,12 @@ simplicial-category forgetful functor also creates all small limits and colimits
 The actual two-object free dagger cells have the full universal property
 `bg.eq.A-univ` and are finitely presentable for finite simplicial sets. The
 underlying free cell is a pushout of its two ordinary one-edge copies. A concrete
-right adjoint also proves colimit preservation by ordinary forgetting. These
-last two results supply steps of `bg.lem.reduction`; the full successive-cell
-attachment comparison remains unproved. Two concrete
+right adjoint also proves colimit preservation by ordinary forgetting.
+Ordinary simplicial-category colimits are now constructed, completing the
+successive-attachment comparison in `bg.lem.reduction`. The actual generator
+family `I†` detects object surjectivity and boundary lifting on every hom space.
+The comparison of this boundary condition with trivial Kan fibrations remains
+unproved. Two concrete
 comparison obstructions and the first release's elementary foundations are retained.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
@@ -67,7 +70,9 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Final assertion of `bg.lem.presentable` | [`DaggerSemanticColimit`](DaggerModels/DaggerSemanticColimit.lean), [`DaggerFiniteGenerators`](DaggerModels/DaggerFiniteGenerators.lean), [`DaggerSimplicialPresentable`](DaggerModels/DaggerSimplicialPresentable.lean) | Actual small colimits and a small strong generator of finitely presentable objects give unconditional local finite presentability of the full dagger simplicial category at every common universe |
 | `bg.lem.creation` | [`DaggerOrdinaryCreation`](DaggerModels/DaggerOrdinaryCreation.lean) | The actual ordinary simplicial-category forgetful functor creates all small limits and colimits, with no existence premise or restriction on object maps |
 | `bg.not.cells`, `bg.eq.A-univ` and its finite compactness assertion | [`TwoObjectDaggerCell`](DaggerModels/TwoObjectDaggerCell.lean), [`TwoObjectCellPresentability`](DaggerModels/TwoObjectCellPresentability.lean) | Actual free two-object cell, unrestricted universal property and finite presentability when the simplicial set has finitely many nondegenerate simplices |
-| Free-cell decomposition and preservation used in `bg.lem.reduction` | [`OrdinaryTwoObjectCell`](DaggerModels/OrdinaryTwoObjectCell.lean), [`TwoObjectCellPushout`](DaggerModels/TwoObjectCellPushout.lean), [`DaggerSimplicialCofree`](DaggerModels/DaggerSimplicialCofree.lean) | Actual ordinary cells, the underlying free-cell pushout, and an actual right adjoint to ordinary forgetting; the full attachment reduction is not yet proved |
+| Ordinary colimits used in `bg.lem.reduction` | [`SimplicialColimits`](DaggerModels/SimplicialColimits.lean) | Actual colimits of all small ordinary simplicial-category diagrams, with arbitrary object maps and no existence premise |
+| `bg.lem.reduction` | [`TwoObjectCellReductionResolved`](DaggerModels/TwoObjectCellReductionResolved.lean) | Actual dagger attachment is isomorphic to two successive ordinary attachments along the given edge and its dagger, with both pushouts and all three comparison legs |
+| `bg.not.cells`, `bg.def.IJ` and generator lifting in `bg.lem.I-inj` | [`DaggerDiscreteObjects`](DaggerModels/DaggerDiscreteObjects.lean), [`TwoObjectCellLifting`](DaggerModels/TwoObjectCellLifting.lean), [`DaggerGeneratingCofibrations`](DaggerModels/DaggerGeneratingCofibrations.lean) | Actual initial-to-point generator and full boundary family detect object surjectivity plus boundary RLP on every hom; the trivial Kan comparison remains unproved |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -154,7 +159,7 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 97 selected library theorems against twenty-one
+Linux GitHub Actions job. It compares 99 selected library theorems against twenty-three
 self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
@@ -178,6 +183,8 @@ self-contained problem specifications:
 - [Creation over ordinary simplicial categories](.ci/comparator/DaggerOrdinaryCreationChallenge.lean): 116 lines
 - [Two-object dagger cell universal property](.ci/comparator/TwoObjectDaggerCellChallenge.lean): 57 lines
 - [Finite presentability of the same universal cell](.ci/comparator/FiniteTwoObjectCellChallenge.lean): 95 lines
+- [Ordinary simplicial-category colimits](.ci/comparator/SimplicialColimitsChallenge.lean): 40 lines
+- [Initial-to-point object generator](.ci/comparator/DaggerObjectGeneratorChallenge.lean): 91 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -207,12 +214,12 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks direct Mathlib imports and coverage of all 100 registered roots.
-Nineteen Challenges have 100-line budgets. The monadicity and ordinary-creation
+CI checks direct Mathlib imports and coverage of all 102 registered roots.
+Twenty-one Challenges have 100-line budgets. The monadicity and ordinary-creation
 Challenges have reviewed 160-line and 116-line budgets respectively. Both need
 the two full category structures and actual forgetful functor visible, including
 structural proofs. The ordinary-creation file still has 101 nonblank lines; its
-116-line format preserves readability. The 1,649 lines across all twenty-one
+116-line format preserves readability. The 1,780 lines across all twenty-three
 files are the review surface; checking one file is not a review of the entire
 formalization.
 
@@ -265,6 +272,14 @@ not merely finite sets in each degree. Both specify full definitions directly
 using Mathlib imports. Their witnesses are the actual free cells constructed in
 the library. The ordinary-cell pushout and cofree constructions are supporting
 proof modules covered by the library audit, not additional Comparator roots.
+The ordinary-colimits and object-generator Challenges add 40 and 91 lines,
+retaining all preceding 100 roots and twenty-one specifications unchanged.
+The former requires actual small colimits of the full ordinary enriched category.
+The latter requires one initial object, one terminal object, and the same arrow
+between them to detect object surjectivity for every target functor. The library
+witnesses are the concrete empty and identity-only one-object categories.
+The complete attachment reduction and boundary-RLP characterization are audited
+and separately reviewed supporting results, not separate Comparator roots.
 
 ## Citing this version
 
@@ -303,10 +318,11 @@ are complete. The original word monad is finitary, and dagger simplicial categor
 have all small limits and colimits and are locally finitely presentable.
 The ordinary-category forgetful assertion in `bg.lem.creation` is also proved.
 The actual two-object free cells, their finite presentability, the underlying
-free-cell pushout, and the ordinary forgetful right adjoint are now proved.
-The next stages toward A–D include the full ordinary/dagger cell-attachment
-comparison, ordinary rigidification and coherent nerve, their lifted
-adjunction, and the model structures. These
+free-cell pushout, ordinary colimit existence, and full successive-attachment
+comparison are proved. The actual `I†` lifting condition is characterized by
+object surjectivity and ordinary boundary lifting on all hom spaces.
+The next stages toward A–D include the ordinary Kan–Quillen comparison,
+rigidification and coherent nerve, their lifted adjunction, and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
 
@@ -339,6 +355,10 @@ graph の圏についても、実際の前層圏との圏同値、全ての小�
 二対象自由 dagger セルの普遍性 `bg.eq.A-univ` と、有限 simplicial set に対する
 同じセルの有限可呈示性も証明しました。それぞれ 57 行・95 行の Challenge で照合します。
 underlying 自由セルの二つの通常セルによる pushout 分解と、忘却関手の具体的な右随伴も
-構成しています。セル付加の還元補題全体は未完了です。
+構成しています。通常の simplicial category の小余極限を実際に構成することで、
+セル付加の還元補題 `bg.lem.reduction` 全体も証明しました。
+また、実際の生成射族 `I†` に対する右持ち上げ条件が、対象上の全射性と全ての hom の
+境界持ち上げ条件に同値であることを証明しました。trivial Kan fibration との比較は未完了です。
+新しい余極限・対象生成射の Challenge は 40 行・91 行で、既存の仕様は保持しています。
 論文の主定理全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

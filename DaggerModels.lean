@@ -85,3 +85,15 @@ import DaggerModels.UnderlyingTwoObjectCell
 import DaggerModels.OrdinaryTwoObjectCell
 import DaggerModels.DaggerSimplicialCofree
 import DaggerModels.TwoObjectCellPushout
+import DaggerModels.SimplicialColimitsFree
+import DaggerModels.SimplicialHomQuotient
+import DaggerModels.SimplicialColimitKernel
+import DaggerModels.SimplicialColimits
+import DaggerModels.TwoCopyPushoutReduction
+import DaggerModels.TwoObjectCellReduction
+import DaggerModels.TwoObjectCellReductionChosen
+import DaggerModels.TwoObjectCellReductionResolved
+import DaggerModels.TwoObjectCellLifting
+import DaggerModels.DaggerDiscreteObjects
+import DaggerModels.DaggerDiscreteObjectsExistence
+import DaggerModels.DaggerGeneratingCofibrations

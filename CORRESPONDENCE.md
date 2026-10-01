@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies twenty-one self-contained Comparator Challenges for
+The current branch supplies twenty-three self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all twenty-one files to review the
+unproved library results. A reviewer must inspect all twenty-three files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -472,8 +472,9 @@ for an actual equivalence with presheaves on some small category, as well as
 or duplicate the intermediate equivalence. Comparator replays their proof
 dependencies, and the namespace-wide axiom audit includes those constructions.
 The five graph targets and all preceding 86 roots remain registered. Word
-finitarity, dagger-category presentability, ordinary-creation and two-object cell
-targets below bring the total to 21 Challenges, 100 roots and 1,649 physical lines.
+finitarity, dagger-category presentability, ordinary creation, two-object cells,
+ordinary colimits and object generation below bring the total to 23 Challenges,
+102 roots and 1,780 physical lines.
 Tool pins, permitted axioms
 and negative controls are unchanged. Local finite presentability of dagger
 simplicial categories requires the further constructions below; the main
@@ -693,8 +694,9 @@ statements leave the representing witness free while fixing the full required
 property. Raw comparison in separate Lean environments compares 71 and 84
 constants, including all definition values and structural proofs, with only
 the target theorem's proof body omitted. All preceding 19 Challenges/configs
-and 98 roots are retained. The current total is 21 Challenges, 100 roots and
-1,649 physical lines; no new line-budget exception is needed.
+and 98 roots are retained. This two-object-cell stage had 21 Challenges, 100 roots
+and 1,649 physical lines, with no new line-budget exception. The further
+ordinary-colimits and object-generator registrations are described below.
 
 ## Ordinary cells and two ingredients of cell-attachment reduction
 
@@ -729,11 +731,82 @@ hom and diagram universes remain independent. This does not assume or prove
 existence of arbitrary ordinary simplicial-category colimits.
 
 These four supporting modules are included in the namespace-wide axiom audit,
-but they are not separate Comparator roots. Individual ordinary attachments
-and their successive-pushout comparison are still required to complete
-`bg.lem.reduction`; the whole lemma and main theorems A–D remain unproved.
-The constructions and both new Challenges received separate agent reviews,
-not independent human review.
+but they are not separate Comparator roots. The complete attachment reduction
+is now proved using the ordinary colimit construction below. The constructions
+and their Challenges received separate agent reviews, not independent human review.
+
+## Ordinary colimits and complete attachment reduction
+
+`SimplicialColimitsFree.lean` constructs ordinary simplicial graphs and genuine
+finite paths, with ordinary edgewise simplex operators and the full free
+universal property for arbitrary object functions. `SimplicialHomQuotient.lean`
+constructs degreewise hom quotients by a relation stable under simplex operators,
+retaining the original objects and proving full enriched-functor descent.
+For an arbitrary diagram, `SimplicialColimitKernel.lean` first takes the actual
+Type-colimit of objects. Its edge generators keep the original diagram object,
+both endpoints, and simplex. The quotient relation is the intersection of
+kernels of all original cocone extensions. This quantification does not assume
+a colimit cocone; the relation lives in Prop, so the quotient stays in the
+original universe. `SimplicialColimits.lean` constructs the actual enriched legs,
+proves their identities, composition and naturality with both endpoint
+transports, and proves the complete colimit universal property.
+
+`DaggerModels.simplicialCatHasColimits` is an unconditional theorem at every
+common universe. Its 40-line Mathlib-only Challenge exposes the full ordinary
+category and all enriched functors. No prospective model structure, cocompleteness
+premise, dagger, or restriction on object maps appears in the statement.
+
+`TwoCopyPushoutReduction.lean` proves the general two-copy pasting lemma in an
+arbitrary category. The three `TwoObjectCellReduction` modules instantiate it
+with the actual ordinary and dagger cells. The ordinary pushouts now exist by
+the preceding colimit construction; the dagger pushout exists by proved dagger
+cocompleteness, and its underlying square is a pushout by the cofree adjunction.
+`TwoObjectCellReductionResolved.lean` supplies
+`DaggerModels.TwoObjectCellReduction.reductionIso`, with no remaining `HasPushout`
+or `HasColimits` premises. Its `exists_reduction` theorem uses the same two
+pushouts and comparison isomorphism throughout. The second attaching map is
+literally the original edge followed by dagger, at the reversed endpoint pair,
+and then by the first attachment inclusion. All three comparison-leg equations
+are proved. This proves the full `bg.lem.reduction`, and in fact requires no
+monicity of the simplicial map, distinct endpoints, or nonempty edge space.
+These reduction proofs are audited and separately reviewed auxiliary results;
+the ordinary-colimits theorem is their new registered Comparator root.
+
+## The actual object generator and boundary lifting
+
+`DaggerDiscreteObjects.lean` equips the existing discrete enrichment on V,
+with hom the constant simplicial set `ULift (PLift (x = y))`, with equality
+reversal as dagger. Its full Hom equivalence classifies arbitrary dagger functors
+by object functions. Objects and hom universes remain independent. Empty and
+one-object identity-only instances give actual initial and terminal objects,
+with the unique arrow between them. Lifting against that arrow is proved
+equivalent to surjectivity of the actual object function.
+
+`exists_daggerObjectGenerator` has a 91-line Mathlib-only Challenge exposing the
+full dagger category. It requires one initial object, one terminal object and
+one arrow, outside the quantification over every target functor. These universal
+properties determine the concrete empty-to-point arrow up to arrow isomorphism,
+under which lifting is invariant. The conclusion is actual surjectivity, not
+essential surjectivity. The library uses the same concrete witnesses throughout.
+
+`TwoObjectCellLifting.lean` uses the full two-object-cell Hom equivalence to prove
+that lifting against the actual image of any simplicial map is equivalent to
+lifting on every full hom space. Both endpoint equalities are transported
+before comparing dependent hom maps. Arbitrary object functions, equal endpoints
+and empty simplicial sets are all retained. `DaggerGeneratingCofibrations.lean`
+defines `I†` as the literal union of all actual free boundary inclusions (all
+natural-number dimensions, including zero) and the empty-to-point generator.
+Its RLP is exactly object surjectivity and boundary RLP for every hom map.
+These are audited and separately reviewed auxiliary results, not additional
+Comparator roots. The comparison of boundary RLP with a Kan fibration that is
+a weak homotopy equivalence, and therefore full `bg.lem.I-inj`, remains unproved.
+No weak-equivalence or model-category structure is supplied as an extra premise.
+
+The two new Challenges retain all preceding 100 roots and twenty-one
+specifications/configurations unchanged. The complete registered scope is now
+102 roots (99 mathematical and three definition markers) in twenty-three
+Challenges, totalling 1,780 physical lines. Neither new Challenge needs an
+exception to the 100-line budget. Main theorems A–D remain unproved.
 
 ## Main-result status
 
@@ -755,7 +828,8 @@ not independent human review.
 | Final assertion of `bg.lem.presentable` | Dagger simplicial categories are locally finitely presentable | Proved using constructed small colimits and a small strong generator of finitely presentable objects, at every common universe |
 | `bg.lem.creation` | Ordinary simplicial-category forgetting creates all small limits and colimits | Full Mathlib creation data proved, with independent object, hom, and diagram universes and arbitrary object maps |
 | `bg.not.cells`, `bg.eq.A-univ` and the following compactness assertion | Two-object free cells and finite presentability | Actual cells, unrestricted universal property and finite presentability for finite simplicial sets proved |
-| Two ingredients of `bg.lem.reduction` | Underlying free-cell pushout and ordinary forgetful preservation | Actual decomposition and cofree right adjoint proved; the full attachment reduction remains unproved |
+| `bg.lem.reduction` | Successive ordinary attachments compute the forgotten dagger attachment | Full comparison isomorphism and three leg equations proved, with both ordinary pushouts constructed and no existence premise |
+| `bg.not.cells`, `bg.def.IJ`, generator lifting in `bg.lem.I-inj` | Actual object and boundary generators | Exact object-surjectivity plus all-hom boundary-RLP characterization proved; comparison with trivial Kan fibrations remains unproved |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

@@ -149,7 +149,7 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   adjunction and proved graph-forgetting accessibility to show that the same
   universal cell is finitely presentable for a finite simplicial set. The two
   closed conclusions have separate 57-line and 95-line Mathlib-only Challenges.
-- Two ingredients of `bg.lem.reduction`: `OrdinaryTwoObjectCell.lean` constructs
+- `bg.lem.reduction`: `OrdinaryTwoObjectCell.lean` constructs
   the actual ordinary one-edge cell and its full universal property.
   `UnderlyingTwoObjectCell.lean` classifies ordinary functors out of the actual
   free dagger cell by two independent edge maps. `TwoObjectCellPushout.lean`
@@ -157,8 +157,29 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   the discrete two-object category; the reverse copy uses swapped labels.
   `DaggerSimplicialCofree.lean` constructs the actual right adjoint to ordinary
   forgetting, with hom C(x,y) times C(y,x), and proves colimit preservation.
-  These are auxiliary audited results. Ordinary attachment existence and the
-  full successive-attachment comparison remain to be proved.
+  `SimplicialColimitsFree.lean`, `SimplicialHomQuotient.lean`,
+  `SimplicialColimitKernel.lean` and `SimplicialColimits.lean` construct actual
+  ordinary colimits from free paths and their semantic hom quotients, retaining
+  arbitrary object maps and the original common universe. Ordinary attachment
+  existence is therefore proved. `TwoCopyPushoutReduction.lean` proves the
+  two-copy pasting result, and `TwoObjectCellReductionResolved.lean` applies it
+  to the actual cells and their dagger attachment. The resulting isomorphism
+  respects all three comparison legs and uses exactly the attachments along
+  the given edge and its dagger. No pushout-existence premise remains. Thus
+  the full reduction lemma is proved; ordinary colimits have a 40-line Challenge.
+- Generator lifting in `bg.lem.I-inj`: `DaggerDiscreteObjects.lean` constructs
+  discrete dagger categories with constant lifted equality homs, their full
+  Hom/object-function equivalence, the actual initial empty category and
+  terminal identity-only point, and proves that the empty-to-point map detects
+  object surjectivity. A 91-line Challenge protects the same initial/terminal
+  witnesses and lifting equivalence for all target functors.
+  `TwoObjectCellLifting.lean` proves that actual free-cell lifting is equivalent
+  to lifting on every full hom space, without endpoint restrictions.
+  `DaggerGeneratingCofibrations.lean` defines the actual `I†` as all free boundary
+  maps, including dimension zero, together with the object generator. Its RLP
+  is exactly object surjectivity plus boundary RLP on every hom. Identifying the
+  latter with a Kan fibration that is a weak homotopy equivalence remains open.
+  The full model-categorical `bg.lem.I-inj` assertion is not yet claimed.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -179,20 +200,27 @@ Required chain:
    ordinary-category forgetful functor (`bg.lem.creation`) is now also proved.
    Two-object free cells and their finite presentability (`bg.not.cells`,
    `bg.eq.A-univ`) are proved, including the full unrestricted universal property.
-   The ordinary free-cell decomposition and forgetful right adjoint needed for
-   `bg.lem.reduction` are proved; the complete attachment comparison remains open.
+   Actual ordinary colimits and the complete successive-attachment comparison
+   in `bg.lem.reduction` are proved, with all required pushouts constructed.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).
 4. The exact classes `W†`, `I†`, `J†` (`bg.def.W`, `bg.def.IJ`), two-out-of-three,
    cell and lifting results, and the recognition theorem's hypotheses.
+   The actual `I†` is defined and its full boundary-RLP characterization is proved.
+   The comparison with trivial Kan fibrations still requires ordinary SSet theory.
 5. The actual model structure, specified generating sets, characterization of
    trivial fibrations, combinatoriality, and left properness.
 
 Pinned mathlib supplies enriched categories/functors, a general `ModelCategory`
 class, weak factorization systems, and small object machinery. It does not
-supply the ordinary Bergner model structure needed here. A degree-zero dagger
-category does not replace a dagger simplicial category.
+supply the ordinary Bergner model structure needed here. Its
+`SimplicialSet.CategoryWithFibrations` defines Kan fibrations by horn lifting,
+but describes the SSet Quillen model structure as TODO. In particular, it does
+not supply the required boundary-RLP/trivial-fibration comparison with actual
+weak homotopy equivalences. A degree-zero dagger category does not replace a
+dagger simplicial category. The external Kan–Quillen source recorded below is
+a candidate dependency to port and audit, not an assumed theorem.
 
 ## B — dagger Joyal structure and rigidification equivalence
 

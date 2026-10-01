@@ -35,7 +35,12 @@ project:
     and are finitely presentable for finite simplicial sets. Their ordinary
     underlying categories are pushouts of the two directed one-edge cells.
     An actual cofree right adjoint proves ordinary forgetting preserves colimits.
-    The main model-categorical theorems A-D are not formalized.
+    Actual ordinary colimits discharge both pushout-existence conditions in the
+    full successive-attachment reduction. Actual discrete dagger categories,
+    the initial-to-point generator, and the two-object cell lifting equivalence
+    give the full I-dagger boundary-RLP characterization. Its comparison with
+    trivial Kan fibrations remains unproved. The main model-categorical theorems
+    A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
   responsible_maintainers:
@@ -70,8 +75,12 @@ sources:
       The ordinary forgetful creation assertion of bg.lem.creation is also proved.
       The two-object cells in bg.not.cells, their universal property bg.eq.A-univ,
       and its finite compactness assertion are proved. The underlying free-cell
-      decomposition and colimit preservation used in bg.lem.reduction are proved;
-      the full successive-attachment comparison is not yet formalized.
+      decomposition, ordinary colimit existence, and colimit preservation prove
+      the full successive-attachment comparison in bg.lem.reduction. The actual
+      I-dagger in bg.def.IJ, including dimension-zero boundaries and the object
+      generator, has the exact object-surjectivity plus hom-boundary-RLP
+      characterization used in bg.lem.I-inj. The comparison with trivial Kan
+      fibrations is not yet formalized.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -117,7 +126,14 @@ status:
     and the same cell is finitely presentable for finite simplicial sets.
     The actual ordinary one-edge cells, their pushout decomposition of the
     underlying free dagger cell, and a right adjoint to ordinary forgetting
-    are constructed. The full bg.lem.reduction attachment comparison remains open.
+    are constructed. Actual ordinary colimits and the two-copy pasting lemma
+    complete the full bg.lem.reduction attachment comparison with all three
+    comparison-leg equations and no pushout-existence premise. Actual discrete
+    dagger categories give the initial empty and terminal identity-only point;
+    the same empty-to-point map detects surjectivity of every functor on objects.
+    Actual free two-object cell lifting is equivalent to full hom-space lifting.
+    Together these prove the exact I-dagger boundary-RLP characterization. The
+    trivial Kan fibration comparison and full bg.lem.I-inj remain unproved.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -457,6 +473,18 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/finite_two_object_cell.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.simplicialCatHasColimits"
+      file: "DaggerModels/SimplicialColimits.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/simplicial_colimits.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.exists_daggerObjectGenerator"
+      file: "DaggerModels/DaggerDiscreteObjectsExistence.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/dagger_object_generator.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -588,16 +616,29 @@ fidelity:
     discrete two-object category, with the reverse copy relabelled by swap.
     Cofree mapping spaces C(x,y) times C(y,x), with swap dagger, give an actual
     right adjoint to forgetting and hence colimit preservation without assuming
-    ordinary colimit existence. Full cell-attachment reduction and the main
-    theorems remain unproved.
+    ordinary colimit existence. Ordinary colimits are separately constructed
+    from actual Type-colimits of vertices, tagged edge generators, free finite
+    paths, and hom quotients by the kernels of all original cocone extensions.
+    The quotient relation lives in Prop, so the universe is retained. Both
+    ordinary pushouts therefore exist. Their two-copy universal property and
+    forgetful preservation give the actual dagger-attachment comparison, with
+    prescribed forward and dagger attaching maps and all three leg equations.
+    The discrete enrichment has constant lifted equality homs and equality
+    reversal as dagger. Its full Hom/object-function equivalence supplies the
+    actual empty and identity-only point and the object-surjectivity lifting
+    equivalence. The two-object cell Hom equivalence similarly supplies local
+    lifting, including dependent endpoint transports. The actual I-dagger is
+    the union of all boundary cell maps and that object map; its RLP is exactly
+    object surjectivity and boundary RLP on every hom. The boundary-RLP/trivial-Kan
+    comparison and main theorems remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 97 selected library
-    theorems and three audit-only definition roots against twenty-one self-contained
+    checks, not independent human review. Comparator checks 99 selected library
+    theorems and three audit-only definition roots against twenty-three self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib. The original
     fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
     73, 100, and 83 lines). The literal monadicity/word-finitarity specification has 160 lines
@@ -612,8 +653,13 @@ review:
     add 57 and 95 lines, with one closed existential root each. The finite-cell
     statement requires the same witness to have the full universal property and
     be finitely presentable, using finite nondegenerate simplices rather than
-    degreewise finiteness. All preceding 98 roots and nineteen specifications
-    remain unchanged. All twenty-one total 1649 physical lines,
+    degreewise finiteness. The ordinary-colimits and object-generator specifications
+    add 40 and 91 lines with one unconditional root each. The object-generator
+    statement uses the same initial/terminal objects and arrow for all target
+    functors, and requires actual object surjectivity. All preceding 100 roots
+    and twenty-one specifications/configurations remain unchanged. Full attachment
+    reduction and boundary-RLP characterization are audited and separately reviewed
+    auxiliary results, not separate Comparator roots. All twenty-three total 1780 physical lines,
     including comments and blank lines, and together form the review surface.
     New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
@@ -736,7 +782,8 @@ alignment:
         Actual ordinary pushout of two one-edge cells over the discrete two-object
         category; the second copy uses swapped object labels. The apex is the
         underlying original free dagger cell. This auxiliary result is audited
-        but is not a separate Comparator root. Full attachment reduction is unproved.
+        but is not a separate Comparator root. The complete attachment reduction
+        is recorded below.
     - source: "Colimit preservation used in bg.lem.reduction"
       lean: "DaggerModels.DaggerSimplicialCat.Cofree.forget_preservesColimitsOfSize"
       module: "DaggerModels/DaggerSimplicialCofree.lean"
@@ -745,7 +792,56 @@ alignment:
         An actual cofree right adjoint with hom C(x,y) times C(y,x) proves preservation
         for independent object, hom and diagram universes. No ordinary colimit
         existence is assumed or concluded. Audited auxiliary, not a separate
-        Comparator root; the full attachment reduction is not yet proved.
+        Comparator root. The ordinary colimit construction and complete attachment
+        reduction are recorded below.
+    - source: "Ordinary colimit existence used in bg.lem.reduction"
+      lean: "DaggerModels.simplicialCatHasColimits"
+      module: "DaggerModels/SimplicialColimits.lean"
+      status: "proved"
+      note: >-
+        Actual arbitrary-diagram colimits from Type object colimits, tagged edge
+        generators, free paths, and semantic hom quotients. All enriched functors
+        and object maps are retained, at every common universe u. No ordinary
+        colimit or model-structure premise. Protected by a 40-line Challenge.
+    - source: "bg.lem.reduction"
+      lean: "DaggerModels.TwoObjectCellReduction.exists_reduction"
+      module: "DaggerModels/TwoObjectCellReductionResolved.lean"
+      status: "proved"
+      note: >-
+        The same witnesses give both actual ordinary pushouts, the isomorphism
+        from the forgotten actual dagger attachment, and all three comparison-leg
+        equations. The reverse attaching map is literally the original edge
+        followed by dagger at reversed endpoints. No HasPushout, HasColimits,
+        monicity, distinctness or nonemptiness premise. Audited auxiliary result,
+        separately reviewed, not a separate Comparator root.
+    - source: "bg.not.cells and the object-generator clause of bg.lem.I-inj"
+      lean: "DaggerModels.exists_daggerObjectGenerator"
+      module: "DaggerModels/DaggerDiscreteObjectsExistence.lean"
+      status: "proved"
+      note: >-
+        Concrete empty and identity-only one-object dagger categories supply
+        actual initial/terminal data and the same arrow for all target functors.
+        Lifting against it is exactly object surjectivity. The common-universe
+        closed root has a 91-line Challenge; the underlying discrete construction
+        and lifting result also retain independent object and hom universes.
+    - source: "I-dagger in bg.def.IJ"
+      lean: "DaggerModels.DaggerGeneratingCofibrations.generators"
+      module: "DaggerModels/DaggerGeneratingCofibrations.lean"
+      status: "definition-and-elementary-lemmas"
+      note: >-
+        Literal supremum of actual free boundary maps in every natural-number
+        dimension, including zero, and the actual empty-to-point singleton family.
+    - source: "Boundary-RLP characterization within bg.lem.I-inj"
+      lean: "DaggerModels.DaggerGeneratingCofibrations.generators_rlp_iff"
+      module: "DaggerModels/DaggerGeneratingCofibrations.lean"
+      status: "proved"
+      note: >-
+        Actual I-dagger RLP equals object surjectivity and ordinary boundary RLP
+        on every full hom map, including equal endpoints and arbitrary object
+        functions. Derived from the full cell Hom equivalence and the concrete
+        object generator. Audited and separately reviewed auxiliary result, not
+        a separate Comparator root. Trivial Kan fibration comparison remains open;
+        this does not claim the full model-categorical source lemma.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

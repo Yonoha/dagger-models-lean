@@ -99,6 +99,8 @@
     "DaggerModels.DaggerSimplicialCat.forget_createsLimits",
     "DaggerModels.DaggerSimplicialCat.forget_createsColimits",
     "DaggerModels.exists_twoObjectDaggerCell",
-    "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell"
+    "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell",
+    "DaggerModels.simplicialCatHasColimits",
+    "DaggerModels.exists_daggerObjectGenerator"
   ]
 }

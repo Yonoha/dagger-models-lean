@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against twenty-one self-contained problem specifications:
+candidate against twenty-three self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -27,15 +27,17 @@ candidate against twenty-one self-contained problem specifications:
 | [DaggerOrdinaryCreationChallenge.lean](DaggerOrdinaryCreationChallenge.lean) | 116 | [dagger_ordinary_creation.json](dagger_ordinary_creation.json) | 2 theorems: creation of all small limits and colimits by the actual ordinary-category forgetful functor |
 | [TwoObjectDaggerCellChallenge.lean](TwoObjectDaggerCellChallenge.lean) | 57 | [two_object_dagger_cell.json](two_object_dagger_cell.json) | 1 theorem: unrestricted universal property of a two-object dagger cell |
 | [FiniteTwoObjectCellChallenge.lean](FiniteTwoObjectCellChallenge.lean) | 95 | [finite_two_object_cell.json](finite_two_object_cell.json) | 1 theorem: the same universal cell is finitely presentable for finite simplicial sets |
+| [SimplicialColimitsChallenge.lean](SimplicialColimitsChallenge.lean) | 40 | [simplicial_colimits.json](simplicial_colimits.json) | 1 theorem: unconditional small colimits of the full ordinary simplicial category |
+| [DaggerObjectGeneratorChallenge.lean](DaggerObjectGeneratorChallenge.lean) | 91 | [dagger_object_generator.json](dagger_object_generator.json) | 1 theorem: the same actual initial-to-terminal arrow detects object surjectivity for every target functor |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The twenty-one Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,649 lines in total**, including
+the implementation. The twenty-three Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **1,780 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 76
+The checker retains the original **21 named library theorems** and adds 78
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -43,7 +45,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-100-root coverage set; it is a registry, not an executable Comparator config.
+102-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -156,6 +158,20 @@ comparison covers 71 and 84 local constants respectively, excluding only each
 target's proof body. The underlying ordinary cell pushout and the cofree right
 adjoint are audited supporting modules, not separately registered roots.
 
+The next two specifications preserve those 100 roots and all twenty-one
+preceding Challenges/configurations byte-for-byte. The 40-line ordinary-colimits
+Challenge states `HasColimits` for the full ordinary enriched category, with no
+existence premise. The 91-line object-generator Challenge requires a single
+initial object, terminal object, and arrow between them, quantified before all
+target functors. Lifting against that arrow is equivalent to actual object
+surjectivity, not essential surjectivity. Initial/terminal uniqueness makes this
+a specification of the concrete empty-to-point arrow up to arrow isomorphism.
+The library supplies the concrete empty and identity-only point witnesses.
+Raw comparison covers 23 and 83 local constants, excluding only each target's
+proof body. These add no line-budget exceptions, tool changes, axiom permissions,
+or negative-control changes. The full attachment reduction and full `I†`
+boundary-RLP theorem are audited supporting results, not additional roots.
+
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
 explicit. Necessary structural proof fields in category/functor constructions
@@ -202,10 +218,10 @@ change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
-the nineteen ordinary Challenges and the explicit 160-line monadicity and
+the twenty-one ordinary Challenges and the explicit 160-line monadicity and
 116-line ordinary-creation exceptions (including blank lines and comments),
 plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 100 roots.
+permitted axioms, no definition holes, and exact registration of all 102 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
@@ -226,7 +242,7 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The twenty-one positive comparisons use current candidate
+the Challenge mathematics. The twenty-three positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
 

@@ -84,6 +84,14 @@ CHALLENGES = {
         ".ci/comparator/FiniteTwoObjectCellChallenge.lean",
         ".ci/comparator/finite_two_object_cell.json"
     ),
+    "simplicial_colimits": (
+        ".ci/comparator/SimplicialColimitsChallenge.lean",
+        ".ci/comparator/simplicial_colimits.json"
+    ),
+    "dagger_object_generator": (
+        ".ci/comparator/DaggerObjectGeneratorChallenge.lean",
+        ".ci/comparator/dagger_object_generator.json"
+    ),
 }
 # Literal monadicity and ordinary creation need both complete category structures
 # and the actual forgetful functors. These reviewed exceptions keep them visible.
