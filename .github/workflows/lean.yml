@@ -59,6 +59,7 @@ jobs:
           Mathlib.CategoryTheory.Presentable.Limits
           Mathlib.CategoryTheory.Limits.Types.Pullbacks
           Mathlib.CategoryTheory.Limits.Types.Coproducts
+          Mathlib.CategoryTheory.Quotient
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

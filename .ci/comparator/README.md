@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against seventeen self-contained problem specifications:
+candidate against eighteen self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -23,15 +23,16 @@ candidate against seventeen self-contained problem specifications:
 | [FreeDaggerUniversalChallenge.lean](FreeDaggerUniversalChallenge.lean) | 83 | [free_dagger_universal.json](free_dagger_universal.json) | 1 theorem: existence of a free dagger simplicial category with bijective restriction for every target |
 | [DaggerMonadicityChallenge.lean](DaggerMonadicityChallenge.lean) | 160 | [dagger_monadicity.json](dagger_monadicity.json) | 3 theorems: literal isomorphism reflection, monadicity and finitarity of a free/forgetful composite for the actual graph forgetful functor |
 | [DaggerGraphPresentableChallenge.lean](DaggerGraphPresentableChallenge.lean) | 74 | [dagger_graph_presentable.json](dagger_graph_presentable.json) | 5 theorems: actual small-index presheaf equivalence, limits/colimits, and graph LFP/LP |
+| [DaggerSimplicialPresentableChallenge.lean](DaggerSimplicialPresentableChallenge.lean) | 93 | [dagger_simplicial_presentable.json](dagger_simplicial_presentable.json) | 4 theorems: unconditional small limits/colimits and LFP/LP of the actual dagger simplicial category |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The seventeen Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,288 lines in total**, including
+the implementation. The eighteen Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **1,381 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 68
+The checker retains the original **21 named library theorems** and adds 72
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -39,7 +40,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-92-root coverage set; it is a registry, not an executable Comparator config.
+96-root coverage set; it is a registry, not an executable Comparator config.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -113,6 +114,18 @@ the full equivalence, including natural unit/counit and the triangle law.
 This 74-line file extends the preceding 86 roots to 91 without altering them.
 It does not conclude LFP for dagger simplicial categories.
 
+The dagger simplicial presentability specification contains the full original
+enriched category and every dagger enriched functor, with arbitrary object maps.
+It directly states all small limits, all small colimits, local finite
+presentability and local presentability, at every common universe `u`.
+Cocompleteness, strong generators and finitarity are not premises of any target.
+The library supplies actual hom quotient colimits and a small strong generator
+of finitely presentable objects, with the universal properties proved.
+The 93-line Mathlib-only specification adds four roots to the preceding 92;
+every prior Challenge, target and axiom policy is unchanged. Its conclusions
+complete `bg.lem.presentable`, but do not assert creation by the ordinary-category
+forgetful functor in `bg.lem.creation` or any main model-categorical theorem.
+
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
 explicit. Necessary structural proof fields in category/functor constructions
@@ -159,9 +172,9 @@ change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
-the sixteen ordinary Challenges and the explicit 160-line monadicity exception
+the seventeen ordinary Challenges and the explicit 160-line monadicity exception
 (including blank lines and comments), plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 92 roots.
+permitted axioms, no definition holes, and exact registration of all 96 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
@@ -182,7 +195,7 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The seventeen positive comparisons use current candidate
+the Challenge mathematics. The eighteen positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
 

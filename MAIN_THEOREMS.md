@@ -86,8 +86,8 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   coequalizer universal property and preservation. `DaggerSimplicialMonadicity.lean`
   then applies Mathlib's Beck theorem to the actual free adjunction. Thus the
   original graph forgetful functor is monadic, at every common universe `u`.
-  The word finitarity ingredient is proved below; the local finite
-  presentability conclusion for dagger simplicial categories remains to prove.
+  The word finitarity and local finite presentability assertions are proved
+  below as well.
 - The graph presentability ingredient in the proof of `bg.lem.presentable`:
   `DaggerGraphIndex.lean` gives a small index with a vertex object, simplex
   edge objects, endpoint maps, and an involution commuting with ordinary
@@ -110,7 +110,25 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   `DaggerSimplicialLimits.lean` derives creation and existence of all small
   limits from monadicity. These results concern the graph forgetful functor;
   the different ordinary-category forgetful assertion in `bg.lem.creation`
-  and general colimits are still required.
+  is still required. General colimits are constructed below.
+- The final local finite presentability assertion of `bg.lem.presentable`:
+  `DaggerHomQuotient.lean` constructs actual enriched hom quotients, retaining
+  ordinary simplicial maps, dagger, arbitrary object maps, and the full
+  factorization universal property. `DaggerSemanticColimit.lean` applies this
+  to the original free category on the graph colimit. Its relation is the
+  intersection of the kernels of all existing cocone extensions; the relation
+  lives in `Prop`, so homs stay in the original universe. The original diagram
+  legs preserve identity and composition in this quotient, and the quotient,
+  free-adjunction and graph-colimit universal properties give the actual
+  colimit. No dagger-category colimit is assumed in this construction.
+  `DaggerFiniteGenerators.lean` transports graph generators through the
+  actual free adjunction, selects a small set of representatives, and proves
+  finite presentability using the already proved accessibility of the graph
+  forgetful functor. `DaggerSimplicialPresentable.lean` combines this small
+  strong generator with the constructed colimits to prove unconditional local
+  finite presentability at every common universe `u`. The complete conclusion
+  of `bg.lem.presentable` is now proved, without postulating the manuscript's
+  cited general finitary-monad theorem. This does not assert `bg.lem.creation`.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -125,10 +143,10 @@ Required chain:
    The categories, graphs, concrete free construction and adjunction are now
    implemented, monadicity over dagger graphs is proved, and the graph category
    is locally finitely presentable by an actual presheaf equivalence. The word
-   monad is finitary, and all small limits and filtered colimits exist.
-   General colimits, creation of limits and colimits by the ordinary-category
-   forgetful functor (`bg.lem.creation`), and local finite presentability (`bg.lem.presentable`)
-   for dagger simplicial categories are still required.
+   monad is finitary. All small limits and colimits and local finite
+   presentability of dagger simplicial categories are now proved, completing
+   `bg.lem.presentable`. Creation of limits and colimits by the different
+   ordinary-category forgetful functor (`bg.lem.creation`) is still required.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

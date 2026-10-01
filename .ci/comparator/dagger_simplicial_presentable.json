@@ -1,0 +1,15 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.daggerSimplicialCatHasLimits",
+    "DaggerModels.daggerSimplicialCatHasColimits",
+    "DaggerModels.daggerSimplicialCatLocallyFinitelyPresentable",
+    "DaggerModels.daggerSimplicialCatLocallyPresentable"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

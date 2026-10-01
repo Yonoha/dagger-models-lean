@@ -60,3 +60,10 @@ import DaggerModels.FreeSimplicialMap
 import DaggerModels.FreeWordFinitary
 import DaggerModels.DaggerSimplicialLimits
 import DaggerModels.DaggerSimplicialFilteredColimits
+import DaggerModels.StrongGeneratorAdjunction
+import DaggerModels.DaggerFiniteGenerators
+import DaggerModels.DaggerHomKernel
+import DaggerModels.DaggerHomQuotient
+import DaggerModels.DaggerColimitKernel
+import DaggerModels.DaggerSemanticColimit
+import DaggerModels.DaggerSimplicialPresentable

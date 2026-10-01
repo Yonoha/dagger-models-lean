@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies sixteen self-contained Comparator Challenges for
+The current branch supplies eighteen self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all sixteen files to review the
+unproved library results. A reviewer must inspect all eighteen files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -380,8 +380,8 @@ axiom audit, but are not additional roots of this short universal specification.
 
 This completes the free construction and adjunction used at the start of
 `bg.lem.presentable`. Its monadicity assertion is proved in the next section.
-The local finite presentability conclusion and creation of limits and colimits
-in `bg.lem.creation` remain unproved. The model-categorical conclusions of A–D
+The local finite presentability conclusion is proved below. Creation of limits
+and colimits in `bg.lem.creation` remains unproved. The model-categorical conclusions of A–D
 do not follow from the currently proved results alone. The implementation and
 Challenge correspondence received separate GPT-6.1-Sol/xhigh agent reviews;
 this is not independent human review. No manuscript statement was edited.
@@ -421,8 +421,8 @@ also a colimit, giving preservation by `forgetGraph`. Together with the actual
 free adjunction and reflection of isomorphisms, Mathlib's Beck theorem yields
 `forgetGraph_monadic : Nonempty (MonadicRightAdjoint forgetGraph)`. This is the
 full first assertion of `bg.lem.presentable`, at every common universe `u`.
-The graph presentability and word-finitarity ingredients are proved below.
-Local finite presentability of dagger simplicial categories remains unproved.
+The graph presentability, word-finitarity and dagger-category local finite
+presentability assertions are proved below.
 
 The Challenge directly protects the literal reflection and monadicity types.
 It shows the full category structures and the original forgetful functor, and
@@ -470,11 +470,12 @@ for an actual equivalence with presheaves on some small category, as well as
 `IsLocallyPresentable`. It does not fix the proof's choice of indexing category
 or duplicate the intermediate equivalence. Comparator replays their proof
 dependencies, and the namespace-wide axiom audit includes those constructions.
-The five graph targets and all preceding 86 roots remain registered. With the
-word-finitarity target below, the 17 Challenges have 92 roots and total 1,288
-physical lines. Tool pins, permitted axioms and negative controls are unchanged.
-These graph results do not yet prove local
-finite presentability of dagger simplicial categories or the main theorems A–D.
+The five graph targets and all preceding 86 roots remain registered. Word
+finitarity and the dagger-category presentability targets below bring the total
+to 18 Challenges, 96 roots and 1,381 physical lines. Tool pins, permitted axioms
+and negative controls are unchanged. Local finite presentability of dagger
+simplicial categories requires the further constructions below; the main
+theorems A–D remain unproved.
 
 ## Finitary words and limits over dagger graphs
 
@@ -524,9 +525,70 @@ in dagger simplicial categories, and the graph forgetful functor itself is
 finitely accessible. The finitarity premise in the filtered argument is
 discharged by the new theorem. These consequences are checked by Lean and
 the full namespace axiom audit; they are not additional Comparator roots.
-They do not assert general colimits or the different claim in `bg.lem.creation`,
-whose forgetful functor goes to ordinary simplicial categories. The category's
-local finite presentability and the main theorems A–D remain unproved.
+They do not assert the different claim in `bg.lem.creation`, whose forgetful
+functor goes to ordinary simplicial categories. General colimits and local
+finite presentability are proved next. The main theorems A–D remain unproved.
+
+## Dagger simplicial category colimits and local finite presentability
+
+Files: [DaggerHomKernel.lean](DaggerModels/DaggerHomKernel.lean),
+[DaggerHomQuotient.lean](DaggerModels/DaggerHomQuotient.lean),
+[DaggerColimitKernel.lean](DaggerModels/DaggerColimitKernel.lean),
+[DaggerSemanticColimit.lean](DaggerModels/DaggerSemanticColimit.lean),
+[StrongGeneratorAdjunction.lean](DaggerModels/StrongGeneratorAdjunction.lean),
+[DaggerFiniteGenerators.lean](DaggerModels/DaggerFiniteGenerators.lean), and
+[DaggerSimplicialPresentable.lean](DaggerModels/DaggerSimplicialPresentable.lean).
+Problem specification:
+[DaggerSimplicialPresentableChallenge.lean](.ci/comparator/DaggerSimplicialPresentableChallenge.lean).
+
+This proves the final assertion of `bg.lem.presentable` for the complete original
+category, at every common universe `u`. The proof builds the needed colimits and
+finite generators instead of postulating the cited general finitary-monad theorem.
+
+`HomQuotient` closes a relation on each mapping-space degree under composition
+using Mathlib's actual category quotient. Ordinary simplex operators and dagger
+descend, giving an actual enriched dagger category on the original object type.
+The quotient functor and factorization bijection allow arbitrary object maps.
+In particular, uniqueness uses equality of dependent hom maps with the required
+endpoint transports; it does not restrict to functors fixing objects.
+
+For a small diagram `K`, `ColimitKernel.graph K` is its colimit after forgetting
+to dagger graphs. The original free adjunction forms a dagger category on this
+graph, including paths newly composable after vertex identifications. Every
+existing dagger-category cocone gives a free extension from that category.
+Their joint kernel defines a relation on hom simplices. Although the family of
+all cocones lives in `Type (u+1)`, the relation is in `Prop`, so its hom quotients
+remain in `Type u`. No dagger-category colimit or prospective quotient is
+assumed in defining the relation.
+
+The images of each original diagram identity and composite are related because
+every actual cocone preserves them. Thus the graph legs become enriched dagger
+functors into the quotient. The quotient and free-adjunction universal properties,
+followed by the graph-colimit universal property, prove existence and uniqueness
+of factorization for every target cocone. This constructs all `u`-small colimits
+of the actual category, including arbitrary vertex identifications.
+
+Free images of a small strong generator in the graph category form a strong
+generator because the actual right adjoint is faithful and reflects isomorphisms.
+No fullness hypothesis is used. Accessibility of that right adjoint makes the
+free images finitely presentable. Since their isomorphism-closed image is only
+essentially small, `DaggerFiniteGenerators` chooses a genuinely small set of
+representatives and proves it remains a strong generator. Mathlib's generator
+criterion, with the constructed colimits supplying its cocompleteness premise,
+then gives unconditional local finite presentability.
+
+The 93-line Challenge contains the complete original category and all enriched
+dagger functors. Its four targets directly state `HasLimits`, `HasColimits`,
+`IsLocallyFinitelyPresentable` and `IsLocallyPresentable` at universe `u`.
+None assumes colimits, a strong generator, finitarity, or a restricted object
+class. All imports are Mathlib; the full structure and its proof fields are
+visible. The preceding 92 targets and their specifications are unchanged, and
+these four targets bring the total to 96. The proof and statement correspondence
+received separate agent reviews; this is not independent human review.
+
+Together with the preceding monadicity proof, this completes `bg.lem.presentable`.
+It does not prove creation by the distinct forgetful functor to ordinary
+simplicial categories in `bg.lem.creation`, or any of the main theorems A–D.
 
 ## Main-result status
 
@@ -541,10 +603,11 @@ local finite presentability and the main theorems A–D remain unproved.
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
 | `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
 | Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |
-| First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck; local finite presentability of dagger simplicial categories remains unproved |
+| First assertion of `bg.lem.presentable` | Graph forgetful functor is monadic | Proved by actual split coequalizers and Beck |
 | Graph ingredient in the proof of `bg.lem.presentable` | Dagger graphs are locally finitely presentable | Actual presheaf equivalence, all small limits/colimits, and LFP proved at every common value universe |
 | Word ingredient in the proof of `bg.lem.presentable` | The original word monad is finitary | Proved by exact finite endpoint pullbacks, disjoint sums and their natural identification with the actual free functor |
-| Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; general colimits and the ordinary-category forgetful claim remain unproved |
+| Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; the ordinary-category forgetful claim remains unproved |
+| Final assertion of `bg.lem.presentable` | Dagger simplicial categories are locally finitely presentable | Proved using constructed small colimits and a small strong generator of finitely presentable objects, at every common universe |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.

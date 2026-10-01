@@ -122,6 +122,7 @@ jobs:
           Mathlib.CategoryTheory.Presentable.Limits
           Mathlib.CategoryTheory.Limits.Types.Pullbacks
           Mathlib.CategoryTheory.Limits.Types.Coproducts
+          Mathlib.CategoryTheory.Quotient
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"
