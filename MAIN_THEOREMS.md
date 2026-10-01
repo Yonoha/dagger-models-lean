@@ -139,6 +139,26 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   and construct full Mathlib creation data using proved isomorphism reflection.
   `DaggerOrdinaryCreation.lean` states both conclusions without existence
   premises, for independent object, hom, and diagram universes.
+- `bg.not.cells`, `bg.eq.A-univ`, and the following finite compactness assertion:
+  `TwoObjectDaggerGraph.lean` constructs the literal graph with empty diagonal
+  edges and off-diagonal copies of K. The original free category on that graph
+  represents arbitrary target object pairs and one simplicial edge map.
+  `TwoObjectGraphPresentability.lean` retains those endpoints in an actual
+  pullback, including for empty or disconnected K, and proves finite
+  presentability. `TwoObjectCellPresentability.lean` uses the original free
+  adjunction and proved graph-forgetting accessibility to show that the same
+  universal cell is finitely presentable for a finite simplicial set. The two
+  closed conclusions have separate 57-line and 95-line Mathlib-only Challenges.
+- Two ingredients of `bg.lem.reduction`: `OrdinaryTwoObjectCell.lean` constructs
+  the actual ordinary one-edge cell and its full universal property.
+  `UnderlyingTwoObjectCell.lean` classifies ordinary functors out of the actual
+  free dagger cell by two independent edge maps. `TwoObjectCellPushout.lean`
+  proves its actual pushout decomposition into the two one-edge copies over
+  the discrete two-object category; the reverse copy uses swapped labels.
+  `DaggerSimplicialCofree.lean` constructs the actual right adjoint to ordinary
+  forgetting, with hom C(x,y) times C(y,x), and proves colimit preservation.
+  These are auxiliary audited results. Ordinary attachment existence and the
+  full successive-attachment comparison remain to be proved.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -158,7 +178,9 @@ Required chain:
    `bg.lem.presentable`. Creation of limits and colimits by the different
    ordinary-category forgetful functor (`bg.lem.creation`) is now also proved.
    Two-object free cells and their finite presentability (`bg.not.cells`,
-   `bg.eq.A-univ`) remain to be integrated.
+   `bg.eq.A-univ`) are proved, including the full unrestricted universal property.
+   The ordinary free-cell decomposition and forgetful right adjoint needed for
+   `bg.lem.reduction` are proved; the complete attachment comparison remains open.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).

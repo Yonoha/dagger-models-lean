@@ -76,3 +76,12 @@ import DaggerModels.DaggerColimitOpposite
 import DaggerModels.DaggerOrdinaryLimitCreation
 import DaggerModels.DaggerOrdinaryColimitCreation
 import DaggerModels.DaggerOrdinaryCreation
+import DaggerModels.TwoObjectDaggerGraph
+import DaggerModels.TwoObjectDaggerCell
+import DaggerModels.TwoObjectDaggerCellUniversal
+import DaggerModels.TwoObjectGraphPresentability
+import DaggerModels.TwoObjectCellPresentability
+import DaggerModels.UnderlyingTwoObjectCell
+import DaggerModels.OrdinaryTwoObjectCell
+import DaggerModels.DaggerSimplicialCofree
+import DaggerModels.TwoObjectCellPushout

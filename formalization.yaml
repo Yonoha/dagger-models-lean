@@ -31,6 +31,10 @@ project:
     objects, this proves local finite presentability of dagger simplicial categories.
     The ordinary-category forgetful functor creates all small limits and colimits,
     with independent object, hom, and diagram universes.
+    Actual two-object free dagger cells have the unrestricted universal property
+    and are finitely presentable for finite simplicial sets. Their ordinary
+    underlying categories are pushouts of the two directed one-edge cells.
+    An actual cofree right adjoint proves ordinary forgetting preserves colimits.
     The main model-categorical theorems A-D are not formalized.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
@@ -64,6 +68,10 @@ sources:
       and a small strong generator of finitely presentable objects prove the lemma's
       complete local finite presentability conclusion for dagger simplicial categories.
       The ordinary forgetful creation assertion of bg.lem.creation is also proved.
+      The two-object cells in bg.not.cells, their universal property bg.eq.A-univ,
+      and its finite compactness assertion are proved. The underlying free-cell
+      decomposition and colimit preservation used in bg.lem.reduction are proved;
+      the full successive-attachment comparison is not yet formalized.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -105,6 +113,11 @@ status:
     bg.lem.presentable. The different ordinary-category forgetful assertion in
     bg.lem.creation is also proved, with actual creation data, independent
     object, hom, and diagram universes, and no existence premise.
+    The actual two-object free dagger cells have the full bg.eq.A-univ property,
+    and the same cell is finitely presentable for finite simplicial sets.
+    The actual ordinary one-edge cells, their pushout decomposition of the
+    underlying free dagger cell, and a right adjoint to ordinary forgetting
+    are constructed. The full bg.lem.reduction attachment comparison remains open.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -432,6 +445,18 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_ordinary_creation.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.exists_twoObjectDaggerCell"
+      file: "DaggerModels/TwoObjectDaggerCellUniversal.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/two_object_dagger_cell.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell"
+      file: "DaggerModels/TwoObjectCellPresentability.lean"
+      sorry_count: 0
+      axioms: ["Classical.choice", "Quot.sound", "propext"]
+      comparator_config: ".ci/comparator/finite_two_object_cell.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -550,15 +575,29 @@ fidelity:
     The apex and cone/cocone are retained exactly after forgetting. Actual
     universal maps and ordinary inverses lift by dagger commutation, yielding
     full Mathlib creation data without existence or fullness premises. Object,
-    hom, and diagram universes remain independent. The main theorems remain unproved.
+    hom, and diagram universes remain independent. The two-object dagger graph
+    has empty diagonal edges and two copies of K interchanged by dagger. Its
+    actual free category represents arbitrary pairs of target objects and one
+    simplicial edge map. A pullback description of this graph Hom functor,
+    retaining endpoints even for empty or disconnected K, proves finite
+    presentability when K is finitely presentable. The original free adjunction
+    and filtered-colimit accessibility transfer this property to the same cell.
+    Finite simplicial sets satisfy the needed hypothesis by pinned Mathlib.
+    The ordinary free-cell Hom functor instead has two independent edge maps;
+    this constructs its pushout from two ordinary one-edge cells over the
+    discrete two-object category, with the reverse copy relabelled by swap.
+    Cofree mapping spaces C(x,y) times C(y,x), with swap dagger, give an actual
+    right adjoint to forgetting and hence colimit preservation without assuming
+    ordinary colimit existence. Full cell-attachment reduction and the main
+    theorems remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 95 selected library
-    theorems and three audit-only definition roots against nineteen self-contained
+    checks, not independent human review. Comparator checks 97 selected library
+    theorems and three audit-only definition roots against twenty-one self-contained
     Challenge files in .ci/comparator. Each imports only Mathlib. The original
     fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
     73, 100, and 83 lines). The literal monadicity/word-finitarity specification has 160 lines
@@ -569,8 +608,12 @@ review:
     The ordinary-creation Challenge adds 116 lines and two unconditional
     creation targets, with both full categories and actual forgetful functor
     visible. Its reviewed 116-line exception preserves readability; it has 101
-    nonblank lines. All preceding 96 roots and eighteen specifications remain
-    unchanged. All nineteen total 1497 physical lines,
+    nonblank lines. The two-object universal and finite-cell specifications
+    add 57 and 95 lines, with one closed existential root each. The finite-cell
+    statement requires the same witness to have the full universal property and
+    be finitely presentable, using finite nondegenerate simplices rather than
+    degreewise finiteness. All preceding 98 roots and nineteen specifications
+    remain unchanged. All twenty-one total 1649 physical lines,
     including comments and blank lines, and together form the review surface.
     New proof/Challenge correspondence was separately
     reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
@@ -665,6 +708,44 @@ alignment:
         dagger fixes objects, and the actual universal descent preserves dagger.
         No HasColimits or fixed-object premise; all four universes are independent.
         Actual isomorphism reflection supplies the required creation reflection.
+    - source: "bg.not.cells and bg.eq.A-univ"
+      lean: "DaggerModels.exists_twoObjectDaggerCell"
+      module: "DaggerModels/TwoObjectDaggerCellUniversal.lean"
+      status: "proved"
+      note: >-
+        The witness is the original free dagger category on the literal two-object
+        graph with empty diagonal edges and off-diagonal copies of K. The visible
+        classifier sends any actual enriched dagger functor to its two object
+        images and generator composite. It is bijective for every target, with
+        arbitrary object maps and coincident target endpoints permitted.
+    - source: "Finite compactness assertion following bg.eq.A-univ"
+      lean: "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell"
+      module: "DaggerModels/TwoObjectCellPresentability.lean"
+      status: "proved"
+      note: >-
+        The same actual universal cell is finitely presentable for K.Finite,
+        meaning finitely many nondegenerate simplices in total. Endpoint pullbacks
+        prove graph finite presentability; the original free adjunction and proved
+        accessibility of graph forgetting transfer it to the actual free cell.
+        No connectedness, nonemptiness, or prior cell-presentability premise.
+    - source: "Underlying free-cell decomposition within bg.lem.reduction"
+      lean: "DaggerModels.TwoObjectCellPushout.isPushout"
+      module: "DaggerModels/TwoObjectCellPushout.lean"
+      status: "proved"
+      note: >-
+        Actual ordinary pushout of two one-edge cells over the discrete two-object
+        category; the second copy uses swapped object labels. The apex is the
+        underlying original free dagger cell. This auxiliary result is audited
+        but is not a separate Comparator root. Full attachment reduction is unproved.
+    - source: "Colimit preservation used in bg.lem.reduction"
+      lean: "DaggerModels.DaggerSimplicialCat.Cofree.forget_preservesColimitsOfSize"
+      module: "DaggerModels/DaggerSimplicialCofree.lean"
+      status: "proved"
+      note: >-
+        An actual cofree right adjoint with hom C(x,y) times C(y,x) proves preservation
+        for independent object, hom and diagram universes. No ordinary colimit
+        existence is assumed or concluded. Audited auxiliary, not a separate
+        Comparator root; the full attachment reduction is not yet proved.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
       module: "DaggerModels/ReverseSimplex.lean"

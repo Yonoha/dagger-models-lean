@@ -5,11 +5,11 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies nineteen self-contained Comparator Challenges for
+The current branch supplies twenty-one self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all nineteen files to review the
+unproved library results. A reviewer must inspect all twenty-one files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
 
@@ -472,8 +472,9 @@ for an actual equivalence with presheaves on some small category, as well as
 or duplicate the intermediate equivalence. Comparator replays their proof
 dependencies, and the namespace-wide axiom audit includes those constructions.
 The five graph targets and all preceding 86 roots remain registered. Word
-finitarity, dagger-category presentability, and ordinary-creation targets below
-bring the total to 19 Challenges, 98 roots and 1,497 physical lines. Tool pins, permitted axioms
+finitarity, dagger-category presentability, ordinary-creation and two-object cell
+targets below bring the total to 21 Challenges, 100 roots and 1,649 physical lines.
+Tool pins, permitted axioms
 and negative controls are unchanged. Local finite presentability of dagger
 simplicial categories requires the further constructions below; the main
 theorems A–D remain unproved.
@@ -645,9 +646,94 @@ blank lines it has 101 lines. Readability is retained rather than hiding local
 definitions or compressing proof fields. Its two root types and all 92 local
 constants were compared directly in separate Lean environments, with only the
 two root proof bodies omitted. The existing 18 Challenges/configurations and
-96 roots are retained, giving 19 Challenges, 98 roots and 1,497 physical lines.
+96 roots were retained at this stage, giving 19 Challenges and 98 roots before
+the two-object cell specifications below.
 The implementation and statement correspondence received separate agent reviews;
 no independent human review is claimed. The main theorems A–D remain unproved.
+
+## Two-object cells and finite compactness
+
+Files: [TwoObjectDaggerGraph](DaggerModels/TwoObjectDaggerGraph.lean),
+[TwoObjectDaggerCell](DaggerModels/TwoObjectDaggerCell.lean),
+[TwoObjectDaggerCellUniversal](DaggerModels/TwoObjectDaggerCellUniversal.lean),
+[TwoObjectGraphPresentability](DaggerModels/TwoObjectGraphPresentability.lean), and
+[TwoObjectCellPresentability](DaggerModels/TwoObjectCellPresentability.lean).
+
+The actual graph in `bg.not.cells` has two vertices `ULift Bool`, empty diagonal
+edge spaces, and off-diagonal copies of K exchanged by dagger. Its full graph
+Hom equivalence classifies a morphism by an arbitrary pair of target vertices
+and one simplicial edge map. The target vertices may coincide, and K may be
+empty or disconnected. Applying the original finite-path free adjunction gives
+the actual cell `F(G_K)` and the complete equivalence in `bg.eq.A-univ`, with
+restriction literally given by the singleton generator followed by the target
+functor's hom map. Both source and target naturality are proved.
+
+Finite presentability requires retaining the endpoint pair even when K is
+empty or disconnected. The graph Hom functor is naturally the pullback of
+`Hom(K, totalEdges(G))` and the vertex-pair set over
+`Hom(K, const(vertices(G) times vertices(G)))`. The inverse uses the actual
+endpoint fiber in every simplicial degree. Evaluation colimit preservation,
+finite products and pullbacks, and finite presentability of K prove that this
+Hom functor preserves filtered colimits. This is not an assumption that the
+two-object graph functor is left adjoint to the total-edge functor.
+
+The original free adjunction and the already proved filtered-colimit
+accessibility of graph forgetting transfer finite presentability to `F(G_K)`.
+Pinned Mathlib proves finite simplicial sets are finitely presentable. Here
+`K.Finite` means finitely many nondegenerate simplices in total, not degreewise
+finiteness. The conclusion uses the same actual cell for both its universal
+property and finite presentability, completing the compactness assertion
+following `bg.eq.A-univ` at every common universe `u`.
+
+The 57-line and 95-line Mathlib-only Challenges protect these two conclusions.
+They show the original dagger structures, all enriched dagger functors and the
+actual generator-restriction classifier. The latter also shows the complete
+category structure needed for `IsFinitelyPresentable`. Their closed existential
+statements leave the representing witness free while fixing the full required
+property. Raw comparison in separate Lean environments compares 71 and 84
+constants, including all definition values and structural proofs, with only
+the target theorem's proof body omitted. All preceding 19 Challenges/configs
+and 98 roots are retained. The current total is 21 Challenges, 100 roots and
+1,649 physical lines; no new line-budget exception is needed.
+
+## Ordinary cells and two ingredients of cell-attachment reduction
+
+Files: [OrdinaryTwoObjectCell](DaggerModels/OrdinaryTwoObjectCell.lean),
+[UnderlyingTwoObjectCell](DaggerModels/UnderlyingTwoObjectCell.lean),
+[TwoObjectCellPushout](DaggerModels/TwoObjectCellPushout.lean), and
+[DaggerSimplicialCofree](DaggerModels/DaggerSimplicialCofree.lean).
+
+The ordinary cell of `bg.not.cells` has terminal diagonal homs, forward hom K,
+and empty reverse hom. Its enriched identities and composition are explicitly
+constructed, with its unrestricted universal property and both naturalities.
+Ordinary enriched functors from `U(F(G_K))` to any ordinary simplicial category
+are classified by two independent directed edge maps with their endpoints.
+No dagger compatibility is imposed on those target functors.
+
+This gives the actual pushout decomposition of the underlying free dagger cell
+used in `bg.lem.reduction`. Its base is the discrete two-object category. One
+span leg fixes the object labels and the other swaps them, so the second copy
+of the ordinary cell represents the paper's reverse-labelled cell. The apex
+is literally `forget.obj (TwoObjectDaggerCell.cell K)`, and its legs are the
+forward and reverse singleton inclusions. Full factorization and uniqueness
+for every compatible pair of ordinary functors prove `IsColimit` and `IsPushout`.
+There is no restriction on K, the target endpoints, or target object maps.
+
+Ordinary forgetting also has an actual right adjoint. It sends C to the dagger
+category with the same objects and hom `C(x,y) times C(y,x)`. Composition is
+forward composition paired with reverse composition in the opposite order;
+dagger swaps the two factors at the same simplex degree. Pairing an ordinary
+functor F with its value on the source dagger gives a full natural Hom
+equivalence, and the actual adjunction proves colimit preservation. Object,
+hom and diagram universes remain independent. This does not assume or prove
+existence of arbitrary ordinary simplicial-category colimits.
+
+These four supporting modules are included in the namespace-wide axiom audit,
+but they are not separate Comparator roots. Individual ordinary attachments
+and their successive-pushout comparison are still required to complete
+`bg.lem.reduction`; the whole lemma and main theorems A–D remain unproved.
+The constructions and both new Challenges received separate agent reviews,
+not independent human review.
 
 ## Main-result status
 
@@ -668,6 +754,8 @@ no independent human review is claimed. The main theorems A–D remain unproved.
 | Consequences over dagger graphs | All small limits and filtered colimits | Existence and creation by the graph forgetful functor proved; ordinary-category forgetting is treated separately |
 | Final assertion of `bg.lem.presentable` | Dagger simplicial categories are locally finitely presentable | Proved using constructed small colimits and a small strong generator of finitely presentable objects, at every common universe |
 | `bg.lem.creation` | Ordinary simplicial-category forgetting creates all small limits and colimits | Full Mathlib creation data proved, with independent object, hom, and diagram universes and arbitrary object maps |
+| `bg.not.cells`, `bg.eq.A-univ` and the following compactness assertion | Two-object free cells and finite presentability | Actual cells, unrestricted universal property and finite presentability for finite simplicial sets proved |
+| Two ingredients of `bg.lem.reduction` | Underlying free-cell pushout and ordinary forgetful preservation | Actual decomposition and cofree right adjoint proved; the full attachment reduction remains unproved |
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.
