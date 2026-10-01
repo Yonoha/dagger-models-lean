@@ -92,6 +92,22 @@ CHALLENGES = {
         ".ci/comparator/DaggerObjectGeneratorChallenge.lean",
         ".ci/comparator/dagger_object_generator.json"
     ),
+    "sset_boundary_fibration": (
+        ".ci/comparator/SSetBoundaryFibrationChallenge.lean",
+        ".ci/comparator/sset_boundary_fibration.json"
+    ),
+    "sset_boundary_cells": (
+        ".ci/comparator/SSetBoundaryCellsChallenge.lean",
+        ".ci/comparator/sset_boundary_cells.json"
+    ),
+    "sset_boundary_retraction": (
+        ".ci/comparator/SSetBoundaryRetractionChallenge.lean",
+        ".ci/comparator/sset_boundary_retraction.json"
+    ),
+    "small_object_finite_domains": (
+        ".ci/comparator/SmallObjectFiniteDomainsChallenge.lean",
+        ".ci/comparator/small_object_finite_domains.json"
+    ),
 }
 # Literal monadicity and ordinary creation need both complete category structures
 # and the actual forgetful functors. These reviewed exceptions keep them visible.

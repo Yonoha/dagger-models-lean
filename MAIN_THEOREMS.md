@@ -180,6 +180,40 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   is exactly object surjectivity plus boundary RLP on every hom. Identifying the
   latter with a Kan fibration that is a weak homotopy equivalence remains open.
   The full model-categorical `bg.lem.I-inj` assertion is not yet claimed.
+- Ordinary inputs to `bg.lem.I-inj`: `SSetBoundaryFibration.lean` proves that
+  actual Mathlib boundary RLP implies its Kan fibration property.
+  `SSetBoundaryCellsCore.lean`, `SSetBoundaryCellsAttachment.lean` and
+  `SSetBoundaryCells.lean` construct actual countable relative boundary-cell
+  presentations for all ordinary monos, using all new nondegenerate simplices,
+  including vertices. They retain the original map, source and target, allow
+  nonmonic characteristic maps, and prove boundary-cell closure equals monos
+  and actual `I.rlp = monomorphisms.rlp`, for every value universe.
+  `SSetMonoRLPRetraction.lean` and `SSetBoundaryRetraction.lean` supply one
+  section and one cylinder homotopy with all four simultaneous laws over the
+  target. No source/target Kan premise or weak-equivalence conclusion is used.
+- The local part of `bg.def.IJ` and `bg.lem.Iinj-in-Jinj`:
+  `DaggerLocalFibrations.lean` defines the actual positive horn family `J†loc`
+  and proves its RLP is exactly Kan fibrations on every full hom space.
+  Actual `I†` RLP implies object surjectivity and this local condition.
+  Unitary interval extraction, lifting and the full `J†` condition remain open.
+- Small-object input in the proof of `bg.thm.main`:
+  `SmallObjectFiniteDomains.lean` proves the generic finite-domain bridge to
+  Mathlib's `HasSmallObjectArgument`, with independent category/hom/auxiliary
+  universes and explicit smallness, local-smallness and colimit hypotheses.
+  `DaggerSmallObject.lean` discharges them for the original `I†`, using its
+  finitely presentable boundary domains, initial empty domain, literal union
+  smallness and proved dagger-category colimits. This gives unconditional
+  small object and actual functorial factorization data at every common `u`,
+  with left class `I†.rlp.llp` and right class `I†.rlp`. It does not identify
+  either class with a model-structure predicate or treat `J†` interval cells.
+
+The four new 15/27/27/21-line Challenges protect seven results: four ordinary
+lifting/cell conclusions, two simultaneous section/homotopy conclusions, and
+one generic finite-domain theorem. Local `J†loc` and the actual `I†` application
+are separately reviewed and audited auxiliary results. All 102 prior roots and
+23 prior specifications/configurations are retained. Current coverage is 27
+Challenges, 1,870 physical lines and 109 roots (106 mathematics plus three
+markers), with the two existing 160/116-line exceptions unchanged.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -208,7 +242,14 @@ Required chain:
 4. The exact classes `W†`, `I†`, `J†` (`bg.def.W`, `bg.def.IJ`), two-out-of-three,
    cell and lifting results, and the recognition theorem's hypotheses.
    The actual `I†` is defined and its full boundary-RLP characterization is proved.
-   The comparison with trivial Kan fibrations still requires ordinary SSet theory.
+   Ordinary boundary RLP now implies actual Kan fibrations, and all ordinary
+   monos have actual relative boundary-cell presentations. Boundary-RLP maps
+   have sections and cylinder homotopies over their targets. The actual local
+   horn family has the correct all-hom Kan RLP equivalence, and `I†` admits
+   unconditional small object and functorial factorization data. The missing
+   ordinary comparison is with actual weak homotopy equivalences and trivial
+   Kan fibrations. The full `J†` interval lifting and recognition hypotheses
+   remain open.
 5. The actual model structure, specified generating sets, characterization of
    trivial fibrations, combinatoriality, and left properness.
 
@@ -220,7 +261,9 @@ but describes the SSet Quillen model structure as TODO. In particular, it does
 not supply the required boundary-RLP/trivial-fibration comparison with actual
 weak homotopy equivalences. A degree-zero dagger category does not replace a
 dagger simplicial category. The external Kan–Quillen source recorded below is
-a candidate dependency to port and audit, not an assumed theorem.
+a candidate source to evaluate, not an assumed theorem. The present boundary,
+cellular and small-object proofs were constructed independently from pinned
+Mathlib and this project's checked lemmas; no external Lean bodies were copied.
 
 ## B — dagger Joyal structure and rigidification equivalence
 
@@ -312,6 +355,10 @@ Its pins are Lean `v4.25.0-rc2` and mathlib
 `6c193806481aaf608f1396601b6dc95277ddcfe8`. This companion uses Lean `v4.27.0`
 and mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`.
 The external source was inspected, not imported or compiled in this project.
-Porting, compilation, license preservation, and a transitive axiom audit are
-required before treating it as a checked dependency. It does not supply the
-Bergner/Joyal/rigidification results needed by A–C.
+No applicable repository-level license was established at that exact commit:
+no LICENSE/COPYING file was found and GitHub metadata reported no license.
+A few unrelated files have Apache headers; these do not resolve the license of
+the required model-category proofs. No external Lean bodies have been adopted.
+License resolution, compatible compilation and a transitive axiom audit would
+be required before treating that implementation as a checked dependency.
+It does not supply the Bergner/Joyal/rigidification results needed by A–C.

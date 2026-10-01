@@ -1,0 +1,14 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.SSetBoundaryCells.exists_relativeCellComplex",
+    "DaggerModels.SSetBoundaryCells.boundaryCells_eq_monomorphisms",
+    "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

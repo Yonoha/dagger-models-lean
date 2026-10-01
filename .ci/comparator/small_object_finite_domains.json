@@ -1,0 +1,12 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

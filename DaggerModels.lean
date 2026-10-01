@@ -97,3 +97,12 @@ import DaggerModels.TwoObjectCellLifting
 import DaggerModels.DaggerDiscreteObjects
 import DaggerModels.DaggerDiscreteObjectsExistence
 import DaggerModels.DaggerGeneratingCofibrations
+import DaggerModels.SSetBoundaryFibration
+import DaggerModels.DaggerLocalFibrations
+import DaggerModels.SSetBoundaryCellsCore
+import DaggerModels.SSetBoundaryCellsAttachment
+import DaggerModels.SSetBoundaryCells
+import DaggerModels.SSetMonoRLPRetraction
+import DaggerModels.SSetBoundaryRetraction
+import DaggerModels.SmallObjectFiniteDomains
+import DaggerModels.DaggerSmallObject

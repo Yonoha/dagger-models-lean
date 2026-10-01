@@ -35,9 +35,16 @@ right adjoint also proves colimit preservation by ordinary forgetting.
 Ordinary simplicial-category colimits are now constructed, completing the
 successive-attachment comparison in `bg.lem.reduction`. The actual generator
 family `I†` detects object surjectivity and boundary lifting on every hom space.
-The comparison of this boundary condition with trivial Kan fibrations remains
-unproved. Two concrete
-comparison obstructions and the first release's elementary foundations are retained.
+Ordinary boundary RLP now implies the actual Mathlib Kan fibration property.
+Every ordinary simplicial mono has an actual relative boundary-cell presentation;
+the boundary-cell closure equals all monos, and their right lifting classes agree.
+Boundary RLP also gives one section and one cylinder homotopy satisfying both
+endpoint laws and the equation over the original target. The actual local horn
+family `J†loc` detects local Kan fibrations. The actual `I†` admits the small
+object argument and functorial factorization in `I†.rlp.llp` and `I†.rlp`.
+The weak homotopy equivalence comparison, trivial Kan characterization, and
+unitary-interval part of `J†` remain unproved. Two concrete comparison obstructions
+and the first release's elementary foundations are retained.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
 structures, the rigidification Quillen equivalence, the intrinsic recognition
@@ -73,6 +80,10 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Ordinary colimits used in `bg.lem.reduction` | [`SimplicialColimits`](DaggerModels/SimplicialColimits.lean) | Actual colimits of all small ordinary simplicial-category diagrams, with arbitrary object maps and no existence premise |
 | `bg.lem.reduction` | [`TwoObjectCellReductionResolved`](DaggerModels/TwoObjectCellReductionResolved.lean) | Actual dagger attachment is isomorphic to two successive ordinary attachments along the given edge and its dagger, with both pushouts and all three comparison legs |
 | `bg.not.cells`, `bg.def.IJ` and generator lifting in `bg.lem.I-inj` | [`DaggerDiscreteObjects`](DaggerModels/DaggerDiscreteObjects.lean), [`TwoObjectCellLifting`](DaggerModels/TwoObjectCellLifting.lean), [`DaggerGeneratingCofibrations`](DaggerModels/DaggerGeneratingCofibrations.lean) | Actual initial-to-point generator and full boundary family detect object surjectivity plus boundary RLP on every hom; the trivial Kan comparison remains unproved |
+| Ordinary inputs to `bg.lem.I-inj` | [`SSetBoundaryFibration`](DaggerModels/SSetBoundaryFibration.lean), [`SSetBoundaryCells`](DaggerModels/SSetBoundaryCells.lean) | Boundary RLP implies actual Mathlib Kan fibrations; every mono is a genuine relative boundary-cell complex; boundary-cell closure equals monos and `I.rlp = monomorphisms.rlp` |
+| Section and homotopy input to `bg.lem.I-inj` | [`SSetMonoRLPRetraction`](DaggerModels/SSetMonoRLPRetraction.lean), [`SSetBoundaryRetraction`](DaggerModels/SSetBoundaryRetraction.lean) | The same section and cylinder homotopy satisfy all four equations for mono-RLP or boundary-RLP, with no Kan-object premise or weak-equivalence conclusion |
+| Local lifting in `bg.def.IJ` and `bg.lem.Iinj-in-Jinj` | [`DaggerLocalFibrations`](DaggerModels/DaggerLocalFibrations.lean) | Actual `J†loc` RLP is all-hom Mathlib Kan fibrations; actual `I†` RLP implies object surjectivity and this local condition; interval lifting remains open |
+| Small-object input to `bg.thm.main` | [`SmallObjectFiniteDomains`](DaggerModels/SmallObjectFiniteDomains.lean), [`DaggerSmallObject`](DaggerModels/DaggerSmallObject.lean) | General finite-domain bridge with explicit smallness/colimit premises; unconditional actual `I†` application and functorial factorization data; no model structure asserted |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -123,7 +134,13 @@ lake exe cache get \
   Mathlib.CategoryTheory.Presentable.Limits \
   Mathlib.CategoryTheory.Limits.Types.Pullbacks \
   Mathlib.CategoryTheory.Limits.Types.Coproducts \
-  Mathlib.CategoryTheory.Quotient
+  Mathlib.CategoryTheory.Quotient \
+  Mathlib.AlgebraicTopology.SimplicialSet.CategoryWithFibrations \
+  Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits \
+  Mathlib.CategoryTheory.LiftingProperties.Limits \
+  Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting \
+  Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms \
+  Mathlib.CategoryTheory.SmallObject.Basic
 lake build
 lake env lean Audit.lean
 python3 scripts/check_audit.py
@@ -159,8 +176,8 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 99 selected library theorems against twenty-three
-self-contained problem specifications:
+Linux GitHub Actions job. It compares 106 selected mathematical results against
+twenty-seven self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
 - [Dagger simplicial sets](.ci/comparator/SimplicialSetChallenge.lean): 96 lines
@@ -185,6 +202,10 @@ self-contained problem specifications:
 - [Finite presentability of the same universal cell](.ci/comparator/FiniteTwoObjectCellChallenge.lean): 95 lines
 - [Ordinary simplicial-category colimits](.ci/comparator/SimplicialColimitsChallenge.lean): 40 lines
 - [Initial-to-point object generator](.ci/comparator/DaggerObjectGeneratorChallenge.lean): 91 lines
+- [Boundary lifting implies actual Kan fibrations](.ci/comparator/SSetBoundaryFibrationChallenge.lean): 15 lines
+- [Ordinary relative boundary cells and lifting-class equality](.ci/comparator/SSetBoundaryCellsChallenge.lean): 27 lines
+- [Section and cylinder homotopy from lifting](.ci/comparator/SSetBoundaryRetractionChallenge.lean): 27 lines
+- [Small object argument from finitely presentable domains](.ci/comparator/SmallObjectFiniteDomainsChallenge.lean): 21 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -214,12 +235,13 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks direct Mathlib imports and coverage of all 102 registered roots.
-Twenty-one Challenges have 100-line budgets. The monadicity and ordinary-creation
+CI checks direct Mathlib imports and coverage of all 109 registered roots
+(106 mathematical results and three definition markers). Twenty-five Challenges
+have 100-line budgets. The monadicity and ordinary-creation
 Challenges have reviewed 160-line and 116-line budgets respectively. Both need
 the two full category structures and actual forgetful functor visible, including
 structural proofs. The ordinary-creation file still has 101 nonblank lines; its
-116-line format preserves readability. The 1,780 lines across all twenty-three
+116-line format preserves readability. The 1,870 lines across all twenty-seven
 files are the review surface; checking one file is not a review of the entire
 formalization.
 
@@ -280,6 +302,17 @@ between them to detect object surjectivity for every target functor. The library
 witnesses are the concrete empty and identity-only one-object categories.
 The complete attachment reduction and boundary-RLP characterization are audited
 and separately reviewed supporting results, not separate Comparator roots.
+That stage had 23 Challenges and 102 roots. The four ordinary-lifting and
+small-object Challenges add 90 lines and seven roots while retaining those
+23 specifications, their 23 configurations, and all 102 ordered roots unchanged.
+Four new roots protect the ordinary Kan consequence, actual relative cells,
+cell-closure equality and `I.rlp` equality. Two protect the same section and
+homotopy with all four laws. The last protects the general finite-domain small
+object theorem, with its explicit assumptions. The actual `J†loc` equivalence
+and unconditional actual `I†` factorization are separately reviewed and audited
+applications, not additional Comparator roots. The new tranche has passed local
+fresh compilation, exact root-header comparison and a 2,544-declaration audit;
+these checks do not substitute for its exact-commit Linux run.
 
 ## Citing this version
 
@@ -287,9 +320,9 @@ Use the [v0.1.0 release](https://github.com/Yonoha/dagger-models-lean/releases/t
 and its tagged source when citing the first version. GitHub citation metadata is
 provided in [CITATION.cff](CITATION.cff). For an immutable reference, record the
 full commit hash shown in the release notes as well.
-The presheaf, free-adjunction, cellular, dagger simplicial-category, and comparison-obstruction developments
-described above are newer than v0.1.0; cite the corresponding development commit
-when referring to them.
+The presheaf, free-adjunction, cellular, dagger simplicial-category, ordinary-lifting,
+small-object and comparison-obstruction developments described above are newer than
+v0.1.0; cite the corresponding development commit when referring to them.
 
 Suggested wording:
 
@@ -320,8 +353,13 @@ The ordinary-category forgetful assertion in `bg.lem.creation` is also proved.
 The actual two-object free cells, their finite presentability, the underlying
 free-cell pushout, ordinary colimit existence, and full successive-attachment
 comparison are proved. The actual `I†` lifting condition is characterized by
-object surjectivity and ordinary boundary lifting on all hom spaces.
-The next stages toward A–D include the ordinary Kan–Quillen comparison,
+object surjectivity and ordinary boundary lifting on all hom spaces. Boundary
+lifting now gives actual local Kan fibrations and a section/cylinder homotopy;
+all ordinary monos have actual relative boundary-cell presentations. The actual
+`I†` has functorial factorization from the small object argument. The missing
+ordinary input is the comparison with actual weak homotopy equivalences and
+trivial Kan fibrations. The next stages toward A–D also include unitary interval
+lifting, the rest of the ordinary Kan–Quillen comparison,
 rigidification and coherent nerve, their lifted adjunction, and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
@@ -359,6 +397,13 @@ underlying 自由セルの二つの通常セルによる pushout 分解と、忘
 セル付加の還元補題 `bg.lem.reduction` 全体も証明しました。
 また、実際の生成射族 `I†` に対する右持ち上げ条件が、対象上の全射性と全ての hom の
 境界持ち上げ条件に同値であることを証明しました。trivial Kan fibration との比較は未完了です。
-新しい余極限・対象生成射の Challenge は 40 行・91 行で、既存の仕様は保持しています。
-論文の主定理全体を Lean で証明したという意味ではありません。
+さらに通常の境界 RLP から実際の Mathlib Kan fibration を導き、任意の通常の mono の
+実相対境界セル表示、境界セル閉包と mono 全体の一致、および右持ち上げ類の一致を証明しました。
+同じ section と cylinder homotopy が、両端と元の target 上の四式を満たすことも証明しました。
+実 `J†loc` の RLP は全ての hom が Kan fibration であることに同値です。
+実 `I†` の small object argument と、`I†.rlp.llp`・`I†.rlp` による関手的分解も証明しました。
+今回の４ Challenges は 15・27・27・21 行で、既存23本と102 rootsをそのまま保持します。
+全体は27本・1,870行・109 roots（数学106、定義marker3）です。
+弱ホモトピー同値・trivial Kan fibration との同定と `J†` の interval 部分は未完了で、
+論文の主定理 A–D 全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

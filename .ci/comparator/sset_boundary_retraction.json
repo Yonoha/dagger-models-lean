@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy",
+    "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

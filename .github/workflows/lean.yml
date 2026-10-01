@@ -61,6 +61,12 @@ jobs:
           Mathlib.CategoryTheory.Limits.Types.Pullbacks
           Mathlib.CategoryTheory.Limits.Types.Coproducts
           Mathlib.CategoryTheory.Quotient
+          Mathlib.AlgebraicTopology.SimplicialSet.CategoryWithFibrations
+          Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
+          Mathlib.CategoryTheory.LiftingProperties.Limits
+          Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
+          Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms
+          Mathlib.CategoryTheory.SmallObject.Basic
       - name: Check all library proofs
         run: lake build
       - name: Audit transitive axiom dependencies

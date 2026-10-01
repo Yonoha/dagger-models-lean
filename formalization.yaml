@@ -41,6 +41,12 @@ project:
     give the full I-dagger boundary-RLP characterization. Its comparison with
     trivial Kan fibrations remains unproved. The main model-categorical theorems
     A-D are not formalized.
+    Ordinary boundary lifting now implies the actual Mathlib Kan fibration
+    predicate. Every ordinary simplicial mono has an actual relative boundary-cell
+    presentation, yielding equality of boundary RLP and mono RLP. Both conditions
+    supply an actual section and cylinder homotopy over the original target.
+    A finite-domain small-object bridge gives the actual I-dagger unconditional
+    small object argument and functorial factorization in its two lifting classes.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
   responsible_maintainers:
@@ -81,6 +87,11 @@ sources:
       generator, has the exact object-surjectivity plus hom-boundary-RLP
       characterization used in bg.lem.I-inj. The comparison with trivial Kan
       fibrations is not yet formalized.
+      Ordinary boundary-cell presentations, boundary-to-Kan lifting and sections
+      with cylinder homotopies supply further inputs toward bg.lem.I-inj.
+      The actual local horn family in bg.def.IJ has RLP exactly on local Kan
+      fibrations. The actual I-dagger small-object argument and functorial
+      factorization implement the corresponding input to bg.thm.main.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -134,6 +145,15 @@ status:
     Actual free two-object cell lifting is equivalent to full hom-space lifting.
     Together these prove the exact I-dagger boundary-RLP characterization. The
     trivial Kan fibration comparison and full bg.lem.I-inj remain unproved.
+    The actual ordinary boundary RLP implies Mathlib's Kan fibration property.
+    Every ordinary mono has an actual relative boundary-cell presentation, and
+    the transfinite closure of boundary coproduct attachments is exactly all
+    monos. Boundary RLP therefore equals mono RLP. Each such map has one section
+    and one cylinder homotopy satisfying both endpoint laws and the equation
+    over its original target. The local positive horn generators have RLP exactly
+    when every hom map is a Kan fibration. The actual I-dagger admits the small
+    object argument and actual functorial factorization, from proved smallness,
+    finite presentability of all generator domains and existing small colimits.
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
@@ -485,6 +505,48 @@ status:
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_object_generator.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.SSetBoundaryFibration.boundary_rlp_le_fibrations"
+      file: "DaggerModels/SSetBoundaryFibration.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_fibration.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SSetBoundaryCells.exists_relativeCellComplex"
+      file: "DaggerModels/SSetBoundaryCells.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_cells.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SSetBoundaryCells.boundaryCells_eq_monomorphisms"
+      file: "DaggerModels/SSetBoundaryCells.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_cells.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp"
+      file: "DaggerModels/SSetBoundaryCells.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_cells.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy"
+      file: "DaggerModels/SSetMonoRLPRetraction.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_retraction.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp"
+      file: "DaggerModels/SSetBoundaryRetraction.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/sset_boundary_retraction.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
+      file: "DaggerModels/SmallObjectFiniteDomains.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/small_object_finite_domains.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -631,43 +693,46 @@ fidelity:
     the union of all boundary cell maps and that object map; its RLP is exactly
     object surjectivity and boundary RLP on every hom. The boundary-RLP/trivial-Kan
     comparison and main theorems remain unproved.
+    The ordinary boundary-to-Kan proof uses the actual lower-boundary pushout
+    onto the horn-to-upper-boundary inclusion, including dimension zero. The
+    ordinary cell presentation keeps all new nondegenerate simplices, the
+    original mono, source, target and relative skeletal diagram. No monicity
+    of characteristic maps is assumed. The same section and cylinder homotopy
+    satisfy all four displayed laws; no stationarity on the section image is
+    asserted. The small-object bridge has independent category, hom and auxiliary
+    universes and chooses the actual regular cardinal aleph0. Its actual I-dagger
+    application discharges smallness, finite-domain and colimit premises using
+    the original boundary and empty-to-point family. Both functorial factorization
+    classes are the literal I-dagger.rlp.llp and I-dagger.rlp. The weak-homotopy
+    equivalence comparison and main theorems remain unproved.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator checks 99 selected library
-    theorems and three audit-only definition roots against twenty-three self-contained
-    Challenge files in .ci/comparator. Each imports only Mathlib. The original
-    fifteen have 100-line budgets (72, 96, 22, 92, 88, 44, 91, 28, 88, 55, 93, 29,
-    73, 100, and 83 lines). The literal monadicity/word-finitarity specification has 160 lines
-    with a reviewed 160-line exception to keep both actual category structures
-    and the forgetful functor visible. The graph presentability
-    Challenge adds 74 lines. The complete dagger simplicial category
-    limits/colimits/LFP/LP Challenge adds 93 lines and four unconditional targets.
-    The ordinary-creation Challenge adds 116 lines and two unconditional
-    creation targets, with both full categories and actual forgetful functor
-    visible. Its reviewed 116-line exception preserves readability; it has 101
-    nonblank lines. The two-object universal and finite-cell specifications
-    add 57 and 95 lines, with one closed existential root each. The finite-cell
-    statement requires the same witness to have the full universal property and
-    be finitely presentable, using finite nondegenerate simplices rather than
-    degreewise finiteness. The ordinary-colimits and object-generator specifications
-    add 40 and 91 lines with one unconditional root each. The object-generator
-    statement uses the same initial/terminal objects and arrow for all target
-    functors, and requires actual object surjectivity. All preceding 100 roots
-    and twenty-one specifications/configurations remain unchanged. Full attachment
-    reduction and boundary-RLP characterization are audited and separately reviewed
-    auxiliary results, not separate Comparator roots. All twenty-three total 1780 physical lines,
-    including comments and blank lines, and together form the review surface.
-    New proof/Challenge correspondence was separately
-    reviewed by GPT-6.1-Sol/xhigh agents who did not implement those proofs.
-    Challenge proof placeholders are outside the proved library. Dependency pins
-    and negative-control implementations use v0.1.0 commit
+    checks, not independent human review. Comparator compares 106 selected
+    library theorems and three audit-only definition roots against twenty-seven
+    self-contained Mathlib-only Challenges. Twenty-five retain 100-line budgets;
+    the existing monadicity and ordinary-creation exceptions retain 160 and
+    116 physical lines so both full categories and actual forgetful functors
+    stay visible. The complete review surface is 1870 physical lines, including
+    comments and blanks. The four new specifications have 15, 27, 27 and 21
+    lines and append seven roots to the preceding 102, retaining all twenty-three
+    preceding specifications and configurations byte-for-byte. They protect
+    actual boundary-to-Kan lifting; ordinary relative cell presentation, boundary
+    closure and mono-RLP equality; both section/cylinder-homotopy conclusions;
+    and the general finite-domain small-object bridge. The actual local horn
+    generator characterization and unconditional I-dagger factorization are
+    separately reviewed, axiom-audited auxiliary results rather than additional
+    Comparator roots. New proofs and their specifications received separate
+    GPT-6.1-Sol/xhigh agent reviews; no independent human review is claimed.
+    Challenge proof markers are outside the proved library. Dependency pins and
+    negative-control implementations retain the v0.1.0 reference commit
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
-    Comparator cannot establish that the chosen specifications correctly express
-    the original manuscript, and no independent human review is claimed.
+    Comparator establishes agreement with trusted specifications; their
+    correspondence with the original manuscript still requires mathematical review.
+
 alignment:
   namespace: "DaggerModels"
   statements:
@@ -953,6 +1018,60 @@ alignment:
         colimit, constructed from genuine orbit representatives and attachment
         pushouts. Degree zero attaches individual new vertices. No cellularity
         premise or monicity of characteristic maps is assumed.
+    - source: "Ordinary boundary-to-Kan input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetBoundaryFibration.boundary_rlp_le_fibrations"
+      module: "DaggerModels/SSetBoundaryFibration.lean"
+      status: "proved"
+      note: >-
+        Actual Mathlib boundary RLP implies its actual Kan fibration class at every value universe, with arbitrary source and target; no weak-equivalence conclusion.
+    - source: "Ordinary relative boundary-cell input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetBoundaryCells.exists_relativeCellComplex"
+      module: "DaggerModels/SSetBoundaryCells.lean"
+      status: "proved"
+      note: >-
+        Every original simplicial mono has actual countable RelativeCellComplex data; dimension zero and original source, target and map are retained.
+    - source: "Ordinary boundary-cell closure input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetBoundaryCells.boundaryCells_eq_monomorphisms"
+      module: "DaggerModels/SSetBoundaryCells.lean"
+      status: "proved"
+      note: >-
+        Actual transfinite compositions of pushouts of coproducts of Mathlib I equal all simplicial monomorphisms, at every value universe.
+    - source: "Ordinary boundary lifting input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp"
+      module: "DaggerModels/SSetBoundaryCells.lean"
+      status: "proved"
+      note: >-
+        Actual Mathlib I.rlp equals monomorphisms.rlp; weak homotopy equivalences and trivial Kan fibrations are not yet identified.
+    - source: "Ordinary mono lifting and homotopy input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy"
+      module: "DaggerModels/SSetMonoRLPRetraction.lean"
+      status: "proved"
+      note: >-
+        One section and one actual cylinder homotopy satisfy all four simultaneous equations, including the equation over the target; no Kan or model premise.
+    - source: "Ordinary boundary lifting and homotopy input toward bg.lem.I-inj"
+      lean: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp"
+      module: "DaggerModels/SSetBoundaryRetraction.lean"
+      status: "proved"
+      note: >-
+        The same four equations follow from actual boundary RLP by the proved class equality; no stationarity or weak-equivalence assertion.
+    - source: "Local positive horn family in bg.def.IJ"
+      lean: "DaggerModels.DaggerLocalFibrations.local_generators_rlp_iff"
+      module: "DaggerModels/DaggerLocalFibrations.lean"
+      status: "proved"
+      note: >-
+        Actual J-dagger-local RLP is exactly all-hom Kan fibrations; actual I-dagger RLP implies this local condition. Interval lifting remains unproved. Auxiliary audited result.
+    - source: "Finite-domain small object input toward bg.thm.main"
+      lean: "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
+      module: "DaggerModels/SmallObjectFiniteDomains.lean"
+      status: "proved"
+      note: >-
+        Actual small-object argument at aleph0, from smallness, finitely presentable domains and small colimits; category, hom and auxiliary universes remain independent.
+    - source: "Actual I-dagger factorization input toward bg.thm.main"
+      lean: "DaggerModels.DaggerSmallObject.generators_hasFunctorialFactorization"
+      module: "DaggerModels/DaggerSmallObject.lean"
+      status: "proved"
+      note: >-
+        Unconditional actual functorial factorization in I-dagger.rlp.llp and I-dagger.rlp, with actual factorization data for every morphism; no weak-equivalence or model-category assertion. Auxiliary audited result.
     - source: "Main theorems A-D"
       status: "not-formalized"
 acknowledgements: >-

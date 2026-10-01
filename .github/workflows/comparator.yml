@@ -12,7 +12,8 @@ permissions:
 jobs:
   compare:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # Allow all 27 comparison groups and both negative controls to finish.
+    timeout-minutes: 60
     env:
       MATHLIB_NO_CACHE_ON_UPDATE: "1"
     steps:
@@ -124,6 +125,12 @@ jobs:
           Mathlib.CategoryTheory.Limits.Types.Pullbacks
           Mathlib.CategoryTheory.Limits.Types.Coproducts
           Mathlib.CategoryTheory.Quotient
+          Mathlib.AlgebraicTopology.SimplicialSet.CategoryWithFibrations
+          Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
+          Mathlib.CategoryTheory.LiftingProperties.Limits
+          Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
+          Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms
+          Mathlib.CategoryTheory.SmallObject.Basic
       - name: Enable the unprivileged systemd sandbox wrapper
         run: |
           sudo loginctl enable-linger "$(id -un)"

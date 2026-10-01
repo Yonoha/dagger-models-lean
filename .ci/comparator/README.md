@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against twenty-three self-contained problem specifications:
+candidate against twenty-seven self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -29,15 +29,19 @@ candidate against twenty-three self-contained problem specifications:
 | [FiniteTwoObjectCellChallenge.lean](FiniteTwoObjectCellChallenge.lean) | 95 | [finite_two_object_cell.json](finite_two_object_cell.json) | 1 theorem: the same universal cell is finitely presentable for finite simplicial sets |
 | [SimplicialColimitsChallenge.lean](SimplicialColimitsChallenge.lean) | 40 | [simplicial_colimits.json](simplicial_colimits.json) | 1 theorem: unconditional small colimits of the full ordinary simplicial category |
 | [DaggerObjectGeneratorChallenge.lean](DaggerObjectGeneratorChallenge.lean) | 91 | [dagger_object_generator.json](dagger_object_generator.json) | 1 theorem: the same actual initial-to-terminal arrow detects object surjectivity for every target functor |
+| [SSetBoundaryFibrationChallenge.lean](SSetBoundaryFibrationChallenge.lean) | 15 | [sset_boundary_fibration.json](sset_boundary_fibration.json) | 1 theorem: actual ordinary boundary RLP implies the existing Mathlib Kan fibration property |
+| [SSetBoundaryCellsChallenge.lean](SSetBoundaryCellsChallenge.lean) | 27 | [sset_boundary_cells.json](sset_boundary_cells.json) | 3 theorems: every mono has actual relative boundary cells, boundary-cell closure equals monos, and actual right lifting classes agree |
+| [SSetBoundaryRetractionChallenge.lean](SSetBoundaryRetractionChallenge.lean) | 27 | [sset_boundary_retraction.json](sset_boundary_retraction.json) | 2 theorems: one section and cylinder homotopy with all four laws, from mono-RLP and actual boundary-RLP |
+| [SmallObjectFiniteDomainsChallenge.lean](SmallObjectFiniteDomainsChallenge.lean) | 21 | [small_object_finite_domains.json](small_object_finite_domains.json) | 1 theorem: actual small object argument from smallness and finitely presentable domains, with explicit colimit/local-smallness assumptions |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The twenty-three Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,780 lines in total**, including
+the implementation. The twenty-seven Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **1,870 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 78
+The checker retains the original **21 named library theorems** and adds 85
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -45,7 +49,9 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-102-root coverage set; it is a registry, not an executable Comparator config.
+109-root coverage set (106 mathematics and three markers); it is a registry,
+not an executable Comparator config. Counts in the milestone paragraphs below
+are historical; the table and totals above describe the current coverage.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -171,6 +177,30 @@ Raw comparison covers 23 and 83 local constants, excluding only each target's
 proof body. These add no line-budget exceptions, tool changes, axiom permissions,
 or negative-control changes. The full attachment reduction and full `I†`
 boundary-RLP theorem are audited supporting results, not additional roots.
+That stage had 23 Challenges, 102 roots and 1,780 physical lines.
+
+The four ordinary-lifting and small-object specifications add 90 lines and
+seven roots, retaining all those 23 Challenges and 23 configs byte-for-byte,
+and all 102 ordered roots. The 15-line file asks for actual Mathlib
+`I.rlp ≤ fibrations SSet`, without a source/target Kan assumption. The 27-line
+cell file requires an actual `RelativeCellComplex` for every original mono,
+with actual boundary maps in all dimensions including zero; it also protects
+boundary-cell closure equality and actual `I.rlp = monomorphisms.rlp`.
+The separate 27-line file requires the same section and cylinder homotopy to
+satisfy `s ≫ p = 𝟙 Y`, both endpoint equations, and `H ≫ p = fst ≫ p`, for
+mono-RLP and actual boundary-RLP. It does not assert stationarity or identify a
+weak-equivalence predicate. The 21-line general theorem retains independent
+category, hom and auxiliary universes, actual family smallness, local smallness,
+small colimits and finite presentability of every domain as explicit hypotheses.
+The library separately discharges them for its original `I†` and constructs
+actual functorial factorization data in `I†.rlp.llp` and `I†.rlp`.
+That application and the actual local horn `J†loc` equivalence are audited and
+separately agent-reviewed auxiliary results, not extra Comparator roots.
+All seven new root headers, including universe parameters, passed local exact
+comparison; the nine-module tranche also passed fresh compilation and the
+standard-axiom audit. Real exact-commit Linux verification is a separate check.
+No specification defines away weak homotopy equivalence, concludes a full
+trivial Kan characterization, or claims unitary interval lifting or A–D.
 
 The result statements in a Challenge have intentional `sorry` placeholders:
 they specify obligations, not proved results. The data definitions remain
@@ -218,10 +248,10 @@ change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
-the twenty-one ordinary Challenges and the explicit 160-line monadicity and
+the twenty-five standard-budget Challenges and the explicit 160-line monadicity and
 116-line ordinary-creation exceptions (including blank lines and comments),
 plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 102 roots.
+permitted axioms, no definition holes, and exact registration of all 109 roots.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
@@ -242,9 +272,13 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The twenty-three positive comparisons use current candidate
+the Challenge mathematics. The twenty-seven positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
+The overall workflow time budget is 60 minutes, raised from 45 so all 27 groups
+and both negative controls can finish. This changes the wall-time allocation,
+not the checker, sandbox, tool/dependency pins, permitted axioms or controls.
+The six additional cache entries select artifacts at the unchanged Mathlib pin.
 
 ## Updating the mathematical specification
 
