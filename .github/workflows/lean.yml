@@ -40,6 +40,7 @@ jobs:
           Mathlib.CategoryTheory.Limits.Types.Colimits
           Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
           Mathlib.CategoryTheory.Adjunction.Unique
+          Mathlib.CategoryTheory.Adjunction.Mates
           Mathlib.CategoryTheory.Limits.Types.Pushouts
           Mathlib.CategoryTheory.MorphismProperty.Retract
           Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory

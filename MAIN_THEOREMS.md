@@ -178,9 +178,16 @@ Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
   to lifting on every full hom space, without endpoint restrictions.
   `DaggerGeneratingCofibrations.lean` defines the actual `I†` as all free boundary
   maps, including dimension zero, together with the object generator. Its RLP
-  is exactly object surjectivity plus boundary RLP on every hom. Identifying the
-  latter with a Kan fibration that is a weak homotopy equivalence remains open.
-  The full model-categorical `bg.lem.I-inj` assertion is not yet claimed.
+  is exactly object surjectivity plus boundary RLP on every hom. The published
+  library has not yet registered the comparison with a Kan fibration that is
+  a weak homotopy equivalence, or the full `bg.lem.I-inj` assertion.
+  A subsequent private integration checkpoint now proves that exact
+  equivalence using the fully compiled/audited external Kan–Quillen result,
+  with the existing geometric weak-equivalence definition and common universe
+  `{u,u}`. The 70-line bridge, three exact upstream type checks, eight-root
+  transitive axiom audit, and separate source correspondence review pass.
+  Public dependency adoption and Comparator registration remain pending;
+  this result is not included in the published verification totals below.
 - Ordinary inputs to `bg.lem.I-inj`: `SSetBoundaryFibration.lean` proves that
   actual Mathlib boundary RLP implies its Kan fibration property.
   `SSetBoundaryCellsCore.lean`, `SSetBoundaryCellsAttachment.lean` and
@@ -215,9 +222,13 @@ are separately reviewed and audited auxiliary results. That stage retained
 102 prior roots and 23 prior specifications/configurations. The ordinary
 rigidification adjunction and its two natural comparisons add three roots by
 extending the colimits Challenge from 40 to 99 lines, retaining all 109 preceding
-roots and the other 26 specifications/configurations. Current coverage is 27
+roots and the other 26 specifications/configurations. That checkpoint had 27
 Challenges, 1,929 physical lines and 112 roots (109 mathematics plus three
-markers), with the two existing 160/116-line exceptions unchanged.
+markers). The full dagger lift adds two self-contained specifications of 118
+and 234 lines, giving 29 Challenges, 2,281 lines and 114 unique roots. One
+supporting colimits theorem is checked in both contexts, so there are 115
+comparisons. All old roots/specifications/configurations are retained; the
+160/116-line exceptions remain and the new 118/234 exceptions are reviewed.
 
 `formalization.yaml` and `CORRESPONDENCE.md` specify the exact checked scope.
 
@@ -241,6 +252,21 @@ Required chain:
    Actual ordinary colimits and the complete successive-attachment comparison
    in `bg.lem.reduction` are proved, with all required pushouts constructed.
 2. Fixed-object model structures (`gb.cor.sGph-model`, `bg.thm.fixed-object`).
+   The preceding categorical decomposition `bg.lem.gph-decomposition` now
+   passes a private checkpoint: the actual fixed-object graph category is
+   equivalent to the product of upper-triangular simplicial sets and diagonal
+   `BC₂` functors. The construction retains the same arbitrary object type,
+   identity object maps, the actual nontrivial diagonal dagger action, both
+   functors, natural unit/counit, and both triangles. Strict checks, mixed
+   imports, a 244-root transitive axiom audit, and root source review pass.
+   A subsequent 21-root private checkpoint proves that the actual all-hom
+   Kan-fibration and geometric weak-equivalence conditions are equivalent to
+   the upper/diagonal factor conditions. It applies to arbitrary original
+   object types, without order, finiteness, or source/target Kan hypotheses.
+   Its separate agent source review passes. This is the homwise detection
+   step in `gb.cor.sGph-model`, not the model-structure existence assertion.
+   The graph model structure and its transfer to categories remain open;
+   this decomposition is not yet in the public Comparator registry.
 3. Natural unitary intervals, their extraction and realization, and coherent
    unitary equivalences (`bg.def.interval`, `bg.prop.cu-groupoid`).
 4. The exact classes `W†`, `I†`, `J†` (`bg.def.W`, `bg.def.IJ`), two-out-of-three,
@@ -250,10 +276,11 @@ Required chain:
    monos have actual relative boundary-cell presentations. Boundary-RLP maps
    have sections and cylinder homotopies over their targets. The actual local
    horn family has the correct all-hom Kan RLP equivalence, and `I†` admits
-   unconditional small object and functorial factorization data. The missing
-   ordinary comparison is with actual weak homotopy equivalences and trivial
-   Kan fibrations. The full `J†` interval lifting and recognition hypotheses
-   remain open.
+   unconditional small object and functorial factorization data. The ordinary
+   comparison with actual weak homotopy equivalences and trivial Kan fibrations
+   now passes the private exact integration checkpoint described above;
+   publication and registered verification remain. The full `J†` interval
+   lifting and recognition hypotheses remain open.
 5. The actual model structure, specified generating sets, characterization of
    trivial fibrations, combinatoriality, and left properness.
 
@@ -265,7 +292,8 @@ but describes the SSet Quillen model structure as TODO. In particular, it does
 not supply the required boundary-RLP/trivial-fibration comparison with actual
 weak homotopy equivalences. A degree-zero dagger category does not replace a
 dagger simplicial category. The external Kan–Quillen source recorded below is
-a candidate source to evaluate, not an assumed theorem. The present boundary,
+now compiled and audited privately, with the exact `I†` bridge checked, but it
+is not yet a published dependency. The present boundary,
 cellular and small-object proofs were constructed independently from pinned
 Mathlib and this project's checked lemmas; no external Lean bodies were copied.
 
@@ -280,9 +308,32 @@ Required chain:
    implemented above.
 2. Ordinary rigidification and coherent nerve are constructed in
    `OrdinaryRigidification.lean` using Mathlib's actual standard thickening and
-   Yoneda-extension adjunction. The full natural comparison with Mathlib's
-   nerve and the standard-simplex comparison are proved. Compatibility with
-   opposites and the concrete dagger lifted adjunction (`dj.lem.lift`) remain.
+   Yoneda-extension adjunction. Both the comparison with Mathlib's nerve and
+   the standard-simplex comparison are natural isomorphisms. The actual
+   thickening reversal and `O ⋙ N ≅ N ⋙ S` retain both inverse laws and
+   involution coherence. Degree-zero nerve simplices and the canonical
+   rigidification vertices identify naturally with the original object types.
+   The opposite comparison for rigidification is the mate under the original
+   ordinary adjunction, not a replacement adjunction. These give the actual
+   dagger left and right functors and their adjunction in `DaggerAdjunction.lean`.
+   Its full Hom equivalence restricts the original one in both directions;
+   forgetting its unit and enriched counit gives the original maps.
+   `OrdinaryFreeDagger.lean` constructs the actual category-to-category free
+   adjunction from the already checked graph-free construction and semantic
+   hom quotients, retaining original objects and the identity object unit.
+   Mathlib's `Adjunction.leftAdjointUniq` supplies the canonical free comparison,
+   preserving the actual composite units and counits. Thus all conclusions of
+   `dj.lem.lift` are proved locally, with separate agent source reviews.
+   The twelve construction modules and their exact witness module are now
+   integrated in this checkout; the final full build, 2,929-declaration
+   module-owned axiom audit and per-declaration metadata checks pass. The
+   exact nineteen-field public witness and two separately reviewed Mathlib-only
+   specifications are now registered. Real Linux Comparator verification for
+   this integration remains a separate gate.
+   This does not complete B: its model-category assertions remain open.
+   The separate ordinary free-dagger pushout presentation in the unlabelled
+   remark after `dj.not.adjunctions` also remains open.
+
 3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
    preservation by rigidification, and accessibility of weak equivalences.
    The cellular characterization is complete: every free cofibration has an
@@ -297,7 +348,8 @@ only in positive degrees. Replacing it by all monomorphisms would change B.
 Mathlib supplies the coherent nerve, standard thickening and general presheaf
 adjunction used in the constructed ordinary rigidification adjunction. The
 ordinary Joyal–Bergner model structures and Quillen equivalence, and the
-dagger-compatible lift, remain required. Mathlib also supplies relative
+model-category properties of the constructed dagger adjunction, remain
+required. Mathlib also supplies relative
 skeletons and their successor formula; this companion proves the actual
 dagger-cell pushout decomposition. The reuse inventory in
 [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md) separates exact reused
@@ -364,21 +416,20 @@ the README's broader claim is not used as an instantiated theorem here.
 Its pins are Lean `v4.25.0-rc2` and mathlib
 `6c193806481aaf608f1396601b6dc95277ddcfe8`. This companion uses Lean `v4.27.0`
 and mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`.
-The external source was inspected and its unchanged import closure was tested
-in an isolated compatibility probe against this project's pin. After preparing
-the pinned caches, 44 of 183 modules compiled, 13 had source/API failures, and
-126 were blocked by failed prerequisites. The full model structure and target
-comparison theorems did not compile; no verified dependency is claimed.
-A bounded compatibility adaptation subsequently obtained 61 compiled modules,
-with five direct failures and 117 modules not compiled at their traversal
-positions. Fourteen changed modules pass strict compilation; 439 declarations
-in those modules and signature bridges pass transitive standard-axiom checks.
-These counts are not full-model verification. Exact coverage and remaining
-failures are recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
+The unchanged external source initially failed against this project's pin.
+The subsequent private compatibility adaptation now compiles the full original
+183-module dependency closure, including `SSet.KeyLemma` and the actual
+`ModelCategory SSet` instance. All modules import together with the published
+companion, and the fresh transitive axiom union for all 8,696 owned/generated
+declarations contains only the three standard axioms. The exact manuscript
+`I†` bridge is checked privately as described above. Historical intermediate
+counts, adaptation scope and immutable verification records are retained in
+[EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
 No applicable repository-level license was established at that exact commit:
 no LICENSE/COPYING file was found and GitHub metadata reported no license.
 A few unrelated files have Apache headers; these do not resolve the license of
 the required model-category proofs. No external Lean bodies have been adopted.
-License resolution, compatible compilation and a transitive axiom audit would
-be required before treating that implementation as a checked dependency.
+The local compatibility and axiom checks are complete for this closure;
+license resolution, public adoption and registered verification remain before
+it can be a published dependency of this companion.
 It does not supply the Bergner/Joyal/rigidification results needed by A–C.

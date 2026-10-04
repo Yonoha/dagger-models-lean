@@ -5,17 +5,19 @@ Version 0.1.0 remains the immutable initial foundations release.
 Names below are in the `DaggerModels` namespace. A definition being implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies twenty-seven self-contained Comparator Challenges for
+The current branch supplies twenty-nine self-contained Comparator Challenges for
 reviewing its mathematical scope. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
-unproved library results. A reviewer must inspect all twenty-seven files to review the
+unproved library results. A reviewer must inspect all twenty-nine files to review the
 whole checked scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
-The current total is 1,929 physical lines and 112 roots: 109 mathematical results
-and three definition markers. Twenty-five files have the standard 100-line
-budget; the existing 160-line and 116-line exceptions are unchanged. Smaller
-counts below describe earlier milestones, not the current coverage.
+The current total is 2,281 physical lines and 114 unique roots: 111 mathematical
+results and three definition markers. There are 115 comparisons because the
+ordinary colimits theorem is checked in its original group and the dagger-lift
+group. Twenty-five files have the standard 100-line budget; four reviewed
+exceptions have 160, 116, 118 and 234 lines. Smaller counts below describe earlier
+milestones, not the current coverage.
 
 ## The reversal simplex category
 
@@ -919,8 +921,8 @@ fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D remain un
 
 The ordinary adjunction recalled in `dj.not.adjunctions` is constructed in
 [`OrdinaryRigidification.lean`](DaggerModels/OrdinaryRigidification.lean).
-It supplies an input to `dj.lem.lift`; the latter's opposite coherence and
-dagger lift are not asserted here. The reuse search and version decisions are
+It supplies the original ordinary adjunction used by the complete dagger lift
+described in the following section. The reuse search and version decisions are
 recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
 
 At every common universe `u`, `cosimplicialThickening` is a functor
@@ -972,8 +974,91 @@ the audit's two negative controls, Challenge registration and metadata checks.
 Literal comparison of all 42 Challenge declarations has zero differences,
 excluding only the four configured theorem-proof bodies. Linux Comparator
 execution remains a separate check; no independent human review is claimed. This ordinary
-adjunction does not establish opposite compatibility, the dagger lifted
-adjunction, preservation of model classes, or any Quillen-equivalence claim.
+adjunction alone does not establish the further dagger lift below. Preservation
+of model classes and all Quillen-equivalence claims remain open.
+
+## The actual ordinary free dagger adjunction and the full dagger lift
+
+`OrdinaryFreeDagger.lean` constructs the category-to-category free completion in
+`dj.not.adjunctions`. It first doubles the underlying graph of the original
+simplicial category, keeping the same object type. The existing graph-free
+construction supplies finite words. Its existing semantic hom quotient imposes
+the original identity and composition laws in every simplicial degree.
+Restriction along the actual unit and extension to every dagger simplicial
+category are inverse, naturally for all enriched functors, including arbitrary
+object maps. Mathlib's `Adjunction.leftAdjointOfEquiv` and
+`Adjunction.adjunctionOfEquivLeft` construct the full functor and adjunction.
+The unit has the identity object map. This establishes the actual free adjunction;
+the separate ordinary free-dagger pushout presentation in the subsequent
+unlabelled manuscript remark is still open.
+
+For the original ordinary adjunction `F ⊣ N`, the new modules establish the
+following complete chain toward `dj.lem.lift`:
+
+1. `ThickeningReversal.lean` reverses Mathlib's original finite-order path
+   subsets. Both inverse equations, all-simplex naturality and involution
+   coherence hold with the original enrichment.
+2. `NerveOpposite.lean` gives the natural isomorphism `O ⋙ N ≅ N ⋙ S`,
+   retaining the full enriched-functor data and outer `ULift`.
+   `NerveVertices.lean` identifies degree-zero simplices with original objects.
+3. `RigidificationOpposite.lean` uses `CategoryTheory.mateEquiv` for the
+   original uncomposed Yoneda adjunction, proving both inverses and coherence.
+   `RigidificationVertices.lean` proves that its original-unit vertex map is
+   bijective and natural. The mate does not replace the original adjunction.
+4. `DaggerCoherentNerve.lean` and `DaggerRigidification.lean` construct the actual
+   dagger functors, retaining their original underlying objects and maps.
+   `DaggerAdjunctionCompatibility.lean` and `DaggerAdjunction.lean` restrict the
+   original full Hom equivalence in both directions. The lifted unit and
+   enriched counit forget to the original ones, and both triangles hold.
+5. `DaggerFreeComparison.lean` and `ActualDaggerFreeComparison.lean` apply
+   Mathlib's `Adjunction.leftAdjointUniq` to the two actual composite adjunctions.
+   The comparison is the canonical identity mate for their common right functor.
+   Existing Mathlib lemmas give both composite unit and counit equations.
+
+`DaggerAdjunctionWitness.lean` assembles this into one nineteen-field witness.
+It requires both actual free adjunctions as data, both full dagger functors,
+forgetful functor equations, both directions of the original Hom correspondence,
+original unit/counit compatibility, and the canonical natural comparison with
+its two composite laws. Equality transports are explicit in all these fields.
+The statement is unconditional at every common universe `u`; it does not
+assume a model structure, Kan condition, or a free adjunction still to construct.
+The implementation's comparison is also checked equal to its original actual
+`canonicalFreeComparison`, with both inverses and full unit/counit formulas.
+Thus all conclusions of `dj.lem.lift` are proved. None of A–D is completed.
+
+The two new Mathlib-only Challenges are 118 and 234 physical lines. A separate
+agent reviewed the complete category definitions, all nineteen witness fields,
+original T/F/N/adjunction, both Hom directions and equality-transport orientations
+against `dj.not.adjunctions` and `dj.lem.lift`. The reviewer matched fifty full
+shared declaration bodies and approved the explicit line-budget exceptions.
+The full categories and original adjunction data remain visible; no candidate
+or local helper module is imported and no definition hole is enabled. Agent
+review is not independent human review.
+
+All 27 preceding Challenge/configuration pairs and all 112 ordered registry
+entries are retained. Two existence roots give 114 unique targets, comprising
+111 mathematical results and three audit markers, across 29 Challenges and
+2,281 physical lines. There are 115 comparisons because the existing ordinary
+colimits theorem is configured in both its original group and the lift group.
+The original Kan extension depends on that theorem; leaving its proof marker
+unconfigured would cause Comparator to compare the placeholder proof body.
+The checker permits exactly this pair of groups for that one theorem, rejects
+within-group duplicates and all other repeats, and retains exact registry
+coverage. Tool/dependency pins and both Comparator negative controls are unchanged.
+
+The existing free-SSet pushout targets quantify over every actual adjunction
+to the same explicit forgetful functor. Applying them to the witness's actual
+freeSSetAdjunction protects the original zero-skeleton gluing, natural opposite
+coprojection, unit and both swap laws, without duplicating those definitions in
+the lift Challenge. The ordinary-category pushout remark is not inferred from
+that simplicial-set result.
+
+The source proofs, exact wrapper contracts and separate source reviews passed
+before adoption. Literal transitive local comparison of both specs found zero
+differences, excluding only the configured theorem proof bodies. The integrated
+build, all-owned/private/generated axiom audit and metadata checks are separate
+from actual Linux Comparator verification; only a successful job for the cited
+commit confirms the latter. Historical CI counts above refer to their old commit.
 
 ## Main-result status
 
@@ -985,7 +1070,9 @@ adjunction, preservation of model classes, or any Quillen-equivalence claim.
 | `pointset.cor.no-naive-quillen` | Comparison obstruction with the DCH model; Theorem D | Not formalized |
 | `prop.sSetdag_is_equivalent_to_Fun` | Presheaf equivalence and presentability | Proved, with arbitrary value universe |
 | `dj.not.adjunctions` (simplicial sets) | Free–forgetful adjunction | Actual adjunction, zero-skeleton pushout, unit and swap proved |
-| `dj.not.adjunctions` (ordinary rigidification) | Ordinary rigidification and coherent nerve | Actual Mathlib-based adjunction, full natural nerve comparison, and standard-simplex comparison proved; opposite coherence and the dagger lift remain unproved |
+| `dj.not.adjunctions` (ordinary rigidification) | Ordinary rigidification and coherent nerve | Actual Mathlib-based adjunction, full natural nerve comparison and standard-simplex comparison proved; this original adjunction is used by the full dagger lift below |
+| `dj.not.adjunctions` (ordinary free dagger) | Category-to-category free completion | Actual free adjunction, original object type and identity object unit proved; explicit ordinary pushout remark remains open |
+| `dj.lem.lift` | Dagger rigidification/coherent-nerve adjunction and canonical free comparison | Full actual lift, both original Hom directions, unit/counit, both free adjunctions and canonical comparison with both composite laws proved |
 | `dj.lem.free-cof` | Cellular characterization of free cofibrations | Both conclusions proved: an actual relative free-boundary-cell complex for every free cofibration, and equality with the stated saturation, at arbitrary value universe |
 | `bg.def.dagger-scat`, `bg.def.dagger-graph` | Dagger simplicial categories and graphs | Full definitions, functor categories, and enriched dagger laws implemented |
 | Opening construction in `bg.lem.presentable` | Free dagger simplicial category | Concrete word model, actual adjunction, singleton unit and universal property proved |

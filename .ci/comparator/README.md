@@ -2,7 +2,7 @@
 
 The [Comparator workflow](../../.github/workflows/comparator.yml) uses
 [leanprover/comparator](https://github.com/leanprover/comparator) to compare the
-candidate against twenty-seven self-contained problem specifications:
+candidate against twenty-nine self-contained problem specifications:
 
 | Challenge | Physical lines | Configuration | Comparison roots |
 | --- | --- | --- | --- |
@@ -33,15 +33,17 @@ candidate against twenty-seven self-contained problem specifications:
 | [SSetBoundaryCellsChallenge.lean](SSetBoundaryCellsChallenge.lean) | 27 | [sset_boundary_cells.json](sset_boundary_cells.json) | 3 theorems: every mono has actual relative boundary cells, boundary-cell closure equals monos, and actual right lifting classes agree |
 | [SSetBoundaryRetractionChallenge.lean](SSetBoundaryRetractionChallenge.lean) | 27 | [sset_boundary_retraction.json](sset_boundary_retraction.json) | 2 theorems: one section and cylinder homotopy with all four laws, from mono-RLP and actual boundary-RLP |
 | [SmallObjectFiniteDomainsChallenge.lean](SmallObjectFiniteDomainsChallenge.lean) | 21 | [small_object_finite_domains.json](small_object_finite_domains.json) | 1 theorem: actual small object argument from smallness and finitely presentable domains, with explicit colimit/local-smallness assumptions |
+| [OrdinaryFreeDaggerChallenge.lean](OrdinaryFreeDaggerChallenge.lean) | 118 | [ordinary_free_dagger.json](ordinary_free_dagger.json) | 1 theorem: actual category-to-category free adjunction, original objects and identity object unit |
+| [DaggerLiftChallenge.lean](DaggerLiftChallenge.lean) | 234 | [dagger_lift.json](dagger_lift.json) | 2 theorems: existing ordinary colimits support and unconditional full nineteen-field dagger lift |
 
 Each file directly imports only pinned Mathlib modules, with its own definitions
 visible. None imports `DaggerModels`, a local reference module, or a snapshot of
-the implementation. The twenty-seven Challenges are compiled in separate environments
-under the logical module name `Challenge`. Their **1,929 lines in total**, including
+the implementation. The twenty-nine Challenges are compiled in separate environments
+under the logical module name `Challenge`. Their **2,281 lines in total**, including
 comments and blank lines, are the review surface;
 reviewing one file does not review the others.
 
-The checker retains the original **21 named library theorems** and adds 88
+The checker retains the original **21 named library theorems** and adds 90
 selected results toward the main theorems, including their statement
 dependencies. Three additional reflexive statements make `FreeCofibration`,
 `nonDegenerateEquiv`, and `forget` roots of the recursive definition comparison.
@@ -49,7 +51,7 @@ These statements are inline in the simplicial-set Challenge; `Contracts.lean`
 adds matching roots to the solution environment. They are audit markers, not new
 mathematical results, and are not imported by `DaggerModels.lean`.
 No definition holes are enabled. [targets.json](targets.json) records the full
-112-root coverage set (109 mathematics and three markers); it is a registry,
+114-root coverage set (111 mathematics and three markers); it is a registry,
 not an executable Comparator config. Counts in the milestone paragraphs below
 are historical; the table and totals above describe the current coverage.
 
@@ -62,8 +64,29 @@ The original colimit theorem remains one of its four configured targets;
 its proof marker is not an unconfigured helper or a definition hole.
 All 109 preceding ordered roots and the other 26 specifications/configurations
 are retained. Dependency pins, line-budget exceptions, permitted axioms and
-negative controls are unchanged. These are ordinary-category assertions and
-do not claim the dagger lift or Quillen properties.
+negative controls are unchanged. Those four roots protect the ordinary-category assertions. The separate lift
+specification below protects the full dagger lift; Quillen properties remain open.
+
+The new ordinary-free and dagger-lift specifications retain every old
+specification/configuration and ordered registry root. The 118/234-line budget
+exceptions keep both full category structures, dagger simplicial sets, original
+T/F/N/adjunction and all nineteen lift fields visible. Separate agent review
+checked their manuscript correspondence, exact definitions and transports.
+The lift requires both free adjunctions as witnesses, full Hom compatibility in
+both directions, the original unit/counit and the canonical free comparison
+with its composite unit/counit equations, at an arbitrary common universe.
+It asserts no model structure, Quillen property or ordinary free pushout remark.
+
+The existing colimits theorem is deliberately configured in both
+`simplicial_colimits` and `dagger_lift`. Comparator recursively compares the
+original chosen Kan extension's dependencies; this supporting theorem's
+placeholder proof must therefore be a configured target in each environment.
+Its full type is checked twice. There are 114 unique registry roots and 115
+comparisons, not 115 distinct results. The source checker rejects repetitions
+within one group and every other cross-group repeat, and requires this exact
+pair of supporting groups. There are no unconfigured proof markers in the new
+specifications. Existing free-SSet pushout targets apply to any actual adjunction
+to the same forget functor, including the new lift witness's freeSSetAdjunction.
 
 The new existential statements require actual categories, equivalences,
 adjunctions, and counterexamples. They let the implementation choose the proof
@@ -260,10 +283,13 @@ change what is being checked. Repository administration and branch protection
 are not established by this workflow. Newly added mathematical results must be
 registered explicitly; the current target list is not a claim of coverage for
 future declarations. The source-hygiene check enforces the 100-line budget for
-the twenty-five standard-budget Challenges and the explicit 160-line monadicity and
-116-line ordinary-creation exceptions (including blank lines and comments),
-plain direct Mathlib imports, standard
-permitted axioms, no definition holes, and exact registration of all 112 roots.
+the twenty-five standard-budget Challenges and four explicit exceptions of
+160, 116, 118 and 234 lines (including blanks and comments), plain direct
+Mathlib imports, standard permitted axioms, no definition holes, and all 114
+unique roots. The supporting ordinary-colimits root is checked in exactly its
+two specified groups; every other root occurs in one group. Six temporary
+negative mutations checked rejection of lost coverage, duplicate registry
+entries, within-group duplicates, unapproved repeats and missing/extra support.
 This check is not a Lean parser or an adversarial security
 boundary; it does not replace review of trusted source files.
 
@@ -284,13 +310,15 @@ negative controls. This Linux check is separate from the macOS-compatible
 The immutable v0.1.0 commit `dce8401a23588ba65b8aa4ca41de26cb0203d444`
 still supplies the trusted Lake configuration, toolchain, dependency manifest,
 and implementations mutated by the two negative controls. It no longer supplies
-the Challenge mathematics. The twenty-seven positive comparisons use current candidate
+the Challenge mathematics. The twenty-nine positive comparisons use current candidate
 source. Every comparison has independent writable dependency artifacts, staged
 and discarded sequentially by `run_comparator.py`.
-The overall workflow time budget is 60 minutes, raised from 45 so all 27 groups
-and both negative controls can finish. This changes the wall-time allocation,
-not the checker, sandbox, tool/dependency pins, permitted axioms or controls.
-The six additional cache entries select artifacts at the unchanged Mathlib pin.
+The overall workflow time budget is 120 minutes. The preceding 27-group run
+needed more than 60 minutes; each of the 29 isolated positive groups now also
+builds and replays the thirteen added modules. The larger allowance preserves
+all checks and provides setup margin. The sandbox, tool/dependency pins,
+permitted axioms and controls are unchanged. The additional explicit Mates cache entry selects
+artifacts at the same pinned Mathlib revision.
 
 ## Updating the mathematical specification
 

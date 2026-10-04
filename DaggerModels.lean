@@ -107,3 +107,16 @@ import DaggerModels.SSetBoundaryRetraction
 import DaggerModels.SmallObjectFiniteDomains
 import DaggerModels.DaggerSmallObject
 import DaggerModels.OrdinaryRigidification
+import DaggerModels.ThickeningReversal
+import DaggerModels.NerveOpposite
+import DaggerModels.NerveVertices
+import DaggerModels.RigidificationVertices
+import DaggerModels.RigidificationOpposite
+import DaggerModels.DaggerCoherentNerve
+import DaggerModels.DaggerRigidification
+import DaggerModels.DaggerAdjunctionCompatibility
+import DaggerModels.DaggerAdjunction
+import DaggerModels.OrdinaryFreeDagger
+import DaggerModels.DaggerFreeComparison
+import DaggerModels.ActualDaggerFreeComparison
+import DaggerModels.DaggerAdjunctionWitness

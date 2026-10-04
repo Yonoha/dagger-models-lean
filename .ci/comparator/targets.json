@@ -111,6 +111,8 @@
     "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument",
     "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction",
     "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib",
-    "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
+    "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso",
+    "DaggerModels.exists_ordinaryFreeDaggerAdjunction",
+    "DaggerModels.OrdinaryRigidification.exists_daggerRigidificationLift"
   ]
 }

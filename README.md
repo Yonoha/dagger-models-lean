@@ -49,7 +49,13 @@ The ordinary rigidification adjunction in `dj.not.adjunctions` now uses Mathlib'
 standard simplicial thickening, coherent nerve, and Yoneda-extension adjunction.
 The constructed right adjoint is naturally isomorphic to Mathlib's actual nerve,
 and rigidification sends the standard simplex diagram to the standard thickening.
-The dagger lift and the Quillen-equivalence claims remain unproved.
+The dagger lift is now constructed from the actual thickening reversal and
+opposite mate under that original adjunction. Its full Hom correspondence,
+unit and counit forget to the original ones. The ordinary-category free dagger
+adjunction also exists with the original objects and identity object unit.
+Mathlib's uniqueness of left adjoints gives the canonical free-functor comparison,
+including both composite unit and counit laws. This proves `dj.lem.lift`;
+model structures and Quillen-equivalence claims remain unproved.
 **The main theorems A–D of the paper are not yet formalized.** In particular,
 this repository does not yet prove the dagger Bergner or dagger Joyal model
 structures, the rigidification Quillen equivalence, the intrinsic recognition
@@ -90,6 +96,8 @@ theorem, or the comparison with anti-involutive simplicial sets.
 | Local lifting in `bg.def.IJ` and `bg.lem.Iinj-in-Jinj` | [`DaggerLocalFibrations`](DaggerModels/DaggerLocalFibrations.lean) | Actual `J†loc` RLP is all-hom Mathlib Kan fibrations; actual `I†` RLP implies object surjectivity and this local condition; interval lifting remains open |
 | Small-object input to `bg.thm.main` | [`SmallObjectFiniteDomains`](DaggerModels/SmallObjectFiniteDomains.lean), [`DaggerSmallObject`](DaggerModels/DaggerSmallObject.lean) | General finite-domain bridge with explicit smallness/colimit premises; unconditional actual `I†` application and functorial factorization data; no model structure asserted |
 | Ordinary adjunction in `dj.not.adjunctions`, input to `dj.lem.lift` | [`OrdinaryRigidification`](DaggerModels/OrdinaryRigidification.lean) | Mathlib's actual thickening and coherent nerve, the left Kan extension adjunction, full natural comparison of nerves, and standard-simplex comparison, at every common universe |
+| Category-to-category free adjunction in `dj.not.adjunctions` | [`OrdinaryFreeDagger`](DaggerModels/OrdinaryFreeDagger.lean) | Actual free dagger completion preserving original objects and the identity object unit; full enriched Hom universal property |
+| All conclusions of `dj.lem.lift` | [`DaggerAdjunction`](DaggerModels/DaggerAdjunction.lean), [`ActualDaggerFreeComparison`](DaggerModels/ActualDaggerFreeComparison.lean), [`DaggerAdjunctionWitness`](DaggerModels/DaggerAdjunctionWitness.lean) | Actual dagger left/right functors, original Hom correspondence in both directions, unit/counit compatibility, both actual free adjunctions and the canonical comparison with both composite laws |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -112,7 +120,7 @@ The repository selects its own toolchain; no manual Lean version choice is neede
 ```sh
 git clone https://github.com/Yonoha/dagger-models-lean.git
 cd dagger-models-lean
-git checkout codex/part1-foundations
+git checkout codex/part1-adjunction
 lake exe cache get \
   Mathlib.AlgebraicTopology.SimplicialSet.Op \
   Mathlib.AlgebraicTopology.SimplicialSet.Degenerate \
@@ -126,6 +134,7 @@ lake exe cache get \
   Mathlib.CategoryTheory.Limits.Types.Colimits \
   Mathlib.AlgebraicTopology.SimplicialSet.Skeleton \
   Mathlib.CategoryTheory.Adjunction.Unique \
+  Mathlib.CategoryTheory.Adjunction.Mates \
   Mathlib.CategoryTheory.Limits.Types.Pushouts \
   Mathlib.CategoryTheory.MorphismProperty.Retract \
   Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory \
@@ -190,8 +199,8 @@ matching those statements to the paper remains a mathematical review task.
 
 The current development branch additionally runs
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
-Linux GitHub Actions job. It compares 109 selected mathematical results against
-twenty-seven self-contained problem specifications:
+Linux GitHub Actions job. It compares 111 selected mathematical results against
+twenty-nine self-contained problem specifications:
 
 - [Reversal simplex category](.ci/comparator/ReverseSimplexChallenge.lean): 72 lines
 - [Dagger simplicial sets](.ci/comparator/SimplicialSetChallenge.lean): 96 lines
@@ -220,6 +229,8 @@ twenty-seven self-contained problem specifications:
 - [Ordinary relative boundary cells and lifting-class equality](.ci/comparator/SSetBoundaryCellsChallenge.lean): 27 lines
 - [Section and cylinder homotopy from lifting](.ci/comparator/SSetBoundaryRetractionChallenge.lean): 27 lines
 - [Small object argument from finitely presentable domains](.ci/comparator/SmallObjectFiniteDomainsChallenge.lean): 21 lines
+- [Ordinary-category free dagger adjunction](.ci/comparator/OrdinaryFreeDaggerChallenge.lean): 118 lines
+- [Full dagger lift of the original adjunction](.ci/comparator/DaggerLiftChallenge.lean): 234 lines
 
 Each Challenge directly imports only pinned Mathlib modules and contains the
 definitions and theorem statements to review. It does not import this library
@@ -249,15 +260,17 @@ build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.j
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
 statement"; they are excluded from the library and are not claimed as proofs.
 The actual library must remain free of proof holes and extra axioms.
-CI checks direct Mathlib imports and coverage of all 112 registered roots
-(109 mathematical results and three definition markers). Twenty-five Challenges
-have 100-line budgets. The monadicity and ordinary-creation
-Challenges have reviewed 160-line and 116-line budgets respectively. Both need
-the two full category structures and actual forgetful functor visible, including
-structural proofs. The ordinary-creation file still has 101 nonblank lines; its
-116-line format preserves readability. The 1,929 lines across all twenty-seven
-files are the review surface; checking one file is not a review of the entire
-formalization.
+CI checks direct Mathlib imports and all 114 unique registered roots
+(111 mathematical results and three definition markers). It performs 115 root
+comparisons: the existing ordinary-colimits theorem is deliberately checked in
+both its original group and the dagger-lift group, whose chosen Kan extension
+depends on it. Every other root occurs in exactly one group; duplicate roots
+within a group are rejected. All 112 preceding ordered roots are retained.
+Twenty-five Challenges have 100-line budgets. The monadicity, ordinary creation,
+ordinary free adjunction and dagger lift have reviewed budgets of 160, 116,
+118 and 234 lines. Their full categories, forgetful functors and original
+adjunction data remain visible. The 2,281 lines across all twenty-nine files,
+including comments and blanks, are the review surface.
 
 These additional checks were introduced after the immutable v0.1.0 release.
 Comparator verifies agreement with the Challenges; mathematical review must
@@ -422,8 +435,17 @@ Kan 拡張の随伴定理を再利用して構成しました。nerve 全体の�
 標準単体上で標準 thickening に一致する自然同型も証明しています。
 既存の余極限 Challenge を 40 行から 99 行へ拡張し、３ roots を追加しました。
 ほかの26本とその設定、および従来の109 rootsは保持しています。
-全体は27本・1,929行・112 roots（数学109、定義marker3）です。
-opposite との整合性と dagger への随伴の持ち上げは未完了です。
+さらに、元の thickening の反転、opposite との自然な整合性と頂点の同定を構成し、
+元の Hom 対応・unit・counit を保持した dagger 随伴を証明しました。
+通常の simplicial category からの自由 dagger 随伴も、既存の graph 自由構成と商を
+再利用して構成しています。Mathlib の左随伴の一意性を適用し、実際の自由関手の比較と
+合成 unit・counit との整合性まで示したため、`dj.lem.lift` の全結論が証明済みです。
+元の圏・関手・随伴・19個の対応条件を明示した118行と234行の Challenge を追加し、
+別の agent による原稿との照合を通しました。既存27本と112 rootsは全て保持しています。
+全体は29本・2,281行・114個の異なる roots（数学111、定義marker3）です。
+元の余極限定理を二つの文脈で検査するため、比較回数は115回です。
+局所検証と、各 commit に対する実際の Linux Comparator の成功は区別します。
+通常の自由 dagger 圏の明示的な pushout 表示を述べる別の remark は未完了です。
 弱ホモトピー同値・trivial Kan fibration との同定と `J†` の interval 部分は未完了で、
 論文の主定理 A–D 全体を Lean で証明したという意味ではありません。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

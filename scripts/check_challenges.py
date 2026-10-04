@@ -108,13 +108,30 @@ CHALLENGES = {
         ".ci/comparator/SmallObjectFiniteDomainsChallenge.lean",
         ".ci/comparator/small_object_finite_domains.json"
     ),
+    "ordinary_free_dagger": (
+        ".ci/comparator/OrdinaryFreeDaggerChallenge.lean",
+        ".ci/comparator/ordinary_free_dagger.json"
+    ),
+    "dagger_lift": (
+        ".ci/comparator/DaggerLiftChallenge.lean", ".ci/comparator/dagger_lift.json"
+    ),
 }
-# Literal monadicity and ordinary creation need both complete category structures
-# and the actual forgetful functors. These reviewed exceptions keep them visible.
+# Literal category and adjunction statements need complete category structures,
+# actual forgetful functors, and the original Hom/unit/counit correspondence.
+# These separately reviewed exceptions keep all of that data visible.
 # All other Challenges retain the original 100-line budget.
 LINE_BUDGET_EXCEPTIONS = {
     ".ci/comparator/DaggerMonadicityChallenge.lean": 160,
     ".ci/comparator/DaggerOrdinaryCreationChallenge.lean": 116,
+    ".ci/comparator/OrdinaryFreeDaggerChallenge.lean": 118,
+    ".ci/comparator/DaggerLiftChallenge.lean": 234,
+}
+# The same colimits proof marker is needed by the original chosen Kan extension
+# in both specifications. Comparator must check its type in each environment;
+# otherwise it compares the marker's proof body to the implementation's proof.
+# No other cross-group repeats, or repeats within one group, are permitted.
+REPEATED_ROOT_GROUPS = {
+    "DaggerModels.simplicialCatHasColimits": {"simplicial_colimits", "dagger_lift"},
 }
 STANDARD_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 
@@ -124,8 +141,9 @@ def validate_challenges(root: Path) -> None:
     if len(registered) != len(set(registered)) or not registered:
         raise ValueError("The coverage registry must be nonempty and have no duplicate targets")
     covered = []
+    root_groups = {}
     total_lines = 0
-    for source_path, config_path in CHALLENGES.values():
+    for group, (source_path, config_path) in CHALLENGES.items():
         source = (root / source_path).read_text(encoding="utf-8")
         lines = source.splitlines()
         budget = LINE_BUDGET_EXCEPTIONS.get(source_path, 100)
@@ -144,13 +162,25 @@ def validate_challenges(root: Path) -> None:
             raise ValueError(f"{config_path}: unexpected module names")
         if config.get("definition_names") or not config["theorem_names"]:
             raise ValueError(f"{config_path}: definition holes or empty theorem list")
+        if len(config["theorem_names"]) != len(set(config["theorem_names"])):
+            raise ValueError(f"{config_path}: repeated target within one group")
         if set(config["permitted_axioms"]) != STANDARD_AXIOMS:
             raise ValueError(f"{config_path}: changed axiom policy")
         covered.extend(config["theorem_names"])
+        for name in config["theorem_names"]:
+            root_groups.setdefault(name, set()).add(group)
         print(f"{source_path}: {len(lines)} lines, {len(config['theorem_names'])} comparison roots")
-    if len(covered) != len(set(covered)) or set(covered) != set(registered):
-        raise ValueError("The Comparator configurations must cover the registry exactly once")
-    print(f"Total review surface: {total_lines} lines; {len(covered)} comparison roots.")
+    if set(covered) != set(registered):
+        raise ValueError("The Comparator configurations must cover the complete registry")
+    for name, groups in root_groups.items():
+        expected = REPEATED_ROOT_GROUPS.get(name)
+        if expected is not None:
+            if groups != expected:
+                raise ValueError(f"{name}: expected exactly the supporting groups {sorted(expected)}")
+        elif len(groups) != 1:
+            raise ValueError(f"{name}: unapproved cross-group repeat")
+    print(f"Total review surface: {total_lines} lines; {len(registered)} unique roots; "
+          f"{len(covered)} comparisons.")
 
 
 if __name__ == "__main__":

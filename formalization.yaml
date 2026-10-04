@@ -50,8 +50,13 @@ project:
     The ordinary rigidification adjunction uses Mathlib's standard thickening
     and general Yoneda-extension adjunction. Its nerve is naturally isomorphic
     to the actual Mathlib coherent nerve, and its standard-simplex values are
-    naturally the standard thickening. Opposite compatibility and the dagger
-    lift remain unproved.
+    naturally the standard thickening. The actual thickening reversal and
+    opposite mate construct the dagger left/right functors and their adjunction,
+    retaining the original Hom correspondence in both directions and the original
+    unit/counit. The ordinary-category free dagger adjunction retains original
+    objects and the identity object unit. Mathlib's uniqueness of left adjoints
+    gives the canonical comparison, preserving both composite units/counits.
+    All conclusions of dj.lem.lift are proved; model structures remain unproved.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
   responsible_maintainers:
@@ -99,8 +104,11 @@ sources:
       factorization implement the corresponding input to bg.thm.main.
       The ordinary rigidification adjunction recalled in dj.not.adjunctions is
       constructed from existing Mathlib results, with the full natural nerve
-      comparison and standard-simplex comparison. This is an ordinary input
-      to dj.lem.lift, not a proof of the dagger lifted adjunction.
+      comparison and standard-simplex comparison. The category-to-category free
+      dagger adjunction in dj.not.adjunctions and the complete dj.lem.lift are
+      now constructed. The original ordinary adjunction, both full Hom directions,
+      unit/counit, actual free adjunctions and canonical comparison are retained.
+      The separate ordinary free-dagger pushout remark is not included.
     relationship: "formalizes"
     author_endorsement: "participated"
     note: >-
@@ -118,6 +126,8 @@ related_formalizations:
       categories and functors, Cartesian SSet tensor, quivers, and finite paths.
       Ordinary rigidification reuses the existing simplicial thickening,
       coherent nerve, restricted Yoneda functor and left Kan extension adjunction.
+      The dagger lift reuses the actual mate correspondence and uniqueness of
+      left adjoints, including its existing unit and counit compatibility lemmas.
 status:
   scope: >-
     Partial formalization toward A-D. Presheaf equivalence and local finite
@@ -168,6 +178,11 @@ status:
     Full simplicial counterexamples, model structures, unitary-core recognition
     and main theorems A-D remain unproved. The
     concrete comparison obstructions do not by themselves establish Theorem D.
+    All conclusions of dj.lem.lift are proved for the original rigidification
+    adjunction: actual dagger functors, full Hom compatibility in both directions,
+    original unit/counit, both actual free adjunctions and the canonical free
+    comparison with composite unit/counit laws, at every common universe u.
+    The ordinary-category free pushout presentation is a separate open remark.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
   # intentional proof placeholders and are not imported by the library.
   sorry_count: 0
@@ -576,6 +591,18 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
       literature_dependencies: []
+    - declaration: "DaggerModels.exists_ordinaryFreeDaggerAdjunction"
+      file: "DaggerModels/DaggerAdjunctionWitness.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/ordinary_free_dagger.json"
+      literature_dependencies: []
+    - declaration: "DaggerModels.OrdinaryRigidification.exists_daggerRigidificationLift"
+      file: "DaggerModels/DaggerAdjunctionWitness.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/comparator/dagger_lift.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -743,20 +770,33 @@ fidelity:
     spaces lie in arbitrary common universe u; no fibrancy or model premise
     is imposed. The same rigidification is left adjoint to the actual Mathlib
     nerve, and its representable values are naturally the standard thickening.
-    Opposite coherence, the dagger lift and Quillen claims remain unproved.
+    The actual opposite coherence and canonical vertex identifications construct
+    the full dagger lift. Its Hom equivalence is the restriction of this original
+    adjunction in both directions. Its unit and full enriched counit forget to
+    the original ones. The free ordinary completion uses the existing graph-free
+    category and semantic hom quotient with original identities/compositions;
+    it has the original objects and identity object unit. The canonical free
+    comparison is Mathlib's leftAdjointUniq for the actual composite adjunctions.
+    Quillen properties and the separate ordinary free pushout remark remain open.
     See CORRESPONDENCE.md for the complete scope discussion.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
   notes: >-
     Build, axiom audit, metadata consistency, and Comparator are executable
-    checks, not independent human review. Comparator compares 109 selected
-    library theorems and three audit-only definition roots against twenty-seven
-    self-contained Mathlib-only Challenges. Twenty-five retain 100-line budgets;
-    the existing monadicity and ordinary-creation exceptions retain 160 and
-    116 physical lines so both full categories and actual forgetful functors
-    stay visible. The complete review surface is 1929 physical lines, including
-    comments and blanks. The ordinary-lifting specifications have 15, 27, 27 and
+    checks, not independent human review. Comparator is configured for 111
+    selected library theorems and three audit-only definition roots against
+    twenty-nine self-contained Mathlib-only Challenges. The 114 unique roots
+    are compared 115 times: the original colimits theorem is checked in both
+    its original group and the dagger-lift group, whose chosen Kan extension
+    depends on it. This is the only permitted repeat; within-group duplicates
+    are rejected. Twenty-five files retain 100-line budgets; four reviewed
+    exceptions have 160, 116, 118 and 234 physical lines. Full categories,
+    forgetful functors and the original Hom/unit/counit contracts stay visible.
+    The complete review surface is 2281 physical lines, including comments and
+    blanks. The new free/lift specifications received separate agent review.
+    Local build/axiom and literal statement checks are distinct from the real
+    Linux Comparator run; the latter must be checked at the exact cited commit. The ordinary-lifting specifications have 15, 27, 27 and
     21 lines. They protect
     actual boundary-to-Kan lifting; ordinary relative cell presentation, boundary
     closure and mono-RLP equality; both section/cylinder-homotopy conclusions;
@@ -772,6 +812,14 @@ review:
     twenty-six Challenges and their configurations are retained. The new
     specification exposes the actual thickening, both nerves and chosen left
     Kan extension, with no definition holes or hidden candidate imports.
+    The two additional specifications preserve all preceding 112 ordered roots
+    and all 27 existing Challenge/configuration files. They add unconditional
+    ordinary-free and full lifted-adjunction witnesses, with arbitrary common
+    universe and full original Hom/unit/counit and comparison data. The ordinary
+    colimit marker is configured in both groups, never left as an unchecked
+    helper. Existing free-SSet pushout targets quantify over every adjunction
+    to the same forgetful functor, so they also protect the new witness's free
+    SSet presentation and swap laws. No new definition hole is enabled.
     Challenge proof markers are outside the proved library. Dependency pins and
     negative-control implementations retain the v0.1.0 reference commit
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
@@ -1128,13 +1176,31 @@ alignment:
       module: "DaggerModels/OrdinaryRigidification.lean"
       status: "proved"
       note: >-
-        Full natural isomorphism to Mathlib's actual SimplicialNerve with postcomposition on all enriched functors; the same left adjoint is transported to this nerve. Opposite coherence and the dagger lift remain unproved.
+        Full natural isomorphism to Mathlib's actual SimplicialNerve with postcomposition on all enriched functors; the same left adjoint is transported to this nerve. Opposite coherence and the actual dagger lift are established by the further results below.
     - source: "Standard-simplex values of ordinary rigidification in dj.not.adjunctions"
       lean: "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
       module: "DaggerModels/OrdinaryRigidification.lean"
       status: "proved"
       note: >-
         The standard simplex diagram followed by the same rigidification is naturally isomorphic to Mathlib's original thickening diagram; uliftYoneda is definitionally SSet.stdSimplex.
+    - source: "Category-to-category free dagger adjunction in dj.not.adjunctions"
+      lean: "DaggerModels.exists_ordinaryFreeDaggerAdjunction"
+      module: "DaggerModels/DaggerAdjunctionWitness.lean"
+      status: "proved"
+      note: >-
+        Actual free adjunction to the original ordinary forgetful functor, with
+        original object types and identity object unit. Arbitrary full enriched
+        dagger functors are quantified. The ordinary free pushout remark is separate.
+    - source: "All conclusions of dj.lem.lift"
+      lean: "DaggerModels.OrdinaryRigidification.exists_daggerRigidificationLift"
+      module: "DaggerModels/DaggerAdjunctionWitness.lean"
+      status: "proved"
+      note: >-
+        Full nineteen-field witness for the original T/F/N/adjunction. Actual
+        dagger functors, both original Hom directions, unit/counit, both free
+        adjunctions and canonical comparison with both composite unit/counit
+        laws. Same arbitrary common universe; no model-category hypothesis or
+        Quillen conclusion. Separate agent specification review, not human review.
     - source: "Main theorems A-D"
       status: "not-formalized"
 acknowledgements: >-
