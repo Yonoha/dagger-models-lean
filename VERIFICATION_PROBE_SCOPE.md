@@ -22,3 +22,11 @@ verification of any mathematical theorem, or native production-sandbox
 acceptance. The main companion and its normal verification workflow are
 unchanged. The commit skips unrelated automatic proof/Comparator jobs; the
 capability workflow is dispatched explicitly and its exact commit is recorded.
+
+The initial run at commit `009c5c2e4a8c79c8bf5b3b0260ec973a52f1cbdd`
+failed both filesystem denial checks on both runners, while socket denials and
+the ABI6 prerequisite passed. That failed result is retained as
+[run 37290623484](https://github.com/Yonoha/dagger-models-lean/actions/runs/37290623484).
+The next probe explicitly adds the fixture root to `ReadOnlyPaths` and records
+mount namespace, mount flags, and relevant mount entries to diagnose the failure.
+The expected denial results remain unchanged.

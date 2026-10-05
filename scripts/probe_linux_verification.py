@@ -22,6 +22,14 @@ import socket
 import sys
 protected, writable = map(Path, sys.argv[1:3])
 results = {"payload_uid": os.getuid(), "denials": {}}
+results["mount_namespace"] = os.readlink("/proc/self/ns/mnt")
+results["protected_statvfs_flags"] = os.statvfs(protected).f_flag
+results["writable_statvfs_flags"] = os.statvfs(writable).f_flag
+results["relevant_mounts"] = [
+    line for line in Path("/proc/self/mountinfo").read_text().splitlines()
+    if any(str(path) == line.split()[4] or str(path).startswith(line.split()[4].rstrip("/") + "/")
+           for path in (protected, writable))
+]
 for name, action in [
     ("protected_write", lambda: protected.write_text("unexpected write")),
     ("protected_chmod", lambda: protected.chmod(0o777)),
@@ -75,7 +83,8 @@ def main():
     properties = [
         f"User={os.getuid()}", f"Group={os.getgid()}",
         "NoNewPrivileges=yes", "ProtectSystem=strict",
-        f"ReadWritePaths={build}", "RestrictAddressFamilies=~AF_UNIX",
+        f"ReadOnlyPaths={root}", f"ReadWritePaths={build}",
+        "RestrictAddressFamilies=~AF_UNIX",
         "SystemCallFilter=~@network-io @debug", "SystemCallErrorNumber=EPERM",
         "CapabilityBoundingSet=", "RestrictSUIDSGID=yes",
         "ProtectKernelTunables=yes", "ProtectKernelModules=yes",
@@ -92,6 +101,7 @@ def main():
         "systemd": subprocess.run(["systemd", "--version"], capture_output=True,
                                   text=True, check=True).stdout.splitlines()[0],
         "landlock": query_landlock_abi(), "caller_uid": os.getuid(),
+        "controller_mount_namespace": os.readlink("/proc/self/ns/mnt"),
         "system_manager_properties": properties,
         "payload_exit_code": result.returncode,
         "payload_stdout": result.stdout, "payload_stderr": result.stderr,
