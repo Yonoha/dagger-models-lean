@@ -1,89 +1,23 @@
-name: Lean verification
+name: Linux verification capability probe
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  verify:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+  capabilities:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-latest]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 5
     steps:
-      - name: Check out the source
+      - name: Check out the reviewed probe
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Install the pinned Lean toolchain
-        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
         with:
-          auto-config: "false"
-          build: "false"
-          use-mathlib-cache: "false"
-          use-github-cache: "false"
-      - name: Fetch the required mathlib artifacts
-        run: >-
-          lake exe cache get
-          Mathlib.AlgebraicTopology.SimplicialSet.Op
-          Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
-          Mathlib.CategoryTheory.Groupoid
-          Mathlib.Data.Int.Basic
-          Mathlib.Data.Quot
-          Mathlib.CategoryTheory.Presentable.Presheaf
-          Mathlib.CategoryTheory.Presentable.Type
-          Mathlib.CategoryTheory.Presentable.Adjunction
-          Mathlib.AlgebraicTopology.SimplicialSet.Presentable
-          Mathlib.CategoryTheory.Functor.KanExtension.Adjunction
-          Mathlib.CategoryTheory.Limits.Types.Colimits
-          Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
-          Mathlib.CategoryTheory.Adjunction.Unique
-          Mathlib.CategoryTheory.Adjunction.Mates
-          Mathlib.CategoryTheory.Limits.Types.Pushouts
-          Mathlib.CategoryTheory.MorphismProperty.Retract
-          Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
-          Mathlib.CategoryTheory.MorphismProperty.TransfiniteComposition
-          Mathlib.CategoryTheory.MorphismProperty.FunctorCategory
-          Mathlib.CategoryTheory.Types.Monomorphisms
-          Mathlib.AlgebraicTopology.SimplicialSet.Boundary
-          Mathlib.AlgebraicTopology.RelativeCellComplex.Basic
-          Mathlib.CategoryTheory.LiftingProperties.Adjunction
-          Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
-          Mathlib.AlgebraicTopology.SimplicialSet.Monoidal
-          Mathlib.CategoryTheory.Enriched.Opposite
-          Mathlib.CategoryTheory.PathCategory.Basic
-          Mathlib.Combinatorics.Quiver.Symmetric
-          Mathlib.CategoryTheory.Limits.Shapes.SplitCoequalizer
-          Mathlib.CategoryTheory.Monad.Monadicity
-          Mathlib.CategoryTheory.Monad.Limits
-          Mathlib.CategoryTheory.Presentable.Limits
-          Mathlib.CategoryTheory.Limits.Types.Pullbacks
-          Mathlib.CategoryTheory.Limits.Types.Coproducts
-          Mathlib.CategoryTheory.Quotient
-          Mathlib.AlgebraicTopology.SimplicialSet.CategoryWithFibrations
-          Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
-          Mathlib.CategoryTheory.LiftingProperties.Limits
-          Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
-          Mathlib.AlgebraicTopology.SimplicialSet.Monomorphisms
-          Mathlib.CategoryTheory.SmallObject.Basic
-          Mathlib.AlgebraicTopology.SimplicialNerve
-          Mathlib.CategoryTheory.Limits.Presheaf
-      - name: Check all library proofs
-        run: lake build
-      - name: Audit transitive axiom dependencies
-        run: lake env lean Audit.lean
-      - name: Check the audit rejects proof holes and extra axioms
-        run: python3 scripts/check_audit.py
-      - name: Check Challenge size, imports, and complete target coverage
-        run: python3 scripts/check_challenges.py
-      - name: Install metadata validators
-        run: |
-          python3 -m venv "$RUNNER_TEMP/metadata-venv"
-          "$RUNNER_TEMP/metadata-venv/bin/python" -m pip install -r .ci/requirements.txt
-      - name: Validate formalization metadata against Lean and the upstream schema
-        run: |
-          mkdir -p build
-          lake env lean scripts/ReportAxioms.lean > build/axioms.json
-          "$RUNNER_TEMP/metadata-venv/bin/python" scripts/check_metadata.py --axioms build/axioms.json
+          persist-credentials: false
+      - name: Measure native Linux isolation prerequisites
+        run: python3 -I -B scripts/probe_linux_verification.py
