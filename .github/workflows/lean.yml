@@ -1,4 +1,4 @@
-name: Linux verification capability probe
+name: Linux verification isolation probe
 
 on:
   workflow_dispatch:
@@ -7,17 +7,69 @@ permissions:
   contents: read
 
 jobs:
-  capabilities:
-    strategy:
-      fail-fast: false
-      matrix:
-        runner: [ubuntu-24.04, ubuntu-latest]
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 5
+  native-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - name: Check out the reviewed probe
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - name: Measure native Linux isolation prerequisites
-        run: python3 -I -B scripts/probe_linux_verification.py
+      - name: Install only the pinned Lean toolchain
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+      - name: Check out the pinned native boundary runner
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: Zouuup/landrun
+          ref: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+          path: landrun
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: landrun/go.mod
+          cache: "false"
+      - name: Build the pinned native boundary runner
+        working-directory: landrun
+        run: go build -o landrun cmd/landrun/main.go
+      - name: Execute the exact production builder on harmless native controls
+        run: |
+          python3 -B - <<'PY'
+          import hashlib
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+          expected = {
+              "verification_sandbox.py": "50293d0a27ba96175be527b005f4d756009381f267406c0b60946555feb6c711",
+              "verification_denial_controls.py": "5efca549934d6756e7012bc228bc279c1afef2d1bccfb8c1a758ef352167b5bb",
+          }
+          for name, digest in expected.items():
+              assert hashlib.sha256((Path("scripts") / name).read_bytes()).hexdigest() == digest
+          prefix = subprocess.run(["lean", "--print-prefix"], check=True,
+                                  text=True, capture_output=True).stdout.strip()
+          output = Path(os.environ["RUNNER_TEMP"]) / "dagger-native-isolation-controls"
+          try:
+              result = subprocess.run([
+                  sys.executable, "-B", "scripts/verification_denial_controls.py",
+                  "--landrun", str(Path("landrun/landrun").resolve()),
+                  "--output", str(output), "--lean-prefix", prefix,
+              ], check=False)
+          finally:
+              for name in ["native-results.json", "isolation-command-history.json"]:
+                  path = output / name
+                  if path.is_file():
+                      print("NATIVE_EVIDENCE_BEGIN " + name, flush=True)
+                      print(path.read_text(), flush=True)
+                      print("NATIVE_EVIDENCE_END " + name, flush=True)
+          raise SystemExit(result.returncode)
+          PY
