@@ -1,0 +1,36 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "DaggerModels.DaggerSimplicialCat.Hom.ext",
+    "DaggerModels.DaggerSimplicialGraph.Map.ext",
+    "DaggerModels.DaggerSimplicialGraph.id_obj",
+    "DaggerModels.DaggerSimplicialGraph.id_map",
+    "DaggerModels.DaggerSimplicialGraph.comp_obj",
+    "DaggerModels.DaggerSimplicialGraph.comp_map",
+    "DaggerModels.DaggerSimplicialGraph.dagger_app_involutive",
+    "DaggerModels.FreeSimplicialPaths.map_nil",
+    "DaggerModels.FreeSimplicialPaths.map_cons",
+    "DaggerModels.FreeSimplicialPaths.map_id",
+    "DaggerModels.FreeSimplicialPaths.map_comp",
+    "DaggerModels.FreeSimplicialPaths.map_pathComp",
+    "DaggerModels.FreeSimplicialPaths.reverse_nil",
+    "DaggerModels.FreeSimplicialPaths.reverse_cons",
+    "DaggerModels.FreeSimplicialPaths.reverse_comp",
+    "DaggerModels.FreeSimplicialPaths.reverse_involutive",
+    "DaggerModels.FreeSimplicialPaths.map_reverse",
+    "DaggerModels.FreeSimplicialPaths.dagger_involutive",
+    "DaggerModels.FreeSimplicialPaths.inclusion_dagger",
+    "DaggerModels.FreeSimplicialPaths.id_dagger",
+    "DaggerModels.FreeSimplicialPaths.comp_dagger",
+    "DaggerModels.TwoObjectDaggerGraph.emptyMap_unique",
+    "DaggerModels.LawMarkerPathExample.enrichment_laws",
+    "DaggerModels.LawMarkerPathExample.enrichment_eq"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

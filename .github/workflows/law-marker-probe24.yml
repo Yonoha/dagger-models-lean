@@ -1,0 +1,151 @@
+name: Law marker probe24
+
+on:
+  push:
+    branches:
+      - codex/part1-law-marker-probe24
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/part1-law-marker-probe24' && !github.event.deleted
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+    steps:
+      - name: Check out the reviewed probe payload and trusted scripts
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          path: control
+          persist-credentials: false
+      - name: Seed retained evidence with exact workflow, scripts and payload
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          evidence = Path(os.environ["RUNNER_TEMP"]) / "dagger-law-marker-probe24-evidence"
+          evidence.mkdir()
+          shutil.copytree("control/.ci/law-marker-probe24", evidence / "reviewed-inputs")
+          shutil.copyfile("control/.github/workflows/law-marker-probe24.yml", evidence / "workflow.yml")
+          keys = ("GITHUB_REPOSITORY", "GITHUB_REF", "GITHUB_SHA", "GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_WORKFLOW")
+          (evidence / "github-execution-identity.json").write_text(json.dumps(
+              {key: os.environ.get(key) for key in keys}, indent=2) + "\n")
+          PY
+      - name: Check out unchanged pinned proof build inputs
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Yonoha/dagger-models-lean
+          ref: dce8401a23588ba65b8aa4ca41de26cb0203d444
+          path: reference
+          persist-credentials: false
+      - name: Check out the pinned native Comparator
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: leanprover/comparator
+          ref: fd5d5bcf14177b187f66d4502071268d877887c3
+          path: comparator
+          persist-credentials: false
+      - name: Check out the pinned Lean 4.27 exporter
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: leanprover/lean4export
+          ref: 590dec59d93ab6becdf16fdd8aee5abbb99cb856
+          path: lean4export
+          persist-credentials: false
+      - name: Check out the pinned Linux sandbox
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: Zouuup/landrun
+          ref: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+          path: landrun
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
+        with:
+          go-version-file: landrun/go.mod
+          cache-dependency-path: landrun/go.sum
+      - name: Build the Linux sandbox
+        working-directory: landrun
+        run: go build -o landrun cmd/landrun/main.go
+      - name: Install Lean tooling on the Linux runner
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596
+        with:
+          lake-package-directory: comparator
+          auto-config: "false"
+          build: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+      - name: Build native Comparator with its own 4.35 toolchain
+        working-directory: comparator
+        run: lake build comparator
+      - name: Build the external exporter with proof toolchain 4.27
+        working-directory: lean4export
+        run: lake build
+      - name: Prepare the exact 24-target pair and two isolated controls
+        run: >-
+          python3 control/.ci/law-marker-probe24/scripts/prepare_probe24.py
+          --reference reference --payload control/.ci/law-marker-probe24/payload
+          --output "$RUNNER_TEMP/dagger-law-marker-probe24"
+      - name: Populate the trusted Linux Mathlib 4.27 cache
+        working-directory: ${{ runner.temp }}/dagger-law-marker-probe24/cache
+        run: >-
+          lake exe cache get
+          Mathlib.AlgebraicTopology.SimplicialSet.Monoidal
+          Mathlib.CategoryTheory.Enriched.Opposite
+          Mathlib.Combinatorics.Quiver.Symmetric
+          Mathlib.CategoryTheory.PathCategory.Basic
+          Mathlib.AlgebraicTopology.SimplicialSet.Boundary
+          Mathlib.AlgebraicTopology.SimplicialSet.KanComplex
+          Mathlib.CategoryTheory.MorphismProperty.LiftingProperty
+      - name: Enable the existing unprivileged systemd wrapper
+        run: |
+          sudo loginctl enable-linger "$(id -un)"
+          sudo systemctl start "user@$(id -u).service"
+          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
+      - name: Run three native cases with the pinned launcher command
+        env:
+          COMPARATOR_LANDRUN: ${{ github.workspace }}/landrun/landrun
+          COMPARATOR_LEAN4EXPORT: ${{ github.workspace }}/lean4export/.lake/build/bin/lean4export
+        run: >-
+          python3 control/.ci/law-marker-probe24/scripts/run_probe24.py
+          --projects "$RUNNER_TEMP/dagger-law-marker-probe24"
+          --comparator "$GITHUB_WORKSPACE/comparator/.lake/build/bin/comparator"
+          --evidence "$RUNNER_TEMP/dagger-law-marker-probe24-evidence"
+      - name: Preserve finite source bindings and outcomes in the job log
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          root = Path(os.environ["RUNNER_TEMP"]) / "dagger-law-marker-probe24-evidence"
+          for name in ("prepared-source-bindings.json", "native-results.json"):
+              path = root / name
+              print(f"=== retained evidence: {name} ===", flush=True)
+              print(path.read_text() if path.is_file() else "NO RESULT FILE", flush=True)
+          PY
+      - name: Retain raw logs, fixed sources and own binary artifacts
+        if: always()
+        id: retained
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: law-marker-probe24-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/dagger-law-marker-probe24-evidence
+          include-hidden-files: "true"
+          if-no-files-found: error
+          retention-days: 30
+      - name: Record retained artifact identity
+        if: always()
+        env:
+          ARTIFACT_ID: ${{ steps.retained.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.retained.outputs.artifact-digest }}
+          ARTIFACT_URL: ${{ steps.retained.outputs.artifact-url }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          print(json.dumps({key: os.environ.get(key) for key in
+              ("ARTIFACT_ID", "ARTIFACT_DIGEST", "ARTIFACT_URL")}, sort_keys=True))
+          PY
