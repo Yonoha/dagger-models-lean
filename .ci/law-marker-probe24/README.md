@@ -32,6 +32,12 @@ Lean build, export, timeout, or unrelated failure does not count as a successful
 negative control. The positive case requires exit code 0 and Comparator's success
 message. The launcher uses the existing Landrun/systemd isolation route.
 
+Before each native launch, the copied Mathlib and Batteries repositories must
+have the exact manifest revisions and no tracked changes. The runner retains
+their Git commands, raw outputs and exit codes. Only after these checks may it
+classify the exact repository-state warning messages separately from compiler
+diagnostics. Other warnings, errors and child failures still reject the case.
+
 The `Law marker probe24` workflow retains the exact input sources, configuration,
 launcher arguments, separate raw stdout/stderr, outcomes, and available own build
 artifacts for 30 days. Its combined log concatenates stdout and stderr and does
