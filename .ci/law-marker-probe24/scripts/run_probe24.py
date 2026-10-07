@@ -151,7 +151,7 @@ def main() -> None:
             for name in ("Challenge.lean", "Solution.lean", "config.json",
                     "lean-toolchain", "lake-manifest.json", "lakefile.lean"):
                 shutil.copyfile(project / name, case_evidence / name)
-            shutil.copytree(args.projects / "cache/.lake", project / ".lake", symlinks=False)
+            shutil.copytree(args.projects / "cache/.lake", project / ".lake", symlinks=True)
             dependency_state = verify_trusted_dependency_state(
                 project, case_evidence / "trusted-dependency-state")
             command = [

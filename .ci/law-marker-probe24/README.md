@@ -32,6 +32,7 @@ Lean build, export, timeout, or unrelated failure does not count as a successful
 negative control. The positive case requires exit code 0 and Comparator's success
 message. The launcher uses the existing Landrun/systemd isolation route.
 
+The trusted dependency cache is copied with its symbolic links preserved.
 Before each native launch, the copied Mathlib and Batteries repositories must
 have the exact manifest revisions and no tracked changes. The runner retains
 their Git commands, raw outputs and exit codes. Only after these checks may it
