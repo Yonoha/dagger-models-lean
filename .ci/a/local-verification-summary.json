@@ -1,6 +1,6 @@
 {
   "schema": "theorem-a-local-verification-summary/v1",
-  "status": "full-current-native-source-build-expanded-audit-and-A-Comparator-default-kernel-passed; Linux-verification-pending",
+  "status": "native-current-source-build-and-A-Comparator-passed; local-Linux-ABCD-main-and-restored-audit-aggregate-accepted; hosted-CI-and-publication-pending",
   "public_declaration": "DaggerComparator.mainA",
   "type": "DaggerTheoremAChallenge.statement.{u}",
   "source_sha256": {
@@ -26,7 +26,7 @@
   "whole_current_2771_source_build_passed": true,
   "A_Comparator_and_default_kernel_replay_passed": true,
   "expanded_all_owner_audit_passed": true,
-  "Linux_CI_passed": false,
+  "Linux_CI_passed": true,
   "independent_human_review": false,
   "new_publication": false,
   "accepted_current_native_build_receipt_sha256": "6cad99320bd31e4f826839a69e3e8c7867bdf1f73d1565ba613c7b955d6de1d5",
@@ -60,5 +60,38 @@
     "Linux_extension_preflight_passed": true,
     "published_archive_url": null
   },
-  "metadata_current_71_check_passed": true
+  "metadata_current_71_check_passed": true,
+  "Linux_CI_evidence_scope": "Local ARM64 Linux partial-cache continuation with separately accepted restored-owner audit; no hosted CI or full updated-controller execution.",
+  "local_Linux_verification": {
+    "source_commit": "dfee9b568d8f67980b164fa830d189d106951a57",
+    "owned_modules": 2771,
+    "owned_declarations": 40022,
+    "advertised_results": 71,
+    "main_results": 8,
+    "BCD_comparisons": 9,
+    "A_comparisons": 5,
+    "audit_negative_controls_rejected": 4,
+    "A_external_compiles": 6,
+    "A_exports": 5,
+    "restored_positive_byte_identical": true,
+    "source_and_olean_unchanged": true,
+    "strict_Landrun_and_user_systemd": true,
+    "cold_independent_rebuild": false,
+    "full_updated_controller_executed": false,
+    "hosted_GitHub_CI_executed": false,
+    "raw_result_sha256": "35163ba5950b0ab590030d43f71391af74468940a98f696831266f65c0baf89f",
+    "main_acceptance_sha256": "d926af64654d22e741d5b77957b1061c271f6cf197981889de40cc5972b73c6b",
+    "restored_supplement_sha256": "dafc303f7a94ce432f638b8ccd113ea49a664363b703a706af4a65072389c12d",
+    "aggregate_acceptance_sha256": "e1dc6ecd24838abc317ee635c87acd7f595437cffd763b561b00ed949511b73f",
+    "initial_and_restored_audit_sha256": "0c3318eaf51dd4101127fe07ff1cbedf97c548afeaf070e09ec30d131b4568e5",
+    "before_and_after_source_olean_snapshot_sha256": "220e9ebd12692136a0989716dba96f2697a15fbfbcf0d7fdc7309bf9a4afc5b6",
+    "source_module_hashes_sha256": "07849ab1b2f7841bf386defe00a70317cddedd9c1983c608f5b09cdcafe0ecef",
+    "VM_resources": {
+      "cpus": 1,
+      "RAM_GiB": 6,
+      "initial_swap_GiB": 2,
+      "additional_swap_GiB_during_source_build": 2
+    },
+    "cache_bind_or_overlay_used": false
+  }
 }

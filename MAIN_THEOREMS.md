@@ -8,9 +8,14 @@ advertised results and eight main roots, including all four negative controls
 and a byte-identical restored positive. The local Comparator run passed five A
 cases and five retained portable controls, including default-kernel replay for
 the positive cases and rejection of three A negative fixtures.
-Linux verification and B/C/D re-export comparison against the new 2771-source
-snapshot remain pending; see [A_VERIFICATION.md](A_VERIFICATION.md). The B/C/D
-evidence below describes its separate frozen 2767-module scope.
+The local ARM64 Linux partial-cache continuation passed all nine B/C/D lane
+cases, including the public B/C/D re-exports from the new 2771-source
+snapshot, and five A cases.
+Its 40,022-declaration/71-result/eight-main-root audit, four rejected audit
+mutations and separately restored byte-identical positive were accepted as one
+local result; see [A_VERIFICATION.md](A_VERIFICATION.md). This is not a cold
+rebuild, a single newer-controller run or hosted GitHub CI. The B/C/D evidence
+below describes its separate frozen 2767-module scope.
 
 The saved package passed official Comparator and default-kernel replay for B,
 D, and the universe-zero instance of full C, with a passing normal control and
@@ -32,8 +37,8 @@ and default Lake build and the data-only audit of 40,006 owned declarations
 passed locally; the audit rejected all four negative controls and passed the
 restored positive run. The actual public B, generic C and D exports passed official Comparator and
 default-kernel replay locally. Direct trusted data exports matched all three
-kernel-accepted exports byte for byte. Unprivileged Linux CI and new
-publication remain pending. The 185 included
+kernel-accepted exports byte for byte. A separate exact-commit Linux result for
+that historical 2767-module lane and new publication are not claimed. The 185 included
 `TopCatModelCategory` modules reuse upstream source; provenance and unresolved
 upstream terms are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 The cited B/C/D records do not prove A. The 27 foundation Challenges and their
@@ -363,7 +368,7 @@ The substantive later development reuses pinned Mathlib and selected
 Mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`. Native API repair
 and source provenance are recorded in the saved certificate package. This is
 not a claim that the entire original external project was adopted unchanged,
-that all of its source was independently reviewed, or that the full current
-source tree has passed Linux CI. The current 185-module reused source closure
+that all of its source was independently reviewed, or that the current tree has
+passed a cold rebuild or hosted GitHub CI. The current 185-module reused source closure
 is included in the accepted local build and all-owner data-only audit; its
 upstream distribution terms are not yet confirmed.

@@ -1,6 +1,6 @@
 {
   "format_version": 2,
-  "stage": "current A/B/C/D source inventory; full native build, expanded all-owner audit and A Comparator passed; Linux verification and current B/C/D re-export pending",
+  "stage": "current A/B/C/D source inventory; native build and A Comparator passed; local ARM64 Linux main plus restored-owner audit independently accepted; partial-cache continuation; hosted CI and publication pending",
   "lean": "4.27.0",
   "mathlib_commit": "a3a10db0e9d66acbebf76c5e6a135066525ac900",
   "published_foundation_commit": "60c401897ce3cd56a6dff79531eb9b2efbb48452",
@@ -28900,5 +28900,7 @@
     }
   ],
   "A_Comparator_and_default_kernel_replay": true,
-  "native_current_verification": ".ci/a/local-verification-summary.json"
+  "native_current_verification": ".ci/a/local-verification-summary.json",
+  "local_Linux_ABCD_aggregate_accepted": true,
+  "local_Linux_verification": "LINUX_VERIFICATION.md"
 }

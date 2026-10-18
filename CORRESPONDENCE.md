@@ -995,7 +995,7 @@ adjunction, preservation of model classes, or any Quillen-equivalence claim.
 
 | Manuscript label | Result | Status |
 | --- | --- | --- |
-| `bg.thm.main`, `bg.thm.left-proper` | Dagger Bergner model structure and left properness; Theorem A | `mainA.{u}` passed the 2771-module build, 40,022-declaration expanded audit and local Comparator (five A cases plus five retained controls); positive cases passed default-kernel replay; Linux pending; see `A_VERIFICATION.md` |
+| `bg.thm.main`, `bg.thm.left-proper` | Dagger Bergner model structure and left properness; Theorem A | `mainA.{u}` passed the 2771-module build, 40,022-declaration expanded audit and local Comparator (five A cases plus five retained controls); positive cases passed default-kernel replay; current local ARM64 Linux A checks and restored audit accepted; see `A_VERIFICATION.md` |
 | `dj.thm.main`, `dj.thm.equivalence` | Dagger Joyal model structure and rigidification Quillen equivalence; Theorem B | Saved package passed; public source built and audited; actual public export passed Comparator and default kernel locally |
 | `dj.thm.intrinsic-equivalence` | Intrinsic recognition using unitary cores; Theorem C | Saved certificate covers `Statement.{0}`; generic Challenge closure guarded; actual public `Statement.{u}` Comparator and kernel replay passed locally |
 | `pointset.cor.no-naive-quillen` | Comparison obstruction with the DCH model; Theorem D | Frozen statement and fresh public export Comparator-matched and kernel-replayed locally; public source built and all-owner audited |
@@ -1020,7 +1020,12 @@ adjunction, preservation of model classes, or any Quillen-equivalence claim.
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.
-The B/C/D statement contracts, current A verification boundary, and remaining Linux CI gate are in [MAIN_THEOREMS.md](MAIN_THEOREMS.md). It also records a malformed hypothesis in
+The current 2771-source local ARM64 Linux run passed all nine B/C/D lane cases,
+including current public re-exports, and five A cases, with four rejected
+audit mutations and a separately restored
+byte-identical owner audit; it was a verified partial-cache continuation, not
+hosted GitHub CI. The B/C/D statement contracts and current A verification
+boundary are in [MAIN_THEOREMS.md](MAIN_THEOREMS.md). It also records a malformed hypothesis in
 `dj.prop.strict-borel-presentation`; no manuscript change has been made here.
 The correspondence above is an explicit mathematical interpretation of the
 formal statements, not a machine-checked translation of the manuscript's prose.
@@ -1056,7 +1061,8 @@ the saved wrapper's universe-zero versus public generic type mismatch;
 the aligned generic Challenge passed its closure guard. Actual public B,
 generic C and D Comparator and default-kernel replay passed locally, and direct
 trusted data exports for the three declarations matched the accepted exports
-byte for byte. An unprivileged Linux job and new remote publication remain unverified. The
+byte for byte. A separate exact-commit Linux job for that historical 2767-module
+scope and new remote publication are not claimed. The
 27 foundation Challenges and 112 roots remain unchanged; the three B/C/D
 cases are separate. The 185 locally included `TopCatModelCategory` modules
 are attributed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); upstream
@@ -1069,6 +1075,10 @@ byte-identical restored positive. Its five A-specific local Comparator cases
 and five retained portable controls passed with default-kernel replay on the
 positive cases. The 48-line A Challenge imports 366 local modules covering
 679,416 source lines; an agent reviewed its manuscript correspondence, but no
-independent human review is recorded. These A results do not amount to a new
-2771-source B/C/D re-export comparison or a passed Linux CI run. See
+independent human review is recorded. The subsequent current-source local
+ARM64 Linux result does include nine B/C/D lane cases, including current public
+re-exports, and five A cases, plus four audit negative controls and a separately
+restored owner audit.
+It is a partial-cache continuation, not a cold build, a one-run execution of
+the newer full controller, or hosted GitHub CI. See
 [A_VERIFICATION.md](A_VERIFICATION.md).

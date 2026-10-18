@@ -2,8 +2,9 @@
 
 The helper scripts are installed, and `hosted-comparator.yml.proposed` is a
 reviewable workflow preparation file. It is outside `.github/workflows` and
-does not activate a job. No successful hosted VM or complete current-source Linux run
-has been recorded for this preparation.
+does not activate a job. The local ARM64 Linux partial-cache continuation and
+separate restored-audit supplement were accepted together for the current
+2771-source snapshot. No successful hosted VM or GitHub CI run has been recorded.
 
 The host checks both control and candidate checkout revisions before using
 them, fetches B/C/D and additive A assets from independent trusted locks, and
@@ -41,10 +42,12 @@ The hosted x64 cache route and its disk savings remain unmeasured.
 
 ## Activation conditions
 
-The actual current native source build, expanded audit and A Comparator must
-first pass. Generate and review the real additive A asset, register the actual
-A metadata/configuration, verify the current Linux route, and populate reviewed
-asset locks. Both public archive URLs remain unconfigured until publication.
+The current native source build, expanded audit and A Comparator passed.
+The real additive A asset was reviewed, A metadata/configuration was registered,
+and the local ARM64 Linux main gates plus separately restored audit were accepted
+for the exact current source. This did not exercise the hosted x64 VM or the
+newer integrated controller as one run. Both public archive URLs remain
+unconfigured until publication; populate reviewed URL locks then.
 Null or missing pins fail before tool or image setup.
 
 Once those conditions are met, use this workflow to replace the staged
@@ -61,8 +64,9 @@ manifest and interpret its rejection as a proof failure. The replacement uses
 Static checks cover source staging, all 34 guest CLI options, workflow/script
 syntax, the pinned snapshot index, and a synthetic complete result plus 26
 missing/changed-result rejection cases. A separate agent reviewed the result
-gate. These checks do not establish actual VM boot, Lean compilation, Landrun
-enforcement, Comparator success or Linux acceptance.
+gate. Those static checks alone do not establish VM boot, Lean compilation,
+Landrun enforcement, Comparator success or Linux acceptance; the separate
+local ARM64 Linux receipts establish their stated local scope only.
 
 ## Retained verification evidence
 

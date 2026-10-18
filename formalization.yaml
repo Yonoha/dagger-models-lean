@@ -192,7 +192,11 @@ status:
     controls and reproduces the restored positive output byte for byte.
     The 48-line A Challenge imports a 366-module project closure with 679,416
     source lines; it is not a self-contained Mathlib-only specification.
-    Linux CI and new publication remain pending. Reused upstream source terms
+    The local ARM64 Linux main run and separately executed restored-owner audit
+    passed independent aggregate acceptance for all 2771 modules, nine B/C/D
+    comparisons, five A comparisons and four audit negatives. It is a partial-cache
+    continuation, not a cold build or a full updated-controller/hosted CI run.
+    New publication remains pending. Reused upstream source terms
     remain unconfirmed.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
   # intentional proof placeholders and are not imported by the library.
@@ -840,13 +844,17 @@ review:
     frozen Comparator and default kernel replay. The actual public B export
     passed locally; the generic C Challenge passed its strict frozen-closure
     guard. Actual public B, generic C and D Comparator/default-kernel replay and
-    direct data export byte-identity passed locally; Linux CI remains pending. The actual
+    direct data export byte-identity passed locally. The actual
     2767-module source build and data-only all-owner audit passed locally.
     The separate A bridge is now registered from the actual 2771-module,
     40022-declaration data-only audit. All five A cases passed, including normal
     and frozen-Challenge positives and three compiled negative candidates;
     the native A run retained five additional portable controls. A full
-    2771-source Linux run remains pending. No independent human review is claimed.
+    2771-source local ARM64 Linux main run and separate restored-owner audit have
+    now passed independent aggregate acceptance, including all nine B/C/D and
+    five A comparisons and four audit negatives. This retained-cache continuation
+    does not establish a cold rebuild, a full updated-controller execution or
+    hosted GitHub CI. See LINUX_VERIFICATION.md. No independent human review is claimed.
 
 alignment:
   namespace: "DaggerModels (foundations); DaggerComparator (local public A/B/C/D aliases)"
@@ -1209,7 +1217,7 @@ alignment:
     - source: "bg.thm.main and bg.thm.left-proper (Theorem A)"
       lean: "DaggerComparator.mainA"
       module: "MainTheoremsA.lean"
-      status: "current-2771-native-build-and-expanded-all-owner-audit-passed; A-Comparator-and-default-kernel-passed-with-all-negative-controls; Linux-pending"
+      status: "current-2771-native-and-local-Linux-build-and-all-owner-audit-passed; A-Comparator-and-default-kernel-passed-with-all-negative-controls; restored-Linux-audit-aggregate-accepted; hosted-CI-pending"
       note: "Separate A certificate; 48-line project-import Challenge with a 366-module, 679416-line closure. Agent correspondence review only."
     - source: "dj.thm.main and dj.thm.equivalence (Theorem B)"
       lean: "DaggerComparator.mainB"

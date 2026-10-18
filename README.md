@@ -15,10 +15,18 @@ and a byte-identical restored positive; 71-result metadata passed `--scope curre
 The local Comparator run passed five A cases plus five retained portable
 controls: positive cases passed default-kernel
 replay, while the weakened statement, extra axiom and changed `leftProper`
-definition were rejected. This is macOS local evidence; Linux verification and
-new 2771-source B/C/D re-export comparison remain pending.
-[A_VERIFICATION.md](A_VERIFICATION.md) records the exact scope; the saved B/C/D
-certificates below remain separate.
+definition were rejected. These completed comparison and negative-control
+results are macOS local evidence. The resumed local ARM64 Linux run passed the
+2771-module build, 40,022-declaration/71-result/eight-main-root audit, all nine
+B/C/D lane cases (including current public re-exports), five A cases, and four
+rejected audit mutations. A separate
+restored owner audit matched the initial audit byte for byte, with all source
+and `.olean` files unchanged; the combined local result was accepted. This was
+a continuation from a verified partial cache, not a cold rebuild or a run of
+the new full controller, and hosted GitHub CI remains unrun.
+[A_VERIFICATION.md](A_VERIFICATION.md) records A's exact scope, and
+[LINUX_VERIFICATION.md](LINUX_VERIFICATION.md) binds the accepted local Linux
+result to its receipts; the saved B/C/D certificates below remain separate.
 See [PUBLISHING.md](PUBLISHING.md) for the ordered publication checks,
 trusted-asset handling and permanent paper-facing record.
 
@@ -77,9 +85,11 @@ lake env lean Audit.lean
 python3 scripts/check_audit.py
 ```
 
-The separate B/C/D source workflow checks the public exports and full metadata
-against immutable Challenges and the data-only audit. Its real Linux run remains
-pending; these local commands do not replace that gate.
+The separate retained B/C/D source workflow checks the public exports and full
+metadata against immutable Challenges and the data-only audit. Its historical
+2767-module exact-commit Linux job remains separate; the current 2771-module
+local Linux result is described above. These local commands do not replace
+either gate.
 
 ## Retained foundation milestone (historical scope)
 
@@ -519,6 +529,9 @@ Comparator と Lean カーネルの再検査を通過しました。公開 C は
 closure guard も通過しました。公開 alias を含む全2767モジュールの統合ビルドと
 全owner監査はローカルで通過しました。公開 B・多相 C・D の Comparator と
 Lean カーネルの再検査、および３件の直接 export 照合もローカルで通過しました。
-現行2771ソースでの B・C・D 再 export 比較、Linux CI と新しいリモート公開は
-別途確認が必要です。
+現行2771ソースの ARM64 Linux 実行では、対照例を含むB・C・Dの比較9件、Aの比較5件、
+監査の負例4件を通過しました。別実行の復元後 owner 監査も初回と byte 単位で一致し、
+source と `.olean` の全件不変を確認して、結合したローカル結果を受け入れました。
+これは検証済み部分キャッシュからの再開であり、cold rebuild や新しい全体 controller の
+一括実行、GitHub 上の CI 成功を意味しません。新しいリモート公開も未実施です。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

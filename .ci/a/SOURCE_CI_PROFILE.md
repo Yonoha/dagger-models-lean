@@ -1,4 +1,4 @@
-# Current source CI profile: prepared, not executed
+# Current source CI profile: local Linux verification accepted
 
 `scripts/bcd_source_ci.py --source-profile current-2771` adds a release-snapshot
 verification profile for the current 2771-module source graph. The default
@@ -38,15 +38,29 @@ retained profile does not load the A helper.
 
 The real additive A asset passed full local fetch verification and the extension
 preflight. Matching 71-result metadata passed the current-scope checker against
-the actual expanded audit. Actual Linux execution is still required. See
-[ASSETS.md](ASSETS.md) for the pinned local hashes and pending public URL. Fetch receipts must be retained outside the exact trusted payload
+the actual expanded audit. The resumed local ARM64 Linux partial-cache
+continuation passed the 2771-module sequential and ordinary Lake builds, the
+40,022-declaration/71-result/eight-main-root audit, all nine B/C/D lane cases
+(including current public re-exports), five A cases, and four rejected audit
+mutations. The A extension compiled six
+external fixtures and exported five environments. A separate supplement on
+the same guest project repeated the all-owner audit byte for byte with every
+source and `.olean` file unchanged; the combined local result was accepted.
+The original raw result SHA-256 is
+`35163ba5950b0ab590030d43f71391af74468940a98f696831266f65c0baf89f`;
+the accepted aggregate SHA-256 is
+`e1dc6ecd24838abc317ee635c87acd7f595437cffd763b561b00ed949511b73f`.
+This is neither a cold rebuild nor one execution of the newer integrated
+controller. See [ASSETS.md](ASSETS.md) for the pinned local hashes and pending
+public URL. Fetch receipts must be retained outside the exact trusted payload
 before passing that payload to the runner.
 
 Eight Python staging/validation fixtures and nine A-helper fixtures passed
 locally. A separate agent reviewed the A helper's boundaries and the compiler
 write scope was narrowed following that review. These checks do not execute
-Lean, the auditor, the exporter, Comparator, or Linux. No current-profile Linux
-success or release is claimed.
+Lean, the auditor, the exporter, Comparator, or Linux. Those fixtures are
+separate from the actual local Linux execution described above. No hosted
+GitHub CI success or release is claimed.
 
 The prepared hosted wrapper, its input boundaries and the exact-70 to exact-71
 workflow transition are described in [HOSTED_CI.md](HOSTED_CI.md). Its workflow
