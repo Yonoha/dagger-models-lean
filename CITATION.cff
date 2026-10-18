@@ -1,18 +1,26 @@
 cff-version: 1.2.0
-message: "Please cite the versioned companion repository when using this partial formalization."
+message: "Please cite a released version or an exact commit; this development snapshot is not released."
 type: software
 title: "Dagger models in Lean: a partial formalization of Part I"
 authors:
   - family-names: Akasaka
     given-names: Keima
-version: 0.1.0
-date-released: 2026-10-01
+version: 0.2.0-dev
 url: "https://github.com/Yonoha/dagger-models-lean"
 repository-code: "https://github.com/Yonoha/dagger-models-lean"
+# Applies to original companion code; copied third-party sources retain their
+# separate terms as recorded in THIRD_PARTY_NOTICES.md.
 license: Apache-2.0
 abstract: >-
-  A partial Lean 4 formalization accompanying Models for dagger (infinity,1)-categories I:
-  Dagger simplicial sets and unitary cores. Version 0.1.0 covers the reversal simplex
-  category, dagger simplicial sets and elementary reversal lemmas, the definition of
-  free cofibrations, and the vertex-level word obstruction. It does not formalize the
-  main model-categorical theorems.
+  An unpublished Lean 4 development snapshot accompanying Models for dagger
+  (infinity,1)-categories I: Dagger simplicial sets and unitary cores. The local
+  retained source build, axiom audit, Comparator and default-kernel replay cover
+  public Theorem B, generic Theorem C and Theorem D aliases in the saved
+  2767-module scope. The separate Theorem A bridge passed the current
+  2771-module local build, expanded all-owner audit and A-specific Comparator
+  with default-kernel replay. New 2771-source B/C/D re-export comparison remains
+  pending.
+  Unprivileged Linux CI and independent human manuscript review remain pending.
+  Apache-2.0 covers original companion code and documentation. Applicable
+  distribution terms for some copied third-party sources remain unconfirmed;
+  see THIRD_PARTY_NOTICES.md.

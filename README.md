@@ -3,6 +3,88 @@
 [![Lean verification](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml)
 [![Comparator](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml)
 
+## Current Theorem A local verification
+
+The current development adds `DaggerComparator.mainA` and a
+`MainTheoremsABCD.lean` aggregate. The A statement and proof passed local Lean
+typechecking against accepted dependencies, with only the three standard axioms.
+The full current 2771-module sequential build and ordinary `lake build` passed
+locally. The expanded data-only audit passed for all 40,022 owned declarations,
+71 advertised results and eight main roots, with four rejected negative controls
+and a byte-identical restored positive; 71-result metadata passed `--scope current`.
+The local Comparator run passed five A cases plus five retained portable
+controls: positive cases passed default-kernel
+replay, while the weakened statement, extra axiom and changed `leftProper`
+definition were rejected. This is macOS local evidence; Linux verification and
+new 2771-source B/C/D re-export comparison remain pending.
+[A_VERIFICATION.md](A_VERIFICATION.md) records the exact scope; the saved B/C/D
+certificates below remain separate.
+
+## Retained B/C/D local evidence (2767-module scope)
+
+The saved standalone package passed official Comparator and default Lean
+kernel replay for B, D, and the universe-zero instance of the original full-C
+statement. Its C Challenge wrapper fixed `Statement.{0}`. The original C
+statement and proof are universe-polymorphic, and the public alias has type
+`Statement.{u}`. A new polymorphic Challenge compiled locally; a strict
+closure guard matched all 46,951 non-root constant records to the old frozen
+export and matched the full root record after specializing `u = 0`. Comparison
+of the actual public C alias against this Challenge passed locally with the
+official Comparator and default Lean kernel. The
+27-Challenge foundation release did not contain these results.
+The C statement covers every map of original dagger quasi-categories,
+all ordered vertex pairs (including equal pairs), and the same original unitary
+core, without an extra Kan or comparison hypothesis. The Challenge files for
+B/C/D import prior project definitions and models; unlike the 27 foundation
+Challenges, they are not Mathlib-only. An agent compared these Lean statements
+with the manuscript; independent human review has not been recorded.
+
+The public `MainTheoremsBCD.lean` module now exposes
+`DaggerComparator.mainB`, `DaggerComparator.originalMainTheoremC` and
+`DaggerComparator.mainD`. The full 2767-module source closure, including these
+aliases, passed sequential compilation and the ordinary Lake build locally.
+The [portable local verification summary](.ci/bcd/local-verification-summary.json)
+records the accepted build, audit, and public replay receipts for this local
+verification.
+The trusted data-only auditor checked all 40,006 owned declarations in 2767
+modules, reported 70 advertised results with only the three permitted standard
+axioms, and passed all four negative controls plus restored positive replay.
+The actual public B, generic C and D exports passed official Comparator and
+default-kernel replay. The first public C attempt exposed the old `.{0}`
+wrapper's mismatch with `.{u}`; an additive generic Challenge passed the
+frozen-closure guard before the successful public replay. Direct trusted data
+exports for all three public declarations matched the kernel-accepted exports
+byte for byte. Unprivileged Linux CI, independent human review
+and new remote publication are not claimed. These records do not establish Theorem A.
+The 185 included `TopCatModelCategory` modules reuse pinned upstream work;
+[third-party provenance](THIRD_PARTY_NOTICES.md) records notices and the
+unconfirmed terms that must be resolved before new distribution.
+
+To reproduce the saved local certificate checks after obtaining the portable
+package, run this from its extracted `comparator-certificates` directory:
+
+```sh
+python3 replay_certificates.py --case all
+```
+
+To check the retained foundation library in this repository:
+
+```sh
+lake build DaggerModels.lean
+lake env lean Audit.lean
+python3 scripts/check_audit.py
+```
+
+The separate B/C/D source workflow checks the public exports and full metadata
+against immutable Challenges and the data-only audit. Its real Linux run remains
+pending; these local commands do not replace that gate.
+
+## Retained foundation milestone (historical scope)
+
+The following inventory describes the retained 27-Challenge foundation snapshot.
+Open items in this inventory are historical foundation status, not the current
+B/C/D certificate status.
+
 A **partial formalization** accompanying Keima Akasaka's *Models for dagger
 $(\infty,1)$-categories I: Dagger simplicial sets and unitary cores*.
 
@@ -49,12 +131,6 @@ The ordinary rigidification adjunction in `dj.not.adjunctions` now uses Mathlib'
 standard simplicial thickening, coherent nerve, and Yoneda-extension adjunction.
 The constructed right adjoint is naturally isomorphic to Mathlib's actual nerve,
 and rigidification sends the standard simplex diagram to the standard thickening.
-The dagger lift and the Quillen-equivalence claims remain unproved.
-**The main theorems A–D of the paper are not yet formalized.** In particular,
-this repository does not yet prove the dagger Bergner or dagger Joyal model
-structures, the rigidification Quillen equivalence, the intrinsic recognition
-theorem, or the comparison with anti-involutive simplicial sets.
-
 ## What is checked
 
 | Paper construction or argument | Lean content | Scope |
@@ -94,9 +170,9 @@ theorem, or the comparison with anti-involutive simplicial sets.
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
 on 2026-10-01; they are used instead of potentially changing theorem numbers.
-[MAIN_THEOREMS.md](MAIN_THEOREMS.md) records the complete A–D objective, its
-remaining proof dependencies, and a malformed source statement found during
-formalization. These remaining results are not postulated as axioms.
+[MAIN_THEOREMS.md](MAIN_THEOREMS.md) separates the locally verified A bridge,
+the retained B/C/D certificates, source-integration work, and manuscript issues.
+No main result is introduced as a new axiom.
 
 [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md) maps existing library
 results to the manuscript, records reuse decisions and compatibility work,
@@ -172,7 +248,7 @@ The [GitHub workflow](.github/workflows/lean.yml), using the official
 audit on pushes and pull requests. Python is needed only for the audit's
 negative controls, not to check the mathematical proofs.
 
-## What the audit guarantees
+## Retained foundation audit
 
 [`Audit.lean`](Audit.lean) traverses the transitive axiom dependencies of every
 loaded declaration in the `DaggerModels` namespace, including definitions and
@@ -188,7 +264,7 @@ matching those statements to the paper remains a mathematical review task.
 
 ## Preserving the intended statements
 
-The current development branch additionally runs
+The retained foundation workflow is configured to run
 [leanprover/comparator](https://github.com/leanprover/comparator) in a separate
 Linux GitHub Actions job. It compares 109 selected mathematical results against
 twenty-seven self-contained problem specifications:
@@ -237,13 +313,13 @@ source-to-Lean correspondence. Review status is **agent-reviewed**; no independe
 human review is claimed. CI checks it against the vendored upstream v0.4 schema
 and compares its reported axioms with the dependencies collected from Lean.
 
-To run the metadata check on this development version after `lake build`:
+To check the retained foundation metadata after `lake build`:
 
 ```sh
 python3 -m venv build/metadata-venv
 build/metadata-venv/bin/python -m pip install -r .ci/requirements.txt
 lake env lean scripts/ReportAxioms.lean > build/axioms.json
-build/metadata-venv/bin/python scripts/check_metadata.py --axioms build/axioms.json
+build/metadata-venv/bin/python scripts/check_metadata.py --scope foundations --axioms build/axioms.json
 ```
 
 The intentional `sorry` placeholders in the trusted Challenges mean "prove this
@@ -337,6 +413,8 @@ full commit hash shown in the release notes as well.
 The presheaf, free-adjunction, cellular, dagger simplicial-category, ordinary-lifting,
 small-object and comparison-obstruction developments described above are newer than
 v0.1.0; cite the corresponding development commit when referring to them.
+The current `0.2.0-dev` A/B/C/D source snapshot has not been published; cite an
+exact commit only after that commit is available.
 
 Suggested wording:
 
@@ -346,8 +424,8 @@ Suggested wording:
 
 ## Development
 
-[`AGENTS.md`](AGENTS.md) records the development policy: use GPT-6.1-Sol with
-`xhigh` effort for implementation from detailed proofs and for a separate
+[`AGENTS.md`](AGENTS.md) records the author's current development policy: use
+GPT-6.1-Sol with `xhigh` effort for implementation from detailed proofs and for a separate
 statement review; reserve `ultra` for a concrete difficult obstacle, and
 distinguish that obstacle from missing mathematics that may call for Astra.
 These are task roles, not a claim that the main chat's model changes itself.
@@ -359,6 +437,8 @@ helper scripts, lifecycle hooks, and Lean LSP integration are not part of that
 installation. The repository's Lean/Lake build and audits are the verification
 commands. See `AGENTS.md` for the pinned skill revision and usage instructions.
 
+The following paragraph records the earlier foundation milestone; the current
+A/B/C/D verification status is given at the top of this document.
 The cellular characterization, free dagger simplicial-category adjunction and
 monadicity over dagger graphs, and graph presheaf equivalence/presentability
 are complete. The original word monad is finitary, and dagger simplicial categories
@@ -370,20 +450,22 @@ comparison are proved. The actual `I†` lifting condition is characterized by
 object surjectivity and ordinary boundary lifting on all hom spaces. Boundary
 lifting now gives actual local Kan fibrations and a section/cylinder homotopy;
 all ordinary monos have actual relative boundary-cell presentations. The actual
-`I†` has functorial factorization from the small object argument. The missing
+`I†` has functorial factorization from the small object argument. The then-missing
 ordinary input is the comparison with actual weak homotopy equivalences and
-trivial Kan fibrations. The next stages toward A–D also include unitary interval
+trivial Kan fibrations. The stages then listed toward A–D also included unitary interval
 lifting, the rest of the ordinary Kan–Quillen comparison,
 opposite compatibility of rigidification and coherent nerve, their dagger lift,
 and the model structures. These
 requirements are recorded in [MAIN_THEOREMS.md](MAIN_THEOREMS.md); they are not
 assumed as axioms in the current proofs.
 
-This companion was developed with AI assistance. The source, precise scope, and
-verification workflow are public so that its mathematical content can be reviewed.
-Original project code and documentation are distributed under Apache-2.0; see
-[LICENSE](LICENSE). Dependencies retain their own licenses. The license does not
-apply to the separately maintained manuscript.
+This companion was developed with AI assistance. The released foundation source,
+precise scope, and verification workflow are available for mathematical review;
+the current A/B/C/D snapshot has not been published.
+Original project code and documentation are under Apache-2.0; see
+[LICENSE](LICENSE). Copied third-party source terms are recorded in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), including unresolved scope.
+The license does not apply to the separately maintained manuscript.
 
 日本語: 現在の開発版では、基礎的な定義・補題に加え、前層の圏同値と局所可呈示性、
 自由・忘却随伴とその零次骨格に沿う pushout 表示、自由 cofibration の coproduct・
@@ -423,7 +505,18 @@ Kan 拡張の随伴定理を再利用して構成しました。nerve 全体の�
 既存の余極限 Challenge を 40 行から 99 行へ拡張し、３ roots を追加しました。
 ほかの26本とその設定、および従来の109 rootsは保持しています。
 全体は27本・1,929行・112 roots（数学109、定義marker3）です。
-opposite との整合性と dagger への随伴の持ち上げは未完了です。
-弱ホモトピー同値・trivial Kan fibration との同定と `J†` の interval 部分は未完了で、
-論文の主定理 A–D 全体を Lean で証明したという意味ではありません。
+この基礎段階では opposite との整合性と dagger への随伴の持ち上げ、
+弱ホモトピー同値・trivial Kan fibration との同定と `J†` の interval 部分は未完了でした。
+主定理 A の完成は、これらの基礎結果や B・C・D のローカル証明書からは従いません。
+別途構成した A の公開 alias は、現行2771モジュールの全ソースビルド、
+40,022宣言・71件・8主結果の拡張監査（負例4件と復元正例を含む）、
+A専用5件と保存済み対照5件の Comparator／標準カーネル検査をローカルで通過しました。
+B・D、および元の C 主張の universe 0 での実例は、保存済みの独立パッケージで
+Comparator と Lean カーネルの再検査を通過しました。公開 C は universe 多相の
+`Statement.{u}` です。新しい多相 Challenge はコンパイルされ、旧凍結版との
+closure guard も通過しました。公開 alias を含む全2767モジュールの統合ビルドと
+全owner監査はローカルで通過しました。公開 B・多相 C・D の Comparator と
+Lean カーネルの再検査、および３件の直接 export 照合もローカルで通過しました。
+現行2771ソースでの B・C・D 再 export 比較、Linux CI と新しいリモート公開は
+別途確認が必要です。
 対応する箇所と未実装の範囲は [CORRESPONDENCE.md](CORRESPONDENCE.md) に記載しています。

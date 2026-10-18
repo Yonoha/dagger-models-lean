@@ -1,0 +1,18 @@
+{
+  "kind": "bcd_source_comparator_public_results",
+  "theorem_names": [
+    "DaggerComparator.mainB",
+    "DaggerComparator.originalMainTheoremC",
+    "DaggerComparator.mainD"
+  ],
+  "case_names": {
+    "B": "DaggerComparator.mainB",
+    "C": "DaggerComparator.originalMainTheoremC",
+    "D": "DaggerComparator.mainD"
+  },
+  "config_paths": {
+    "DaggerComparator.mainB": ".ci/bcd/main-b.json",
+    "DaggerComparator.originalMainTheoremC": ".ci/bcd/original-main-c.json",
+    "DaggerComparator.mainD": ".ci/bcd/main-d.json"
+  }
+}

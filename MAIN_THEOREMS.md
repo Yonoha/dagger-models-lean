@@ -1,17 +1,51 @@
 # Part I main-theorem formalization
 
-The active objective is the full statements of **A–D**, not merely the
-foundational lemmas below. This development does not yet prove any of A–D.
-A successful build or Comparator run establishes only the registered Lean
-results. Main-theorem completion requires the actual categories, weak
-equivalences, adjunctions, and hypotheses in the manuscript.
+The additive Theorem A bridge now passes local typechecking against accepted
+dependencies, including `DaggerComparator.mainA.{u}` and its standard-three-axiom
+check. The full current 2771-module sequential and ordinary Lake builds passed
+locally. The expanded all-owner audit passed for 40,022 declarations, 71
+advertised results and eight main roots, including all four negative controls
+and a byte-identical restored positive. The local Comparator run passed five A
+cases and five retained portable controls, including default-kernel replay for
+the positive cases and rejection of three A negative fixtures.
+Linux verification and B/C/D re-export comparison against the new 2771-source
+snapshot remain pending; see [A_VERIFICATION.md](A_VERIFICATION.md). The B/C/D
+evidence below describes its separate frozen 2767-module scope.
 
-The labels below refer to the author's Part I working manuscript inspected on
-2026-10-01. Source line numbers are navigation aids, not stable identifiers.
-This roadmap records implementation dependencies, not assumptions added to the
-Lean library. Unfinished results are not declared as axioms or `sorry` proofs.
+The saved package passed official Comparator and default-kernel replay for B,
+D, and the universe-zero instance of full C, with a passing normal control and
+rejected theorem-mismatch and forbidden-axiom controls. The saved C wrapper
+fixes `Statement.{0}`. The original C statement and proof, and the public
+alias compiled below, are universe-polymorphic at `Statement.{u}`. The new
+generic Challenge compiled and passed a strict closure guard against the old
+frozen export: 46,951 non-root records match exactly, and the full root record
+matches after `u = 0` specialization. Actual public C Comparator and
+default-kernel replay subsequently passed locally. The source-correspondence
+review found no concrete weakening or circular assumption in those three Lean
+statement types. This is an agent review, not independent human validation of
+the manuscript translation or of the proofs.
 
-## Verified steps toward the main results
+The public `MainTheoremsBCD.lean` aliases `DaggerComparator.mainB`,
+`DaggerComparator.originalMainTheoremC` and `DaggerComparator.mainD` are now
+in the local source-integrated library. The accepted 2767-module sequential
+and default Lake build and the data-only audit of 40,006 owned declarations
+passed locally; the audit rejected all four negative controls and passed the
+restored positive run. The actual public B, generic C and D exports passed official Comparator and
+default-kernel replay locally. Direct trusted data exports matched all three
+kernel-accepted exports byte for byte. Unprivileged Linux CI and new
+publication remain pending. The 185 included
+`TopCatModelCategory` modules reuse upstream source; provenance and unresolved
+upstream terms are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The cited B/C/D records do not prove A. The 27 foundation Challenges and their
+112 registered roots remain a separate retained lane.
+
+The following foundation milestones were written before the B/C/D certificates;
+where a dependency is described as open there, that statement is historical.
+The labels refer to the author's Part I manuscript, with navigation details in
+the source-correspondence review. No target is added as an axiom or a proof-hole
+placeholder.
+
+## Retained foundation milestones (historical scope)
 
 - `prop.sSetdag_is_equivalent_to_Fun`: `Presheaf.lean` constructs
   `DaggerSSet.{u} ≌ (ReverseSimplexᵒᵖ ⥤ Type u)` for every universe `u`.
@@ -223,7 +257,13 @@ markers), with the two existing 160/116-line exceptions unchanged.
 
 ## A — dagger Bergner model structure
 
-Targets: `bg.thm.main` (line 1119), `bg.thm.left-proper` (line 1143).
+Targets: `bg.thm.main`, `bg.thm.left-proper`.
+
+The following chain is an earlier foundation plan; its open markers are
+historical, not the status of the current A theorem. The current A bridge
+combines the existing standard model and left properness proofs. Its precise
+verification status is in
+[A_VERIFICATION.md](A_VERIFICATION.md).
 
 Required chain:
 
@@ -267,118 +307,63 @@ weak homotopy equivalences. A degree-zero dagger category does not replace a
 dagger simplicial category. The external Kan–Quillen source recorded below is
 a candidate source to evaluate, not an assumed theorem. The present boundary,
 cellular and small-object proofs were constructed independently from pinned
-Mathlib and this project's checked lemmas; no external Lean bodies were copied.
+Mathlib and this project's checked lemmas. At that foundation stage no
+external Lean bodies were copied; later B/C/D source reuse is recorded below.
 
 ## B — dagger Joyal structure and rigidification equivalence
 
-Targets: `dj.thm.main` (line 1810), `dj.thm.equivalence` (line 1848).
-
-Required chain:
-
-1. The presheaf equivalence, local presentability, and free–forgetful adjunction,
-   including the explicit pushout description (`dj.not.adjunctions`), are
-   implemented above.
-2. Ordinary rigidification and coherent nerve are constructed in
-   `OrdinaryRigidification.lean` using Mathlib's actual standard thickening and
-   Yoneda-extension adjunction. The full natural comparison with Mathlib's
-   nerve and the standard-simplex comparison are proved. Compatibility with
-   opposites and the concrete dagger lifted adjunction (`dj.lem.lift`) remain.
-3. Cellular characterization of free cofibrations (`dj.lem.free-cof`),
-   preservation by rigidification, and accessibility of weak equivalences.
-   The cellular characterization is complete: every free cofibration has an
-   actual relative free-boundary-cell presentation, and saturation equality
-   is proved. Preservation by rigidification and accessibility of the weak
-   equivalences remain to prove.
-4. The recognition theorem with `W = C†⁻¹(W†)` and the exact `FreeCofibration`
-   class, followed by the fibrant counit and Quillen-equivalence criterion.
-
-The `FreeCofibration` class requires freeness of new nondegenerate simplices
-only in positive degrees. Replacing it by all monomorphisms would change B.
-Mathlib supplies the coherent nerve, standard thickening and general presheaf
-adjunction used in the constructed ordinary rigidification adjunction. The
-ordinary Joyal–Bergner model structures and Quillen equivalence, and the
-dagger-compatible lift, remain required. Mathlib also supplies relative
-skeletons and their successor formula; this companion proves the actual
-dagger-cell pushout decomposition. The reuse inventory in
-[EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md) separates exact reused
-theorems from source candidates and remaining gaps.
+The original `dj.thm.main` and `dj.thm.equivalence` are represented by
+`DaggerActualMainTheoremBChallenge.statement.{u}`. It includes the model
+classes, local presentability and generators, left properness, and the
+rigidification–nerve Quillen equivalence for the actual dagger simplicial set
+and dagger simplicial category structures. The free-cofibration and weak-class
+predicates agree with the manuscript definitions. The internal bridge from
+ordinary boundary lifting to ordinary trivial Kan fibrations is explicit.
+The local B certificate passes frozen-statement Comparator and kernel replay.
 
 ## C — recognition using the unitary core
 
-Target: `dj.thm.intrinsic-equivalence` (line 2985).
+`ChallengeOriginalMainTheoremC.Statement.{u}` expresses the three conditions of
+`dj.thm.intrinsic-equivalence` for **every** map between original dagger
+quasi-categories. The fully faithful condition quantifies over every ordered
+pair of original vertices, including repeated pairs. Conditions (2) and (3)
+use the same original unitary-core functor; no extra Kan, comparison or endpoint
+hypothesis is added. The saved local C certificate passes its unchanged
+pre-proof frozen Challenge at universe zero. The polymorphic source theorem
+compiled and passed the all-owner audit; the generic Challenge compiled and
+passed the frozen-closure guard; actual public Comparator and default-kernel
+replay subsequently passed locally. Matching the
+coslice-fibre implementation of mapping spaces to the manuscript's `Map_X(x,y)`
+is a separate mathematical interpretation recorded in the source review.
 
-The target applies to dagger quasi-categories. Its unitary core is the full Kan
-subcomplex of a homotopy-fixed-point complex spanned by the canonical vertices.
-Strict fixed points or the ordinary maximal core do not express this definition.
-
-Required chain: Real realization and the reversal action; `EC₂` and homotopy
-fixed points; canonical vertices and `def.unitary_core`; full Kan subcomplexes;
-derived-fixed-point and Real edgewise comparison; equivariant path spaces and
-the coherent unitary interval criterion; local mapping-space comparison and
-ordinary recognition. Restricting the target to dagger Joyal fibrant objects
-would also change its scope.
-
-### Source statements that need explicit repair before formalization
-
-`dj.prop.strict-borel-presentation` (line 2623) has a broken sentence. Its proof
-uses an equivalence `e` at line 2636, but the proposition does not introduce `e`.
-The intended input appears to be a monomorphism `O → A` and a specified
-equivalence `e : A ≃ B` in `Fun(BC₂, S)_{O/}`, to be represented by a strict Borel
-weak-equivalence zigzag under `O`. This restoration must be stated explicitly
-before formalizing it; it has not been silently assumed in this library.
-
-The earlier proof of `dj.prop.real-identity-section` also retains undeclared
-`X`, `ρ`, and `σ`; the following detailed proof supplies typed composites.
-These manuscript issues do not affect the new presheaf or strict obstruction
-proofs. This development has not edited the separately maintained manuscript.
+The manuscript's `dj.prop.strict-borel-presentation` has an undeclared `e` in
+its proof, and `dj.prop.real-identity-section` has undeclared symbols in an
+earlier proof. The Lean C result did not silently edit those manuscript lines.
 
 ## D — failure of the two specified Quillen adjunctions
 
-Target: `pointset.cor.no-naive-quillen` (line 3500).
+`ChallengeActualMainTheoremD.Statement.{u}` states existence of the DCH-side
+model with all three classes identified, failure of **both** original tagged
+quotient adjunctions to be Quillen, and failure of naive restriction by a
+cofibration-class disagreement. It is not merely a non-Quillen claim
+conditional on an assumed model. The local D certificate passes
+frozen-statement Comparator and kernel replay. Internal source bridges identify
+the right-induced weak equivalences and fibrations with the separately
+constructed ordinary Joyal Smith model. An independent audit of the external
+DCH literature is outside the recorded agent correspondence review.
 
-Required chain:
+## External Kan–Quillen reuse provenance
 
-1. The tagged index category and its quotient; presheaf comparison and the
-   concrete left and right Kan-extension adjunctions $q_! \dashv q^* \dashv q_*$.
-2. The DCH model structure's actual cofibrations and trivial cofibrations,
-   together with B and the comparison of free completions.
-3. The fixed-vertex obstruction (underlying predicates implemented above)
-   shows the inclusion fails to preserve cofibrations.
-4. The double-walking-isomorphism generator maps to a map that is not a dagger
-   weak equivalence. This uses free completions, rigidification, and the
-   integer groupoid's strict unitary obstruction (implemented above).
-
-The two concrete examples alone do not prove D. Completion requires proving
-failure of the two actual adjunctions to satisfy the Quillen conditions.
-
-## External Kan–Quillen implementation to evaluate
-
-The source of
-[joelriou/topcat-model-category at 6c0c356](https://github.com/joelriou/topcat-model-category/tree/6c0c356fea469689fe76baeb47ba773460dfacee)
-contains an actual simplicial-set `ModelCategory` instance in
-[`ModelCategorySSet.lean`](https://github.com/joelriou/topcat-model-category/blob/6c0c356fea469689fe76baeb47ba773460dfacee/TopCatModelCategory/ModelCategorySSet.lean),
-the realization–Sing Quillen adjunction, and unit/counit weak-equivalence proofs.
-No corresponding `IsQuillenEquivalence` instance was found in that source;
-the README's broader claim is not used as an instantiated theorem here.
-
-Its pins are Lean `v4.25.0-rc2` and mathlib
-`6c193806481aaf608f1396601b6dc95277ddcfe8`. This companion uses Lean `v4.27.0`
-and mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`.
-The external source was inspected and its unchanged import closure was tested
-in an isolated compatibility probe against this project's pin. After preparing
-the pinned caches, 44 of 183 modules compiled, 13 had source/API failures, and
-126 were blocked by failed prerequisites. The full model structure and target
-comparison theorems did not compile; no verified dependency is claimed.
-A bounded compatibility adaptation subsequently obtained 61 compiled modules,
-with five direct failures and 117 modules not compiled at their traversal
-positions. Fourteen changed modules pass strict compilation; 439 declarations
-in those modules and signature bridges pass transitive standard-axiom checks.
-These counts are not full-model verification. Exact coverage and remaining
-failures are recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
-No applicable repository-level license was established at that exact commit:
-no LICENSE/COPYING file was found and GitHub metadata reported no license.
-A few unrelated files have Apache headers; these do not resolve the license of
-the required model-category proofs. No external Lean bodies have been adopted.
-License resolution, compatible compilation and a transitive axiom audit would
-be required before treating that implementation as a checked dependency.
-It does not supply the Bergner/Joyal/rigidification results needed by A–C.
+The early bounded probe of `joelriou/topcat-model-category` is recorded in
+[EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md); its partial build
+counts describe that probe, not the later local B/C/D certificate status.
+The substantive later development reuses pinned Mathlib and selected
+`TopCatModelCategory` source from original commit
+`6c0c356fea469689fe76baeb47ba773460dfacee`, ported to Lean 4.27 and
+Mathlib `a3a10db0e9d66acbebf76c5e6a135066525ac900`. Native API repair
+and source provenance are recorded in the saved certificate package. This is
+not a claim that the entire original external project was adopted unchanged,
+that all of its source was independently reviewed, or that the full current
+source tree has passed Linux CI. The current 185-module reused source closure
+is included in the accepted local build and all-owner data-only audit; its
+upstream distribution terms are not yet confirmed.

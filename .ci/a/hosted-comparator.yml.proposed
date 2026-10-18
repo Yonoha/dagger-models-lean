@@ -1,0 +1,80 @@
+name: Current ABCD source Comparator (hosted ABI9 guest)
+
+on:
+  push:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-current-abcd-linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+    steps:
+      - name: Check out trusted scripts and lock
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: control
+          persist-credentials: false
+      - name: Refuse an unpublished or unpinned trusted asset
+        run: |
+          python3 control/scripts/fetch_a_assets.py \
+            --lock control/.ci/a/asset-lock.json \
+            --output "$RUNNER_TEMP/a-trusted" \
+            --preflight-only
+          python3 control/scripts/fetch_bcd_assets.py \
+            --lock control/.ci/bcd/asset-lock.json \
+            --output "$RUNNER_TEMP/bcd-trusted" \
+            --preflight-only
+      - name: Require fresh hosted x64 KVM and reclaim only unused SDKs
+        run: bash control/scripts/host_prereq.sh
+      - name: Check out candidate sources as data
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Check out strict Landrun source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: Zouuup/landrun
+          ref: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
+          path: landrun
+          persist-credentials: false
+      - name: Check out legacy format-2 exporter
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: leanprover/lean4export
+          ref: bd93e5ed12fbeea19f39ec3ead659c293b2b8a95
+          path: lean4export-legacy
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: landrun/go.mod
+          cache-dependency-path: landrun/go.sum
+      - name: Install pinned Lean toolchain
+        uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
+        with:
+          lake-package-directory: control
+          auto-config: "false"
+          build: "false"
+          use-mathlib-cache: "false"
+          use-github-cache: "false"
+      - name: Run trusted host setup and strict current ABCD guest gates
+        shell: bash
+        env:
+          BCD_CONTROL_REVISION: ${{ github.event.pull_request.base.sha || github.sha }}
+          BCD_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python3 control/scripts/hosted_abcd_vm.py \
+            --control-revision "$BCD_CONTROL_REVISION" \
+            --source-revision "$BCD_SOURCE_REVISION"

@@ -1,0 +1,40 @@
+{
+  "archive_layout": {
+    "c_universe_extension": "c-universe-extension/",
+    "changed_definition_fixture": "changed-definition/",
+    "pins": "pins/",
+    "portable_package": "comparator-certificates/",
+    "source_graph": "source-graph.json",
+    "trusted_auditor": "trusted-audit/"
+  },
+  "published_archive_sha256": "21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3",
+  "published_archive_url": null,
+  "schema": "bcd-trusted-source-inputs/v1",
+  "source_status": "locally prepared release asset candidate; independent Linux CI and publication pending",
+  "tool_commits": {
+    "comparator": "14fda6a603d433dad5db83ca55f15afc91190fda",
+    "landrun": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4",
+    "lean4checker": "b7398199245524275543dec6113229c9bb4902e5",
+    "lean4export_legacy_format_2": "bd93e5ed12fbeea19f39ec3ead659c293b2b8a95"
+  },
+  "verified_local_content_sha256": {
+    "c-universe-extension/C.universal.challenge.export.gz": "96a0a5456a63930ef710131e25d13566898659742dea37d4098925e30001a55b",
+    "c-universe-extension/CheckGenericCClosure.lean": "4adcf11bc0048701571672f3d80a098c63d8639941b7d7911d7a323d0cf54bb5",
+    "c-universe-extension/closure-guard-result.json": "c388443ff4653954066669a331014efb83e90c96e3f2be2c4a0079deac9de3ef",
+    "c-universe-extension/extension.json": "ccb4939cc13bdaa204e5971347ea739cbce6a8693d3522dcca96495edfc47520",
+    "c-universe-extension/manifest.json": "c247d0244d21a48e02359225b1428d8e168d4f99c4efb5fa9616b537f5d3aa67",
+    "c-universe-extension/sources/ComparatorChallengeCOriginalMainTheoremC.lean": "8094f792618d0f58e456c094e88a258c8892e65c4cd9cdbcad46d32e1f0b47ab",
+    "changed-definition/manifest.json": "12e013e53765775bd38d2f6be6cd22c66700ed485e9d5017a86dd76450077756",
+    "changed-definition/replay-case.json": "747cec03e2a4f2465e436fe8e03005cd35a8b271e3158c4ea4861844cd41c9f4",
+    "comparator-certificates/certificate-exports.json": "350faac7fd9886f5beb4fdc35b2b2992bbd214aac0571199f1d8080ce705a13d",
+    "comparator-certificates/manifest.json": "42e1ed4e30b7988d797bf8afa040d4b77fe459f8f113539ab5d245ea6bebe690",
+    "comparator-certificates/replay-cases.json": "45d89e063f9d4ba409d860f1bb275bdf57fdc21e9212f97142d88b4af6b6d997",
+    "pins/lake-manifest.json": "1c6eb229691c7b0d1b38a574a7897e19dbe7f0bc2674d62c640fdc2e105e3c48",
+    "pins/lean-toolchain": "d55ca0039a5479db5b38919d005b2c427b89b3be4f0184a20f2f4eae931f5bdb",
+    "source-graph.json": "9502ed6d0cc9f374cd90cdf7eb551fbec004e0454738a414884a15770718a0dc",
+    "trusted-audit/TrustedBCDAudit.lean": "dbac622e4d3bef029045f6f5b9336526f1cff96d10ce570a253342686f1cf1e1",
+    "trusted-audit/advertised.txt": "8f577490e02d8e3aab544f1043919fef9a8698f4d392e108ef3541b0fe600eee",
+    "trusted-audit/main-results.txt": "d3728cb345bc310fe0e5b3dec795773ffd07054d68587ecbbd4cefc0bcb73afe",
+    "trusted-audit/owners.txt": "0ac259053b923ab93c856faa01a588b315c7cfca5a5c3e7daf147bb745d6ff5d"
+  }
+}

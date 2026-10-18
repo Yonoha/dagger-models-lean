@@ -70,7 +70,9 @@ jobs:
           Mathlib.AlgebraicTopology.SimplicialNerve
           Mathlib.CategoryTheory.Limits.Presheaf
       - name: Check all library proofs
-        run: lake build
+        # The separate BCD workflow builds the full integrated source graph.
+        # This job retains the published foundation barrel and its import closure.
+        run: lake build DaggerModels.lean
       - name: Audit transitive axiom dependencies
         run: lake env lean Audit.lean
       - name: Check the audit rejects proof holes and extra axioms
@@ -85,4 +87,5 @@ jobs:
         run: |
           mkdir -p build
           lake env lean scripts/ReportAxioms.lean > build/axioms.json
-          "$RUNNER_TEMP/metadata-venv/bin/python" scripts/check_metadata.py --axioms build/axioms.json
+          "$RUNNER_TEMP/metadata-venv/bin/python" scripts/check_metadata.py \
+            --scope foundations --axioms build/axioms.json

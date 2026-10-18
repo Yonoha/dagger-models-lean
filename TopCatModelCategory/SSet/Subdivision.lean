@@ -1,0 +1,557 @@
+import Mathlib.CategoryTheory.Limits.Presheaf
+import Mathlib.SetTheory.Cardinal.Finite
+import TopCatModelCategory.SSet.NonemptyFiniteChains
+import TopCatModelCategory.SSet.NonDegenerateSimplices
+import TopCatModelCategory.SSet.StandardSimplex
+import TopCatModelCategory.SSet.Skeleton
+import TopCatModelCategory.SSet.Monomorphisms
+import TopCatModelCategory.SSet.Nonempty
+import TopCatModelCategory.MorphismProperty
+import TopCatModelCategory.ULift
+
+-- Jardine, *Simplicial approximation*
+
+universe v u
+
+open CategoryTheory Limits Simplicial Opposite
+
+instance : HasColimitsOfSize.{u, u} SSet.{u} := by
+  dsimp [SSet, SimplicialObject]
+  infer_instance
+
+instance : HasColimitsOfSize.{0, u} SSet.{u} := by
+  dsimp [SSet, SimplicialObject]
+  infer_instance
+
+def PartOrd.uliftFUnctor : PartOrd.{u} ⥤ PartOrd.{max u v} where
+  obj X := .of (ULift.{v} X)
+  map f := PartOrd.ofHom ⟨fun x ↦ ULift.up (f (ULift.down x)),
+    fun x y hxy ↦ f.hom.monotone hxy⟩
+
+namespace SimplexCategory
+
+def toPartOrd : SimplexCategory ⥤ PartOrd.{u} :=
+  skeletalFunctor ⋙ forget₂ NonemptyFinLinOrd FinPartOrd ⋙
+    forget₂ FinPartOrd PartOrd ⋙ PartOrd.uliftFUnctor
+
+@[simp]
+lemma toPartOrd_obj (n : SimplexCategory) :
+    toPartOrd.{u}.obj n = .of (ULift.{u} (Fin (n.len + 1))) := by
+  rfl
+
+@[simp]
+lemma toPartOrd_map_apply {n m : SimplexCategory} (f : n ⟶ m)
+    (i : (Fin (n.len + 1))) :
+    toPartOrd.{u}.map f (ULift.up i) = ULift.up (f i) := by
+  rfl
+
+noncomputable def sd : SimplexCategory ⥤ SSet.{u} :=
+  toPartOrd.{u} ⋙ PartOrd.nonemptyFiniteChainsFunctor ⋙ PartOrd.nerveFunctor
+
+end SimplexCategory
+
+namespace SSet
+
+noncomputable def sd : SSet.{u} ⥤ SSet.{u} :=
+  stdSimplex.{u}.leftKanExtension SimplexCategory.sd
+
+noncomputable def ex : SSet.{u} ⥤ SSet.{u} :=
+  Presheaf.restrictedULiftYoneda.{0} SimplexCategory.sd
+
+noncomputable def sdExAdjunction : sd.{u} ⊣ ex.{u} :=
+  Presheaf.uliftYonedaAdjunction.{0}
+    (SSet.stdSimplex.{u}.leftKanExtension SimplexCategory.sd)
+    (SSet.stdSimplex.{u}.leftKanExtensionUnit SimplexCategory.sd)
+
+instance : sd.{u}.IsLeftAdjoint := sdExAdjunction.isLeftAdjoint
+
+instance : ex.{u}.IsRightAdjoint := sdExAdjunction.isRightAdjoint
+
+namespace stdSimplex
+
+noncomputable def sdIso : stdSimplex.{u} ⋙ sd ≅ SimplexCategory.sd :=
+  Presheaf.isExtensionAlongULiftYoneda _
+
+def partOrdIso : stdSimplex.{u} ≅ SimplexCategory.toPartOrd ⋙ PartOrd.nerveFunctor :=
+  NatIso.ofComponents (fun n ↦ by
+    induction n using SimplexCategory.rec with | _ n
+    exact isoNerve' _ (orderIsoULift _).symm)
+
+@[simp]
+lemma partOrdIso_inv_app (n : ℕ) :
+    partOrdIso.{u}.inv.app ⦋n⦌ = (isoNerve' _ (orderIsoULift _).symm).inv := rfl
+
+@[simp]
+lemma partOrdIso_hom_app (n : ℕ) :
+    partOrdIso.{u}.hom.app ⦋n⦌ = (isoNerve' _ (orderIsoULift _).symm).hom := rfl
+
+end stdSimplex
+
+instance : sd.{u}.IsLeftKanExtension stdSimplex.sdIso.inv :=
+  inferInstanceAs (Functor.IsLeftKanExtension _
+    (SSet.stdSimplex.{u}.leftKanExtensionUnit SimplexCategory.sd.{u}))
+
+@[simps!]
+noncomputable def B : SSet.{u} ⥤ SSet.{u} := SSet.N.functor ⋙ PartOrd.nerveFunctor
+
+instance (X : SSet.{u}) [X.Nonempty] : (B.obj X).Nonempty := by
+  dsimp [B]
+  infer_instance
+
+instance (X : SSet.{u}) [X.IsFinite] : (B.obj X).IsFinite := by
+  dsimp [B]
+  infer_instance
+
+instance b_hasDimensionLT (X : SSet.{u}) (d : ℕ) [X.HasDimensionLT d] :
+    (B.obj X).HasDimensionLT d := by
+  dsimp [B]
+  rw [PartialOrder.nerve_hasDimensionLT_iff]
+  intro n f hf
+  let φ (i : Fin (n + 1)) : Fin d :=
+    ⟨(f i).dim, X.dim_lt_of_nondegenerate ⟨_, (f i).nonDegenerate⟩ d⟩
+  have hφ : StrictMono φ := fun _ _ hij ↦ N.lt_of_lt (hf hij)
+  simpa using Nat.card_le_card_of_injective _ hφ.injective
+
+open Functor in
+noncomputable def stdSimplexCompBIso : stdSimplex.{u} ⋙ B ≅ SimplexCategory.sd :=
+  isoWhiskerRight stdSimplex.partOrdIso _ ≪≫
+    Functor.associator _ _ _ ≪≫ isoWhiskerLeft _ (Functor.associator _ _ _).symm ≪≫
+    isoWhiskerLeft _ (isoWhiskerRight PartOrd.nerveFunctorCompNIso PartOrd.nerveFunctor)
+
+noncomputable def sdToB : sd.{u} ⟶ B :=
+  sd.{u}.descOfIsLeftKanExtension stdSimplex.sdIso.inv _ stdSimplexCompBIso.{u}.inv
+
+lemma sdToB_app_stdSimplex_obj (n : SimplexCategory) :
+    sdToB.{u}.app (stdSimplex.obj n) =
+      stdSimplex.sdIso.hom.app n ≫ stdSimplexCompBIso.inv.app n := by
+  have := sd.{u}.descOfIsLeftKanExtension_fac_app
+    stdSimplex.sdIso.inv _ stdSimplexCompBIso.{u}.inv n
+  simp only [← this, Iso.hom_inv_id_app_assoc, sdToB]
+
+instance (n : SimplexCategory) : IsIso (sdToB.{u}.app (stdSimplex.obj n)) := by
+  rw [sdToB_app_stdSimplex_obj]
+  infer_instance
+
+instance : IsIso (Functor.whiskerLeft stdSimplex sdToB) := by
+  rw [NatTrans.isIso_iff_isIso_app]
+  dsimp
+  infer_instance
+
+section
+
+variable (X : SSet.{u})
+
+variable {X} in
+lemma N.lift_monotone_aux {s₀ s₁ : X.N} (hs : s₀ ≤ s₁)
+    {d : ℕ} (f : Δ[d] ⟶ X) (φ₁ : Δ[d].N)
+    (hφ₁ : s₁.toS = S.map f φ₁.toS) :
+    ∃ (φ₀ : Δ[d].N), φ₀ ≤ φ₁ ∧ s₀.toS = S.map f φ₀.toS := by
+  obtain ⟨dx, ⟨x, hx⟩, rfl⟩ := φ₁.mk_surjective
+  obtain ⟨a, rfl⟩ := stdSimplex.objEquiv.symm.surjective x
+  rw [stdSimplex.mem_nonDegenerate_iff_mono, Equiv.apply_symm_apply] at hx
+  obtain rfl : s₁.dim = dx := S.dim_eq_of_eq hφ₁
+  rw [le_iff_exists] at hs
+  obtain ⟨g, _, hg⟩ := hs
+  rw [S.ext_iff'] at hφ₁
+  simp only [S.map_dim, mk_dim, S.cast_dim, S.cast_simplex_rfl, S.map_simplex, mk_simplex,
+    exists_const] at hφ₁
+  refine ⟨N.mk (SSet.stdSimplex.objEquiv.symm (g ≫ a)) ?_, ?_, ?_⟩
+  · rw [stdSimplex.mem_nonDegenerate_iff_mono, Equiv.apply_symm_apply]
+    infer_instance
+  · dsimp
+    rw [N.le_iff, Subfunctor.ofSection_le_iff,
+      Subcomplex.mem_ofSimplex_obj_iff]
+    exact ⟨g, rfl⟩
+  · dsimp
+    rw [S.ext_iff']
+    simp only [S.map_dim, mk_dim, S.cast_dim, S.cast_simplex_rfl, S.map_simplex, mk_simplex,
+      exists_const]
+    rw [← hg, hφ₁, stdSimplex.objEquiv_symm_comp, ← FunctorToTypes.naturality]
+    rfl
+
+variable {X} in
+lemma N.lift_monotone {n : ℕ} (s : Fin (n + 1) →o X.N) :
+    ∃ (d : ℕ) (f : Δ[d] ⟶ X) (φ : Fin (n + 1) → Δ[d].N) (_ : Monotone φ),
+      ∀ (i : Fin (n + 1)), (s i).toS = S.map f (φ i).toS := by
+  induction n with
+  | zero =>
+    refine ⟨_, yonedaEquiv.symm (s 0).simplex,
+      fun _ ↦ N.mk _ (stdSimplex.id_nonDegenerate (s 0).dim), ?_, ?_⟩
+    · rw [Fin.monotone_iff_le_succ]
+      intro i
+      fin_cases i
+    · intro i
+      fin_cases i
+      simp [SSet.S.ext_iff']
+  | succ n hn =>
+    let t : Fin (n + 1) →o X.N := ⟨_, (s.monotone.comp Fin.strictMono_succ.monotone)⟩
+    obtain ⟨d, f, φ, hφ, hφ'⟩ := hn t
+    obtain ⟨φ₀, hφ₀, hφ₀'⟩ :=
+      N.lift_monotone_aux (s.monotone (Fin.zero_le 1)) f (φ 0) (hφ' 0)
+    refine ⟨d, f, Fin.cases φ₀ φ, ?_, ?_⟩
+    · rw [Fin.monotone_iff_le_succ]
+      intro i
+      induction i using Fin.cases with
+      | zero => exact hφ₀
+      | succ i => exact hφ (by simp)
+    · intro i
+      induction i using Fin.cases with
+      | zero =>  exact hφ₀'
+      | succ i => exact hφ' i
+
+open PartialOrder in
+instance : Epi (sdToB.app X) := by
+  rw [epi_iff_nonDegenerate]
+  intro n b hb
+  obtain ⟨d, f, φ, hφ, hφ'⟩ := N.lift_monotone b.toOrderHom
+  let ψ (i : Fin (n + 1)) : NonemptyFiniteChains (ULift.{u} (Fin (d + 1))) :=
+    NonemptyFiniteChains.ofN (mapN (stdSimplex.partOrdIso.hom.app _) (φ i))
+  have hψ : Monotone ψ := fun i j hij ↦ by
+    dsimp [ψ]
+    rw [NonemptyFiniteChains.le_iff, NonemptyFiniteChains.ofN_le_ofN_iff]
+    exact (mapN _).monotone (hφ hij)
+  let s : SimplexCategory.sd ^⦋d⦌ _⦋n⦌ := Monotone.functor hψ
+  have hs (i : Fin (n + 1)) :
+      ((stdSimplexCompBIso.inv.app ⦋d⦌).app (op ⦋n⦌) s).obj i = φ i := by
+    rw [N.ext_iff]
+    dsimp [s, stdSimplexCompBIso]
+    rw [toS_mapN_of_isIso]
+    dsimp [PartOrd.nerveFunctorCompNIso]
+    change S.map (stdSimplex.partOrdIso.inv.app ⦋d⦌)
+      (NonemptyFiniteChains.nerveNEquiv.symm (ψ i)).toS = (φ i).toS
+    have : NonemptyFiniteChains.nerveNEquiv.symm (ψ i) =
+      N.mk' (S.map (stdSimplex.isoNerve'.{u} (ULift.{u} (Fin (d + 1)))
+        (orderIsoULift _).symm).hom (φ i).toS) (by
+          rw [S.simplex_map_nonDegenerate_iff_of_mono]
+          exact (φ i).nonDegenerate) := by
+      apply NonemptyFiniteChains.nerveNEquiv.injective
+      simp [ψ]
+      congr
+      rw [N.ext_iff, toS_mapN_of_isIso]
+    erw [this]
+    rw [N.mk'_toS, stdSimplex.partOrdIso_inv_app, S.map_map]
+    dsimp only [SimplexCategory.len_mk]
+    rw [Iso.hom_inv_id, S.map_id]
+  refine ⟨(sd.map f).app _
+    ((stdSimplex.sdIso.{u}.inv.app ⦋d⦌).app _ s), ?_⟩
+  dsimp
+  rw [← FunctorToTypes.comp, NatTrans.naturality, FunctorToTypes.comp,
+    sdToB_app_stdSimplex_obj, comp_app, types_comp_apply]
+  nth_rw 3 [← FunctorToTypes.comp]
+  rw [Iso.inv_hom_id_app, NatTrans.id_app, types_id_apply]
+  apply Preorder.nerveExt
+  ext i
+  change mapN f (((stdSimplexCompBIso.inv.app ⦋d⦌).app (op ⦋n⦌) s).obj i) = b.obj i
+  rw [hs]
+  have hnd : (S.map f (φ i).toS).simplex ∈ X.nonDegenerate _ := by
+    rw [← hφ' i]
+    exact (b.obj i).nonDegenerate
+  apply N.ext
+  rw [toS_mapN_of_nonDegenerate f (φ i) hnd]
+  exact (hφ' i).symm
+
+noncomputable def N.equivSubcomplex (s : X.N) :
+    s.subcomplex.toSSet.N ≃o Set.Iic s where
+  toFun x := ⟨mapN s.subcomplex.ι x, by
+    change mapN s.subcomplex.ι x ≤ s
+    rw [N.le_iff, Subfunctor.ofSection_le_iff]
+    exact N.mapN_ι_simplex_mem_obj x⟩
+  invFun y := N.toSubcomplex y.1 (by
+    rw [← Subfunctor.ofSection_le_iff]
+    exact y.2)
+  left_inv x := by simp
+  right_inv y := by aesop
+  map_rel_iff' {x y} := by
+    rw [← Subtype.coe_le_coe]
+    dsimp
+    rw [N.le_iff, N.le_iff, subcomplex_mapN, subcomplex_mapN,
+      Subcomplex.image_le_image_iff_of_mono]
+
+variable {X} in
+lemma isColimitBMapCoconeCoconeN_aux
+    {n : ℕ} {i : X.N} (x : ComposableArrows i.subcomplex.toSSet.N n)
+    {k : X.N} (hk : mapN i.subcomplex.ι (x.obj (Fin.last _)) = k) :
+    ∃ (z : ComposableArrows k.subcomplex.toSSet.N n), ∀ (d : Fin (n + 1)),
+      mapN k.subcomplex.ι (z.obj d) =
+        mapN i.subcomplex.ι (x.obj d) := by
+  let φ (d : Fin (n + 1)) : k.subcomplex.toSSet.N :=
+    (mapN i.subcomplex.ι (x.obj d)).toSubcomplex (by
+      simp only [← Subfunctor.ofSection_le_iff, subcomplex_mapN]
+      have h₁ := x.monotone d.le_last
+      rw [N.le_iff] at h₁
+      exact (Subcomplex.image_monotone i.subcomplex.ι h₁).trans (by simp [← hk]))
+  have hφ : Monotone φ := by
+    intro d d' h
+    dsimp [φ]
+    rw [N.toSubcomplex_le_toSubcomplex_iff]
+    exact (mapN _).monotone (x.monotone h)
+  refine ⟨hφ.functor, fun d ↦ by simp [φ]⟩
+
+open Functor in
+noncomputable def isColimitBMapCoconeCoconeN :
+    IsColimit (B.mapCocone X.coconeN) :=
+  evaluationJointlyReflectsColimits _ (fun ⟨n⟩ ↦ by
+    induction n using SimplexCategory.rec with | _ n
+    apply Nonempty.some
+    rw [Types.isColimit_iff_coconeTypesIsColimit]
+    refine ⟨⟨?_, fun b ↦ ?_⟩⟩
+    · intro x y h
+      obtain ⟨i, x, rfl⟩ := ιColimitType_jointly_surjective _ x
+      obtain ⟨j, y, rfl⟩ := ιColimitType_jointly_surjective _ y
+      dsimp at x y h
+      generalize hx : mapN i.subcomplex.ι (x.obj (Fin.last _)) = k
+      have hy : mapN j.subcomplex.ι (y.obj (Fin.last _)) = k := by
+        rw [← hx]
+        exact Functor.congr_obj h.symm (Fin.last _)
+      have hki : k ≤ i := by
+        rw [← hx, N.le_iff, Subfunctor.ofSection_le_iff]
+        exact N.mapN_ι_simplex_mem_obj (x.obj (Fin.last _))
+      have hkj : k ≤ j := by
+        rw [← hy, N.le_iff, Subfunctor.ofSection_le_iff]
+        exact N.mapN_ι_simplex_mem_obj (y.obj (Fin.last _))
+      obtain ⟨z, hz⟩ := isColimitBMapCoconeCoconeN_aux x hx
+      obtain ⟨z', hz'⟩ := isColimitBMapCoconeCoconeN_aux y hy
+      obtain rfl : z = z' := by
+        apply Preorder.nerveExt
+        ext d : 1
+        apply N.mapN_injective_of_mono k.subcomplex.ι
+        rw [hz, hz']
+        exact Functor.congr_obj h d
+      trans Functor.ιColimitType _ k z
+      · rw [← ιColimitType_map _ (homOfLE hki)]
+        congr
+        apply Preorder.nerveExt
+        ext d : 1
+        apply N.mapN_injective_of_mono i.subcomplex.ι
+        dsimp
+        rw [mapN_mapN]
+        exact (hz d).symm
+      · rw [← ιColimitType_map _ (homOfLE hkj)]
+        congr
+        apply Preorder.nerveExt
+        ext d : 1
+        apply N.mapN_injective_of_mono j.subcomplex.ι
+        dsimp
+        rw [mapN_mapN]
+        exact hz' d
+    · refine ⟨Functor.ιColimitType _ (b.obj (Fin.last _))
+        (Monotone.functor (f := fun i ↦ (b.obj i).toSubcomplex ?_) (fun i j hij ↦ ?_)),
+        Preorder.nerveExt ?_⟩
+      · dsimp
+        rw [← Subfunctor.ofSection_le_iff, ← N.le_iff]
+        exact b.monotone i.le_last
+      · dsimp
+        rw [N.toSubcomplex_le_toSubcomplex_iff]
+        exact b.monotone hij
+      · ext i
+        rw [N.ext_iff]
+        dsimp
+        apply toS_mapN_of_mono)
+
+instance : PreservesColimit X.functorN B :=
+  preservesColimit_of_preserves_colimit_cocone X.isColimitCoconeN
+    X.isColimitBMapCoconeCoconeN
+
+end
+
+variable (X : SSet.{u})
+
+class IsWeaklyPolyhedralLike where
+  mono {n : ℕ} (x : X.nonDegenerate n) : Mono (yonedaEquiv.symm x.1)
+
+attribute [instance] IsWeaklyPolyhedralLike.mono
+
+instance (T : Type u) [PartialOrder T] :
+    (nerve T).IsWeaklyPolyhedralLike where
+  mono := by
+    rintro d ⟨x, hx⟩
+    dsimp
+    rw [PartialOrder.mem_nonDegenerate_iff] at hx
+    rw [NatTrans.mono_iff_mono_app]
+    intro ⟨n⟩
+    induction n using SimplexCategory.rec with | _ n
+    rw [mono_iff_injective]
+    intro i j h
+    ext k : 1
+    apply hx.injective
+    exact Functor.congr_obj h k
+
+instance : (B.obj X).IsWeaklyPolyhedralLike := by
+  dsimp [B]
+  infer_instance
+
+section
+
+variable [X.IsWeaklyPolyhedralLike]
+
+variable {X}
+
+lemma mono_yonedaEquiv_symm {n : ℕ} (x : X _⦋n⦌) (hx : x ∈ X.nonDegenerate n) :
+    Mono (yonedaEquiv.symm x) :=
+  IsWeaklyPolyhedralLike.mono ⟨x, hx⟩
+
+instance : Functor.Faithful stdSimplex.{u} where
+  map_injective {n m f g} h := by
+    induction n using SimplexCategory.rec with | _ n
+    induction m using SimplexCategory.rec with | _ m
+    ext i : 3
+    exact DFunLike.congr_fun
+      ((congr_fun (NatTrans.congr_app h (op ⦋n⦌)) (stdSimplex.objEquiv.symm (𝟙 _)))) i
+
+lemma injective_map_of_nonDegenerate {n : ℕ} (x : X _⦋n⦌) (hx : x ∈ X.nonDegenerate n)
+    {m : SimplexCategory} {f g : m ⟶ ⦋n⦌}
+    (h : X.map f.op x = X.map g.op x) :
+    f = g := by
+  have := mono_yonedaEquiv_symm x hx
+  apply stdSimplex.{u}.map_injective
+  rw [← cancel_mono (yonedaEquiv.symm x)]
+  apply yonedaEquiv.injective
+  rwa [yonedaEquiv_comp, stdSimplex.yonedaEquiv_map,
+    yonedaEquiv_comp, stdSimplex.yonedaEquiv_map]
+
+instance (x : X.N) : Mono (yonedaEquiv.symm x.simplex) :=
+  mono_yonedaEquiv_symm _ x.nonDegenerate
+
+lemma IsWeaklyPolyhedralLike.isIso_toOfSimplex {n : ℕ} (x : X _⦋n⦌) (hx : x ∈ X.nonDegenerate n) :
+    IsIso (Subcomplex.toOfSimplex x) := by
+  have : Mono (Subcomplex.toOfSimplex x) := by
+    have := mono_yonedaEquiv_symm x hx
+    exact mono_of_mono_fac (Subcomplex.toOfSimplex_ι x)
+  apply isIso_of_mono_of_epi
+
+@[simps! hom]
+noncomputable def IsWeaklyPolyhedralLike.iso {n : ℕ} (x : X _⦋n⦌) (hx : x ∈ X.nonDegenerate n) :
+    Δ[n] ≅ Subcomplex.ofSimplex x :=
+  have := IsWeaklyPolyhedralLike.isIso_toOfSimplex x hx
+  asIso (Subcomplex.toOfSimplex x)
+
+instance (x : X.N) : IsIso (sdToB.app x.subcomplex.toSSet) := by
+  rw [NatTrans.isIso_app_iff_of_iso _ (IsWeaklyPolyhedralLike.iso _ x.nonDegenerate).symm]
+  infer_instance
+
+open MorphismProperty
+
+instance : IsIso (sdToB.app X) :=
+  colimitsOfShape_le (W := isomorphisms SSet.{u}) _
+    (colimitsOfShape.mk' _ _ _ _ (isColimitOfPreserves sd X.isColimitCoconeN)
+      X.isColimitBMapCoconeCoconeN (Functor.whiskerLeft _ sdToB)
+      (fun s ↦ (by dsimp; simp only [isomorphisms.iff]; infer_instance)) _ (by simp))
+
+lemma isWeaklyPolyhedralLike_of_mono {Y : SSet.{u}} (f : Y ⟶ X) [Mono f] :
+    IsWeaklyPolyhedralLike Y where
+  mono {n} x := by
+    have := mono_yonedaEquiv_symm (f.app _ x.1) (by
+      rw [nonDegenerate_iff_of_mono]
+      exact x.2)
+    exact mono_of_mono_fac (yonedaEquiv_symm_comp x.1 f)
+
+instance (A : X.Subcomplex) : A.toSSet.IsWeaklyPolyhedralLike :=
+  isWeaklyPolyhedralLike_of_mono A.ι
+
+end
+
+instance [X.IsWeaklyPolyhedralLike] : (sd.obj X).IsWeaklyPolyhedralLike :=
+  isWeaklyPolyhedralLike_of_mono (asIso (sdToB.app X)).hom
+
+instance (n : SimplexCategory) : (stdSimplex.{u}.obj n).IsWeaklyPolyhedralLike :=
+  isWeaklyPolyhedralLike_of_mono (X := nerve _) (stdSimplex.partOrdIso.{u}.app n).hom
+
+instance : B.{u}.PreservesMonomorphisms where
+  preserves {X Y} f hf := by
+    rw [NatTrans.mono_iff_mono_app]
+    rintro ⟨n⟩
+    induction n using SimplexCategory.rec with | _ n
+    rw [mono_iff_injective]
+    intro s t h
+    apply Preorder.nerveExt
+    ext i
+    exact N.mapN_injective_of_mono f (Functor.congr_obj h i)
+
+open MorphismProperty in
+instance (n : ℕ) : Mono (sd.map (boundary.{u} n).ι) :=
+  ((monomorphisms _).arrow_mk_iso_iff
+    (Arrow.isoMk (asIso (sdToB.app _)) (asIso (sdToB.app _)))).2
+      (monomorphisms.infer_property (B.map (boundary.{u} n).ι))
+
+instance : PreservesWellOrderContinuousOfShape ℕ sd.{u} where
+
+section
+
+open MorphismProperty
+
+instance : IsStableUnderCoproducts.{u} ((monomorphisms SSet).inverseImage sd.{u}) where
+  isStableUnderCoproductsOfShape J := by
+    simp only [isStableUnderColimitsOfShape_iff_colimitsOfShape_le]
+    rintro X Y f hf
+    have hsd : ((monomorphisms _).inverseImage sd).map sd.{u} ≤ monomorphisms _ :=
+      (map_inverseImage_le _ _).trans (by rw [isoClosure_eq_self])
+    apply colimitsOfShape_le _ ((colimitsOfShape_monotone hsd _) _
+      (MorphismProperty.map_colimitsOfShape  _ hf sd))
+
+open MorphismProperty modelCategoryQuillen in
+instance : sd.{u}.PreservesMonomorphisms where
+  preserves {X Y} i _ := by
+    have : (coproducts.{u} I).pushouts ≤ (monomorphisms _).inverseImage sd.{u} := by
+      rw [← MorphismProperty.map_le_iff]
+      refine ((coproducts.{u} I).map_pushouts_le sd.{u}).trans ?_
+      simp only [pushouts_le_iff, map_le_iff, coproducts_le_iff]
+      intro _ _ _ ⟨n⟩
+      simp only [inverseImage_iff, monomorphisms.iff]
+      infer_instance
+    apply transfiniteCompositionsOfShape_le _ _ _
+      ((modelCategoryQuillen.transfiniteCompositionOfMono i).ofLE this).map.mem
+
+end
+
+instance [X.Nonempty] : (B.obj X).Nonempty :=
+  ⟨.mk₀ (Classical.arbitrary X.N)⟩
+
+instance (n : ℕ) : (sd.obj Δ[n]).Nonempty :=
+  nonempty_of_hom (inv (sdToB.app Δ[n]))
+
+instance [X.Nonempty] : (sd.obj X).Nonempty :=
+  nonempty_of_hom (sd.map (yonedaEquiv.symm (Classical.arbitrary _) : Δ[0] ⟶ X))
+
+instance (n : ℕ) : (sd.{u}.obj Δ[n]).HasDimensionLE n :=
+  hasDimensionLT_of_mono (sdToB.app _) _
+
+instance [X.IsFinite] {d : ℕ} : Finite ((B.obj X) _⦋d⦌) := by
+  let f (s : (B.obj X) _⦋d⦌) (i : Fin (d + 1)) : X.N := s.obj i
+  exact Finite.of_injective f (fun _ _ ↦ Preorder.nerveExt)
+
+instance [X.IsWeaklyPolyhedralLike] [X.IsFinite] {d : ℕ} : Finite ((sd.obj X) _⦋d⦌) :=
+  Finite.of_surjective _ ((asIso (sdToB.app X)).app (op ⦋d⦌)).symm.toEquiv.surjective
+
+instance (n : ℕ) : (sd.{u}.obj Δ[n]).IsFinite :=
+  isFinite_of_hasDimensionLT _ (n + 1) (by infer_instance)
+
+lemma iSup_range_sd_map :
+    ⨆ (s : X.N),
+      Subcomplex.range (sd.map (yonedaEquiv.symm s.simplex)) = ⊤ := by
+  ext ⟨n⟩ x
+  induction n using SimplexCategory.rec with | _ n
+  simp only [Subfunctor.iSup_obj, Subfunctor.range_obj, Set.mem_iUnion, Set.mem_range,
+    Subfunctor.top_obj, Set.top_eq_univ, Set.mem_univ, iff_true]
+  obtain ⟨s, y, hs⟩ := Types.jointly_surjective_of_isColimit
+    (isColimitOfPreserves ((CategoryTheory.evaluation _ _).obj (op ⦋n⦌))
+    (isColimitOfPreserves sd X.isColimitCoconeN)) x
+  dsimp at y hs
+  have h : Epi (sd.map (Subcomplex.toOfSimplex s.simplex)) := inferInstance
+  rw [NatTrans.epi_iff_epi_app] at h
+  replace h := h (op ⦋n⦌)
+  rw [epi_iff_surjective] at h
+  obtain ⟨z, rfl⟩ := h y
+  refine ⟨s, z, by rwa [← FunctorToTypes.comp, ← Functor.map_comp] at hs⟩
+
+instance (n : ℕ) [X.HasDimensionLT n] : (sd.obj X).HasDimensionLT n := by
+  rw [hasDimensionLT_iff_subcomplex_top, ← iSup_range_sd_map,
+    hasDimensionLT_iSup_iff]
+  intro x
+  exact hasDimensionLT_of_le _ (x.dim + 1) _
+    (by simpa only [Nat.lt_iff_add_one_le] using X.dim_lt_of_nondegenerate ⟨_, x.nonDegenerate⟩ n)
+
+instance [X.IsFinite] : (sd.obj X).IsFinite := by
+  rw [isFinite_iff_isFinite_subcomplex_top, ← iSup_range_sd_map, isFinite_iSup_iff]
+  infer_instance
+
+end SSet

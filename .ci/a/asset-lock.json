@@ -1,0 +1,8 @@
+{
+  "schema": "dagger-A-additive-trusted-inputs-lock/v1",
+  "published_archive_url": null,
+  "published_archive_sha256": "708769593918d887f04cfff0794439ef0356584ce690c699b355b28969b89d64",
+  "manifest_sha256": "3c33d4d9c26acbffa4ee7ac4c1859af155054785d1cdbf75aba8adaa6999a4cd",
+  "old_BCD_asset_dependency_sha256": "21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3",
+  "expected_source_graph_sha256": "0a3af50bbf1dbb6ae6ddd5b679cb6d0120306c3f3d34777bc358cfd84859943f"
+}

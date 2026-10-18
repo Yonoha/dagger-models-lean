@@ -4,6 +4,28 @@ Inventory date: 2026-10-01. Baseline companion commit:
 `46153c46525fd99ca0f763afd75c6002e1e2a860`; Lean `v4.27.0`; Mathlib
 `a3a10db0e9d66acbebf76c5e6a135066525ac900`.
 
+## Current local reuse status (2026-10-16)
+
+The accepted 2767-module source graph includes 185 local
+`TopCatModelCategory` modules derived from Joël Riou's pinned
+[`topcat-model-category` commit `6c0c356fea469689fe76baeb47ba773460dfacee`](https://github.com/joelriou/topcat-model-category/tree/6c0c356fea469689fe76baeb47ba773460dfacee).
+The local integrated build and data-only all-owner audit passed for the current
+source closure. The actual public B, generic C and D Comparator/kernel replays
+and direct trusted data export byte-identity checks also passed locally. The
+[portable local verification summary](.ci/bcd/local-verification-summary.json)
+records these accepted receipts.
+These are reused upstream proofs with
+version-compatibility adaptations, not independent new proofs of the ordinary
+model-category results. The older compatibility counts and proposed reuse
+route below are historical investigations, not the current build status.
+
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) records the upstream source
+and five retained file-level notices. The pinned upstream snapshot has no
+repository-level `LICENSE` or `NOTICE`; applicable terms for the other 180
+included files remain unconfirmed. New remote distribution is held pending
+clarification. The companion's own Apache-2.0 license does not establish terms
+for those upstream files.
+
 The author requests examination of existing results before new implementation
 and permits retaining already checked custom proofs. Replacing every overlapping
 proof is not an objective. The complete A–D targets remain in
@@ -223,6 +245,29 @@ claimed by these partial-run results.
   for the SSet–TopCat adjunction was found in the inspected project. Its actual
   Quillen-adjunction instance and unit/counit weak-equivalence proofs should
   not be reported as an already integrated Quillen-equivalence instance.
+
+## Later Mathlib source check (2026-10-18)
+
+A read-only check of Mathlib commit
+[`9d68c2ad43a6d5ee2154fde10a1ec0257bdf2273`](https://github.com/leanprover-community/mathlib4/tree/9d68c2ad43a6d5ee2154fde10a1ec0257bdf2273)
+compared the actual source contents of `ModelCategory/Basic.lean`,
+`SimplicialSet/CategoryWithFibrations.lean`, `SimplicialSet/KanComplex.lean`,
+`SingularSet.lean`, and `SimplicialSet/TopAdj.lean` with the required ordinary
+model-category inputs. These files provide abstract model-category APIs,
+boundary and horn generating maps, the cofibration and fibration classes, Kan
+fibrancy, and the realization/singular adjunction. At this commit,
+[`SingularSet.lean`](https://github.com/leanprover-community/mathlib4/blob/9d68c2ad43a6d5ee2154fde10a1ec0257bdf2273/Mathlib/AlgebraicTopology/SingularSet.lean)
+still lists singular Kan fibrancy and the Quillen equivalence as future work.
+The inspected files do not supply a replacement for the reused homotopy-group
+weak-equivalence predicate and the concrete TopCat/SSet model structures.
+
+This bounded check does not prove absence from every Mathlib module. It gives
+no basis for replacing the 185 reused modules by imports alone, or for treating
+Mathlib's license as a grant for those upstream files. No later Mathlib source
+was copied into the library, compiled, or adopted as a dependency; the pinned
+Lean and Mathlib revisions remain unchanged. See `THIRD_PARTY_NOTICES.md` for
+the separate upstream distribution status and the README for current theorem
+verification status.
 
 ## Remaining scope and implementation policy
 

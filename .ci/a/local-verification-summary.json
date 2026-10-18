@@ -1,0 +1,64 @@
+{
+  "schema": "theorem-a-local-verification-summary/v1",
+  "status": "full-current-native-source-build-expanded-audit-and-A-Comparator-default-kernel-passed; Linux-verification-pending",
+  "public_declaration": "DaggerComparator.mainA",
+  "type": "DaggerTheoremAChallenge.statement.{u}",
+  "source_sha256": {
+    "ChallengeTheoremA.lean": "2591c2201f9dea1f9c533878c996a89669426d89516655c475308e138ee7dfcf",
+    "ProofTheoremA.lean": "108dfb28670dbb641564f25442e5089be34e208c83fca91cf9be65d1ef303e76",
+    "MainTheoremsA.lean": "fcd075451ab72dedb96b1adb0463775d6fd728ff80104e8aeaf7497c725e13d6",
+    "MainTheoremsABCD.lean": "7e0c3e37bfe0705a000f3ce20ac41ae4a49be8c60342a21a7c9938e9f5a0437a"
+  },
+  "individual_Lean_compiles_passed": true,
+  "no_sorry_or_admit_in_final_A_modules": true,
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "axiom_output": "DaggerComparator.mainA : DaggerTheoremAChallenge.statement\n'DaggerComparator.mainA' depends on axioms: [propext, Classical.choice, Quot.sound]",
+  "local_compile_receipt_sha256": "8d7994a0562262e9be77eb09b29471d7edd56108af06bff6fdaed283646da13c",
+  "agent_statement_review_sha256": "ad967b7004cc5fdd404ed71563e4a4da240a41bdf3210b946f51e4f657a256ee",
+  "challenge_physical_lines": 48,
+  "challenge_imports_project_definitions": true,
+  "challenge_is_self_contained_Mathlib_only": false,
+  "old_BCD_frozen_inputs_changed": false,
+  "whole_current_2771_source_build_passed": true,
+  "A_Comparator_and_default_kernel_replay_passed": true,
+  "expanded_all_owner_audit_passed": true,
+  "Linux_CI_passed": false,
+  "independent_human_review": false,
+  "new_publication": false,
+  "accepted_current_native_build_receipt_sha256": "6cad99320bd31e4f826839a69e3e8c7867bdf1f73d1565ba613c7b955d6de1d5",
+  "challenge_local_import_closure_modules": 366,
+  "challenge_local_import_closure_lines": 679416,
+  "expanded_audit_receipt_sha256": "f19a69c26660365f450417ec8083b1702acda6d89120d0769a377369a1046fd4",
+  "expanded_audit": {
+    "owned_modules": 2771,
+    "owned_declarations": 40022,
+    "advertised_results": 71,
+    "main_results": 8,
+    "compiled_negative_controls_rejected": 4,
+    "restored_positive_output_byte_identical": true,
+    "raw_positive_stdout_sha256": "0c3318eaf51dd4101127fe07ff1cbedf97c548afeaf070e09ec30d131b4568e5"
+  },
+  "native_A_result_sha256": "e1fd16fc4eb88ec459ed34bc253805f0791ec3ca0f67f542444f7a1de0c152ca",
+  "native_A_cases": {
+    "A_cases": 5,
+    "additional_portable_controls": 5,
+    "external_compiles": 6,
+    "exports": 5,
+    "compiled_negative_candidates_rejected": 3,
+    "normal_and_frozen_positive_default_kernel_replay_passed": true
+  },
+  "formalization_metadata_result_count": 71,
+  "additive_trusted_asset": {
+    "archive_sha256": "708769593918d887f04cfff0794439ef0356584ce690c699b355b28969b89d64",
+    "manifest_sha256": "3c33d4d9c26acbffa4ee7ac4c1859af155054785d1cdbf75aba8adaa6999a4cd",
+    "regular_payload_and_manifest_files": 20,
+    "actual_full_fetch_verified": true,
+    "Linux_extension_preflight_passed": true,
+    "published_archive_url": null
+  },
+  "metadata_current_71_check_passed": true
+}

@@ -1,0 +1,7 @@
+{
+  "kind": "a_source_comparator_case",
+  "case": "A",
+  "theorem_names": [
+    "DaggerComparator.mainA"
+  ]
+}

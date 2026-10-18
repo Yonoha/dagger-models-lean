@@ -1,0 +1,7 @@
+{
+  "kind": "bcd_source_comparator_case",
+  "case": "C",
+  "theorem_names": [
+    "DaggerComparator.originalMainTheoremC"
+  ]
+}

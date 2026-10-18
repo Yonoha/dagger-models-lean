@@ -8,9 +8,10 @@ build does not establish correspondence with the manuscript.
 ## Models and delegation
 
 - For implementation from an existing detailed mathematical proof, use a
-  `gpt-6.1-sol` subagent with `xhigh` reasoning by default. This project authorizes
+  `gpt-6-sol` subagent with `high` reasoning by default, following the author's
+  later instruction. This project authorizes
   that delegation when it is useful; small routine edits need no extra agent.
-- Use a separate `gpt-6.1-sol` / `xhigh` reviewer for substantive changes to
+- Use a separate `gpt-6-sol` / `high` reviewer for substantive changes to
   Challenge statements or their manuscript correspondence. Give the reviewer
   the source definitions and precise manuscript labels, not just a build log.
 - Keep assignments bounded and owned files disjoint. Avoid redundant agents.

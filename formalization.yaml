@@ -3,8 +3,11 @@ version: "v0.4"
 project:
   name: "Dagger models in Lean"
   description: >-
-    A partial formalization of foundational constructions from Models for dagger
-    (infinity,1)-categories I. It constructs the reversal simplex category and
+    The retained 27-Challenge foundation snapshot is a partial formalization
+    of foundational constructions from Models for dagger (infinity,1)-categories I.
+    The following foundation inventory describes that historical scope; current
+    A/B/C/D source integration and local checks are recorded separately below.
+    It constructs the reversal simplex category and
     dagger simplicial sets, proves their presheaf equivalence and presentability,
     constructs the actual free-forgetful adjunction and its zero-skeleton pushout
     presentation with the unit and swap dagger, and proves elementary
@@ -38,9 +41,11 @@ project:
     Actual ordinary colimits discharge both pushout-existence conditions in the
     full successive-attachment reduction. Actual discrete dagger categories,
     the initial-to-point generator, and the two-object cell lifting equivalence
-    give the full I-dagger boundary-RLP characterization. Its comparison with
-    trivial Kan fibrations remains unproved. The main model-categorical theorems
-    A-D are not formalized.
+    give the full I-dagger boundary-RLP characterization. In that foundation
+    snapshot, its comparison with trivial Kan fibrations was not proved. The retained foundation release
+    did not formalize the main model-categorical theorems. Separate local saved
+    certificates verify B, D, and the universe-zero instance of full C; the public 2767-module source-integrated build
+    and data-only all-owner audit passed locally.
     Ordinary boundary lifting now implies the actual Mathlib Kan fibration
     predicate. Every ordinary simplicial mono has an actual relative boundary-cell
     presentation, yielding equality of boundary RLP and mono RLP. Both conditions
@@ -50,12 +55,15 @@ project:
     The ordinary rigidification adjunction uses Mathlib's standard thickening
     and general Yoneda-extension adjunction. Its nerve is naturally isomorphic
     to the actual Mathlib coherent nerve, and its standard-simplex values are
-    naturally the standard thickening. Opposite compatibility and the dagger
-    lift remain unproved.
+    naturally the standard thickening. The retained foundation snapshot did not
+    establish opposite compatibility or the dagger lift; the separate current
+    A/B/C/D results have their own verification status below.
   authors:
     - "Keima Akasaka (AI-assisted; implementation generated with Codex)"
   responsible_maintainers:
     - "Keima Akasaka"
+  # Original companion code and documentation only. Copied third-party sources
+  # retain separate terms; see THIRD_PARTY_NOTICES.md for the unresolved scope.
   license: "Apache-2.0"
 sources:
   - title: "Models for dagger (infinity,1)-categories I: Dagger simplicial sets and unitary cores"
@@ -120,7 +128,7 @@ related_formalizations:
       coherent nerve, restricted Yoneda functor and left Kan extension adjunction.
 status:
   scope: >-
-    Partial formalization toward A-D. Presheaf equivalence and local finite
+    Retained foundations plus separate locally verified A/B/C/D certificates. Presheaf equivalence and local finite
     presentability are proved at every value universe, as is existence of the
     actual free-forgetful adjunction and its explicit free-completion pushout,
     with the genuine universal property, unit and swap dagger. All stated free
@@ -165,9 +173,27 @@ status:
     when every hom map is a Kan fibration. The actual I-dagger admits the small
     object argument and actual functorial factorization, from proved smallness,
     finite presentability of all generator domains and existing small colimits.
-    Full simplicial counterexamples, model structures, unitary-core recognition
-    and main theorems A-D remain unproved. The
-    concrete comparison obstructions do not by themselves establish Theorem D.
+    The foundation-only modules and 27 Challenge lane did not by themselves
+    establish B, C or D. A separate frozen local package passes Comparator and
+    default kernel replay for B, D, and C at universe zero. The original C
+    source and public alias are generic in the universe. A new generic
+    Challenge compiled and passed strict frozen-closure comparison, including
+    exact agreement of the root record after universe-zero specialization;
+    actual public C Comparator and kernel replay subsequently passed locally,
+    alongside B and D. Direct trusted data exports matched all three accepted
+    kernel exports byte for byte. All three public results are registered below
+    with axiom lists from the data-only audit.
+    The retained B/C/D package does not establish A. A separate polymorphic
+    A bridge passed its five A Comparator cases and default-kernel replay,
+    including rejected weakened-statement, extra-axiom and changed-definition
+    candidates. The current 2771-module sequential and ordinary Lake builds
+    passed. Its expanded data-only audit covers 40,022 owned declarations,
+    71 advertised results and eight main roots, rejects all four negative
+    controls and reproduces the restored positive output byte for byte.
+    The 48-line A Challenge imports a 366-module project closure with 679,416
+    source lines; it is not a self-contained Mathlib-only specification.
+    Linux CI and new publication remain pending. Reused upstream source terms
+    remain unconfirmed.
   # Counts apply to the DaggerModels library. Trusted Challenge skeletons use
   # intentional proof placeholders and are not imported by the library.
   sorry_count: 0
@@ -576,6 +602,33 @@ status:
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
       literature_dependencies: []
+    # Axiom order follows the accepted data-only audit of the actual public roots.
+    # Source-code reuse and unresolved upstream terms are recorded in
+    # THIRD_PARTY_NOTICES.md and EXISTING_FORMALIZATIONS.md.
+    - declaration: "DaggerComparator.mainB"
+      file: "MainTheoremsBCD.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: ".ci/bcd/main-b.json"
+      literature_dependencies: []
+    - declaration: "DaggerComparator.originalMainTheoremC"
+      file: "MainTheoremsBCD.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: ".ci/bcd/original-main-c.json"
+      literature_dependencies: []
+    - declaration: "DaggerComparator.mainD"
+      file: "MainTheoremsBCD.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: ".ci/bcd/main-d.json"
+      literature_dependencies: []
+    - declaration: "DaggerComparator.mainA"
+      file: "MainTheoremsA.lean"
+      sorry_count: 0
+      axioms: ["propext", "Quot.sound", "Classical.choice"]
+      comparator_config: ".ci/a/main-a.json"
+      literature_dependencies: []
 automation:
   methods:
     - method: "agent"
@@ -604,24 +657,28 @@ automation:
       prompting_notes: >-
         The author requested short, directly reviewable Challenges importing
         only Mathlib, with existing theorem statements and coverage preserved.
-        GPT-6.1-Sol with xhigh is the implementation/review default; ultra is
-        reserved for identified hard obstacles, and new mathematics is treated
+        The initial implementation/review policy used GPT-6.1-Sol with xhigh;
+        the author later requested GPT-6-Sol with high for continued work.
+        Ultra is reserved for identified hard obstacles, and new mathematics is treated
         separately from translating an existing proof. The author subsequently
         requested formalization of the main theorems; MAIN_THEOREMS.md retains
         that complete objective and distinguishes the proved dependencies from
-        the still unproved model-categorical conclusions.
+        the then-unproved model-categorical conclusions.
   notes: >-
     AI generated the implementation and performed the documented checks.
     The manuscript-to-statement correspondence has been assessed by the agent;
     no independent human mathematical review is claimed.
 fidelity:
   divergences: >-
-    This is a partial formalization. Fin (n+1) represents the ordinal [n],
+    The foundation-specific descriptions below record the retained 27-Challenge
+    milestone; separate A/B/C/D main-result status is given under alignment.
+    This remains a partial formalization of the manuscript. Fin (n+1) represents the ordinal [n],
     and monotone-or-antitone is a property rather than an orientation tag.
     The dagger simplicial-set involution is expressed degreewise using SSet.opObjEquiv.
     Bool represents the two vertices in the algebraic word obstruction and
     the two objects of the integer dagger groupoid; their simplicial nerve
-    and model-categorical consequences are not formalized.
+    and model-categorical consequences had not been formalized at that
+    foundation milestone.
     The definition of FreeCofibration uses Mono in the dagger category.
     The original free functor is constructed via actual left Kan extension.
     A second, explicit pushout construction with swap dagger is proved left
@@ -721,7 +778,7 @@ fidelity:
     lifting, including dependent endpoint transports. The actual I-dagger is
     the union of all boundary cell maps and that object map; its RLP is exactly
     object surjectivity and boundary RLP on every hom. The boundary-RLP/trivial-Kan
-    comparison and main theorems remain unproved.
+    comparison remained open at this foundation milestone; separate local B/C/D certificates were completed later.
     The ordinary boundary-to-Kan proof uses the actual lower-boundary pushout
     onto the horn-to-upper-boundary inclusion, including dimension zero. The
     ordinary cell presentation keeps all new nondegenerate simplices, the
@@ -732,8 +789,8 @@ fidelity:
     universes and chooses the actual regular cardinal aleph0. Its actual I-dagger
     application discharges smallness, finite-domain and colimit premises using
     the original boundary and empty-to-point family. Both functorial factorization
-    classes are the literal I-dagger.rlp.llp and I-dagger.rlp. The weak-homotopy
-    equivalence comparison and main theorems remain unproved.
+    classes are the literal I-dagger.rlp.llp and I-dagger.rlp.     The weak-homotopy equivalence comparison was open at this foundation
+    milestone; separate local B/C/D certificates were completed later.
     Ordinary rigidification is the literal left Kan extension of Mathlib's
     standard simplicial thickening along uliftYoneda, which is Mathlib's
     standard simplex diagram. The restricted Yoneda nerve is naturally
@@ -743,8 +800,9 @@ fidelity:
     spaces lie in arbitrary common universe u; no fibrancy or model premise
     is imposed. The same rigidification is left adjoint to the actual Mathlib
     nerve, and its representable values are naturally the standard thickening.
-    Opposite coherence, the dagger lift and Quillen claims remain unproved.
-    See CORRESPONDENCE.md for the complete scope discussion.
+    The opposite coherence and dagger lift were still open in this foundation
+    milestone; the separate local B certificate proves the full formal target.
+    See CORRESPONDENCE.md for the verification boundary.
 review:
   status: "agent-reviewed"
   reviewers: ["Codex (GPT-6 Astra)", "Codex subagent (GPT-6.1-Sol, xhigh)"]
@@ -777,9 +835,21 @@ review:
     dce8401a23588ba65b8aa4ca41de26cb0203d444; the Challenges do not import it.
     Comparator establishes agreement with trusted specifications; their
     correspondence with the original manuscript still requires mathematical review.
+    The separate B/C/D Challenges import prior project definitions and models;
+    they are not among the 27 Mathlib-only foundation Challenges. The saved B and D statements and the universe-zero C instance passed local
+    frozen Comparator and default kernel replay. The actual public B export
+    passed locally; the generic C Challenge passed its strict frozen-closure
+    guard. Actual public B, generic C and D Comparator/default-kernel replay and
+    direct data export byte-identity passed locally; Linux CI remains pending. The actual
+    2767-module source build and data-only all-owner audit passed locally.
+    The separate A bridge is now registered from the actual 2771-module,
+    40022-declaration data-only audit. All five A cases passed, including normal
+    and frozen-Challenge positives and three compiled negative candidates;
+    the native A run retained five additional portable controls. A full
+    2771-source Linux run remains pending. No independent human review is claimed.
 
 alignment:
-  namespace: "DaggerModels"
+  namespace: "DaggerModels (foundations); DaggerComparator (local public A/B/C/D aliases)"
   statements:
     - source: "bg.def.dagger-scat"
       lean: "DaggerModels.DaggerSimplicialStructure"
@@ -843,7 +913,8 @@ alignment:
         u. All object maps are allowed, and no colimit or fullness premise is
         left in the four protected limits/colimits/LFP/LP conclusions.
         This completes the lemma; bg.lem.creation is recorded separately below.
-        The main theorems A-D remain unproved.
+        At this earlier foundation milestone the main theorems were unproved;
+        separate local B/C/D certificates were completed later.
     - source: "bg.lem.creation (limits)"
       lean: "DaggerModels.DaggerSimplicialCat.forget_createsLimits"
       module: "DaggerModels/DaggerOrdinaryCreation.lean"
@@ -1135,8 +1206,24 @@ alignment:
       status: "proved"
       note: >-
         The standard simplex diagram followed by the same rigidification is naturally isomorphic to Mathlib's original thickening diagram; uliftYoneda is definitionally SSet.stdSimplex.
-    - source: "Main theorems A-D"
-      status: "not-formalized"
+    - source: "bg.thm.main and bg.thm.left-proper (Theorem A)"
+      lean: "DaggerComparator.mainA"
+      module: "MainTheoremsA.lean"
+      status: "current-2771-native-build-and-expanded-all-owner-audit-passed; A-Comparator-and-default-kernel-passed-with-all-negative-controls; Linux-pending"
+      note: "Separate A certificate; 48-line project-import Challenge with a 366-module, 679416-line closure. Agent correspondence review only."
+    - source: "dj.thm.main and dj.thm.equivalence (Theorem B)"
+      lean: "DaggerComparator.mainB"
+      status: "local-frozen-statement-comparator-and-default-kernel-replay-passed; public-source-build-and-all-owner-audit-passed; public-B-export-comparator-and-kernel-passed; direct-export-byte-identical"
+    - source: "dj.thm.intrinsic-equivalence (full Theorem C)"
+      lean: "DaggerComparator.originalMainTheoremC"
+      status: "local-C-universe-zero-frozen-replay-passed; generic-public-source-build-and-all-owner-audit-passed; generic-challenge-frozen-closure-guard-passed; generic-public-comparator-and-kernel-passed; direct-export-byte-identical"
+    - source: "pointset.cor.no-naive-quillen (Theorem D)"
+      lean: "DaggerComparator.mainD"
+      status: "local-frozen-statement-comparator-and-default-kernel-replay-passed; public-source-build-and-all-owner-audit-passed; public-D-export-comparator-and-kernel-passed; direct-export-byte-identical"
+      note: >-
+        These three original Challenges import prior project definitions and
+        models. The source-to-manuscript comparison is an agent read-only review,
+        not independent human proof or external DCH-literature verification.
 acknowledgements: >-
   Lean, mathlib, leanprover/comparator, leanprover/lean4export, Landrun,
   cameronfreer/lean4-skills, and the mathlib-initiative/formalization.yaml

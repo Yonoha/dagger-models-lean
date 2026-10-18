@@ -2,20 +2,35 @@
 
 Scope of the current development, based on the manuscript inspected on 2026-10-01.
 Version 0.1.0 remains the immutable initial foundations release.
-Names below are in the `DaggerModels` namespace. A definition being implemented
+Foundation names below are in the `DaggerModels` namespace; the separate
+public A/B/C/D aliases are in `DaggerComparator`. A definition being
+implemented
 does not mean that every subsequent theorem about it has been proved.
 
-The current branch supplies twenty-seven self-contained Comparator Challenges for
-reviewing its mathematical scope. Each imports only Mathlib; definitions
+The retained foundation lane supplies twenty-seven self-contained Comparator
+Challenges. Each imports only Mathlib; definitions
 are visible in the Challenge rather than imported from this implementation.
 The intentional theorem-proof placeholders are specification markers, not
 unproved library results. A reviewer must inspect all twenty-seven files to review the
-whole checked scope. Comparator checks correspondence between their Lean
+whole foundation scope. Comparator checks correspondence between their Lean
 statements and the implementation, not the translation from the manuscript.
-The current total is 1,929 physical lines and 112 roots: 109 mathematical results
-and three definition markers. Twenty-five files have the standard 100-line
-budget; the existing 160-line and 116-line exceptions are unchanged. Smaller
-counts below describe earlier milestones, not the current coverage.
+The retained foundation total is 1,929 physical lines and 112 roots: 109
+mathematical results and three definition markers. Twenty-five files have the
+standard 100-line budget; the 160-line and 116-line exceptions are unchanged.
+The three separate B/C/D frozen Challenges import earlier project definitions
+and models; they are not part of those 27 Mathlib-only files or 112 roots.
+The separate 48-line A Challenge also imports project definitions, with a local
+import closure of 366 modules and 679,416 source lines; see
+[A_VERIFICATION.md](A_VERIFICATION.md).
+Smaller counts and open-result claims below describe earlier foundation
+milestones, not the current local certificate status.
+
+## Retained foundation milestones (historical scope)
+
+The sections until “Main-result status” record the retained 27-Challenge
+foundation development. Statements there about open main results describe the
+stage at which each foundation lemma was added; current local B/C/D certificate
+status is given in the status table and final section.
 
 ## The reversal simplex category
 
@@ -484,7 +499,7 @@ ordinary-rigidification extension brings the totals to 112 roots and 1,929 lines
 Tool pins, permitted axioms
 and negative controls are unchanged. Local finite presentability of dagger
 simplicial categories requires the further constructions below; the main
-theorems A–D remain unproved.
+theorems A–D had not been proved at that foundation milestone.
 
 ## Finitary words and limits over dagger graphs
 
@@ -536,7 +551,7 @@ discharged by the new theorem. These consequences are checked by Lean and
 the full namespace axiom audit; they are not additional Comparator roots.
 They do not assert the different claim in `bg.lem.creation`, whose forgetful
 functor goes to ordinary simplicial categories. General colimits and local
-finite presentability are proved next. The main theorems A–D remain unproved.
+finite presentability are proved next. At that foundation milestone, the main theorems A–D had not been proved.
 
 ## Dagger simplicial category colimits and local finite presentability
 
@@ -597,7 +612,7 @@ received separate agent reviews; this is not independent human review.
 
 Together with the preceding monadicity proof, this completes `bg.lem.presentable`.
 Creation by the distinct forgetful functor to ordinary simplicial categories
-in `bg.lem.creation` is proved next. The main theorems A–D remain unproved.
+in `bg.lem.creation` is proved next. At that foundation milestone, the main theorems A–D had not been proved.
 
 ## Creation over ordinary simplicial categories
 
@@ -656,7 +671,8 @@ two root proof bodies omitted. The existing 18 Challenges/configurations and
 96 roots were retained at this stage, giving 19 Challenges and 98 roots before
 the two-object cell specifications below.
 The implementation and statement correspondence received separate agent reviews;
-no independent human review is claimed. The main theorems A–D remain unproved.
+no independent human review is claimed. At that foundation milestone, the
+main theorems A–D had not been proved.
 
 ## Two-object cells and finite compactness
 
@@ -913,7 +929,7 @@ declarations, including generated declarations; only `propext`,
 `Classical.choice` and `Quot.sound` occur. Separate agent reviews are recorded,
 without a claim of independent human review. Exact-commit Linux checks remain
 separate from these local results. Weak homotopy equivalences, trivial Kan
-fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D remain unproved.
+fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D had not been proved at that foundation milestone.
 
 ## Ordinary rigidification using existing Mathlib results
 
@@ -979,10 +995,10 @@ adjunction, preservation of model classes, or any Quillen-equivalence claim.
 
 | Manuscript label | Result | Status |
 | --- | --- | --- |
-| `bg.thm.main`, `bg.thm.left-proper` | Dagger Bergner model structure and left properness; Theorem A | Not formalized |
-| `dj.thm.main`, `dj.thm.equivalence` | Dagger Joyal model structure and rigidification Quillen equivalence; Theorem B | Not formalized |
-| `dj.thm.intrinsic-equivalence` | Intrinsic recognition using unitary cores; Theorem C | Not formalized |
-| `pointset.cor.no-naive-quillen` | Comparison obstruction with the DCH model; Theorem D | Not formalized |
+| `bg.thm.main`, `bg.thm.left-proper` | Dagger Bergner model structure and left properness; Theorem A | `mainA.{u}` passed the 2771-module build, 40,022-declaration expanded audit and local Comparator (five A cases plus five retained controls); positive cases passed default-kernel replay; Linux pending; see `A_VERIFICATION.md` |
+| `dj.thm.main`, `dj.thm.equivalence` | Dagger Joyal model structure and rigidification Quillen equivalence; Theorem B | Saved package passed; public source built and audited; actual public export passed Comparator and default kernel locally |
+| `dj.thm.intrinsic-equivalence` | Intrinsic recognition using unitary cores; Theorem C | Saved certificate covers `Statement.{0}`; generic Challenge closure guarded; actual public `Statement.{u}` Comparator and kernel replay passed locally |
+| `pointset.cor.no-naive-quillen` | Comparison obstruction with the DCH model; Theorem D | Frozen statement and fresh public export Comparator-matched and kernel-replayed locally; public source built and all-owner audited |
 | `prop.sSetdag_is_equivalent_to_Fun` | Presheaf equivalence and presentability | Proved, with arbitrary value universe |
 | `dj.not.adjunctions` (simplicial sets) | Free–forgetful adjunction | Actual adjunction, zero-skeleton pushout, unit and swap proved |
 | `dj.not.adjunctions` (ordinary rigidification) | Ordinary rigidification and coherent nerve | Actual Mathlib-based adjunction, full natural nerve comparison, and standard-simplex comparison proved; opposite coherence and the dagger lift remain unproved |
@@ -1004,8 +1020,55 @@ adjunction, preservation of model classes, or any Quillen-equivalence claim.
 | `dj.prop.counterexample` | Rigidification need not preserve all monomorphisms as cofibrations | Vertex-level obstruction proved; proposition not proved |
 
 These results are not inserted as assumptions to make the project build.
-The full A–D objective and remaining dependencies are in
-[MAIN_THEOREMS.md](MAIN_THEOREMS.md). It also records a malformed hypothesis in
+The B/C/D statement contracts, current A verification boundary, and remaining Linux CI gate are in [MAIN_THEOREMS.md](MAIN_THEOREMS.md). It also records a malformed hypothesis in
 `dj.prop.strict-borel-presentation`; no manuscript change has been made here.
 The correspondence above is an explicit mathematical interpretation of the
 formal statements, not a machine-checked translation of the manuscript's prose.
+
+## Retained local B/C/D statement correspondence (2767-module scope)
+
+An internal agent read-only correspondence review examined the B, C, and D
+statement types; the [portable local verification summary](.ci/bcd/local-verification-summary.json)
+identifies the accepted review and local replay evidence without linking to local checkpoints. B covers the original model classes, left properness
+and rigidification Quillen equivalence. C covers all maps of the original
+dagger quasi-categories, all ordered original vertex pairs, and the same
+original unitary core, without extra Kan or comparison hypotheses. D includes
+existence and all three classes of the source model, both original tagged
+adjunction failures, and the restriction obstruction. The B ordinary trivial
+Kan comparison and D right-induced Joyal identification have internal bridge
+lemmas; this is not independent external-literature or human review.
+
+The local `MainTheoremsBCD.lean` module now exposes
+`DaggerComparator.mainB`, `DaggerComparator.originalMainTheoremC` and
+`DaggerComparator.mainD`; these are not old foundation roots. The saved portable certificate package passed official Comparator and default
+Lean kernel replay for B, D, and C at universe zero against immutable original
+Challenges. The C saved wrapper fixes `Statement.{0}`, while the public alias
+has type `Statement.{u}`. The new generic Challenge compiled; its strict guard
+found all 46,951 non-root constant records identical to the frozen export and
+the full root record identical after `u = 0` specialization. Actual public C
+Comparator and default-kernel replay passed locally. The saved package's normal control passed and its
+theorem-mismatch and forbidden-axiom controls were rejected. The portable
+package alone does not establish source integration. A later accepted local
+build covers all 2767 source modules, and the data-only auditor checks all
+40,006 owned declarations, 70 advertised results and four negative controls.
+The actual public B export passed locally. A first public C replay exposed
+the saved wrapper's universe-zero versus public generic type mismatch;
+the aligned generic Challenge passed its closure guard. Actual public B,
+generic C and D Comparator and default-kernel replay passed locally, and direct
+trusted data exports for the three declarations matched the accepted exports
+byte for byte. An unprivileged Linux job and new remote publication remain unverified. The
+27 foundation Challenges and 112 roots remain unchanged; the three B/C/D
+cases are separate. The 185 locally included `TopCatModelCategory` modules
+are attributed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); upstream
+terms are not yet confirmed.
+
+The separate current A bridge passed the full 2771-module local source build
+and expanded data-only audit of 40,022 owned declarations, 71 advertised
+results and eight main roots, including four rejected negative controls and a
+byte-identical restored positive. Its five A-specific local Comparator cases
+and five retained portable controls passed with default-kernel replay on the
+positive cases. The 48-line A Challenge imports 366 local modules covering
+679,416 source lines; an agent reviewed its manuscript correspondence, but no
+independent human review is recorded. These A results do not amount to a new
+2771-source B/C/D re-export comparison or a passed Linux CI run. See
+[A_VERIFICATION.md](A_VERIFICATION.md).

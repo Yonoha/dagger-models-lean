@@ -1,0 +1,160 @@
+{
+  "schema": "bcd-local-verification-summary/v1",
+  "host_scope": "local macOS verification; not Linux CI or remote publication",
+  "build": {
+    "passed": true,
+    "local_modules": 2767,
+    "bare_lake_build_passed": true,
+    "accepted_result_sha256": "b7eb56ba54c6c7ecfdddccff1b7a2ced216b8426722e1582d23f8d2b409a1611",
+    "portable_source_graph_sha256": "9502ed6d0cc9f374cd90cdf7eb551fbec004e0454738a414884a15770718a0dc"
+  },
+  "all_owner_audit": {
+    "passed": true,
+    "owned_declarations": 40006,
+    "owned_modules": 2767,
+    "advertised_results": 70,
+    "project_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "four_negative_controls_rejected": true,
+    "restored_positive_passed": true,
+    "result_sha256": "de11d0a38be4ad1a471a919dbc66e89d5c3a28dc4cba736482bd8630765aa282"
+  },
+  "public_results": [
+    {
+      "case": "B",
+      "declaration": "DaggerComparator.mainB",
+      "universe_parameters": [
+        "u"
+      ],
+      "official_Comparator_verifyMatch": "passed",
+      "Lean_default_kernel": "passed",
+      "direct_data_export_byte_identity": "passed",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ]
+    },
+    {
+      "case": "C",
+      "declaration": "DaggerComparator.originalMainTheoremC",
+      "universe_parameters": [
+        "u"
+      ],
+      "official_Comparator_verifyMatch": "passed",
+      "Lean_default_kernel": "passed",
+      "direct_data_export_byte_identity": "passed",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "case": "D",
+      "declaration": "DaggerComparator.mainD",
+      "universe_parameters": [
+        "u"
+      ],
+      "official_Comparator_verifyMatch": "passed",
+      "Lean_default_kernel": "passed",
+      "direct_data_export_byte_identity": "passed",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ]
+    }
+  ],
+  "comparator": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "control-Solution",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+        "solution_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc"
+      },
+      {
+        "case": "control-Mismatch",
+        "exit_code": 1,
+        "log_sha256": "a59f1b28183797176644f2113e0484f6f9bee315e29d12e2f11759f89bd5e755",
+        "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+        "solution_sha256": "1cee67010a6c3433265114e76d517b81c0f2ff9054eee62a6b79197d54d99da7"
+      },
+      {
+        "case": "control-ForbiddenAxiom",
+        "exit_code": 1,
+        "log_sha256": "3f6c847ca07189c67528cd1c19efef48229ff78307f62905095f96526e3abe96",
+        "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+        "solution_sha256": "8cac8e2b7b189116ada6d83fcc17a0df5dad4decf88913720ce7a1becd455257"
+      },
+      {
+        "case": "control-ChangedDefinition-unchanged",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374",
+        "solution_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374"
+      },
+      {
+        "case": "control-ChangedDefinition",
+        "exit_code": 1,
+        "log_sha256": "d3ea407139745d7b0908df407916d2ac3e8b2328bdd2a881eb294cbb9279e003",
+        "challenge_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374",
+        "solution_sha256": "5af26a3fa23140ece303f149a40bc09f7386fe41f55370c85e9ed6c1a84938de"
+      },
+      {
+        "case": "retained-frozen-C0",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "0a51c04a5ce1919234a1c338398937484e1092475847153fb2e520ec3e60f488",
+        "solution_sha256": "cffc96ecc93be3b2ef32efd2221913d6ed2b081d5da903b8bd5be005e1a27537"
+      },
+      {
+        "case": "B",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "5bb5ab20a101414222f0c0b3c7f569ef62d21d4105408397d56e4e35f55afb9c",
+        "solution_sha256": "66a9d0d90faab4e077401419953253a7f7d09b65e1da16fef59258c7457ec756"
+      },
+      {
+        "case": "C",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "004b6e63577547fb8e39cdc13d1ae22d5693ffef4365bd7ddbead359580759db",
+        "solution_sha256": "f508e2d689ab6270c8a84fa9ab0649a983af421fc3c963f21fde269ca901ed92"
+      },
+      {
+        "case": "D",
+        "exit_code": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "challenge_sha256": "e19ffded19a04e5ee645f8c3804b0e341158f01b124080374893464c20e781b5",
+        "solution_sha256": "98ec7adaf8f76fac341a1fe14d104bb0f797460575d4591f0c12615ff7691f2f"
+      }
+    ],
+    "exact_case_count": 9,
+    "result_sha256": "dabd4340c84bfd3c98fbc65cbe2e72cc2680a13b2f0c16b243a4311d05915ad6",
+    "direct_data_export_result_sha256": "a262e58c44bf7a4d20252bd52f23ed807d6f50031e86d8c033dc6b3a259d3c94",
+    "independent_data_readback_sha256": "ba73cb8f44f138644aba20d6773f899a688c95444915312ce58432d83930cf05"
+  },
+  "C_certificate_scope": {
+    "old_6320_outer_wrapper": "Statement.{0}; retained unchanged and separately replayed",
+    "new_additive_outer_wrapper": "Statement.{u}",
+    "new_manifest_sha256": "c247d0244d21a48e02359225b1428d8e168d4f99c4efb5fa9616b537f5d3aa67",
+    "nonroot_ConstantInfo_records_exact": 46951,
+    "whole_root_specializes_exactly_to_old_record_at_u_zero": true,
+    "preparation_receipt_pending_solution_flag_is_historical": true,
+    "actual_generic_solution_replay": "passed",
+    "project_import_exception": true,
+    "short_outer_wrappers_are_not_self_contained_Mathlib_only_Challenges": true
+  },
+  "independent_human_correspondence_review": false,
+  "upstream_distribution_terms_confirmed": false,
+  "new_remote_publication": false,
+  "real_unprivileged_Linux_CI": "pending",
+  "paper_link_update": "pending verified public release and upstream terms"
+}
