@@ -535,7 +535,7 @@ def landrun(a: argparse.Namespace, project: Path, payload: list[str],
              "--rox", str(a.auditor_binary.parent)]
     if not writable:
         args += ["--rox", str(a.legacy_exporter.parent)]
-    return args + payload
+    return args + ["--"] + payload
 
 
 def public_export_command(a: argparse.Namespace, project: Path, root: str) -> list[str]:
@@ -743,6 +743,7 @@ def compare(a: argparse.Namespace, name: str, challenge: Path, solution: Path,
         "--env", "PATH", "--env", "LEAN_PATH",
         "--env", "DAGGER_COMPARATOR_LOCAL_CONFIG",
         "--rox", str(a.lean_prefix), "--rox", str(a.replay_binary.parent),
+        "--",
         str(a.replay_binary), str(config_file),
     ]
     with log.open("wb") as out:

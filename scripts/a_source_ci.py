@@ -246,8 +246,10 @@ def sandboxed(ci, args, project: Path, case_root: Path, payload: list[str],
               *, writable: bool) -> list[str]:
     # landrun retains strict mode and project .lake read-only for every A process.
     command = ci.landrun(args, project, [], writable=False)
+    if not command or command[-1] != "--":
+        raise ValueError("Landrun payload delimiter missing")
     if writable:
-        command += ["--rw", str(case_root)]
+        command[-1:-1] = ["--rw", str(case_root)]
     return command + payload
 
 
