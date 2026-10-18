@@ -1,4 +1,4 @@
-name: BCD source Comparator (staged)
+name: Current ABCD source Comparator (hosted ABI9 guest)
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  compare-bcd-linux:
+  compare-current-abcd-linux:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
@@ -23,11 +23,17 @@ jobs:
           path: control
           persist-credentials: false
       - name: Refuse an unpublished or unpinned trusted asset
-        run: >-
-          python3 control/scripts/fetch_bcd_assets.py
-          --lock control/.ci/bcd/asset-lock.json
-          --output "$RUNNER_TEMP/bcd-trusted"
-          --preflight-only
+        run: |
+          python3 control/scripts/fetch_a_assets.py \
+            --lock control/.ci/a/asset-lock.json \
+            --output "$RUNNER_TEMP/a-trusted" \
+            --preflight-only
+          python3 control/scripts/fetch_bcd_assets.py \
+            --lock control/.ci/bcd/asset-lock.json \
+            --output "$RUNNER_TEMP/bcd-trusted" \
+            --preflight-only
+      - name: Require fresh hosted x64 KVM and reclaim only unused SDKs
+        run: bash control/scripts/host_prereq.sh
       - name: Check out candidate sources as data
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -35,11 +41,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           path: candidate
           persist-credentials: false
-      - name: Fetch and verify independently pinned trusted inputs
-        run: >-
-          python3 control/scripts/fetch_bcd_assets.py
-          --lock control/.ci/bcd/asset-lock.json
-          --output "$RUNNER_TEMP/bcd-trusted"
       - name: Check out strict Landrun source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -59,9 +60,6 @@ jobs:
         with:
           go-version-file: landrun/go.mod
           cache-dependency-path: landrun/go.sum
-      - name: Build strict Linux sandbox binary
-        working-directory: landrun
-        run: go build -o landrun cmd/landrun/main.go
       - name: Install pinned Lean toolchain
         uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1
         with:
@@ -70,94 +68,27 @@ jobs:
           build: "false"
           use-mathlib-cache: "false"
           use-github-cache: "false"
-      - name: Build separately pinned data-only owner auditor
+      - name: Run trusted host setup and strict current ABCD guest gates
         shell: bash
+        env:
+          BCD_CONTROL_REVISION: ${{ github.event.pull_request.base.sha || github.sha }}
+          BCD_SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           set -euo pipefail
-          audit_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["trusted-audit/TrustedBCDAudit.lean"])')"
-          python3 control/scripts/prepare_bcd_auditor.py \
-            --source "$RUNNER_TEMP/bcd-trusted/trusted-audit/TrustedBCDAudit.lean" \
-            --source-sha256 "$audit_sha" \
-            --toolchain "$RUNNER_TEMP/bcd-trusted/pins/lean-toolchain" \
-            --output "$RUNNER_TEMP/bcd-auditor"
-          (cd "$RUNNER_TEMP/bcd-auditor" && lake build bcdTrustedAudit)
-      - name: Build the pinned legacy exporter
-        working-directory: lean4export-legacy
-        run: lake build lean4export
-      - name: Verify saved package and build official Comparator replay frontend
-        run: >-
-          python3 "$RUNNER_TEMP/bcd-trusted/comparator-certificates/replay_certificates.py"
-          --prepare-only --lean "$(command -v lean)"
-      - name: Prepare trusted Mathlib cache project
-        run: >-
-          python3 control/scripts/prepare_bcd_cache.py
-          --pins "$RUNNER_TEMP/bcd-trusted/pins"
-          --output "$RUNNER_TEMP/bcd-cache"
-      - name: Download artifacts under pinned Mathlib manifest
-        working-directory: ${{ runner.temp }}/bcd-cache
-        run: lake exe cache get
-      - name: Enable unprivileged user systemd manager
-        run: |
-          sudo loginctl enable-linger "$(id -un)"
-          sudo systemctl start "user@$(id -u).service"
-          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
-      - name: Build current sources in enforced Landrun and compare fresh exports
-        shell: bash
-        run: |
-          set -euo pipefail
-          asset="$RUNNER_TEMP/bcd-trusted"
-          replay="$asset/comparator-certificates/.replay-work/tools"
-          asset_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["published_archive_sha256"])')"
-          graph_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["source-graph.json"])')"
-          audit_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["trusted-audit/TrustedBCDAudit.lean"])')"
-          owners_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["trusted-audit/owners.txt"])')"
-          advertised_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["trusted-audit/advertised.txt"])')"
-          main_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["trusted-audit/main-results.txt"])')"
-          c_manifest_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["c-universe-extension/manifest.json"])')"
-          c_extension_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["c-universe-extension/extension.json"])')"
-          c_guard_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["c-universe-extension/CheckGenericCClosure.lean"])')"
-          c_guard_result_sha="$(python3 -c 'import json; print(json.load(open("control/.ci/bcd/asset-lock.json"))["verified_local_content_sha256"]["c-universe-extension/closure-guard-result.json"])')"
-          trusted_lean_path="$(cd "$RUNNER_TEMP/bcd-cache" && lake env printenv LEAN_PATH)"
-          python3 control/scripts/bcd_source_ci.py \
-            --candidate "$GITHUB_WORKSPACE/candidate" \
-            --graph "$asset/source-graph.json" \
-            --graph-sha256 "$graph_sha" \
-            --auditor-binary "$RUNNER_TEMP/bcd-auditor/.lake/build/bin/bcdTrustedAudit" \
-            --auditor-source "$asset/trusted-audit/TrustedBCDAudit.lean" \
-            --auditor-source-sha256 "$audit_sha" \
-            --audit-owners "$asset/trusted-audit/owners.txt" \
-            --audit-owners-sha256 "$owners_sha" \
-            --audit-advertised "$asset/trusted-audit/advertised.txt" \
-            --audit-advertised-sha256 "$advertised_sha" \
-            --audit-main "$asset/trusted-audit/main-results.txt" \
-            --audit-main-sha256 "$main_sha" \
-            --frozen "$asset/comparator-certificates" \
-            --c-universe-extension "$asset/c-universe-extension" \
-            --c-universe-manifest-sha256 "$c_manifest_sha" \
-            --c-universe-extension-sha256 "$c_extension_sha" \
-            --c-universe-guard-sha256 "$c_guard_sha" \
-            --c-universe-guard-result-sha256 "$c_guard_result_sha" \
-            --pins "$asset/pins" \
-            --changed-definition-fixture "$asset/changed-definition" \
-            --cache-dotlake "$RUNNER_TEMP/bcd-cache/.lake" \
-            --work "$RUNNER_TEMP/bcd-run" \
-            --landrun "$GITHUB_WORKSPACE/landrun/landrun" \
-            --legacy-exporter "$GITHUB_WORKSPACE/lean4export-legacy/.lake/build/bin/lean4export" \
-            --replay-binary "$replay/comparator/.lake/build/bin/local_comparator_replay" \
-            --replay-lean-path "$replay/comparator/.lake/build/lib/lean:$replay/lean4checker/.lake/build/lib/lean" \
-            --trusted-lean-path "$trusted_lean_path" \
-            --source-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
-            --asset-sha256 "$asset_sha" \
-            --lean-prefix "$(lean --print-prefix)" \
-            --git-binary "$(command -v git)"
-      - name: Install trusted metadata validators
-        run: |
-          python3 -m venv "$RUNNER_TEMP/bcd-metadata-venv"
-          "$RUNNER_TEMP/bcd-metadata-venv/bin/python" -m pip install -r control/.ci/requirements.txt
-      - name: Validate exact 70 public and foundation results against data-only audit
-        run: >-
-          "$RUNNER_TEMP/bcd-metadata-venv/bin/python" control/scripts/check_metadata.py
-          --scope full
-          --candidate-root "$GITHUB_WORKSPACE/candidate"
-          --trusted-root "$GITHUB_WORKSPACE/control"
-          --axioms "$RUNNER_TEMP/bcd-run/audit-all-owners.log"
+          python3 control/scripts/hosted_abcd_vm.py \
+            --control-revision "$BCD_CONTROL_REVISION" \
+            --source-revision "$BCD_SOURCE_REVISION"
+      - name: Retain bounded ABCD verification evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: current-abcd-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/bcd-run/ci-candidate-result.json
+            ${{ runner.temp }}/bcd-run/audit-all-owners.log
+            ${{ runner.temp }}/bcd-run/audit-restored-owners.log
+            ${{ runner.temp }}/bcd-run/hosted-ci-receipt.json
+            ${{ runner.temp }}/bcd-candidate-hashes.json
+            ${{ runner.temp }}/bcd-vm-diagnostics/*.log
+          if-no-files-found: warn
+          retention-days: 90

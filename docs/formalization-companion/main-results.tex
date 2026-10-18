@@ -1,0 +1,83 @@
+\section{The main theorems of Part I}
+\label{sec:main}
+
+\begin{resultblock}
+\begin{theorem}[A: the dagger Bergner model structure]
+There is a left proper combinatorial model structure $\sCat^{\dag}_{\Bergner}$ on $\sCat^{\dag}$ with the prescribed generating cofibrations $I_{\dag}$, generating trivial cofibrations $J_{\dag}$, and dagger DK-equivalences $W_{\dag}$.
+Its three classes are
+\begin{align}
+\mathrm{Cof}&=I_{\dag}\text{-}\cof,&
+\mathrm{Fib}&=J_{\dag}\text{-}\inj,&
+\mathrm{W}&=W_{\dag}.
+\end{align}
+Here $W_{\dag}$ consists of local weak homotopy equivalences that are essentially surjective up to coherently unitary equivalence, using the specified standard fibrant replacement.
+The underlying category is locally finitely presentable, both generating families are small, and the domain of every generating map is finitely presentable.
+A functor $p:\mathcal C\to\mathcal D$ is a trivial fibration if and only if it is surjective on objects and every map
+$\mathcal C(x,y)\to\mathcal D(px,py)$ is a trivial Kan fibration.
+\end{theorem}
+\Evidence{DaggerComparator.mainA}{MainTheoremsA.lean:11; ChallengeTheoremA.lean:42}
+\Origin{Theorem A of Part I, including the model classes, generating data, trivial-fibration criterion, and left properness for the same model structure. The ordinary Kan--Quillen foundations are reused.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[B: the dagger Joyal model and its Quillen equivalence]
+There is a left proper combinatorial model structure $\sSet^{\dag}_{\Joyal}$ on $\sSet^{\dag}$ with
+\begin{align}
+\mathrm{Cof}&=I^{\sSet}_{\dag}\text{-}\cof=\{\text{free cofibrations}\},\\
+f\in W^{\sSet}_{\dag}&\Longleftrightarrow\frakC_{\dag}(f)\in W_{\dag},\\
+\mathrm{Fib}&=(\mathrm{Cof}\cap W^{\sSet}_{\dag})^{\square}.
+\end{align}
+The trivial cofibrations also have a small generating family.
+A map $p$ is a trivial fibration if and only if $\UdagSSet(p)$ is a trivial Kan fibration.
+Moreover, the original dagger rigidification--nerve adjunction
+\begin{align}
+\frakC_{\dag}:\sSet^{\dag}_{\Joyal}
+\ \rightleftarrows\ \sCat^{\dag}_{\Bergner}:N_{\dag}
+\end{align}
+is a Quillen equivalence.
+\end{theorem}
+\Evidence{DaggerComparator.mainB}{MainTheoremsBCD.lean:14; ChallengeActualMainTheoremB.lean:17,25}
+\Origin{Theorem B of Part I. The comparison uses the original dagger lift of ordinary rigidification and the same standard dagger Joyal model appearing in the model-structure statement.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[C: intrinsic recognition of dagger Joyal equivalences]
+Let $f:X\to Y$ be a dagger morphism between dagger quasi-categories.
+Full faithfulness means that, for every ordered pair of vertices $x,y\in X_0$, the induced map on the specified mapping fibers
+\begin{align}
+\Map_X(x,y)\longrightarrow\Map_Y(fx,fy)
+\end{align}
+is a weak homotopy equivalence.
+The following conditions are equivalent:
+\begin{enumerate}
+\item $f$ belongs to $W^{\sSet}_{\dag}$, equivalently it is a weak equivalence in $\sSet^{\dag}_{\Joyal}$;
+\item $f$ is fully faithful and $\pi_0\calU(f):\pi_0\calU(X)\to\pi_0\calU(Y)$ is surjective;
+\item $f$ is fully faithful and $\calU(f):\calU(X)\to\calU(Y)$ is a weak homotopy equivalence.
+\end{enumerate}
+All conditions use the same original unitary-core functor $\calU$.
+The full-faithfulness condition includes the case $x=y$.
+\end{theorem}
+\Evidence{DaggerComparator.originalMainTheoremC}{MainTheoremsBCD.lean:18; ChallengeOriginalMainTheoremC.lean:14,19,23,27}
+\Origin{Theorem C of Part I. The statement applies to every dagger morphism between dagger quasi-categories and relates local weak equivalences to unitary essential surjectivity.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[D: the anti-involutive model and the comparison obstruction]
+There is a model structure $\sSet^{\AInv}_{\DCH}$ whose cofibrations are the original normal monomorphisms, whose weak equivalences are the prescribed anti-Joyal mapping weak equivalences, and whose fibrations are the prescribed underlying Joyal candidate fibrations.
+For this model and the dagger Joyal model of Theorem B, neither of the original tagged-quotient adjunctions
+\begin{align}
+q_{\rmtag,!}:\sSet^{\AInv}_{\DCH}
+&\ \rightleftarrows\ \sSet^{\dag}_{\Joyal}:q_{\rmtag}^*,\\
+q_{\rmtag}^*:\sSet^{\dag}_{\Joyal}
+&\ \rightleftarrows\ \sSet^{\AInv}_{\DCH}:q_{\rmtag,*}
+\end{align}
+is a Quillen adjunction.
+In addition, restriction along the original inclusion $q_{\rmtag}^*$ does not recover the dagger Joyal cofibrations:
+\begin{align}
+\neg\,\forall f\text{ in }\sSet^{\dag},\quad
+\Cof_{\Joyal}(f)\ \Longleftrightarrow\ \Cof_{\DCH}(q_{\rmtag}^*f).
+\end{align}
+\end{theorem}
+\Evidence{DaggerComparator.mainD}{MainTheoremsBCD.lean:22; ChallengeActualMainTheoremD.lean:11}
+\Origin{Theorem D of Part I, together with the construction of the precise source model used in the formal statement. The obstruction concerns these specified models and adjunctions.}
+\end{resultblock}

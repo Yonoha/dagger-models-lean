@@ -1,0 +1,61 @@
+\clearpage
+\section{Source identification and validation}
+
+\subsection{The recorded source snapshot}
+This catalogue refers to the following saved local commit of \texttt{dagger-models-lean}:
+\Lean{d045ef954e1772463b92b5317fb2377f24d369ac}
+The mathematical source snapshot is
+\Lean{dfee9b568d8f67980b164fa830d189d106951a57}
+The project uses Lean \texttt{v4.27.0}.
+Source locations in the entries are relative to the project root and refer to this fixed source.
+All 91 named declarations were found in the saved audit of owned declarations.
+For all 58 referenced source files, the current SHA-256 agrees with the accepted source manifest.
+The mathematical notation in this companion follows Part I; the Lean declaration names remain unchanged.
+
+\subsection{Completed validation}
+The saved acceptance record dated October 18, 2026 reports:
+\begin{itemize}
+\item a sequential build of all 2,771 local Lean modules and a successful ordinary \texttt{lake build} with 5,717 jobs;
+\item an axiom audit of all 40,022 owned declarations, the 71 registered results, and eight main-result roots;
+\item only the standard axioms \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound};
+\item nine B/C/D cases and five A cases including controls, together with six external fixture compilations and five exports for A;
+\item rejection tests for weakened statements, added axioms, and a changed definition of left properness, together with four negative axiom-audit controls;
+\item byte-identical initial and separately restored audit logs, and unchanged source/olean snapshots before and after verification.
+\end{itemize}
+The number 40,022 counts owned declarations, including definitions, constructions, and auxiliary declarations.
+It is not a count of independent mathematical theorems.
+The forty entries in this catalogue group those declarations by mathematical content.
+
+The recorded execution used ARM64 Linux and continued from a partial cache.
+Acceptance combines the existing main controller with a separately checked restored supplement.
+It does not establish a cache-free rebuild, a fresh integrated full-controller run, or a successful hosted GitHub CI run.
+No Lean proof source was changed or rebuilt for the preparation of this catalogue.
+
+\subsection{Statement correspondence and Comparator}
+The main results have separate Challenge and Proof entry points.
+Comparator tests help detect deviations from the fixed Lean statements.
+They do not by themselves establish that those statements express the intended mathematics of the paper.
+The Challenge files currently import project definitions rather than specifying the problems independently from Mathlib alone.
+For example, the Challenge for A has 48 physical lines, but its transitive import closure contains 366 modules and 679,416 lines.
+Consequently, inspecting the short Challenge file alone does not inspect all mathematical definitions on which it depends.
+Manuscript correspondence has undergone AI-agent review; independent human review of that correspondence has not yet been completed.
+
+Parts of the general Smith machinery use restored closed proof terms.
+This catalogue records the concrete applications whose types and hypotheses are available for inspection.
+Likewise, the weak-equivalence criterion for a given localization is stated with that localization as an assumption; it is not a Bousfield-localization existence theorem.
+
+\subsection{Reused infrastructure and reproducibility data}
+The formalization uses Mathlib's category theory, presheaf and simplicial-set APIs, presentability theory, small object argument, and model-category infrastructure.
+The ordinary simplicial-set and topological model foundations also reuse a compatibility port of Joël Riou's
+\href{https://github.com/joelriou/topcat-model-category}{\texttt{joelriou/topcat-model-category}}.
+These upstream theorems are credited as reused foundations.
+The provenance fields distinguish applications of existing results from constructions carried out in the project.
+
+The saved source archive has SHA-256
+\Lean{9909907e571aafb8a09c794e707a5ea7477fe9f2a06f01f8fb70f532fd4716e7}
+The Linux acceptance aggregate has SHA-256
+\Lean{e1dc6ecd24838abc317ee635c87acd7f595437cffd763b561b00ed949511b73f}
+The local evidence directory under \texttt{lean-checkpoints} is
+\Lean{Linux-current-ABCD-acceptance-20261018-6955/}
+This companion explains the scope of the formalized results.
+The proof source, dependency pins, and validation records remain the authoritative artifacts for reproducing the checks.

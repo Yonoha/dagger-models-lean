@@ -1,26 +1,26 @@
 cff-version: 1.2.0
-message: "Please cite a released version or an exact commit; this development snapshot is not released."
+message: "Please cite this release candidate or an exact commit; consult PUBLICATION.md for verification scope."
 type: software
-title: "Dagger models in Lean: a partial formalization of Part I"
+title: "Dagger models in Lean: companion to Models for dagger (infinity,1)-categories I"
 authors:
   - family-names: Akasaka
     given-names: Keima
-version: 0.2.0-dev
-url: "https://github.com/Yonoha/dagger-models-lean"
+version: 0.2.0-rc1
+date-released: 2026-10-19
+url: "https://github.com/Yonoha/dagger-models-lean/releases/tag/v0.2.0-rc1"
 repository-code: "https://github.com/Yonoha/dagger-models-lean"
-# Applies to original companion code; copied third-party sources retain their
-# separate terms as recorded in THIRD_PARTY_NOTICES.md.
+# Covers original companion code and documentation, not a grant for third-party copies.
 license: Apache-2.0
 abstract: >-
-  An unpublished Lean 4 development snapshot accompanying Models for dagger
-  (infinity,1)-categories I: Dagger simplicial sets and unitary cores. The local
-  retained source build, axiom audit, Comparator and default-kernel replay cover
-  public Theorem B, generic Theorem C and Theorem D aliases in the saved
-  2767-module scope. The separate Theorem A bridge passed the current
-  2771-module local build, expanded all-owner audit and A-specific Comparator
-  with default-kernel replay. New 2771-source B/C/D re-export comparison remains
-  pending.
-  Unprivileged Linux CI and independent human manuscript review remain pending.
-  Apache-2.0 covers original companion code and documentation. Applicable
-  distribution terms for some copied third-party sources remain unconfirmed;
-  see THIRD_PARTY_NOTICES.md.
+  A Lean 4 companion accompanying Models for dagger (infinity,1)-categories I:
+  Dagger simplicial sets and unitary cores, developed with AI assistance.
+  The saved local ARM64 Linux validation covers 2771 modules, 40022 owned
+  declarations, 71 advertised results, eight main roots, nine B/C/D cases,
+  five A cases, and four rejected axiom-audit controls, with a byte-identical
+  restored audit. It continued from a partial cache and was not a cold rebuild
+  or a fresh integrated-controller execution. A hosted-CI pass and independent
+  human manuscript review are not claimed. The accompanying English catalogue
+  has AI-generated prose and uses the notation of Part I.
+  Apache-2.0 covers original companion code and documentation; copied sources
+  retain their own terms. The repository-wide license scope of some upstream
+  copies remains unconfirmed, as recorded in THIRD_PARTY_NOTICES.md.

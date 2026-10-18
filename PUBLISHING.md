@@ -1,4 +1,6 @@
-# Publishing the current Part I Lean companion
+# Historical preparation checklist for the Part I Lean companion
+
+The author has since authorized publication. See [PUBLICATION.md](PUBLICATION.md) for the release-candidate record and current scope. The text below preserves the earlier preparation checklist; it is not a claim that every proposed gate has completed.
 
 This is a **draft transaction checklist**, not a release record. It does not authorize a push, upload, public CI run, contact with a rights holder, or publication. The current source is `0.2.0-dev`; both trusted-asset public URLs are `null`. Keep `CITATION.cff` marked unpublished, without a release date, until an actual release has been made. Do not choose a tag or claim a public URL in advance.
 

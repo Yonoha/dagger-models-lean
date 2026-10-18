@@ -1,0 +1,27 @@
+{
+  "catalogue": {
+    "ai_generated_prose": true,
+    "asset": "part1-lean-formalization-companion-en.pdf",
+    "language": "English",
+    "major_result_entries": 40,
+    "pages": 16,
+    "sha256": "9a356b5e240b65fdc2297b099957647d80155da6c56e49963573732a5a935905"
+  },
+  "local_validation": {
+    "aggregate_sha256": "e1dc6ecd24838abc317ee635c87acd7f595437cffd763b561b00ed949511b73f",
+    "documentation_commit": "d045ef954e1772463b92b5317fb2377f24d369ac",
+    "hosted_CI_success_claimed": false,
+    "independent_human_correspondence_review_claimed": false,
+    "main_roots": 8,
+    "mathematical_source_commit": "dfee9b568d8f67980b164fa830d189d106951a57",
+    "modules": 2771,
+    "owned_declarations": 40022,
+    "registered_results": 71
+  },
+  "standalone_builder_sha256": "4c2fef0248fe4efc7ed9140ab1a68085eb564acd6a8f18da330fd718c52ab86a",
+  "trusted_inputs": {
+    "a": "https://github.com/Yonoha/dagger-models-lean/releases/download/verification-inputs-20261019/trusted-inputs-A-additive.tar.gz",
+    "bcd": "https://github.com/Yonoha/dagger-models-lean/releases/download/verification-inputs-20261019/trusted-inputs.tar.gz"
+  },
+  "version": "0.2.0-rc1"
+}

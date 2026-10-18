@@ -1,0 +1,44 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=24mm]{geometry}
+\usepackage{xcolor,booktabs,longtable,array,enumitem}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{bookmark}
+\usepackage{xurl}
+\usepackage{needspace}
+\input{part1-notation.tex}
+\hypersetup{pdftitle={Lean Formalization Companion to Models for Dagger (Infinity,1)-Categories I},pdfauthor={Keima Akasaka}}
+\setlist{nosep,leftmargin=2em}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0.2em}
+\setlength{\emergencystretch}{2em}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newenvironment{resultblock}{\par\noindent\begin{minipage}{\linewidth}}{\end{minipage}\par}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\Type}{\mathrm{Type}}
+\newcommand{\Cof}{\operatorname{Cof}}
+\newcommand{\Fib}{\operatorname{Fib}}
+\newcommand{\RLP}{\operatorname{RLP}}
+\newcommand{\LLP}{\operatorname{LLP}}
+\newcommand{\Sat}{\operatorname{Sat}}
+\newcommand{\Lean}[1]{\par\smallskip{\footnotesize\ttfamily\raggedright\nolinkurl{#1}\par}}
+\newcommand{\Evidence}[2]{\par{\footnotesize\textbf{Lean}\quad\nolinkurl{#1}\par\textbf{Source}\quad\nolinkurl{#2}\par}}
+\newcommand{\Origin}[1]{\par{\small\textbf{Provenance}\quad #1\par}\medskip}
+\title{Lean Formalization Companion to\\[0.3em]Models for Dagger $(\infty,1)$-Categories I\\[0.6em]{\large A Catalogue of Major Formalized Results}}
+\author{Keima Akasaka}
+\date{October 19, 2026}
+\begin{document}
+\setcounter{tocdepth}{1}
+\maketitle
+\input{overview.tex}
+\tableofcontents
+\clearpage
+\input{main-results.tex}
+\input{dagger-results.tex}
+\input{model-results.tex}
+\input{simplicial-results.tex}
+\input{verification.tex}
+\end{document}

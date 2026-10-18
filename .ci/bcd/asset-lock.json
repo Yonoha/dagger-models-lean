@@ -8,9 +8,9 @@
     "trusted_auditor": "trusted-audit/"
   },
   "published_archive_sha256": "21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3",
-  "published_archive_url": null,
+  "published_archive_url": "https://github.com/Yonoha/dagger-models-lean/releases/download/verification-inputs-20261019/trusted-inputs.tar.gz",
   "schema": "bcd-trusted-source-inputs/v1",
-  "source_status": "locally prepared release asset candidate; independent Linux CI and publication pending",
+  "source_status": "Published hash-pinned verification inputs; saved local acceptance and hosted CI status are recorded separately.",
   "tool_commits": {
     "comparator": "14fda6a603d433dad5db83ca55f15afc91190fda",
     "landrun": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4",

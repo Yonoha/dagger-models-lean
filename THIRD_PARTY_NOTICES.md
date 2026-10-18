@@ -1,4 +1,4 @@
-# Third-party source attribution — draft
+# Third-party source attribution and observed license scope
 
 ## TopCatModelCategory
 
@@ -18,4 +18,4 @@ The adapted `SSet/Simplices.lean` and `SSet/Subcomplex.lean` files now also carr
 explicit modification notices after their preserved upstream headers. The other
 three files in this table are byte-identical to the pinned upstream sources.
 
-**License status to confirm before distribution:** The pinned upstream repository snapshot contains no repository-level `LICENSE` or `NOTICE` file, although those five headers refer to a `LICENSE` file. The remaining included upstream files do not carry that header. This draft records provenance and preserves the observed file-level notices; it does not assign a verified repository-wide license to the copied sources. The companion's own Apache-2.0 `LICENSE` describes its original project code and does not, by itself, establish the terms for upstream files. Confirm the applicable upstream terms or obtain an explicit statement from the upstream rights holders before publishing the copied sources, then update this section with the confirmed license text and any required notices.
+**Unconfirmed repository-wide license scope:** The pinned upstream repository snapshot contains no repository-level `LICENSE` or `NOTICE` file, although those five headers refer to a `LICENSE` file. The remaining included upstream files do not carry that header. This record documents provenance and preserves the observed file-level notices; it does not assign a verified repository-wide license to the copied sources. The companion's own Apache-2.0 `LICENSE` describes its original project code and does not, by itself, establish the terms for upstream files. Confirm the applicable upstream terms or obtain an explicit statement from the upstream rights holders before publishing the copied sources, then update this section with the confirmed license text and any required notices.

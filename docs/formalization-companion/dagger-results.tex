@@ -1,0 +1,226 @@
+\section{Dagger categories and simplicial-categorical constructions}
+
+Here $u$ is an arbitrary universe of values.
+As in Part~I, universe levels are omitted from category notation and specified in the statements.
+A \emph{free cofibration} means the predicate defined in the formalization;
+the results below do not, by themselves, identify it with the cofibrations of a model structure.
+
+\subsection{Dagger simplicial sets and free constructions}
+
+\begin{resultblock}
+\begin{theorem}[Presheaves on the reversal simplex category]
+Let $\prism_{\rev}$ be the reversal simplex category of Part~I.
+For every universe $u$ there is an equivalence of categories
+\begin{align}
+  \sSet^{\dag}
+    &\simeq \Fun(\prism_{\rev}^{\myop},\Set_u).
+\end{align}
+The dagger fixes vertices, and the actions of monotone and antitone maps in $\prism_{\rev}$ agree on their overlap.
+\end{theorem}
+\Evidence{DaggerModels.nonempty_daggerSSetEquivalencePresheaf}{DaggerModels/Presheaf.lean:384}
+\Origin{The equivalence is constructed for the dagger simplicial sets of Part~I; it is not an existing Mathlib equivalence invoked under a new name.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Local finite presentability of dagger simplicial sets]
+For every universe $u$, the category $\sSet^{\dag}$ is locally finitely presentable at level $u$.
+In particular, it is locally presentable.
+\end{theorem}
+\Evidence{DaggerModels.daggerSSetLocallyFinitelyPresentable; DaggerModels.daggerSSetLocallyPresentable}{DaggerModels/Presentable.lean:75,83}
+\Origin{The preceding project-specific presheaf equivalence transports Mathlib's presentability results for presheaf categories without changing the universe of values.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[The free dagger simplicial-set adjunction]
+For every universe $u$, the forgetful functor $\UdagSSet$ to ordinary simplicial sets has a left adjoint $\FdagSSet$:
+\begin{align}
+  \FdagSSet:\sSet&\longrightarrow\sSet^{\dag},
+  &\FdagSSet&\dashv\UdagSSet.
+\end{align}
+\end{theorem}
+\Evidence{DaggerModels.exists_freeDaggerAdjunction}{DaggerModels/FreeDagger.lean:57}
+\Origin{A left Kan extension along the ordinary-simplex inclusion into the reversal simplex category, transported through the presheaf equivalence, gives the original forgetful functor its left adjoint. The explicit pushout description is the separate result below.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Free completion as a pushout over the zeroth skeleton]
+Let $\FdagSSet$ be any chosen left adjoint to $\UdagSSet$, with unit $\eta$.
+For each simplicial set $A$ there is a natural second inclusion $r_A:A^{\myop}\to \UdagSSet\FdagSSet(A)$.
+Writing $A^{(0)}=\sk_0A$ for the zeroth skeleton, the square
+\begin{align}
+  \begin{array}{ccc}
+    A^{(0)}&\longrightarrow&A^{\myop}\\
+    \big\downarrow&&\big\downarrow\scriptstyle r_A\\
+    A&\xrightarrow{\ \eta_A\ }&\UdagSSet\FdagSSet(A)
+  \end{array}
+\end{align}
+is a pushout.
+Moreover, $A^{(0)}$ is isomorphic to Lean's $(A.\mathrm{skeleton}\ 1).\mathrm{toSSet}$, and $\eta_A$ and $r_A$ satisfy both interchange equations for the dagger on the free object.
+Lean's \texttt{skeleton 1} denotes the zeroth skeleton in this formalization, not the ordinary one-dimensional skeleton.
+\end{theorem}
+\Evidence{DaggerModels.freeDagger_pushout; DaggerModels.freeDagger_skeleton_pushout}{DaggerModels/FreeDaggerPushout.lean:312; DaggerModels/FreeDaggerSkeleton.lean:19}
+\Origin{The common vertices, both inclusions, the adjunction unit, and the dagger interchange equations are constructed together.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{proposition}[Images of monomorphisms under free completion]
+Let $\FdagSSet\dashv\UdagSSet$ be any chosen free--forgetful adjunction.
+If $i:K\to L$ is a monomorphism of simplicial sets, then $\FdagSSet(i)$ is a free cofibration.
+\end{proposition}
+\Evidence{DaggerModels.freeDagger_map_freeCofibration}{DaggerModels/FreeDaggerCofibration.lean:194}
+\Origin{The proof uses the concrete pushout and positive-dimensional nondegenerate simplices. The conclusion concerns the specified free-cofibration predicate.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Free-boundary cell presentation of free cofibrations]
+Let $\FdagSSet\dashv\UdagSSet$ be any chosen free--forgetful adjunction, and let $I^{\sSet}_{\dag}$ be the family of free boundary inclusions $\FdagSSet(\partial\Delta^n)\to\FdagSSet(\Delta^n)$ in all degrees, as in Part~I.
+Every free cofibration is a relative $I^{\sSet}_{\dag}$-cell complex.
+As classes of morphisms,
+\begin{align}
+  I^{\sSet}_{\dag}\text{-}\cof
+    &= \{f\mid f\text{ is a free cofibration}\}.
+\end{align}
+On the left, $I^{\sSet}_{\dag}\text{-}\cof$ is the closure of the free boundary inclusions under coproducts, pushouts, transfinite compositions, and retracts.
+\end{theorem}
+\Evidence{DaggerModels.exists_relativeFreeBoundaryCellComplex; DaggerModels.freeBoundarySaturation_eq}{DaggerModels/RelativeCellPresentation.lean:91,99}
+\Origin{The relative skeletal filtration and its attaching pushouts give the cell presentation; individual closure lemmas are subsumed here.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{proposition}[Free cofibrations need not be normal monomorphisms]
+In every universe $u$ there is a morphism $f:X\to Y$ of dagger simplicial sets that is a free cofibration, while its image among anti-involutive simplicial sets is not a normal monomorphism.
+\end{proposition}
+\Evidence{DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono}{DaggerModels/NormalCofibrationObstruction.lean:143}
+\Origin{The counterexample uses the map from the initial object to the point object. It makes no general assertion about the cofibration classes of two model structures.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{proposition}[Ordinary equivalence need not be unitarily essentially surjective]
+There are dagger categories $\mathcal C,\mathcal D$ on small groupoids and a dagger-preserving functor $G:\mathcal C\to\mathcal D$ that is full, faithful, and an equivalence of ordinary categories, but is not essentially surjective by unitary isomorphisms.
+\end{proposition}
+\Evidence{DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective}{DaggerModels/UnitaryObstruction.lean:168}
+\Origin{A concrete two-object integer dagger groupoid supplies the example. The cited declaration does not include subsequent claims about nerves or weak equivalences.}
+\end{resultblock}
+
+\subsection{Dagger simplicial categories and presentability}
+
+\begin{resultblock}
+\begin{theorem}[Free dagger simplicial categories]
+For every universe $u$ and dagger simplicial graph $G$, there are a free dagger simplicial category $\FCatDag(G)$ and a graph map $\eta_G:G\to\UCatDag\FCatDag(G)$.
+Restriction along $\eta_G$ classifies functors from $\FCatDag(G)$ to any dagger simplicial category by a bijection; hence $\FCatDag\dashv\UCatDag$.
+\end{theorem}
+\Evidence{DaggerModels.exists_freeDaggerSimplicialCategory; DaggerModels.FreeDaggerSimplicialCategory.exists_freeDaggerSimplicialCategoryAdjunction}{DaggerModels/FreeDaggerSimplicialCategory.lean:115,106}
+\Origin{The free category is built explicitly from finite paths and their simplicial mapping sets.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Monadicity over dagger simplicial graphs]
+In a common universe $u$, the forgetful functor $\UCatDag$ from dagger simplicial categories to dagger simplicial graphs is a monadic right adjoint.
+\end{theorem}
+\Evidence{DaggerModels.DaggerSimplicialCat.forgetGraph_monadic}{DaggerModels/DaggerSimplicialMonadicity.lean:92}
+\Origin{The free adjunction, reflection of isomorphisms, and graph-split coequalizers are established in the formalization before applying Mathlib's Beck theorem. This is distinct from forgetting to ordinary simplicial categories.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Dagger simplicial graphs as presheaves]
+For every universe $u$ there is a small category $\mathcal I$ and an equivalence
+\begin{align}
+  \sGph^{\dag}
+    &\simeq \Fun(\mathcal I^{\myop},\Set_u).
+\end{align}
+Consequently, dagger simplicial graphs are locally finitely presentable at level $u$ and admit all $u$-small limits and colimits.
+\end{theorem}
+\Evidence{DaggerModels.exists_daggerGraphPresheafEquivalence; DaggerModels.daggerGraphLocallyFinitelyPresentable; DaggerModels.daggerGraphHasLimits; DaggerModels.daggerGraphHasColimits}{DaggerModels/DaggerGraphPresheaf.lean:36; DaggerModels/DaggerGraphPresentable.lean:27,19,23}
+\Origin{The index category and equivalence encode endpoints, simplicial edges, and reversal. Presentability and completeness follow by transport from Mathlib's presheaf results.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Finitarity of the free-word monad]
+In a common universe $u$ one may choose the free--forgetful adjunction $\FCatDag\dashv\UCatDag$ so that the composite $\UCatDag\FCatDag$ is $\aleph_0$-accessible.
+\end{theorem}
+\Evidence{DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction}{DaggerModels/FreeWordFinitary.lean:135}
+\Origin{The proof analyzes actual finite paths and endpoint pullbacks. It asserts finitarity for this particular monad, not for arbitrary monads.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Local finite presentability of dagger simplicial categories]
+In every common universe $u$, the category $\sCat^{\dag}$ has all $u$-small limits and colimits and is locally finitely presentable at level $u$.
+In particular, it is locally presentable.
+\end{theorem}
+\Evidence{DaggerModels.daggerSimplicialCatHasLimits; DaggerModels.daggerSimplicialCatHasColimits; DaggerModels.daggerSimplicialCatLocallyFinitelyPresentable; DaggerModels.daggerSimplicialCatLocallyPresentable}{DaggerModels/DaggerSimplicialPresentable.lean:16,19,23,28}
+\Origin{Colimits are constructed through semantic quotients of mapping spaces; finitely presentable free-graph generators then give the presentability criterion. This result does not assert a model structure.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Creation of limits and colimits by ordinary forgetting]
+Let $o$ and $v$ be independent universes for objects and simplicial mapping sets, and let $w,w'$ be independent universes for diagrams.
+The functor $\UdagSCat:\sCat^{\dag}\to\sCat$ creates limits and colimits of size $(w',w)$, also when the object and mapping-set universes are respectively $o$ and $v$.
+In particular, it lifts a given ordinary universal cone or cocone while retaining its apex.
+\end{theorem}
+\Evidence{DaggerModels.DaggerSimplicialCat.forget_createsLimits; DaggerModels.DaggerSimplicialCat.forget_createsColimits}{DaggerModels/DaggerOrdinaryCreation.lean:14,17}
+\Origin{This construction concerns forgetting to ordinary simplicial categories, rather than the monadic forgetful functor to dagger simplicial graphs.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Two-object free cells and finite presentability]
+For every universe $u$ and simplicial set $K$, there is a two-object free cell $\bbA_{\dag}(K)$ with objects $x,y$ and a specified map $K\to\bbA_{\dag}(K)(x,y)$.
+Restriction along this data classifies maps from $\bbA_{\dag}(K)$ to any target dagger simplicial category by a bijection.
+If, in addition, $K$ is a finite simplicial set, then $\bbA_{\dag}(K)$ is finitely presentable at level $u$.
+\end{theorem}
+\Evidence{DaggerModels.exists_twoObjectDaggerCell; DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell}{DaggerModels/TwoObjectDaggerCellUniversal.lean:22; DaggerModels/TwoObjectCellPresentability.lean:58}
+\Origin{The cell and its universal property are constructed directly; the finite-presentability conclusion uses Mathlib's result for finite simplicial sets under the stated extra hypothesis.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Small colimits of ordinary simplicial categories]
+In a common universe $u$, the category $\sCat$ of ordinary simplicial categories has all $u$-small colimits.
+\end{theorem}
+\Evidence{DaggerModels.simplicialCatHasColimits}{DaggerModels/SimplicialColimits.lean:160}
+\Origin{The construction uses free paths and semantic quotients of simplicial mapping sets. It also supplies colimits needed for the ordinary rigidification below.}
+\end{resultblock}
+
+\subsection{Rigidification and the unitary core}
+
+\begin{resultblock}
+\begin{theorem}[Ordinary rigidification, the coherent nerve, and opposites]
+In a common universe $u$, ordinary rigidification $\frakC:\sSet\to\sCat$, constructed as the left Kan extension of the standard simplex thickening, is left adjoint to the coherent nerve $N$.
+The latter is naturally isomorphic to Mathlib's simplicial nerve, and rigidification of the standard simplices is naturally isomorphic to their thickening.
+There is also a natural isomorphism
+\begin{align}
+  \frakC\circ\mathrm{op}_{\sSet}
+    &\cong \mathrm{op}_{\sCat}\circ\frakC
+\end{align}
+compatible with the double-opposite comparison and the double-reversal map of simplicial sets.
+\end{theorem}
+\Evidence{DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction; DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib; DaggerModels.OrdinaryRigidification.rigidification_simplex_iso; DaggerModels.OrdinaryRigidification.RigidificationOpposite.rigidificationOppositeIso; DaggerModels.OrdinaryRigidification.RigidificationOpposite.rigidificationOppositeIso_coherence}{DaggerModels/OrdinaryRigidification.lean:130,135,140; DaggerModels/RigidificationOpposite.lean:149,165}
+\Origin{The construction uses Mathlib's simplex thickening and presheaf Kan-extension API; the natural nerve and opposite comparisons, including coherence, are proved here. These are ordinary simplicial-categorical results.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[Dagger rigidification and its adjunction]
+In a common universe $u$, ordinary rigidification lifts to a functor
+\begin{align}
+  \frakC_{\dag}:\sSet^{\dag}
+    &\longrightarrow \sCat^{\dag}
+\end{align}
+with exactly the same underlying enriched functor.
+It is left adjoint to the dagger coherent nerve $N_{\dag}$.
+After forgetting the dagger, the unit and counit of $\frakC_{\dag}\dashv N_{\dag}$ agree with those of the original ordinary rigidification--coherent-nerve adjunction.
+\end{theorem}
+\Evidence{DaggerModels.OrdinaryRigidification.DaggerRigidification.daggerRigidification; DaggerModels.OrdinaryRigidification.DaggerRigidification.daggerRigidification_forget; DaggerModels.OrdinaryRigidification.DaggerAdjunction.daggerRigidificationCoherentNerveAdjunction; DaggerModels.OrdinaryRigidification.DaggerAdjunction.adjunction_unit; DaggerModels.OrdinaryRigidification.DaggerAdjunction.adjunction_counit}{DaggerModels/DaggerRigidification.lean:117,128; DaggerModels/DaggerAdjunction.lean:76,89,96}
+\Origin{The dagger lift retains the full ordinary enriched mapping data. The adjunction alone does not assert a Quillen equivalence.}
+\end{resultblock}
+
+\begin{resultblock}
+\begin{theorem}[The Kan dagger core and the unitary core of a Kan object]
+Let $X$ be a dagger simplicial set in universe $u$.
+If the underlying simplicial set of $X$ admits inner-horn fillers, then the underlying simplicial set of its original dagger core is a Kan complex, and its ordinary core $X^{\simeq}$ is the greatest Kan subcomplex of $X$.
+If, in addition, the underlying simplicial set of $X$ is itself a Kan complex, there is an isomorphism
+\begin{align}
+  \calU(X)&\cong V_{\mathrm{can}}(X).
+\end{align}
+Here $\calU(X)$ is the unitary core of Part~I, and $V_{\mathrm{can}}(X)$ abbreviates Lean's \nolinkurl{canonicalVertexFunctor.obj X}.
+\end{theorem}
+\Evidence{DaggerOriginalDaggerCoreKan.daggerCoreCandidate_kan; DaggerOriginalDaggerCoreKan.daggerCore_isGreatestKanSubcomplex; DaggerNativeOriginalKanUnitaryCanonicalIso.unitaryCanonicalIso}{OriginalDaggerCoreKan.lean:24,32; NativeOriginalKanUnitaryCanonicalIso.lean:37}
+\Origin{The core construction and Kan property are established for the specified inner-horn hypothesis; the unitary-core isomorphism requires the additional Kan hypothesis.}
+\end{resultblock}

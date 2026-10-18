@@ -3,6 +3,18 @@
 [![Lean verification](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/lean.yml)
 [![Comparator](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml/badge.svg)](https://github.com/Yonoha/dagger-models-lean/actions/workflows/comparator.yml)
 
+## Part I companion: v0.2.0-rc1
+
+This release candidate publishes the current A/B/C/D source snapshot, saved local Linux validation receipts, and an English catalogue of 40 substantial formalized results. It does not claim a hosted-CI pass or independent human manuscript review.
+
+- **[English catalogue (PDF)](https://github.com/Yonoha/dagger-models-lean/releases/download/v0.2.0-rc1/part1-lean-formalization-companion-en.pdf)**: notation follows Part I; the opening page explicitly identifies the prose, English translation, and result summaries as AI-generated.
+- **[Catalogue source and build instructions](docs/formalization-companion/README.md)**.
+- **[Main A/B/C/D entry points](MainTheoremsABCD.lean)** and [the exact main-result statements](MAIN_THEOREMS.md).
+- **[Saved local Linux receipts and owner-audit logs](verification/local-linux-20261018/README.md)**.
+- **[Publication scope](PUBLICATION.md)**, [third-party attribution and observed license scope](THIRD_PARTY_NOTICES.md), and [mathematical reuse](EXISTING_FORMALIZATIONS.md).
+
+For a paper citation, use the release tag or an exact commit rather than a moving branch. Version v0.1.0 is retained as the historical foundation milestone and does not contain the current main-theorem formalization.
+
 ## Current Theorem A local verification
 
 The current development adds `DaggerComparator.mainA` and a
@@ -23,7 +35,7 @@ rejected audit mutations. A separate
 restored owner audit matched the initial audit byte for byte, with all source
 and `.olean` files unchanged; the combined local result was accepted. This was
 a continuation from a verified partial cache, not a cold rebuild or a run of
-the new full controller, and hosted GitHub CI remains unrun.
+the new full controller, and no hosted GitHub CI success is claimed by these saved receipts.
 [A_VERIFICATION.md](A_VERIFICATION.md) records A's exact scope, and
 [LINUX_VERIFICATION.md](LINUX_VERIFICATION.md) binds the accepted local Linux
 result to its receipts; the saved B/C/D certificates below remain separate.

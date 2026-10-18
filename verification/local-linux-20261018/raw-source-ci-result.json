@@ -1,0 +1,313 @@
+{
+  "kind": "CURRENT_2771_ABCD_LINUX_COMPARATOR_RESULT",
+  "candidate_source_revision": "dfee9b568d8f67980b164fa830d189d106951a57",
+  "trusted_asset_sha256": "21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3",
+  "graph_sha256": "0a3af50bbf1dbb6ae6ddd5b679cb6d0120306c3f3d34777bc358cfd84859943f",
+  "auditor_source_sha256": "c513a930965ed19cc6d757276b6d83675eb44992bc87c1bcaefcd8ae3365db03",
+  "audit_inventory_sha256": {
+    "owners": "149da9a29e3cd8535e14acdb9e0c487c7692d4191fd5e9db97c03e1bee273aa2",
+    "advertised": "1c8b6763d2dfef7e29d8c2142f7a07d919a7340ef9e77efa33c98c97ec0806eb",
+    "main_results": "972cb0bee03545626e32f817aefb8a84603982f2a8e507c9ae57da01d9219b5b"
+  },
+  "owner_audit": {
+    "declaration_count": 40022,
+    "project_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "public_roots": [
+      "DaggerComparator.mainB",
+      "DaggerComparator.mainD",
+      "DaggerComparator.originalMainTheoremC"
+    ],
+    "metadata_result_count": 71,
+    "log_sha256": "0c3318eaf51dd4101127fe07ff1cbedf97c548afeaf070e09ec30d131b4568e5"
+  },
+  "owner_audit_negative_controls": [
+    {
+      "case": "proof-hole",
+      "exit": 1,
+      "log_sha256": "11179b636b6106b7d86dbb606bfcc7c6b6701669bab9f6dadb4d15f11f262dfa"
+    },
+    {
+      "case": "unused-public-extra-axiom",
+      "exit": 1,
+      "log_sha256": "202dbb8f8eaa34c3fbe0f34808cb96a204b237c2c63c2f147569681330a5f730"
+    },
+    {
+      "case": "external-transitive-axiom",
+      "exit": 1,
+      "log_sha256": "3dc37ac53011af51f86c2bcc488200418ae893b96b758f187a4adf88d72064be"
+    },
+    {
+      "case": "initializer-spoof",
+      "exit": 1,
+      "log_sha256": "1a03dd4eafd59895a69acee444eeae0927feb4898282f096c4d056321f8feb98"
+    }
+  ],
+  "candidate_source_hashes_sha256": "07849ab1b2f7841bf386defe00a70317cddedd9c1983c608f5b09cdcafe0ecef",
+  "candidate_public_source_sha256": "0e326733f08aa4f4defc20ecee3df60fb37e0e89b60e320fc4ff1d24afc951b0",
+  "landlock_write_denial_probe_passed": true,
+  "candidate_source_modules": 2771,
+  "candidate_public_export_module": "MainTheoremsBCD",
+  "generic_c_extension": {
+    "case": "C-generic-public",
+    "manifest_sha256": "c247d0244d21a48e02359225b1428d8e168d4f99c4efb5fa9616b537f5d3aa67",
+    "extension_sha256": "ccb4939cc13bdaa204e5971347ea739cbce6a8693d3522dcca96495edfc47520",
+    "guard_result_sha256": "c388443ff4653954066669a331014efb83e90c96e3f2be2c4a0079deac9de3ef",
+    "challenge_raw_sha256": "004b6e63577547fb8e39cdc13d1ae22d5693ffef4365bd7ddbead359580759db",
+    "old_C0_challenge_raw_sha256": "0a51c04a5ce1919234a1c338398937484e1092475847153fb2e520ec3e60f488",
+    "nonroot_constant_records_exact": 46951
+  },
+  "tool_commits": {
+    "comparator": "14fda6a603d433dad5db83ca55f15afc91190fda",
+    "lean4checker": "b7398199245524275543dec6113229c9bb4902e5",
+    "legacy_exporter": "bd93e5ed12fbeea19f39ec3ead659c293b2b8a95",
+    "landrun": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
+  },
+  "results": [
+    {
+      "case": "control-Solution",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+      "solution_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc"
+    },
+    {
+      "case": "control-Mismatch",
+      "exit": 1,
+      "log_sha256": "a59f1b28183797176644f2113e0484f6f9bee315e29d12e2f11759f89bd5e755",
+      "expected_exit": 1,
+      "expected_message": "Challenge and solution theorem statement do not match",
+      "default_kernel_acceptance_required": false,
+      "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+      "solution_sha256": "1cee67010a6c3433265114e76d517b81c0f2ff9054eee62a6b79197d54d99da7"
+    },
+    {
+      "case": "control-ForbiddenAxiom",
+      "exit": 1,
+      "log_sha256": "3f6c847ca07189c67528cd1c19efef48229ff78307f62905095f96526e3abe96",
+      "expected_exit": 1,
+      "expected_message": "Illegal axiom detected",
+      "default_kernel_acceptance_required": false,
+      "challenge_sha256": "c57f169bea7d402cdcebc11f852e1050a3bee7bd35dc29a05201ea66fe2542bc",
+      "solution_sha256": "8cac8e2b7b189116ada6d83fcc17a0df5dad4decf88913720ce7a1becd455257"
+    },
+    {
+      "case": "control-ChangedDefinition-unchanged",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374",
+      "solution_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374"
+    },
+    {
+      "case": "control-ChangedDefinition",
+      "exit": 1,
+      "log_sha256": "d3ea407139745d7b0908df407916d2ac3e8b2328bdd2a881eb294cbb9279e003",
+      "expected_exit": 1,
+      "expected_message": "Const does not match between challenge and target 'DaggerBCDComparatorControl.protectedDefinition'",
+      "default_kernel_acceptance_required": false,
+      "challenge_sha256": "b0807b140af27a044a29ed6789bfa4100fe29e6dbbcc6d1015152255824da374",
+      "solution_sha256": "5af26a3fa23140ece303f149a40bc09f7386fe41f55370c85e9ed6c1a84938de"
+    },
+    {
+      "case": "C-universe-zero-saved",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "0a51c04a5ce1919234a1c338398937484e1092475847153fb2e520ec3e60f488",
+      "solution_sha256": "cffc96ecc93be3b2ef32efd2221913d6ed2b081d5da903b8bd5be005e1a27537"
+    },
+    {
+      "case": "B",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "5bb5ab20a101414222f0c0b3c7f569ef62d21d4105408397d56e4e35f55afb9c",
+      "solution_sha256": "66a9d0d90faab4e077401419953253a7f7d09b65e1da16fef59258c7457ec756"
+    },
+    {
+      "case": "C-generic-public",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "004b6e63577547fb8e39cdc13d1ae22d5693ffef4365bd7ddbead359580759db",
+      "solution_sha256": "f508e2d689ab6270c8a84fa9ab0649a983af421fc3c963f21fde269ca901ed92"
+    },
+    {
+      "case": "D",
+      "exit": 0,
+      "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+      "expected_exit": 0,
+      "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+      "default_kernel_acceptance_required": true,
+      "challenge_sha256": "e19ffded19a04e5ee645f8c3804b0e341158f01b124080374893464c20e781b5",
+      "solution_sha256": "98ec7adaf8f76fac341a1fe14d104bb0f797460575d4591f0c12615ff7691f2f"
+    }
+  ],
+  "source_profile": "current-2771",
+  "current_source_BCD_checks": true,
+  "A_Comparator_passed": true,
+  "ABCD_aggregate_certificate_passed": true,
+  "A_Comparator_extension_required": false,
+  "A_additive_extension": {
+    "manifest_sha256": "3c33d4d9c26acbffa4ee7ac4c1859af155054785d1cdbf75aba8adaa6999a4cd",
+    "frozen_challenge_raw_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+    "native_original_receipt_sha256": "e1fd16fc4eb88ec459ed34bc253805f0791ec3ca0f67f542444f7a1de0c152ca",
+    "compiled_external_fixtures": [
+      {
+        "label": "ComparatorChallengeTheoremA",
+        "source_sha256": "e63def08b85954c44e515c1c098dd4aa50368f0f1e99d57074e213fd244a6deb",
+        "olean_sha256": "1627d5c8e051b520c2e0d53ab6c3a7a2475504856b4afb0b368344e96266d522",
+        "log_sha256": "886f9ae35d33ab854da10072c75f83f31ff470689f711f67289a7fcdacc7a319"
+      },
+      {
+        "label": "ComparatorSolutionAWeakened",
+        "source_sha256": "be46b25e9b145f32b95260ae07eac9b24ba0e6c5a51894c84fe64cbdd643a207",
+        "olean_sha256": "bc696cb81e63cb64d6fc2aa635ccac2a4ea767590d9f797008ab8aafc67fcd17",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "ComparatorSolutionAExtraAxiom",
+        "source_sha256": "dd7da4738ad39329403276d8344377f7d9f6a97c8844dc7ca00e479c658f15b2",
+        "olean_sha256": "cb9a649a254619ae161e526d5337d60345f5d15bf830eaceb6cfd6bb729cc91a",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "changed-ChallengeTheoremA",
+        "source_sha256": "49a59fa469314b662fc34533f48c118710ce2e1886fa13c1e2b99096e1637b31",
+        "olean_sha256": "b2648d078c0048ce562dadea1b694c3919eb651d8795e89a21081e684412ac58",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "changed-ProofTheoremA",
+        "source_sha256": "fd7505746ee206f2f53ab4c5c4b5ccd4eb02970041c64b5410bce0bdcb12c39b",
+        "olean_sha256": "acd9f0a736a20c150627cb726d731f433822c8e8e436dee7c0dd29080d4d833d",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "changed-MainTheoremsA",
+        "source_sha256": "fcd075451ab72dedb96b1adb0463775d6fd728ff80104e8aeaf7497c725e13d6",
+        "olean_sha256": "f61f803ea3c698f4e240249a0f3cc4221d9d8622ecded17526da05b8dba62e57",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "exports": [
+      {
+        "label": "A.challenge",
+        "module": "ComparatorChallengeTheoremA",
+        "raw_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+        "raw_bytes": 167485120
+      },
+      {
+        "label": "A.actual",
+        "module": "MainTheoremsA",
+        "raw_sha256": "1160601d1f343ef5b256f0be98ef5182e91bcb2e3f72932c9a65334a7b55f32e",
+        "raw_bytes": 199059393
+      },
+      {
+        "label": "A-weakened-True-negative",
+        "module": "ComparatorSolutionAWeakened",
+        "raw_sha256": "d3e457889ad1e0435c75aeda9c03eb8b7fa254595997192181ffbb81b59aa5f3",
+        "raw_bytes": 327864
+      },
+      {
+        "label": "A-extra-axiom-negative",
+        "module": "ComparatorSolutionAExtraAxiom",
+        "raw_sha256": "8b39889995a4d42accf0512eec5444f7db4f31d0155c14e93763a85cb2b71029",
+        "raw_bytes": 167483975
+      },
+      {
+        "label": "A.changed-leftProper",
+        "module": "MainTheoremsA",
+        "raw_sha256": "6fbf184b465f1b212be6438a1855f54a0f41600df94bcfda891766ca1bf52022",
+        "raw_bytes": 195435294
+      }
+    ],
+    "results": [
+      {
+        "case": "A-normal-control",
+        "exit": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "expected_exit": 0,
+        "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+        "default_kernel_acceptance_required": true,
+        "challenge_sha256": "1160601d1f343ef5b256f0be98ef5182e91bcb2e3f72932c9a65334a7b55f32e",
+        "solution_sha256": "1160601d1f343ef5b256f0be98ef5182e91bcb2e3f72932c9a65334a7b55f32e",
+        "expected_lines": [
+          "Running Lean default kernel on solution.",
+          "Lean default kernel accepts the solution",
+          "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED"
+        ]
+      },
+      {
+        "case": "A-positive",
+        "exit": 0,
+        "log_sha256": "538537409f073c0636b38036fa62763cce7a9979e86bd7ee7d1e51c291fc7287",
+        "expected_exit": 0,
+        "expected_message": "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED",
+        "default_kernel_acceptance_required": true,
+        "challenge_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+        "solution_sha256": "1160601d1f343ef5b256f0be98ef5182e91bcb2e3f72932c9a65334a7b55f32e",
+        "expected_lines": [
+          "Running Lean default kernel on solution.",
+          "Lean default kernel accepts the solution",
+          "OFFICIAL_COMPARATOR_VERIFYMATCH_AND_KERNEL_REPLAY_PASSED"
+        ]
+      },
+      {
+        "case": "A-weakened-True-negative",
+        "exit": 1,
+        "log_sha256": "dff68abedf1acf604aefd8ecd52db50fab24ff23295ec18b36fd77936492dacb",
+        "expected_exit": 1,
+        "expected_message": "uncaught exception: Challenge and solution theorem statement do not match: 'DaggerComparator.mainA'",
+        "default_kernel_acceptance_required": false,
+        "challenge_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+        "solution_sha256": "d3e457889ad1e0435c75aeda9c03eb8b7fa254595997192181ffbb81b59aa5f3",
+        "expected_lines": [
+          "uncaught exception: Challenge and solution theorem statement do not match: 'DaggerComparator.mainA'"
+        ]
+      },
+      {
+        "case": "A-extra-axiom-negative",
+        "exit": 1,
+        "log_sha256": "b3027a2d214db62f86d3bd1c0d117a4735fa0b83d9c8ddffb52a9e74881e9f29",
+        "expected_exit": 1,
+        "expected_message": "uncaught exception: Illegal axiom detected: 'DaggerComparator.AExtraAxiom'",
+        "default_kernel_acceptance_required": false,
+        "challenge_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+        "solution_sha256": "8b39889995a4d42accf0512eec5444f7db4f31d0155c14e93763a85cb2b71029",
+        "expected_lines": [
+          "uncaught exception: Illegal axiom detected: 'DaggerComparator.AExtraAxiom'"
+        ]
+      },
+      {
+        "case": "A-changed-leftProper-negative",
+        "exit": 1,
+        "log_sha256": "fe1e9900e8418cf6dc2f0c6d044fab27481d7f9ef6cca5bc2ebb5c9d6a3c07f6",
+        "expected_exit": 1,
+        "expected_message": "uncaught exception: Const does not match between challenge and target 'DaggerTheoremAChallenge.leftProper'",
+        "default_kernel_acceptance_required": false,
+        "challenge_sha256": "7f66fb16e9e602e326a266ec39ab9aaf3c53ba136361e157bd857ddb081e206a",
+        "solution_sha256": "6fbf184b465f1b212be6438a1855f54a0f41600df94bcfda891766ca1bf52022",
+        "expected_lines": [
+          "uncaught exception: Const does not match between challenge and target 'DaggerTheoremAChallenge.leftProper'"
+        ]
+      }
+    ],
+    "full_2771_source_and_olean_hashes_restored": true
+  }
+}
