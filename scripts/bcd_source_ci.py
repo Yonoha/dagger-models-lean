@@ -743,6 +743,7 @@ def compare(a: argparse.Namespace, name: str, challenge: Path, solution: Path,
         "--env", "PATH", "--env", "LEAN_PATH",
         "--env", "DAGGER_COMPARATOR_LOCAL_CONFIG",
         "--rox", str(a.lean_prefix), "--rox", str(a.replay_binary.parent),
+        "--rox", "/usr/bin/which", "--rox", "/bin/sh",
         "--",
         str(a.replay_binary), str(config_file),
     ]
