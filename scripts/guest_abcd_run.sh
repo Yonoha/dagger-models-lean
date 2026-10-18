@@ -183,4 +183,5 @@ python3 "$control/scripts/bcd_source_ci.py" \
 
 test -s "$RUNNER_TEMP/bcd-run/ci-candidate-result.json"
 test -s "$RUNNER_TEMP/bcd-run/audit-all-owners.log"
+test -s "$RUNNER_TEMP/bcd-run/audit-restored-owners.log"
 echo GUEST_CURRENT_ABCD_SOURCE_CI_PASSED

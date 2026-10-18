@@ -107,12 +107,17 @@ def verify_checkout_revisions(workspace: Path, control_revision: str,
 
 
 def host_receipt(control_revision: str, source_revision: str,
-                 result_path: Path, audit_path: Path) -> dict:
+                 result_path: Path, audit_path: Path,
+                 restored_audit_path: Path) -> dict:
+    if restored_audit_path.read_bytes() != audit_path.read_bytes():
+        raise RuntimeError("restored owner-audit bytes differ before host receipt")
     return {"kind": "HOSTED_CURRENT_ABCD_VM_CI_RECEIPT",
             "control_revision": control_revision,
             "candidate_source_revision": source_revision,
             "guest_result_sha256": sha256(result_path),
             "owner_audit_log_sha256": sha256(audit_path),
+            "restored_owner_audit_log_sha256": sha256(restored_audit_path),
+            "restored_owner_audit_byte_identical": True,
             "retained_comparator_cases": 9,
             "A_comparator_cases": 5,
             "owner_audit_negative_controls": 4,
@@ -322,11 +327,13 @@ def make_seed(temp: Path, uid: int) -> tuple[Path, Path, Path]:
 
 def validate_guest_result(result: dict, *, source_revision: str, lock: dict,
                           a_lock: dict, candidate_hashes_sha256: str,
-                          audit_log_sha256: str, audit_report: dict) -> None:
+                          audit_log_sha256: str, audit_report: dict,
+                          restored_audit_log_sha256: str,
+                          restored_audit_report: dict) -> None:
     """Require all current-source gates before metadata checks and host receipt.
 
-    Audit JSON comes from the copied log whose digest is checked against the
-    guest receipt. Metadata validation still independently checks all 71 roots.
+    Both audit JSON files are copied from the guest and must be byte-identical.
+    Metadata validation still independently checks all 71 roots.
     """
     required_main = {
         "DaggerActualMainTheoremBProof.verified",
@@ -423,6 +430,14 @@ def validate_guest_result(result: dict, *, source_revision: str, lock: dict,
         raise RuntimeError("Landrun write-denial probe missing")
     if audit_log_sha256 != result.get("owner_audit", {}).get("log_sha256"):
         raise RuntimeError("copied owner-audit log differs from guest result")
+    restored_receipt = result.get("owner_audit_restored")
+    if (restored_audit_log_sha256 != audit_log_sha256 or
+            restored_audit_report != audit_report or
+            not isinstance(restored_receipt, dict) or
+            set(restored_receipt) != {"log_sha256", "byte_identical_to_initial"} or
+            restored_receipt.get("log_sha256") != restored_audit_log_sha256 or
+            restored_receipt.get("byte_identical_to_initial") is not True):
+        raise RuntimeError("restored owner-audit report differs from initial positive")
 
 
 def main() -> None:
@@ -583,6 +598,8 @@ def main() -> None:
                 output.mkdir()
                 guest.copy_output(output / "audit-all-owners.log",
                                   output / "audit-all-owners.log")
+                guest.copy_output(output / "audit-restored-owners.log",
+                                  output / "audit-restored-owners.log")
                 guest.copy_output(output / "ci-candidate-result.json",
                                   output / "ci-candidate-result.json")
             except Exception:
@@ -607,10 +624,16 @@ def main() -> None:
     result = json.loads(result_path.read_text())
     audit_path = runner_temp / "bcd-run/audit-all-owners.log"
     audit_report = json.loads(audit_path.read_text())
+    restored_audit_path = runner_temp / "bcd-run/audit-restored-owners.log"
+    if restored_audit_path.read_bytes() != audit_path.read_bytes():
+        raise RuntimeError("copied restored owner-audit bytes differ")
+    restored_audit_report = json.loads(restored_audit_path.read_text())
     validate_guest_result(result, source_revision=a.source_revision,
                           lock=lock, a_lock=a_lock,
                           candidate_hashes_sha256=sha256(runner_temp / "bcd-candidate-hashes.json"),
-                          audit_log_sha256=sha256(audit_path), audit_report=audit_report)
+                          audit_log_sha256=sha256(audit_path), audit_report=audit_report,
+                          restored_audit_log_sha256=sha256(restored_audit_path),
+                          restored_audit_report=restored_audit_report)
     venv = runner_temp / "bcd-metadata-venv"
     run(sys.executable, "-m", "venv", str(venv))
     vpython = str(venv / "bin/python")
@@ -620,7 +643,7 @@ def main() -> None:
         "--trusted-root", str(control),
         "--axioms", str(runner_temp / "bcd-run/audit-all-owners.log"))
     receipt = host_receipt(a.control_revision, a.source_revision, result_path,
-                           runner_temp / "bcd-run/audit-all-owners.log")
+                           audit_path, restored_audit_path)
     (runner_temp / "bcd-run/hosted-ci-receipt.json").write_text(
         json.dumps(receipt, indent=2, sort_keys=True) + "\n")
     print("HOSTED_CURRENT_ABCD_VM_CI_PASSED", flush=True)

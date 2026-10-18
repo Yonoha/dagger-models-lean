@@ -522,6 +522,24 @@ def validate_owner_audit_output(log: Path, expected_modules: list[str],
             "log_sha256": digest(log)}
 
 
+def run_restored_owner_audit(a: argparse.Namespace, project: Path,
+                             expected_modules: list[str],
+                             expected_advertised: list[str],
+                             initial_summary: dict) -> dict:
+    """Rerun the same strict auditor after negatives and require identical bytes."""
+    initial = a.work / "audit-all-owners.log"
+    restored = a.work / "audit-restored-owners.log"
+    if not initial.is_file() or restored.exists():
+        raise RuntimeError("restored owner audit requires a fresh output and initial audit")
+    systemd(a, project, auditor_command(a, project), restored,
+            timeout=3600, lean_path=a.audit_lean_path)
+    summary = validate_owner_audit_output(
+        restored, expected_modules, expected_advertised, a.source_profile)
+    if summary != initial_summary or restored.read_bytes() != initial.read_bytes():
+        raise RuntimeError("restored owner audit differs from initial positive")
+    return {"log_sha256": digest(restored), "byte_identical_to_initial": True}
+
+
 def landrun(a: argparse.Namespace, project: Path, payload: list[str],
             *, writable: bool) -> list[str]:
     # Deliberately omit --best-effort. Unsupported Landlock must fail closed.
@@ -865,11 +883,12 @@ def main() -> None:
     systemd(args, project, owner_audit, args.work / "audit-all-owners.log",
             timeout=3600, lean_path=args.audit_lean_path)
     graph = json.loads(checked(args.graph, args.graph_sha256).read_text())
+    expected_modules = [row["module"] for row in graph["local_source_modules"]]
+    expected_advertised = inventory_names(args.audit_advertised,
+                                          args.audit_advertised_sha256)
     audit_report = validate_owner_audit_output(
         args.work / "audit-all-owners.log",
-        [row["module"] for row in graph["local_source_modules"]],
-        inventory_names(args.audit_advertised, args.audit_advertised_sha256),
-        args.source_profile)
+        expected_modules, expected_advertised, args.source_profile)
     audit_controls = []
     for case in ("B", "C", "D"):
         if case == "C":
@@ -913,6 +932,8 @@ def main() -> None:
     a_result = (a_helper.run(args, sys.modules[__name__], project, a_preflight,
                                results, audit_controls, audit_report)
                 if a_preflight is not None else None)
+    restored_owner_audit = run_restored_owner_audit(
+        args, project, expected_modules, expected_advertised, audit_report)
     result = {
         "kind": "FRESH_CANDIDATE_BCD_LINUX_COMPARATOR_RESULT",
         "candidate_source_revision": args.source_revision,
@@ -925,6 +946,7 @@ def main() -> None:
             "main_results": args.audit_main_sha256,
         },
         "owner_audit": audit_report,
+        "owner_audit_restored": restored_owner_audit,
         "owner_audit_negative_controls": audit_controls,
         "candidate_source_hashes_sha256": digest(args.work / "candidate-source-hashes.json"),
         "candidate_public_source_sha256": digest(project / f"{PUBLIC_MODULE}.lean"),

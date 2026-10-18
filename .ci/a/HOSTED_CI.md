@@ -17,7 +17,9 @@ The guest uses a fixed Debian cloud image and a fixed snapshot index for kernel
 user. Strict Landrun and user systemd remain required. The current source runner
 builds all 2771 modules, audits the 71 advertised results and eight main roots,
 retains the nine B/C/D Comparator cases and four audit negatives, and adds the
-five A comparisons. The host checks the copied result and audit-log hash, then
+five A comparisons. After the four audit negatives and five A comparisons, the
+guest repeats the same all-owner audit and requires byte-identical output to the first positive.
+The host copies both audit logs, verifies their bytes and receipt hashes, then
 independently validates exact current metadata before writing its receipt.
 
 The A fetcher writes a fetch receipt next to the verified payload. The host
@@ -66,7 +68,8 @@ enforcement, Comparator success or Linux acceptance.
 
 The proposed workflow ends with a pinned `actions/upload-artifact` step that
 runs with `always()`. It collects only `bcd-run/ci-candidate-result.json`,
-`bcd-run/audit-all-owners.log`, `bcd-run/hosted-ci-receipt.json`,
+`bcd-run/audit-all-owners.log`, `bcd-run/audit-restored-owners.log`,
+`bcd-run/hosted-ci-receipt.json`,
 `bcd-candidate-hashes.json`, and `bcd-vm-diagnostics/*.log` from the runner
 temporary directory. It does not collect the VM disk, dependency caches,
 toolchains, trusted archives or raw proof exports. The existing read-only
@@ -76,7 +79,7 @@ The artifact name contains the candidate's full commit SHA, workflow run ID
 and run attempt. Missing files produce a warning. A partial or failed run can
 therefore leave an artifact; artifact existence is not a success certificate.
 The host writes `hosted-ci-receipt.json` only after validating the complete
-guest result, copied audit log and all 71 metadata results.
+guest result, both copied audit logs and all 71 metadata results.
 
 The action is fixed at commit
 `cf430e030ddbb5b0abf93d22962f4752f3646cd9` (v7.0.2). Retention is requested

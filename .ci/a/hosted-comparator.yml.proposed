@@ -86,6 +86,7 @@ jobs:
           path: |
             ${{ runner.temp }}/bcd-run/ci-candidate-result.json
             ${{ runner.temp }}/bcd-run/audit-all-owners.log
+            ${{ runner.temp }}/bcd-run/audit-restored-owners.log
             ${{ runner.temp }}/bcd-run/hosted-ci-receipt.json
             ${{ runner.temp }}/bcd-candidate-hashes.json
             ${{ runner.temp }}/bcd-vm-diagnostics/*.log
