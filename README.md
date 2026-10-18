@@ -19,6 +19,8 @@ definition were rejected. This is macOS local evidence; Linux verification and
 new 2771-source B/C/D re-export comparison remain pending.
 [A_VERIFICATION.md](A_VERIFICATION.md) records the exact scope; the saved B/C/D
 certificates below remain separate.
+See [PUBLISHING.md](PUBLISHING.md) for the ordered publication checks,
+trusted-asset handling and permanent paper-facing record.
 
 ## Retained B/C/D local evidence (2767-module scope)
 

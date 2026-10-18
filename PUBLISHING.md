@@ -1,0 +1,48 @@
+# Publishing the current Part I Lean companion
+
+This is a **draft transaction checklist**, not a release record. It does not authorize a push, upload, public CI run, contact with a rights holder, or publication. The current source is `0.2.0-dev`; both trusted-asset public URLs are `null`. Keep `CITATION.cff` marked unpublished, without a release date, until an actual release has been made. Do not choose a tag or claim a public URL in advance.
+
+## What the candidate establishes
+
+The local macOS run built all 2771 Lean source modules and audited 40,022 owned declarations, 71 advertised results, and eight main roots. The A-specific run passed five A comparisons and five retained controls. The older B/C/D nine-case certificate belongs to the historical 2767-module snapshot; a fresh B/C/D re-export comparison for the 2771-module snapshot belongs to the Linux gate. A complete Linux result and a hosted GitHub result must each be checked from their actual receipts before claiming either passed.
+
+`ChallengeTheoremA.lean` is 48 lines but imports project definitions. Its import closure contains 366 local modules and 679,416 source lines. It is an explicit exception to the Mathlib-only Challenge convention. Agent statement review has been recorded; independent human manuscript review has not. A Lean build, audit, and Comparator run do not by themselves establish manuscript correspondence.
+
+## Ordered publication transaction
+
+1. **Accept the exact local Linux result first.** Check the final exit status, source/control revision binding, 2771 owner modules, 71 advertised results, eight main roots, the three allowed kernel axioms, all nine B/C/D and five A comparisons, four rejected audit mutations, restored positive, current metadata, strict Landlock/guest requirements, and the result/audit hashes. An incomplete or interrupted run is not a pass. Record the result's exact source SHA. If source or trusted controls later change, determine whether the result still covers the final tree; run the final hosted gate on the final commit in any case.
+2. **Resolve distribution terms before public upload.** `THIRD_PARTY_NOTICES.md` identifies 185 copied `TopCatModelCategory` source files. Five carry explicit file-level Apache-2.0 headers; applicable terms for the remaining 180 have not been confirmed. Verify the terms from appropriate primary evidence or obtain an explicit rights statement, preserve required copyright and modification notices, and update the notices and any required license text. Check copied content in both trusted archives too. The companion's own Apache-2.0 license does not automatically license upstream copies. If rights cannot be established, do not distribute those copies; removing them changes the source and requires renewed verification.
+3. **Only after publication is authorized, place the two already hash-pinned archives at immutable HTTPS locations.** Use distinct asset filenames: `trusted-inputs.tar.gz` for B/C/D and `trusted-inputs-A-additive.tar.gz` for A. The B/C/D archive SHA-256 is `21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3`. The additive A archive SHA-256 is `708769593918d887f04cfff0794439ef0356584ce690c699b355b28969b89d64`, with independently pinned inner manifest SHA-256 `3c33d4d9c26acbffa4ee7ac4c1859af155054785d1cdbf75aba8adaa6999a4cd`. The asset location must not depend on the *final* source commit or tag, because the actual asset URLs must be written into that commit's locks. A separate fixed asset release or another immutable HTTPS store can break this cycle; no release or tag is selected by this draft. Do not treat draft or guessed URLs as fetched assets.
+4. **Pin actual URLs and refetch the complete payloads.** Put the real URLs, leaving the existing hashes unchanged, in `.ci/bcd/asset-lock.json` and `.ci/a/asset-lock.json`. From the repository root, set each `*_FETCH_OUT` variable to a distinct, fresh directory and run the full fetchers, not only `--preflight-only`:
+
+   ```sh
+   : "${BCD_FETCH_OUT:?set a fresh B/C/D extraction directory}"
+   : "${A_FETCH_OUT:?set a fresh A extraction directory}"
+   python3 scripts/fetch_bcd_assets.py --lock .ci/bcd/asset-lock.json --output "$BCD_FETCH_OUT"
+   python3 scripts/fetch_a_assets.py --lock .ci/a/asset-lock.json --output "$A_FETCH_OUT"
+   ```
+
+   Before any public upload, the same fetchers can validate independently supplied local files with `--archive "$BCD_ARCHIVE"` and `--archive "$A_ARCHIVE"` while the public URLs remain null. The URL-backed full fetch is still required after upload. Retain the A fetch receipt outside its exact payload directory before handing that payload to the source runner.
+5. **Activate the current hosted gate.** Replace `.github/workflows/bcd-comparator.yml`, which is the old exact-70 job, with the reviewed `.ci/a/hosted-comparator.yml.proposed`. Keep `.github/workflows/lean.yml`, `.github/workflows/comparator.yml`, historical foundation targets and the frozen B/C/D controls. The replacement validates exact 71-result metadata and retains nine B/C/D cases, five A cases, and four audit negatives. Its `pull_request_target` control checkout uses the base SHA: a PR whose base still has null asset URLs will fail closed. The first hosted check of this transition should therefore use a trusted pushed commit containing both real URL locks and the new workflow, then confirm control and candidate SHA in its receipt.
+6. **Finalize metadata, documents, source inventory and package locally.** Update only status statements supported by the accepted Linux result. Keep historical 27-Challenge/112-target foundation and 2767/70 B/C/D records separate from the new 2771/71/8 scope. Use a fresh 2771-owner audit log when checking current metadata:
+
+   ```sh
+   : "${METADATA_PYTHON:?set Python with the pinned .ci/requirements.txt dependencies}"
+   : "${AUDIT_LOG:?set the exact current full-owner audit log}"
+   "$METADATA_PYTHON" scripts/check_metadata.py --scope current --axioms "$AUDIT_LOG" --candidate-root . --trusted-root .
+   ```
+
+   Regenerate the source archive from **every eligible regular file in the final tree**, not merely `git ls-files` or the Lean files. The final inventory must include all 2771 Lean library sources and every eligible control and documentation file. Read its total file count from the final inventory. Previously generated source archives are stale. The reviewed deterministic builder scans for secrets and private absolute paths, excludes `.git`, `.lake`, build caches and similar generated files, checks every `SOURCE_MANIFEST.json` source path/size/SHA, makes two byte-identical archives, and reads back every tar member. Its reviewed implementation currently lives in local preparation evidence; include the builder or an equivalent publicly documented reproducible procedure with the release. For the local operator, a representative invocation is:
+
+   ```sh
+   : "${SOURCE_BUNDLE_BUILDER:?set the reviewed deterministic builder file}"
+   : "${SOURCE_BUNDLE_OUTPUT:?set a fresh output directory outside the source tree}"
+   python3 "$SOURCE_BUNDLE_BUILDER" --repo . --output "$SOURCE_BUNDLE_OUTPUT"
+   ```
+
+   Do not put personal absolute paths, keys, `.env`, caches, compiled objects, the two separate trusted archives, or the 13 external Mathlib sources into the source bundle. The external Mathlib sources come from the pinned dependency manifest. Preserve the exact archive, sidecar manifest and verification SHA-256 values.
+7. **Make and check the final local commit.** Stage the intended source, documents, locks and workflow; inspect the staged path list and diff, ensure all 2771 `SOURCE_MANIFEST.json` entries are present with matching bytes, check `git status`, and record the full final commit SHA. Verify that the source archive matches the committed tree. Bind that SHA to the source archive SHA, both asset URLs and hashes, dependency pins, and local Linux receipt in a release record. A local commit is not publication or GitHub verification.
+8. **Only after push is authorized, push the exact final commit and require hosted CI on that SHA.** Check that the active workflow's trusted control SHA and candidate SHA match the intended run, then inspect the full guest result, owner audit log, current metadata result and host receipt. A passed local ARM/Linux run is not a hosted pass. Any corrective commit requires a new exact-commit hosted check. The proposed workflow retains only bounded outputs: result JSON, audit log, host receipt, 2771-source hash map and VM diagnostic logs. Its artifacts request 90-day retention, require GitHub authentication to download and can include partial failure evidence; artifact existence is not proof of success.
+9. **Create the durable paper-facing record after the hosted result is accepted.** Publish the final source archive and its sidecar hashes, trusted-asset URLs/hashes, final commit SHA, toolchain/dependency pins, result and audit hashes, hosted run reference, precise A/B/C/D claim boundary, third-party notices, and a durable copy of verification evidence. CI artifacts expire and are not a substitute for this record. Select the version/tag/release arrangement at that point, preserve the historical foundation snapshot and its existing public references, and update `CITATION.cff` to a released version/date only when it is actually released. If citation or release-source edits create another commit, check that new exact tree before citing it as verified.
+
+No step in this draft certifies a public URL, a complete Linux result, a hosted CI pass, a license grant, independent human review, or a release. Public steps 3, 8 and 9 require explicit publication authorization; this file is preparation only.
