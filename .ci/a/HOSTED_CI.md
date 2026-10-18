@@ -2,7 +2,7 @@
 
 The helper scripts are installed, and `hosted-comparator.yml.proposed` is a
 reviewable workflow preparation file. It is outside `.github/workflows` and
-does not activate a job. No successful hosted VM or current-source Linux run
+does not activate a job. No successful hosted VM or complete current-source Linux run
 has been recorded for this preparation.
 
 The host checks both control and candidate checkout revisions before using
@@ -33,8 +33,9 @@ come from the toolchain. This changes which prebuilt dependency caches are
 downloaded, while the source runner still builds all 2771 local modules and
 retains every proof, audit and comparison target. The helper verifies the graph,
 both dependency pin files and the exact generated Lakefile before invoking Lake.
-`--plan-only` prints the complete selection without running Lake. Actual disk
-savings and cache download success have not yet been measured in the guest.
+`--plan-only` prints the complete selection without running Lake. The separate local ARM64 Linux lane has fetched and unpacked all 2930 required
+cache files and checked all nine dependency HEADs against the pinned manifest.
+The hosted x64 cache route and its disk savings remain unmeasured.
 
 ## Activation conditions
 
@@ -60,3 +61,28 @@ syntax, the pinned snapshot index, and a synthetic complete result plus 26
 missing/changed-result rejection cases. A separate agent reviewed the result
 gate. These checks do not establish actual VM boot, Lean compilation, Landrun
 enforcement, Comparator success or Linux acceptance.
+
+## Retained verification evidence
+
+The proposed workflow ends with a pinned `actions/upload-artifact` step that
+runs with `always()`. It collects only `bcd-run/ci-candidate-result.json`,
+`bcd-run/audit-all-owners.log`, `bcd-run/hosted-ci-receipt.json`,
+`bcd-candidate-hashes.json`, and `bcd-vm-diagnostics/*.log` from the runner
+temporary directory. It does not collect the VM disk, dependency caches,
+toolchains, trusted archives or raw proof exports. The existing read-only
+repository permission remains unchanged.
+
+The artifact name contains the candidate's full commit SHA, workflow run ID
+and run attempt. Missing files produce a warning. A partial or failed run can
+therefore leave an artifact; artifact existence is not a success certificate.
+The host writes `hosted-ci-receipt.json` only after validating the complete
+guest result, copied audit log and all 71 metadata results.
+
+The action is fixed at commit
+`cf430e030ddbb5b0abf93d22962f4752f3646cd9` (v7.0.2). Retention is requested
+for 90 days, subject to repository policy. GitHub artifact download links
+require authentication and expire when the artifact is removed; see the
+[official action definition](https://github.com/actions/upload-artifact/blob/cf430e030ddbb5b0abf93d22962f4752f3646cd9/action.yml).
+These artifacts support CI inspection. A permanent, anonymously downloadable
+paper record must be fixed separately at publication. The upload step is
+prepared locally and has not been run on GitHub.

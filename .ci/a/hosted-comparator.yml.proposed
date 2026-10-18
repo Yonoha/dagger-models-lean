@@ -78,3 +78,16 @@ jobs:
           python3 control/scripts/hosted_abcd_vm.py \
             --control-revision "$BCD_CONTROL_REVISION" \
             --source-revision "$BCD_SOURCE_REVISION"
+      - name: Retain bounded ABCD verification evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: current-abcd-${{ github.event.pull_request.head.sha || github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/bcd-run/ci-candidate-result.json
+            ${{ runner.temp }}/bcd-run/audit-all-owners.log
+            ${{ runner.temp }}/bcd-run/hosted-ci-receipt.json
+            ${{ runner.temp }}/bcd-candidate-hashes.json
+            ${{ runner.temp }}/bcd-vm-diagnostics/*.log
+          if-no-files-found: warn
+          retention-days: 90
