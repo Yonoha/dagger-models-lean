@@ -580,7 +580,7 @@ def main() -> None:
                     "sudo tee /etc/apt/sources.list.d/bcd-backports.list >/dev/null; "
                     "sudo env DEBIAN_FRONTEND=noninteractive apt-get update; "
                     "sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y "
-                    "--no-install-recommends git python3 python3-venv ca-certificates "
+                    "--no-install-recommends git curl python3 python3-venv ca-certificates "
                     "build-essential libgmp10 libtinfo6 libzstd1 dbus-user-session "
                     # Backports have priority 100: explicitly select the base
                     # package required by this kernel instead of upgrading all

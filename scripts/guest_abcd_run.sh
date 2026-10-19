@@ -80,6 +80,12 @@ replay="$asset/comparator-certificates/.replay-work/tools"
 lock="$control/.ci/bcd/asset-lock.json"
 a_lock="$control/.ci/a/asset-lock.json"
 [[ -r "$lock" && -r "$a_lock" && -r "$a_asset/current-source/source-graph.json" ]]
+# SSH starts in the home directory, which deliberately has no default toolchain.
+# Resolve the installed binary using the trusted pinned control project, then
+# use its bin directory for every subprocess, including those outside a project.
+pinned_lean="$(cd "$control" && elan which lean)"
+[[ "$pinned_lean" == /*/bin/lean && -x "$pinned_lean" ]]
+export PATH="${pinned_lean%/lean}:$PATH"
 [[ -x "$GITHUB_WORKSPACE/landrun/landrun" ]]
 [[ -x "$GITHUB_WORKSPACE/lean4export-legacy/.lake/build/bin/lean4export" ]]
 [[ -x "$RUNNER_TEMP/bcd-auditor/.lake/build/bin/bcdTrustedAudit" ]]
