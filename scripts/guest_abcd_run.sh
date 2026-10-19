@@ -38,6 +38,10 @@ disk_free="$(df -B1 --output=avail "$RUNNER_TEMP" | tail -1 | tr -d ' ')"
   exit 1
 }
 
+# The standard Debian kernel supplies these modules; its cloud flavor does not.
+sudo modprobe 9pnet_virtio
+sudo modprobe 9p
+
 mount_ro_9p() {
   local tag="$1" target="$2" options fstype source
   sudo install -d -m 0755 -- "$target"

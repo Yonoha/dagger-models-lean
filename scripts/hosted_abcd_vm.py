@@ -29,7 +29,7 @@ HERE = Path(__file__).resolve().parent
 DEBIAN_URL = "https://cloud.debian.org/images/cloud/trixie/" + BUILD + "/"
 LANDRUN_COMMIT = "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
 EXPORTER_COMMIT = "bd93e5ed12fbeea19f39ec3ead659c293b2b8a95"
-GUEST_KERNEL = "linux-image-7.2.6+deb13-cloud-amd64=7.2.6-1~bpo13+1"
+GUEST_KERNEL = "linux-image-7.2.6+deb13-amd64=7.2.6-1~bpo13+1"
 GUEST_LINUX_BASE = "linux-base=4.17~bpo13+1"
 CURRENT_GRAPH_SHA = "0a3af50bbf1dbb6ae6ddd5b679cb6d0120306c3f3d34777bc358cfd84859943f"
 OLD_ASSET_SHA = "21111525e8bc72f2c40051f5ce13788beb94ca39c1e4e9daca739d8540f576b3"

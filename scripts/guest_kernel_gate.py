@@ -8,7 +8,7 @@ import platform
 import subprocess
 
 
-KERNEL = "7.2.6+deb13-cloud-amd64"
+KERNEL = "7.2.6+deb13-amd64"
 PACKAGE = "linux-image-" + KERNEL
 VERSION = "7.2.6-1~bpo13+1"
 SYS_LANDLOCK_CREATE_RULESET_X86_64 = 444

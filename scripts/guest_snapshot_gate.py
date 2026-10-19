@@ -17,18 +17,18 @@ PACKAGES = {
     "linux-base": (
         "pool/main/l/linux-base/linux-base_4.17~bpo13+1_all.deb",
         26836, "9c1a30ccf8d94672d8a89425fe419d954096718527155fd58974bd1a1043c55f"),
-    "linux-image-7.2.6+deb13-cloud-amd64": (
-        "pool/main/l/linux-signed-amd64/linux-image-7.2.6+deb13-cloud-amd64_7.2.6-1~bpo13+1_amd64.deb",
-        1928, "58e279d3794660d9150c715a7200aca6e2e1f9b41a668d71fc495f2d82b7ae6d"),
-    "linux-base-7.2.6+deb13-cloud-amd64": (
-        "pool/main/l/linux/linux-base-7.2.6+deb13-cloud-amd64_7.2.6-1~bpo13+1_amd64.deb",
-        981540, "fad4866d4907d0dc680c3b07ec23a8fcb0dc2dd523459e884f7320070b61ddb7"),
-    "linux-binary-7.2.6+deb13-cloud-amd64": (
-        "pool/main/l/linux-signed-amd64/linux-binary-7.2.6+deb13-cloud-amd64_7.2.6-1~bpo13+1_amd64.deb",
-        13422984, "c213df3839b725e0309ca93a4c351f072ea06984a16a565415813ca9e722a31c"),
-    "linux-modules-7.2.6+deb13-cloud-amd64": (
-        "pool/main/l/linux/linux-modules-7.2.6+deb13-cloud-amd64_7.2.6-1~bpo13+1_amd64.deb",
-        37672576, "90a1300d864a2ccaed2b56d80344f3e4ccedb4304453cf3234ff19a276560108"),
+    "linux-image-7.2.6+deb13-amd64": (
+        "pool/main/l/linux-signed-amd64/linux-image-7.2.6+deb13-amd64_7.2.6-1~bpo13+1_amd64.deb",
+        1896, "b2672b4c37ee7a4b68e854523bda3cb60a02ec37b03fec77962b588d5d369af8"),
+    "linux-base-7.2.6+deb13-amd64": (
+        "pool/main/l/linux/linux-base-7.2.6+deb13-amd64_7.2.6-1~bpo13+1_amd64.deb",
+        1034316, "850cd89ef8281e0af21396fbe8146f0c8d49ddf3f84d3ce845e050ac52111d81"),
+    "linux-binary-7.2.6+deb13-amd64": (
+        "pool/main/l/linux-signed-amd64/linux-binary-7.2.6+deb13-amd64_7.2.6-1~bpo13+1_amd64.deb",
+        13964112, "d0472104f28e03e2c29aebc2ded2f5a96d89be1a537f396319e606b41eabb6f6"),
+    "linux-modules-7.2.6+deb13-amd64": (
+        "pool/main/l/linux/linux-modules-7.2.6+deb13-amd64_7.2.6-1~bpo13+1_amd64.deb",
+        158924828, "9656fed6af22f2db202d2312da75788c99f138f17085d580ffda6cbb759406c2"),
 }
 
 
