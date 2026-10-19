@@ -3,6 +3,25 @@
 # trusted control scripts; the candidate checkout is mounted as read-only data.
 set -euo pipefail
 
+# Preserve bounded text diagnostics before the host shuts down a failed guest.
+# Compiler/export payloads remain in the guest; these are only log tails.
+source_failure_logs() {
+  local source_status=$? source_log source_count=0
+  trap - EXIT
+  set +e
+  if [[ "$source_status" != 0 && -n "${RUNNER_TEMP:-}" ]]; then
+    for source_log in "$RUNNER_TEMP/bcd-run/"*.log "$RUNNER_TEMP/bcd-run/"*.log.stderr; do
+      [[ -f "$source_log" && ! -L "$source_log" ]] || continue
+      source_count=$((source_count + 1))
+      [[ "$source_count" -le 40 ]] || break
+      printf '\nGUEST_FAILURE_LOG %s (last 32768 bytes)\n' "${source_log##*/}"
+      tail -c 32768 -- "$source_log"
+    done
+  fi
+  exit "$source_status"
+}
+trap source_failure_logs EXIT
+
 [[ "$(id -un)" == runner && "$(id -u)" != 0 ]]
 [[ "$HOME" == /home/runner ]]
 [[ "${GITHUB_WORKSPACE:-}" == /home/runner/work/* ]]
