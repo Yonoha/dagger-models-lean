@@ -45,7 +45,10 @@ sudo modprobe 9p
 mount_ro_9p() {
   local tag="$1" target="$2" options fstype source
   sudo install -d -m 0755 -- "$target"
-  sudo mount -t 9p -o trans=virtio,version=9p2000.L,ro,msize=1048576 \
+  # All exports are immutable for this VM's lifetime and read-only at both
+  # ends. Cache metadata so 9p reuses inode identities across Landlock checks.
+  # Uncached 9p can otherwise deny execve even for an explicitly allowed file.
+  sudo mount -t 9p -o trans=virtio,version=9p2000.L,ro,cache=loose,msize=1048576 \
     "$tag" "$target"
   options="$(findmnt -n -o OPTIONS --target "$target")"
   fstype="$(findmnt -n -o FSTYPE --target "$target")"
@@ -110,6 +113,15 @@ sudo systemctl start "user@$(id -u).service"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 systemd-run --user --quiet --wait --collect --pipe /bin/true
+
+# Check execution of a trusted binary from a shared filesystem under the same
+# strict wrapper before downloading caches or preparing the full source tree.
+systemd-run --user --quiet --wait --collect --pipe \
+  --property=RestrictAddressFamilies=~AF_UNIX \
+  --property=NoNewPrivileges=yes --setenv=PATH="$PATH" \
+  "$GITHUB_WORKSPACE/landrun/landrun" --log-level debug \
+  --ro / --rw /dev -ldd -add-exec --env PATH \
+  --rox "$(lean --print-prefix)" -- "$pinned_lean" --version
 
 df -B1 "$RUNNER_TEMP"
 cache="$RUNNER_TEMP/bcd-cache"
