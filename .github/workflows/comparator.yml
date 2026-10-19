@@ -91,6 +91,7 @@ jobs:
       - name: Download artifacts using only the trusted dependency pins
         working-directory: ${{ runner.temp }}/dagger-comparator/cache
         run: >-
+          ulimit -s 65536 &&
           lake exe cache get
           Mathlib.AlgebraicTopology.SimplicialSet.Op
           Mathlib.AlgebraicTopology.SimplicialSet.Degenerate

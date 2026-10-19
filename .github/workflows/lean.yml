@@ -26,6 +26,7 @@ jobs:
           use-github-cache: "false"
       - name: Fetch the required mathlib artifacts
         run: >-
+          ulimit -s 65536 &&
           lake exe cache get
           Mathlib.AlgebraicTopology.SimplicialSet.Op
           Mathlib.AlgebraicTopology.SimplicialSet.Degenerate

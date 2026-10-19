@@ -12,6 +12,17 @@ set -euo pipefail
 }
 [[ "$(uname -m)" == x86_64 ]]
 [[ "$(. /etc/os-release; printf '%s' "$ID:$VERSION_ID")" == ubuntu:24.04 ]]
+# The hosted image may expose KVM only to root/the kvm group. Grant this
+# ephemeral job user access to that device without enabling emulation or
+# changing the guest isolation requirements.
+if [[ -c /dev/kvm && ( ! -r /dev/kvm || ! -w /dev/kvm ) ]]; then
+  command -v setfacl >/dev/null || {
+    echo 'setfacl is required to grant the hosted job user KVM access' >&2
+    exit 1
+  }
+  sudo setfacl -m "u:$(id -un):rw" /dev/kvm
+fi
+ls -l /dev/kvm 2>/dev/null || true
 [[ -c /dev/kvm && -r /dev/kvm && -w /dev/kvm ]] || {
   echo 'KVM is unavailable; refusing emulation fallback' >&2
   exit 1
