@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
--- The explicit module registry exceeds Lean's default configuration recursion limit.
+-- Chunked arrays avoid deep array-literal elaboration on Linux workers.
 set_option maxRecDepth 20000
 
 package «dagger-models-lean» where
@@ -78,6 +78,7 @@ lean_lib DaggerModels where
     `ActualFibrantSimplexContractibility,
     `ActualFirstCoreComparisonAllQuasicategories,
     `ActualFirstCoreComparisonWeakReduction,
+  ] ++ #[
     `ActualFixedDaggerCoreComparison,
     `ActualFreeAntiJoyalMappingWeak,
     `ActualFreeAntiWalkingCategoricalCylinder,
@@ -142,6 +143,7 @@ lean_lib DaggerModels where
     `ActualKanSimplexCotensorComparison,
     `ActualLeftCoreMappingWeakRestriction,
     `ActualLeftMappingEquivalenceVerticesStable,
+  ] ++ #[
     `ActualLocallyKanGroupoidalCoherentNerve,
     `ActualMappingCoreVertexCharacterization,
     `ActualNativeDaggerIntervalPresentation,
@@ -206,6 +208,7 @@ lean_lib DaggerModels where
     `ActualQWeightedAugmentationIsomorphisms,
     `ActualQWeightedAugmentationPushouts,
     `ActualQWeightedAugmentationSkeletonInduction,
+  ] ++ #[
     `ActualQWeightedCarrierColimits,
     `ActualQWeightedResolutionCells,
     `ActualQWeightedResolutionCofibrations,
@@ -270,6 +273,7 @@ lean_lib DaggerModels where
     `ActualWalkingIsoCategoricalCylinder,
     `ActualWalkingIsoCategoricalEquivalence,
     `AdjacentWordDeletions,
+  ] ++ #[
     `AdjacentWordInsertions,
     `AmalgamAttachmentCriterion,
     `AmalgamCollapse,
@@ -334,6 +338,7 @@ lean_lib DaggerModels where
     `AmalgamReduction,
     `AmalgamReductionDiamond,
     `AmalgamReductionEncoding,
+  ] ++ #[
     `AmalgamStageAnodyne,
     `AmalgamStageCoverage,
     `AmalgamStageEvaluation,
@@ -398,6 +403,7 @@ lean_lib DaggerModels where
     `ChosenFlagChosenHomCocone,
     `ChosenFlagChosenIdentity,
     `ChosenFlagChosenInverse,
+  ] ++ #[
     `ChosenFlagChosenIso,
     `ChosenFlagChosenNecklaceComparison,
     `ChosenFlagChosenPostcomp,
@@ -462,6 +468,7 @@ lean_lib DaggerModels where
     `ChosenNecklaceJointImages,
     `ChosenNecklaceLabelledPoint,
     `ChosenNecklaceMapInclusion,
+  ] ++ #[
     `ChosenNecklaceMapVertices,
     `ChosenNecklaceOrderLift,
     `ChosenNecklaceOrderMaps,
@@ -526,6 +533,7 @@ lean_lib DaggerModels where
     `CountableCrossedInverseColimit,
     `CountableCrossedInverseTargetSquare,
     `CountableCrossedWholeWitnessTarget,
+  ] ++ #[
     `CountableReplacementPreservation,
     `DaggerAdjunctionCompatibility,
     `DaggerCellHomTransfer,
@@ -590,6 +598,7 @@ lean_lib DaggerModels where
     `IntervalFlagCenter,
     `IntervalFlagContraction,
     `IntervalFlagDiagonal,
+  ] ++ #[
     `IntervalFlagPath,
     `IntervalFlagRaw,
     `IntervalHomIsoContraction,
@@ -654,6 +663,7 @@ lean_lib DaggerModels where
     `NativeCoherentCotensorConstants,
     `NativeCoherentCotensorResolutionNaturality,
     `NativeCoherentCotensorResolutionWeak,
+  ] ++ #[
     `NativeCoherentNerveIsomorphismPartKanFactor,
     `NativeCoherentResolutionC2Span,
     `NativeCoherentResolutionFunctor,
@@ -718,6 +728,7 @@ lean_lib DaggerModels where
     `NativeDiagonalHornSkeletonExtension,
     `NativeDiagonalHornSkeletonGluing,
     `NativeDiagonalHornStageCells,
+  ] ++ #[
     `NativeDualTheoremA,
     `NativeDualTheoremACells,
     `NativeDualTheoremAColumnComparison,
@@ -782,6 +793,7 @@ lean_lib DaggerModels where
     `NativeFreePathUnitNerveWeak,
     `NativeFreeSphereFibreNaturality,
     `NativeFullChainInjectivity,
+  ] ++ #[
     `NativeFullFunctorVertexLifting,
     `NativeFullGroupoidNerveFibration,
     `NativeFullWeakSmithGenerators,
@@ -846,6 +858,7 @@ lean_lib DaggerModels where
     `NativeIhomTensorComparison,
     `NativeIhomTensorFirstNaturality,
     `NativeIhomWeakBetweenKan,
+  ] ++ #[
     `NativeInnerFactorizationAccessible,
     `NativeInnerHornDataPostcomposition,
     `NativeInnerHornFacePostcomposition,
@@ -910,6 +923,7 @@ lean_lib DaggerModels where
     `NativeOrdinaryCoherentResolutionWeak,
     `NativeOrdinaryCoherentRowFactorization,
     `NativeOrdinaryDaggerNerve,
+  ] ++ #[
     `NativeOrdinaryDaggerNerveFunctor,
     `NativeOrdinaryDaggerNerveLift,
     `NativeOrdinaryGroupoidSigma,
@@ -974,6 +988,7 @@ lean_lib DaggerModels where
     `NativeOriginalWeakMonoLiftingRecognition,
     `NativeOriginalWeakMonoPushout,
     `NativeOriginalWeakMonoTransfinite,
+  ] ++ #[
     `NativeOriginalWeakPushoutTensor,
     `NativeOverChainDecomposition,
     `NativeOverChainFixedProjection,
@@ -1038,6 +1053,7 @@ lean_lib DaggerModels where
     `NativeRealEdgewiseDaggerInvolution,
     `NativeRealEdgewiseExactness,
     `NativeRealEdgewiseGeometricWeak,
+  ] ++ #[
     `NativeRealEdgewiseHomotopyFixedPointComparison,
     `NativeRealEdgewiseIndex,
     `NativeRealEdgewiseInterpolationParameters,
@@ -1102,6 +1118,7 @@ lean_lib DaggerModels where
     `NativeSSetRawHomotopyEquivalenceWeak,
     `NativeSignedPathReduction,
     `NativeSignedPathWords,
+  ] ++ #[
     `NativeSimpleSphereFreeClasses,
     `NativeSimplexConeHomotopies,
     `NativeSimplexIndexNerveWeakContractibility,
@@ -1166,6 +1183,7 @@ lean_lib DaggerModels where
     `NativeWalkingEndpointSection,
     `NativeWalkingEndpointTrivialRestriction,
     `NativeWalkingFullBlockPairingCore,
+  ] ++ #[
     `NativeWalkingFullBlockRegularity,
     `NativeWalkingHomotopyNaturalIso,
     `NativeWalkingHomotopySectionCorrection,
@@ -1230,6 +1248,7 @@ lean_lib DaggerModels where
     `OriginalAccessibleSolutionPresentationsRecovered,
     `OriginalAccessibleSolutionRanksRecovered,
     `OriginalAccessibleSolutionsRecovered,
+  ] ++ #[
     `OriginalActionAdjunctionLift,
     `OriginalActionForgetCofreeAdjunction,
     `OriginalActionFreeCoyoneda,
@@ -1294,6 +1313,7 @@ lean_lib DaggerModels where
     `OriginalBorelModelCategory,
     `OriginalBorelModelConsequences,
     `OriginalBorelUnderlyingCofibrations,
+  ] ++ #[
     `OriginalBorelWeakEquivalenceClasses,
     `OriginalBoundarySphereEvaluation,
     `OriginalC2BinaryCofreeAdjunction,
@@ -1358,6 +1378,7 @@ lean_lib DaggerModels where
     `OriginalCounitObjects,
     `OriginalCounitRightCone,
     `OriginalCounitRightConeContractibilityRetraction,
+  ] ++ #[
     `OriginalCounitRightConeCrossTimeProjectionMapsReconciled,
     `OriginalCounitRightConeCrossTimeSectionLawsReconciled,
     `OriginalCounitRightConeCrossTimeSectionsReconciled,
@@ -1422,6 +1443,7 @@ lean_lib DaggerModels where
     `OriginalCutOverNaturality,
     `OriginalDKCompositionReflectionRecovered,
     `OriginalDKEndpointTransportRecovered,
+  ] ++ #[
     `OriginalDKHomRetractsRecovered,
     `OriginalDKTwoOutOfThreeRecovered,
     `OriginalDaggerAdjunctionWitnessRecovered,
@@ -1486,6 +1508,7 @@ lean_lib DaggerModels where
     `OriginalEC2RealizedCellOrbits,
     `OriginalEC2RealizedFreeCellLift,
     `OriginalEC2SimplicialAction,
+  ] ++ #[
     `OriginalEC2SimplicialContraction,
     `OriginalEC2SimplicialProjectiveCofibrancy,
     `OriginalEC2SkeletalPushout,
@@ -1550,6 +1573,7 @@ lean_lib DaggerModels where
     `OriginalFixedObjectDaggerCompletionQuillen,
     `OriginalFixedObjectDaggerCotensorRepresentation,
     `OriginalFixedObjectDaggerDegreeCategories,
+  ] ++ #[
     `OriginalFixedObjectDaggerDerivedCompletion,
     `OriginalFixedObjectDaggerFilteredColimits,
     `OriginalFixedObjectDaggerProducts,
@@ -1614,6 +1638,7 @@ lean_lib DaggerModels where
     `OriginalFlagConstantTargetChecks,
     `OriginalFlagConstantTargetTypes,
     `OriginalFlagCutComposition,
+  ] ++ #[
     `OriginalFlagDegree,
     `OriginalFlagDescentBeadCondition,
     `OriginalFlagDescentChecks,
@@ -1678,6 +1703,7 @@ lean_lib DaggerModels where
     `OriginalFlagSourceAssemblyIso,
     `OriginalFlagSourcePrefixCoordinates,
     `OriginalFlagSourcePrefixJoints,
+  ] ++ #[
     `OriginalFlagSourcePrefixMaps,
     `OriginalFlagSupportFlank,
     `OriginalFlagSurvivingBeads,
@@ -1742,6 +1768,7 @@ lean_lib DaggerModels where
     `OriginalGlobalJCellCESUnifiedRecovered,
     `OriginalGlobalJCellClosureUnifiedRecovered,
     `OriginalGlobalJCellCofUnifiedRecovered,
+  ] ++ #[
     `OriginalGlobalJCellHornRecovered,
     `OriginalGlobalJCellIntervalUnifiedRecovered,
     `OriginalGlobalJCellSuccessorPropertiesRecovered,
@@ -1806,6 +1833,7 @@ lean_lib DaggerModels where
     `OriginalJoinedPrefixBoundaryPreimage,
     `OriginalJoinedPresheafAssociativity,
     `OriginalJoinedSuffixFaceMaps,
+  ] ++ #[
     `OriginalJoinedSuffixHornGluing,
     `OriginalJoinedVertexCoreCriterion,
     `OriginalJoyalLeftProperRecovered,
@@ -1870,6 +1898,7 @@ lean_lib DaggerModels where
     `OriginalNecklaceCutWedge,
     `OriginalNecklaceIntervalRestriction,
     `OriginalNecklacePointSimple,
+  ] ++ #[
     `OriginalNecklaceSimple,
     `OriginalNerveLocalWeakPreservation,
     `OriginalNerveOppositeMap,
@@ -1934,6 +1963,7 @@ lean_lib DaggerModels where
     `OriginalOrdinaryMovingHomDiagramReconciled,
     `OriginalOrdinaryNerveQuasicategory,
     `OriginalOrdinaryObjectCells,
+  ] ++ #[
     `OriginalOrdinaryPiZeroCompatibilityRecovered,
     `OriginalOrdinaryTerminal,
     `OriginalOrdinaryTotalEdgeOperations,
@@ -1998,6 +2028,7 @@ lean_lib DaggerModels where
     `OriginalProductPlateauFlag,
     `OriginalProductSupportBounds,
     `OriginalQuasiReplacementsAccessible,
+  ] ++ #[
     `OriginalQuasicategoryComposeEdges,
     `OriginalQuasicategoryEdgeHomotopies,
     `OriginalQuasicategoryEdgeHomotopyCategory,
@@ -2062,6 +2093,7 @@ lean_lib DaggerModels where
     `OriginalRecoveredGlobalModelConstructionData,
     `OriginalRecoveredGlobalModelEndpointSupportData,
     `OriginalRecoveredKernelExpression,
+  ] ++ #[
     `OriginalRecoveredKernelExpressionData,
     `OriginalRecoveredLiteralChunks,
     `OriginalRecoveredPrivateSquareExpression,
@@ -2126,6 +2158,7 @@ lean_lib DaggerModels where
     `OriginalSimplicialCategoryBarBidegreeDecomposition,
     `OriginalSimplicialCategoryBarConstruction,
     `OriginalSimplicialCategoryBarContraction,
+  ] ++ #[
     `OriginalSimplicialCategoryBarContractionMap,
     `OriginalSimplicialCategoryBarCoproductDegrees,
     `OriginalSimplicialCategoryBarFibre,
@@ -2190,6 +2223,7 @@ lean_lib DaggerModels where
     `OriginalSimplicialGroupoidCompletionDagger,
     `OriginalSimplicialGroupoidCompletionDaggerFunctor,
     `OriginalSimplicialGroupoidCompletionFunctor,
+  ] ++ #[
     `OriginalSimplicialGroupoidCompletionSigma,
     `OriginalSimplicialGroupoidCompletionUniversal,
     `OriginalSimplicialMappingPathFibrations,
@@ -2254,6 +2288,7 @@ lean_lib DaggerModels where
     `OriginalStrictSimplicialPiZeroGroupoid,
     `OriginalSubcomplexNerveData,
     `OriginalSubcomplexSimplexRestriction,
+  ] ++ #[
     `OriginalSuccessorBoundaryNaturalInclusions,
     `OriginalSuccessorBoundaryPresheafPullback,
     `OriginalSuccessorBoundaryProjectionFactorization,
@@ -2318,6 +2353,7 @@ lean_lib DaggerModels where
     `OriginalUnitaryTwoObjectCopyRecovered,
     `OriginalUnitaryWitnessHomotopyRecovered,
     `OriginalUnreplacedGeometricPiKan,
+  ] ++ #[
     `OriginalVariableGraphColimitsRecovered,
     `OriginalVariableHomColimitRecovered,
     `OriginalVariableHomDiagramRecovered,
@@ -2382,6 +2418,7 @@ lean_lib DaggerModels where
     `ProofOriginalMainTheoremC,
     `PushoutRetract,
     `RawIsoTriangleCasts,
+  ] ++ #[
     `RawIsoTriangleCells,
     `RecoveredNativeHornProofClosure,
     `RectangularCellLegPost,
@@ -2446,6 +2483,7 @@ lean_lib DaggerModels where
     `SSetGluingSpan,
     `SSetOperatorMapValues,
     `SSetProductGeometric,
+  ] ++ #[
     `SSetRightProper,
     `SSetSM7,
     `SimplexInverseWitnessCategory,
@@ -2548,6 +2586,7 @@ lean_lib DaggerModels where
     .one `ActualFibrantSimplexContractibility,
     .one `ActualFirstCoreComparisonAllQuasicategories,
     .one `ActualFirstCoreComparisonWeakReduction,
+  ] ++ #[
     .one `ActualFixedDaggerCoreComparison,
     .one `ActualFreeAntiJoyalMappingWeak,
     .one `ActualFreeAntiWalkingCategoricalCylinder,
@@ -2612,6 +2651,7 @@ lean_lib DaggerModels where
     .one `ActualKanSimplexCotensorComparison,
     .one `ActualLeftCoreMappingWeakRestriction,
     .one `ActualLeftMappingEquivalenceVerticesStable,
+  ] ++ #[
     .one `ActualLocallyKanGroupoidalCoherentNerve,
     .one `ActualMappingCoreVertexCharacterization,
     .one `ActualNativeDaggerIntervalPresentation,
@@ -2676,6 +2716,7 @@ lean_lib DaggerModels where
     .one `ActualQWeightedAugmentationIsomorphisms,
     .one `ActualQWeightedAugmentationPushouts,
     .one `ActualQWeightedAugmentationSkeletonInduction,
+  ] ++ #[
     .one `ActualQWeightedCarrierColimits,
     .one `ActualQWeightedResolutionCells,
     .one `ActualQWeightedResolutionCofibrations,
@@ -2740,6 +2781,7 @@ lean_lib DaggerModels where
     .one `ActualWalkingIsoCategoricalCylinder,
     .one `ActualWalkingIsoCategoricalEquivalence,
     .one `AdjacentWordDeletions,
+  ] ++ #[
     .one `AdjacentWordInsertions,
     .one `AmalgamAttachmentCriterion,
     .one `AmalgamCollapse,
@@ -2804,6 +2846,7 @@ lean_lib DaggerModels where
     .one `AmalgamReduction,
     .one `AmalgamReductionDiamond,
     .one `AmalgamReductionEncoding,
+  ] ++ #[
     .one `AmalgamStageAnodyne,
     .one `AmalgamStageCoverage,
     .one `AmalgamStageEvaluation,
@@ -2868,6 +2911,7 @@ lean_lib DaggerModels where
     .one `ChosenFlagChosenHomCocone,
     .one `ChosenFlagChosenIdentity,
     .one `ChosenFlagChosenInverse,
+  ] ++ #[
     .one `ChosenFlagChosenIso,
     .one `ChosenFlagChosenNecklaceComparison,
     .one `ChosenFlagChosenPostcomp,
@@ -2932,6 +2976,7 @@ lean_lib DaggerModels where
     .one `ChosenNecklaceJointImages,
     .one `ChosenNecklaceLabelledPoint,
     .one `ChosenNecklaceMapInclusion,
+  ] ++ #[
     .one `ChosenNecklaceMapVertices,
     .one `ChosenNecklaceOrderLift,
     .one `ChosenNecklaceOrderMaps,
@@ -2996,6 +3041,7 @@ lean_lib DaggerModels where
     .one `CountableCrossedInverseColimit,
     .one `CountableCrossedInverseTargetSquare,
     .one `CountableCrossedWholeWitnessTarget,
+  ] ++ #[
     .one `CountableReplacementPreservation,
     .one `DaggerAdjunctionCompatibility,
     .one `DaggerCellHomTransfer,
@@ -3060,6 +3106,7 @@ lean_lib DaggerModels where
     .one `DaggerModels.FreeDaggerCell,
     .one `DaggerModels.FreeDaggerCofibration,
     .one `DaggerModels.FreeDaggerPushout,
+  ] ++ #[
     .one `DaggerModels.FreeDaggerSimplicialCategory,
     .one `DaggerModels.FreeDaggerSkeleton,
     .one `DaggerModels.FreeInvolution,
@@ -3124,6 +3171,7 @@ lean_lib DaggerModels where
     .one `DiagonalAttachingData,
     .one `DiagonalRowEvaluation,
     .one `DiagonalSuccessorMaps,
+  ] ++ #[
     .one `DiagonalSuccessorMembership,
     .one `DiagonalSuccessorPushout,
     .one `EdgeHomotopyCorrespondence,
@@ -3188,6 +3236,7 @@ lean_lib DaggerModels where
     .one `IsoTriangleFilteredStageLift,
     .one `IsoTriangleFiniteEquations,
     .one `LatchingEZMembership,
+  ] ++ #[
     .one `LatchingFiniteIntersections,
     .one `LatchingIntersectionNaturality,
     .one `LatchingOriginalData,
@@ -3252,6 +3301,7 @@ lean_lib DaggerModels where
     .one `NativeComponentMatchingGluing,
     .one `NativeComponentMatchingNaturality,
     .one `NativeComponentPartialMatchingComparison,
+  ] ++ #[
     .one `NativeComponentPartialMatchingPi,
     .one `NativeConnectedFamilyHom,
     .one `NativeConnectedHornsAndSimplex,
@@ -3316,6 +3366,7 @@ lean_lib DaggerModels where
     .one `NativeEdgeStableFullVertexFibration,
     .one `NativeEdgewiseMapWeak,
     .one `NativeEndomorphismCellSquares,
+  ] ++ #[
     .one `NativeEndomorphismConjugation,
     .one `NativeEndomorphismSimplexMaps,
     .one `NativeEnrichedHomRestrictionMonomorphism,
@@ -3380,6 +3431,7 @@ lean_lib DaggerModels where
     .one `NativeGeometricMappingNaturality,
     .one `NativeGeometricPiProjectionFibration,
     .one `NativeGeometricPiVertexPullback,
+  ] ++ #[
     .one `NativeGeometricPiWeakPullback,
     .one `NativeGeometricPointEvaluation,
     .one `NativeGeometricSphereClassFunctor,
@@ -3444,6 +3496,7 @@ lean_lib DaggerModels where
     .one `NativeInnerHornSimplexReconstruction,
     .one `NativeInnerHornUnionProd,
     .one `NativeInnerJoyalMappingWeak,
+  ] ++ #[
     .one `NativeInnerPairing,
     .one `NativeInnerPushoutIhom,
     .one `NativeInnerQuasicategoryWeakReplacement,
@@ -3508,6 +3561,7 @@ lean_lib DaggerModels where
     .one `NativeOriginalC2InvolutionAction,
     .one `NativeOriginalC2QSingularSpan,
     .one `NativeOriginalC2RealizationMapping,
+  ] ++ #[
     .one `NativeOriginalC2RealizationOpposite,
     .one `NativeOriginalCoherentUnitaryExistence,
     .one `NativeOriginalCompletedCoreUnitaryExistence,
@@ -3572,6 +3626,7 @@ lean_lib DaggerModels where
     .one `NativeOverNerveSimplexFamily,
     .one `NativeOverNerveWeakContractibility,
     .one `NativePalindromicDaggerEquivariance,
+  ] ++ #[
     .one `NativePalindromicVertexFold,
     .one `NativePartialFaceAttachmentAnodyne,
     .one `NativePartialFaceAttachmentComponents,
@@ -3636,6 +3691,7 @@ lean_lib DaggerModels where
     .one `NativeRealEdgewiseRealizationComparison,
     .one `NativeRealEdgewiseRealizationEquivariance,
     .one `NativeRealEdgewiseRealizationVertices,
+  ] ++ #[
     .one `NativeRealEdgewiseSSet,
     .one `NativeRealEdgewiseSingularHomotopy,
     .one `NativeRealEdgewiseStandardSimplexNerve,
@@ -3700,6 +3756,7 @@ lean_lib DaggerModels where
     .one `NativeSimplexIndexResolutionColumnInverse,
     .one `NativeSimplexIndexResolutionColumnRoundtrips,
     .one `NativeSimplexIndexResolutionNaturality,
+  ] ++ #[
     .one `NativeSimplexParameterWeakMap,
     .one `NativeSimplexPullbackFibrationDetection,
     .one `NativeSimplicialCategoryIsoHom,
@@ -3764,6 +3821,7 @@ lean_lib DaggerModels where
     .one `NativeWalkingInverseKanWeak,
     .one `NativeWalkingKanTensor,
     .one `NativeWalkingMarkedWordOperators,
+  ] ++ #[
     .one `NativeWalkingMonoPushout,
     .one `NativeWalkingNondegenerateInsertions,
     .one `NativeWalkingPositiveBoundaryPushout,
@@ -3828,6 +3886,7 @@ lean_lib DaggerModels where
     .one `OriginalActualCoherentUnitaryIdentityRecovered,
     .one `OriginalActualDaggerCofibrationClass,
     .one `OriginalActualDaggerFreeComparisonRecovered,
+  ] ++ #[
     .one `OriginalActualDaggerModelConstruction,
     .one `OriginalActualGeneratingWeakRightLiftingRecovered,
     .one `OriginalActualGlobalWeakDefinitionsRecovered,
@@ -3892,6 +3951,7 @@ lean_lib DaggerModels where
     .one `OriginalChosenHomMapFunctorialityReconciled,
     .one `OriginalChosenProductComparisonReconciledRecovered,
     .one `OriginalCodiscreteNerveInjective,
+  ] ++ #[
     .one `OriginalCofaceIntersectionAgreement,
     .one `OriginalCofibrantBrownPreservationChallengeProof,
     .one `OriginalCofibrantDegreeFreeRetract,
@@ -3956,6 +4016,7 @@ lean_lib DaggerModels where
     .one `OriginalCounitRightConeQBoundaryCofibrationsReconciled,
     .one `OriginalCounitRightConeQBoundaryFaceOverlapReconciled,
     .one `OriginalCounitRightConeQBoundaryMonoReconciled,
+  ] ++ #[
     .one `OriginalCounitRightConeQBoundaryRecognitionReconciled,
     .one `OriginalCounitRightConeQCenterSupportReconciled,
     .one `OriginalCounitRightConeQCofaceImageIntersectionReconciled,
@@ -4020,6 +4081,7 @@ lean_lib DaggerModels where
     .one `OriginalDaggerCoreKan,
     .one `OriginalDaggerCoreKanIdentity,
     .one `OriginalDaggerFreeComparisonRecovered,
+  ] ++ #[
     .one `OriginalDaggerHomotopyFixedPointWeakEquivalences,
     .one `OriginalDaggerMapArrowColimitsRecovered,
     .one `OriginalDaggerRealizationC2Action,
@@ -4084,6 +4146,7 @@ lean_lib DaggerModels where
     .one `OriginalEnrichedHomRetractRecovered,
     .one `OriginalEnrichedHomTransport,
     .one `OriginalEnrichedHomTransportRecovered,
+  ] ++ #[
     .one `OriginalEnrichedTranslationComparisonRecovered,
     .one `OriginalEquivalenceFactorizationTransport,
     .one `OriginalEquivalenceModelTransport,
@@ -4148,6 +4211,7 @@ lean_lib DaggerModels where
     .one `OriginalFixedObjectEnrichedCotensorNaturality,
     .one `OriginalFixedObjectFiniteLimits,
     .one `OriginalFixedObjectFreeDaggerGroupoidQuillen,
+  ] ++ #[
     .one `OriginalFixedObjectFreeDaggerMappingComparison,
     .one `OriginalFixedObjectFreeEC2Mapping,
     .one `OriginalFixedObjectFreeGroupoidQuillen,
@@ -4212,6 +4276,7 @@ lean_lib DaggerModels where
     .one `OriginalFlagDiagonalGeometricReconciledRecovered,
     .one `OriginalFlagDiscreteNerve,
     .one `OriginalFlagFiberContraction,
+  ] ++ #[
     .one `OriginalFlagFiberContractionChecks,
     .one `OriginalFlagFiberContractionData,
     .one `OriginalFlagFiberContractionPoint,
@@ -4276,6 +4341,7 @@ lean_lib DaggerModels where
     .one `OriginalFreeCofibrationGeneration,
     .one `OriginalFreeEC2DaggerGroupoidComparison,
     .one `OriginalFullVertexPathEndpoint,
+  ] ++ #[
     .one `OriginalFullVertexPathFiber,
     .one `OriginalFullVertexPathFiberIso,
     .one `OriginalFullVertexPathFiberModelConsequences,
@@ -4340,6 +4406,7 @@ lean_lib DaggerModels where
     .one `OriginalGlobalJRealizationRecovered,
     .one `OriginalGlobalLeftProperRecovered,
     .one `OriginalGlobalModelDataRecovered,
+  ] ++ #[
     .one `OriginalGlobalModelRecognitionGlueRecovered,
     .one `OriginalGlobalModelRecovered,
     .one `OriginalHomLoopActionTrivial,
@@ -4404,6 +4471,7 @@ lean_lib DaggerModels where
     .one `OriginalKanMappingHomotopyRecognition,
     .one `OriginalKanVertexCosliceFibration,
     .one `OriginalLabeledPathFiberNaturality,
+  ] ++ #[
     .one `OriginalLatchingFiniteUnionDataReconciledRecovered,
     .one `OriginalLatchingFiniteUnionGeometricReconciledRecovered,
     .one `OriginalLatchingFiniteUnionPushoutsReconciledRecovered,
@@ -4468,6 +4536,7 @@ lean_lib DaggerModels where
     .one `OriginalNonfinalHornTerminalKan,
     .one `OriginalNormalGeneratorWholeSolutions,
     .one `OriginalOrdinalJoinAssociativity,
+  ] ++ #[
     .one `OriginalOrdinalJoinLeft,
     .one `OriginalOrdinaryCellComparisonBoundaryGeometricRecovered,
     .one `OriginalOrdinaryCellComparisonGeometricRecovered,
@@ -4532,6 +4601,7 @@ lean_lib DaggerModels where
     .one `OriginalOrdinaryTotalEdgeOperationsStage,
     .one `OriginalOrdinaryTransfiniteHomDiagramReconciled,
     .one `OriginalOrdinaryTranslationRecovered,
+  ] ++ #[
     .one `OriginalOuterTwoHornInverses,
     .one `OriginalOverNerveFibreChallengeProof,
     .one `OriginalPairedCellComparisonRecovered,
@@ -4596,6 +4666,7 @@ lean_lib DaggerModels where
     .one `OriginalQuasicategoryOuterTwoHorns,
     .one `OriginalQuasicategoryPathEdgeRepresentatives,
     .one `OriginalQuasicategoryPathTriangleWitnesses,
+  ] ++ #[
     .one `OriginalQuasicategoryTetrahedronFillers,
     .one `OriginalQuillenACellsReconciledRecovered,
     .one `OriginalQuillenAColumnsReconciledRecovered,
@@ -4660,6 +4731,7 @@ lean_lib DaggerModels where
     .one `OriginalRecoveredSmithConeColimitsExpressionData,
     .one `OriginalRecoveredSmithLimitsExpressionData,
     .one `OriginalRecoveredSmithModelConstructionData,
+  ] ++ #[
     .one `OriginalRecoveredSmithSolutionExpressionData,
     .one `OriginalRecoveredUnitaryDiscreteCoherentAlgebraData,
     .one `OriginalRecoveredUnitaryEndpointCofData,
@@ -4724,6 +4796,7 @@ lean_lib DaggerModels where
     .one `OriginalSimplicialCategoryBarPullback,
     .one `OriginalSimplicialCategoryBarReplacementFibreComparison,
     .one `OriginalSimplicialCategoryBarRowHorizontalTransport,
+  ] ++ #[
     .one `OriginalSimplicialCategoryBarRowPullbackTransport,
     .one `OriginalSimplicialCategoryBarRowSimplexFamily,
     .one `OriginalSimplicialCategoryBarRowSimplexPullback,
@@ -4788,6 +4861,7 @@ lean_lib DaggerModels where
     .one `OriginalSimplicialPiZeroFunctor,
     .one `OriginalSimplicialPiZeroLaxMonoidal,
     .one `OriginalSimplicialPiZeroWeakEquivalence,
+  ] ++ #[
     .one `OriginalSimplicialPullbackPairs,
     .one `OriginalSimplicialSubcomplexOpposite,
     .one `OriginalSimplicialTrivialFibrationTensor,
@@ -4852,6 +4926,7 @@ lean_lib DaggerModels where
     .one `OriginalTaggedReverseAdjunctions,
     .one `OriginalTaggedReverseAntiPresheaf,
     .one `OriginalTaggedReverseFreeCompletion,
+  ] ++ #[
     .one `OriginalTaggedReverseGeneratorComparison,
     .one `OriginalTaggedReversePrecomposition,
     .one `OriginalTaggedReversePresheafInclusion,
@@ -4916,6 +4991,7 @@ lean_lib DaggerModels where
     .one `OriginalWalkingIsoCounitIntegerMapReconciled,
     .one `OriginalWalkingIsoIntegerObstruction,
     .one `OriginalWalkingIsoNerveComparison,
+  ] ++ #[
     .one `OriginalWeakInverseWitnessImage,
     .one `OriginalWeakTargetNativePiKan,
     .one `OriginalWedgeCutFlags,
@@ -4980,6 +5056,7 @@ lean_lib DaggerModels where
     .one `RectangularHomTriangleStageLift,
     .one `RectangularInverseDataPost,
     .one `RectangularInverseTransitionCast,
+  ] ++ #[
     .one `RectangularInverseWitnessData,
     .one `RectangularTrianglePrePost,
     .one `RelativeArrowStageFacs,
@@ -5044,6 +5121,7 @@ lean_lib DaggerModels where
     .one `TerminalArrowConnectedColimits,
     .one `ThickeningReversal,
     .one `ThinNerveAdjacentDegeneracy,
+  ] ++ #[
     .one `TopCatModelCategory.AlephZero,
     .one `TopCatModelCategory.Arrow,
     .one `TopCatModelCategory.AttachCells,
@@ -5108,6 +5186,7 @@ lean_lib DaggerModels where
     .one `TopCatModelCategory.SSet.AnodyneExtensionsAdjunctions,
     .one `TopCatModelCategory.SSet.AnodyneExtensionsDefs,
     .one `TopCatModelCategory.SSet.Basic,
+  ] ++ #[
     .one `TopCatModelCategory.SSet.Boundary,
     .one `TopCatModelCategory.SSet.CategoryWithFibrations,
     .one `TopCatModelCategory.SSet.CategoryWithWeakEquivalences,
@@ -5172,6 +5251,7 @@ lean_lib DaggerModels where
     .one `TopCatModelCategory.SSet.Pseudofunctor,
     .one `TopCatModelCategory.SSet.PtSimplex,
     .one `TopCatModelCategory.SSet.Pullback,
+  ] ++ #[
     .one `TopCatModelCategory.SSet.Quotient,
     .one `TopCatModelCategory.SSet.SimplexCategory,
     .one `TopCatModelCategory.SSet.Simplices,
@@ -5236,6 +5316,7 @@ lean_lib DaggerModels where
     .one `WalkingWordOperationRoundTrips,
     .one `WholeReplacementPrescribedStrongRanks,
     .one `WholeReplacementStrongRanks,
+  ] ++ #[
     .one `WholeSolutionStrongCommonRanks,
     .one `WholeWeakSolutionSets,
     .one `WholeWitnessBoundedBaseFamilies,

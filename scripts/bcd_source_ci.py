@@ -201,6 +201,11 @@ def lakefile_for(modules: list[str]) -> str:
     root_names = sorted({name.split(".")[0] if "." in name else name
                          for name in modules})
     roots = [f"    `{name}," for name in root_names]
+    # Retain the exact registry and order, but avoid one deeply nested array
+    # literal overflowing a Linux Lean worker's default stack.
+    def chunked_array(rows: list[str]) -> str:
+        chunks = [rows[i:i + 64] for i in range(0, len(rows), 64)]
+        return "#[\n" + "\n  ] ++ #[\n".join("\n".join(c) for c in chunks) + "\n  ]\n"
     return (
         "import Lake\nopen Lake DSL\n"
         "set_option maxRecDepth 20000\n"
@@ -211,8 +216,8 @@ def lakefile_for(modules: list[str]) -> str:
         "    \"a3a10db0e9d66acbebf76c5e6a135066525ac900\"\n"
         "@[default_target]\n"
         "lean_lib DaggerModels where\n"
-        "  roots := #[\n" + "\n".join(roots) + "\n  ]\n"
-        "  globs := #[\n" + "\n".join(globs) + "\n  ]\n"
+        "  roots := " + chunked_array(roots) +
+        "  globs := " + chunked_array(globs) +
         "script buildSequential (args) do\n"
         "  let [orderFile] := args | throw <| IO.userError \"Expected a module-order file\"\n"
         "  let workspace ← getWorkspace\n"
