@@ -290,9 +290,16 @@ def prepare_host_tools(workspace: Path, temp: Path) -> None:
     run("lake", "build", "lean4export", cwd=exporter)
     print("HOST_EXPORTER_BUILT", flush=True)
     require_free(temp, 4)
+    # Resolve Elan in the trusted checkout, where the pinned lean-toolchain
+    # exists. The replay preparation runs outside that directory and must not
+    # depend on an Elan default toolchain being configured on the runner.
+    replay_lean = subprocess.check_output(
+        ["elan", "which", "lean"], cwd=control, text=True).strip()
+    if not Path(replay_lean).is_absolute() or not Path(replay_lean).is_file():
+        raise ValueError("pinned replay Lean executable is unavailable")
     run(sys.executable,
         str(asset / "comparator-certificates/replay_certificates.py"),
-        "--prepare-only", "--lean", shutil.which("lean") or "",
+        "--prepare-only", "--lean", replay_lean,
         cwd=workspace)
     print("HOST_OFFICIAL_REPLAY_FRONTEND_BUILT", flush=True)
     require_free(temp, 4)
