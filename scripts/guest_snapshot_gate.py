@@ -12,7 +12,11 @@ PACKAGES_URL = BASE + "dists/trixie-backports/main/binary-amd64/Packages.xz"
 INRELEASE_SHA256 = "22444984a243f2b27cd47058c7783975904f33cf7d9211dee682cc2310ec148b"
 PACKAGES_SHA256 = "648c05d7f805521a30ee009894d75a95e4e41fc2f1c177624d9d7758509d838b"
 VERSION = "7.2.6-1~bpo13+1"
+LINUX_BASE_VERSION = "4.17~bpo13+1"
 PACKAGES = {
+    "linux-base": (
+        "pool/main/l/linux-base/linux-base_4.17~bpo13+1_all.deb",
+        26836, "9c1a30ccf8d94672d8a89425fe419d954096718527155fd58974bd1a1043c55f"),
     "linux-image-7.2.6+deb13-cloud-amd64": (
         "pool/main/l/linux-signed-amd64/linux-image-7.2.6+deb13-cloud-amd64_7.2.6-1~bpo13+1_amd64.deb",
         1928, "58e279d3794660d9150c715a7200aca6e2e1f9b41a668d71fc495f2d82b7ae6d"),
@@ -55,7 +59,8 @@ def check(inrelease: bytes, packages: bytes) -> None:
         found = [r for r in records if r.startswith("Package: " + package + "\n")]
         if len(found) != 1:
             raise RuntimeError("exact kernel component absent: " + package)
-        for key, expected in (("Version", VERSION), ("Filename", filename),
+        version = LINUX_BASE_VERSION if package == "linux-base" else VERSION
+        for key, expected in (("Version", version), ("Filename", filename),
                               ("Size", str(size)), ("SHA256", digest)):
             value = re.search(r"^" + key + r": (.+)$", found[0], re.M)
             if not value or value[1] != expected:

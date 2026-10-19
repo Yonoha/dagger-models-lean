@@ -24,6 +24,9 @@ jobs:
           build: "false"
           use-mathlib-cache: "false"
           use-github-cache: "false"
+      - name: Load the complete library configuration
+        # Diagnose Lake configuration separately from the cache executable.
+        run: lake --verbose check-build
       - name: Fetch the required mathlib artifacts
         run: >-
           ulimit -s 65536 &&

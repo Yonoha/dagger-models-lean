@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL
 
--- Chunked arrays avoid deep array-literal elaboration on Linux workers.
+-- Each module array lives in a separate declaration to keep Lake elaboration shallow.
 set_option maxRecDepth 20000
 
 package «dagger-models-lean» where
@@ -11,9 +11,7 @@ require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @
     "a3a10db0e9d66acbebf76c5e6a135066525ac900"
 
-@[default_target]
-lean_lib DaggerModels where
-  roots := #[
+private def rootChunk00 : Array Lean.Name := #[
     `MainTheoremsABCD,
     `MainTheoremsA,
     `ProofTheoremA,
@@ -78,7 +76,9 @@ lean_lib DaggerModels where
     `ActualFibrantSimplexContractibility,
     `ActualFirstCoreComparisonAllQuasicategories,
     `ActualFirstCoreComparisonWeakReduction,
-  ] ++ #[
+]
+
+private def rootChunk01 : Array Lean.Name := #[
     `ActualFixedDaggerCoreComparison,
     `ActualFreeAntiJoyalMappingWeak,
     `ActualFreeAntiWalkingCategoricalCylinder,
@@ -143,7 +143,9 @@ lean_lib DaggerModels where
     `ActualKanSimplexCotensorComparison,
     `ActualLeftCoreMappingWeakRestriction,
     `ActualLeftMappingEquivalenceVerticesStable,
-  ] ++ #[
+]
+
+private def rootChunk02 : Array Lean.Name := #[
     `ActualLocallyKanGroupoidalCoherentNerve,
     `ActualMappingCoreVertexCharacterization,
     `ActualNativeDaggerIntervalPresentation,
@@ -208,7 +210,9 @@ lean_lib DaggerModels where
     `ActualQWeightedAugmentationIsomorphisms,
     `ActualQWeightedAugmentationPushouts,
     `ActualQWeightedAugmentationSkeletonInduction,
-  ] ++ #[
+]
+
+private def rootChunk03 : Array Lean.Name := #[
     `ActualQWeightedCarrierColimits,
     `ActualQWeightedResolutionCells,
     `ActualQWeightedResolutionCofibrations,
@@ -273,7 +277,9 @@ lean_lib DaggerModels where
     `ActualWalkingIsoCategoricalCylinder,
     `ActualWalkingIsoCategoricalEquivalence,
     `AdjacentWordDeletions,
-  ] ++ #[
+]
+
+private def rootChunk04 : Array Lean.Name := #[
     `AdjacentWordInsertions,
     `AmalgamAttachmentCriterion,
     `AmalgamCollapse,
@@ -338,7 +344,9 @@ lean_lib DaggerModels where
     `AmalgamReduction,
     `AmalgamReductionDiamond,
     `AmalgamReductionEncoding,
-  ] ++ #[
+]
+
+private def rootChunk05 : Array Lean.Name := #[
     `AmalgamStageAnodyne,
     `AmalgamStageCoverage,
     `AmalgamStageEvaluation,
@@ -403,7 +411,9 @@ lean_lib DaggerModels where
     `ChosenFlagChosenHomCocone,
     `ChosenFlagChosenIdentity,
     `ChosenFlagChosenInverse,
-  ] ++ #[
+]
+
+private def rootChunk06 : Array Lean.Name := #[
     `ChosenFlagChosenIso,
     `ChosenFlagChosenNecklaceComparison,
     `ChosenFlagChosenPostcomp,
@@ -468,7 +478,9 @@ lean_lib DaggerModels where
     `ChosenNecklaceJointImages,
     `ChosenNecklaceLabelledPoint,
     `ChosenNecklaceMapInclusion,
-  ] ++ #[
+]
+
+private def rootChunk07 : Array Lean.Name := #[
     `ChosenNecklaceMapVertices,
     `ChosenNecklaceOrderLift,
     `ChosenNecklaceOrderMaps,
@@ -533,7 +545,9 @@ lean_lib DaggerModels where
     `CountableCrossedInverseColimit,
     `CountableCrossedInverseTargetSquare,
     `CountableCrossedWholeWitnessTarget,
-  ] ++ #[
+]
+
+private def rootChunk08 : Array Lean.Name := #[
     `CountableReplacementPreservation,
     `DaggerAdjunctionCompatibility,
     `DaggerCellHomTransfer,
@@ -598,7 +612,9 @@ lean_lib DaggerModels where
     `IntervalFlagCenter,
     `IntervalFlagContraction,
     `IntervalFlagDiagonal,
-  ] ++ #[
+]
+
+private def rootChunk09 : Array Lean.Name := #[
     `IntervalFlagPath,
     `IntervalFlagRaw,
     `IntervalHomIsoContraction,
@@ -663,7 +679,9 @@ lean_lib DaggerModels where
     `NativeCoherentCotensorConstants,
     `NativeCoherentCotensorResolutionNaturality,
     `NativeCoherentCotensorResolutionWeak,
-  ] ++ #[
+]
+
+private def rootChunk10 : Array Lean.Name := #[
     `NativeCoherentNerveIsomorphismPartKanFactor,
     `NativeCoherentResolutionC2Span,
     `NativeCoherentResolutionFunctor,
@@ -728,7 +746,9 @@ lean_lib DaggerModels where
     `NativeDiagonalHornSkeletonExtension,
     `NativeDiagonalHornSkeletonGluing,
     `NativeDiagonalHornStageCells,
-  ] ++ #[
+]
+
+private def rootChunk11 : Array Lean.Name := #[
     `NativeDualTheoremA,
     `NativeDualTheoremACells,
     `NativeDualTheoremAColumnComparison,
@@ -793,7 +813,9 @@ lean_lib DaggerModels where
     `NativeFreePathUnitNerveWeak,
     `NativeFreeSphereFibreNaturality,
     `NativeFullChainInjectivity,
-  ] ++ #[
+]
+
+private def rootChunk12 : Array Lean.Name := #[
     `NativeFullFunctorVertexLifting,
     `NativeFullGroupoidNerveFibration,
     `NativeFullWeakSmithGenerators,
@@ -858,7 +880,9 @@ lean_lib DaggerModels where
     `NativeIhomTensorComparison,
     `NativeIhomTensorFirstNaturality,
     `NativeIhomWeakBetweenKan,
-  ] ++ #[
+]
+
+private def rootChunk13 : Array Lean.Name := #[
     `NativeInnerFactorizationAccessible,
     `NativeInnerHornDataPostcomposition,
     `NativeInnerHornFacePostcomposition,
@@ -923,7 +947,9 @@ lean_lib DaggerModels where
     `NativeOrdinaryCoherentResolutionWeak,
     `NativeOrdinaryCoherentRowFactorization,
     `NativeOrdinaryDaggerNerve,
-  ] ++ #[
+]
+
+private def rootChunk14 : Array Lean.Name := #[
     `NativeOrdinaryDaggerNerveFunctor,
     `NativeOrdinaryDaggerNerveLift,
     `NativeOrdinaryGroupoidSigma,
@@ -988,7 +1014,9 @@ lean_lib DaggerModels where
     `NativeOriginalWeakMonoLiftingRecognition,
     `NativeOriginalWeakMonoPushout,
     `NativeOriginalWeakMonoTransfinite,
-  ] ++ #[
+]
+
+private def rootChunk15 : Array Lean.Name := #[
     `NativeOriginalWeakPushoutTensor,
     `NativeOverChainDecomposition,
     `NativeOverChainFixedProjection,
@@ -1053,7 +1081,9 @@ lean_lib DaggerModels where
     `NativeRealEdgewiseDaggerInvolution,
     `NativeRealEdgewiseExactness,
     `NativeRealEdgewiseGeometricWeak,
-  ] ++ #[
+]
+
+private def rootChunk16 : Array Lean.Name := #[
     `NativeRealEdgewiseHomotopyFixedPointComparison,
     `NativeRealEdgewiseIndex,
     `NativeRealEdgewiseInterpolationParameters,
@@ -1118,7 +1148,9 @@ lean_lib DaggerModels where
     `NativeSSetRawHomotopyEquivalenceWeak,
     `NativeSignedPathReduction,
     `NativeSignedPathWords,
-  ] ++ #[
+]
+
+private def rootChunk17 : Array Lean.Name := #[
     `NativeSimpleSphereFreeClasses,
     `NativeSimplexConeHomotopies,
     `NativeSimplexIndexNerveWeakContractibility,
@@ -1183,7 +1215,9 @@ lean_lib DaggerModels where
     `NativeWalkingEndpointSection,
     `NativeWalkingEndpointTrivialRestriction,
     `NativeWalkingFullBlockPairingCore,
-  ] ++ #[
+]
+
+private def rootChunk18 : Array Lean.Name := #[
     `NativeWalkingFullBlockRegularity,
     `NativeWalkingHomotopyNaturalIso,
     `NativeWalkingHomotopySectionCorrection,
@@ -1248,7 +1282,9 @@ lean_lib DaggerModels where
     `OriginalAccessibleSolutionPresentationsRecovered,
     `OriginalAccessibleSolutionRanksRecovered,
     `OriginalAccessibleSolutionsRecovered,
-  ] ++ #[
+]
+
+private def rootChunk19 : Array Lean.Name := #[
     `OriginalActionAdjunctionLift,
     `OriginalActionForgetCofreeAdjunction,
     `OriginalActionFreeCoyoneda,
@@ -1313,7 +1349,9 @@ lean_lib DaggerModels where
     `OriginalBorelModelCategory,
     `OriginalBorelModelConsequences,
     `OriginalBorelUnderlyingCofibrations,
-  ] ++ #[
+]
+
+private def rootChunk20 : Array Lean.Name := #[
     `OriginalBorelWeakEquivalenceClasses,
     `OriginalBoundarySphereEvaluation,
     `OriginalC2BinaryCofreeAdjunction,
@@ -1378,7 +1416,9 @@ lean_lib DaggerModels where
     `OriginalCounitObjects,
     `OriginalCounitRightCone,
     `OriginalCounitRightConeContractibilityRetraction,
-  ] ++ #[
+]
+
+private def rootChunk21 : Array Lean.Name := #[
     `OriginalCounitRightConeCrossTimeProjectionMapsReconciled,
     `OriginalCounitRightConeCrossTimeSectionLawsReconciled,
     `OriginalCounitRightConeCrossTimeSectionsReconciled,
@@ -1443,7 +1483,9 @@ lean_lib DaggerModels where
     `OriginalCutOverNaturality,
     `OriginalDKCompositionReflectionRecovered,
     `OriginalDKEndpointTransportRecovered,
-  ] ++ #[
+]
+
+private def rootChunk22 : Array Lean.Name := #[
     `OriginalDKHomRetractsRecovered,
     `OriginalDKTwoOutOfThreeRecovered,
     `OriginalDaggerAdjunctionWitnessRecovered,
@@ -1508,7 +1550,9 @@ lean_lib DaggerModels where
     `OriginalEC2RealizedCellOrbits,
     `OriginalEC2RealizedFreeCellLift,
     `OriginalEC2SimplicialAction,
-  ] ++ #[
+]
+
+private def rootChunk23 : Array Lean.Name := #[
     `OriginalEC2SimplicialContraction,
     `OriginalEC2SimplicialProjectiveCofibrancy,
     `OriginalEC2SkeletalPushout,
@@ -1573,7 +1617,9 @@ lean_lib DaggerModels where
     `OriginalFixedObjectDaggerCompletionQuillen,
     `OriginalFixedObjectDaggerCotensorRepresentation,
     `OriginalFixedObjectDaggerDegreeCategories,
-  ] ++ #[
+]
+
+private def rootChunk24 : Array Lean.Name := #[
     `OriginalFixedObjectDaggerDerivedCompletion,
     `OriginalFixedObjectDaggerFilteredColimits,
     `OriginalFixedObjectDaggerProducts,
@@ -1638,7 +1684,9 @@ lean_lib DaggerModels where
     `OriginalFlagConstantTargetChecks,
     `OriginalFlagConstantTargetTypes,
     `OriginalFlagCutComposition,
-  ] ++ #[
+]
+
+private def rootChunk25 : Array Lean.Name := #[
     `OriginalFlagDegree,
     `OriginalFlagDescentBeadCondition,
     `OriginalFlagDescentChecks,
@@ -1703,7 +1751,9 @@ lean_lib DaggerModels where
     `OriginalFlagSourceAssemblyIso,
     `OriginalFlagSourcePrefixCoordinates,
     `OriginalFlagSourcePrefixJoints,
-  ] ++ #[
+]
+
+private def rootChunk26 : Array Lean.Name := #[
     `OriginalFlagSourcePrefixMaps,
     `OriginalFlagSupportFlank,
     `OriginalFlagSurvivingBeads,
@@ -1768,7 +1818,9 @@ lean_lib DaggerModels where
     `OriginalGlobalJCellCESUnifiedRecovered,
     `OriginalGlobalJCellClosureUnifiedRecovered,
     `OriginalGlobalJCellCofUnifiedRecovered,
-  ] ++ #[
+]
+
+private def rootChunk27 : Array Lean.Name := #[
     `OriginalGlobalJCellHornRecovered,
     `OriginalGlobalJCellIntervalUnifiedRecovered,
     `OriginalGlobalJCellSuccessorPropertiesRecovered,
@@ -1833,7 +1885,9 @@ lean_lib DaggerModels where
     `OriginalJoinedPrefixBoundaryPreimage,
     `OriginalJoinedPresheafAssociativity,
     `OriginalJoinedSuffixFaceMaps,
-  ] ++ #[
+]
+
+private def rootChunk28 : Array Lean.Name := #[
     `OriginalJoinedSuffixHornGluing,
     `OriginalJoinedVertexCoreCriterion,
     `OriginalJoyalLeftProperRecovered,
@@ -1898,7 +1952,9 @@ lean_lib DaggerModels where
     `OriginalNecklaceCutWedge,
     `OriginalNecklaceIntervalRestriction,
     `OriginalNecklacePointSimple,
-  ] ++ #[
+]
+
+private def rootChunk29 : Array Lean.Name := #[
     `OriginalNecklaceSimple,
     `OriginalNerveLocalWeakPreservation,
     `OriginalNerveOppositeMap,
@@ -1963,7 +2019,9 @@ lean_lib DaggerModels where
     `OriginalOrdinaryMovingHomDiagramReconciled,
     `OriginalOrdinaryNerveQuasicategory,
     `OriginalOrdinaryObjectCells,
-  ] ++ #[
+]
+
+private def rootChunk30 : Array Lean.Name := #[
     `OriginalOrdinaryPiZeroCompatibilityRecovered,
     `OriginalOrdinaryTerminal,
     `OriginalOrdinaryTotalEdgeOperations,
@@ -2028,7 +2086,9 @@ lean_lib DaggerModels where
     `OriginalProductPlateauFlag,
     `OriginalProductSupportBounds,
     `OriginalQuasiReplacementsAccessible,
-  ] ++ #[
+]
+
+private def rootChunk31 : Array Lean.Name := #[
     `OriginalQuasicategoryComposeEdges,
     `OriginalQuasicategoryEdgeHomotopies,
     `OriginalQuasicategoryEdgeHomotopyCategory,
@@ -2093,7 +2153,9 @@ lean_lib DaggerModels where
     `OriginalRecoveredGlobalModelConstructionData,
     `OriginalRecoveredGlobalModelEndpointSupportData,
     `OriginalRecoveredKernelExpression,
-  ] ++ #[
+]
+
+private def rootChunk32 : Array Lean.Name := #[
     `OriginalRecoveredKernelExpressionData,
     `OriginalRecoveredLiteralChunks,
     `OriginalRecoveredPrivateSquareExpression,
@@ -2158,7 +2220,9 @@ lean_lib DaggerModels where
     `OriginalSimplicialCategoryBarBidegreeDecomposition,
     `OriginalSimplicialCategoryBarConstruction,
     `OriginalSimplicialCategoryBarContraction,
-  ] ++ #[
+]
+
+private def rootChunk33 : Array Lean.Name := #[
     `OriginalSimplicialCategoryBarContractionMap,
     `OriginalSimplicialCategoryBarCoproductDegrees,
     `OriginalSimplicialCategoryBarFibre,
@@ -2223,7 +2287,9 @@ lean_lib DaggerModels where
     `OriginalSimplicialGroupoidCompletionDagger,
     `OriginalSimplicialGroupoidCompletionDaggerFunctor,
     `OriginalSimplicialGroupoidCompletionFunctor,
-  ] ++ #[
+]
+
+private def rootChunk34 : Array Lean.Name := #[
     `OriginalSimplicialGroupoidCompletionSigma,
     `OriginalSimplicialGroupoidCompletionUniversal,
     `OriginalSimplicialMappingPathFibrations,
@@ -2288,7 +2354,9 @@ lean_lib DaggerModels where
     `OriginalStrictSimplicialPiZeroGroupoid,
     `OriginalSubcomplexNerveData,
     `OriginalSubcomplexSimplexRestriction,
-  ] ++ #[
+]
+
+private def rootChunk35 : Array Lean.Name := #[
     `OriginalSuccessorBoundaryNaturalInclusions,
     `OriginalSuccessorBoundaryPresheafPullback,
     `OriginalSuccessorBoundaryProjectionFactorization,
@@ -2353,7 +2421,9 @@ lean_lib DaggerModels where
     `OriginalUnitaryTwoObjectCopyRecovered,
     `OriginalUnitaryWitnessHomotopyRecovered,
     `OriginalUnreplacedGeometricPiKan,
-  ] ++ #[
+]
+
+private def rootChunk36 : Array Lean.Name := #[
     `OriginalVariableGraphColimitsRecovered,
     `OriginalVariableHomColimitRecovered,
     `OriginalVariableHomDiagramRecovered,
@@ -2418,7 +2488,9 @@ lean_lib DaggerModels where
     `ProofOriginalMainTheoremC,
     `PushoutRetract,
     `RawIsoTriangleCasts,
-  ] ++ #[
+]
+
+private def rootChunk37 : Array Lean.Name := #[
     `RawIsoTriangleCells,
     `RecoveredNativeHornProofClosure,
     `RectangularCellLegPost,
@@ -2483,7 +2555,9 @@ lean_lib DaggerModels where
     `SSetGluingSpan,
     `SSetOperatorMapValues,
     `SSetProductGeometric,
-  ] ++ #[
+]
+
+private def rootChunk38 : Array Lean.Name := #[
     `SSetRightProper,
     `SSetSM7,
     `SimplexInverseWitnessCategory,
@@ -2520,8 +2594,9 @@ lean_lib DaggerModels where
     `WholeWitnessSmallFamilyRanks,
     `WholeWitnessTriangleStageLifts,
     `WitnessColimitInverse
-  ]
-  globs := #[
+]
+
+private def globChunk00 : Array Lake.Glob := #[
     .one `MainTheoremsABCD,
     .one `MainTheoremsA,
     .one `ProofTheoremA,
@@ -2586,7 +2661,9 @@ lean_lib DaggerModels where
     .one `ActualFibrantSimplexContractibility,
     .one `ActualFirstCoreComparisonAllQuasicategories,
     .one `ActualFirstCoreComparisonWeakReduction,
-  ] ++ #[
+]
+
+private def globChunk01 : Array Lake.Glob := #[
     .one `ActualFixedDaggerCoreComparison,
     .one `ActualFreeAntiJoyalMappingWeak,
     .one `ActualFreeAntiWalkingCategoricalCylinder,
@@ -2651,7 +2728,9 @@ lean_lib DaggerModels where
     .one `ActualKanSimplexCotensorComparison,
     .one `ActualLeftCoreMappingWeakRestriction,
     .one `ActualLeftMappingEquivalenceVerticesStable,
-  ] ++ #[
+]
+
+private def globChunk02 : Array Lake.Glob := #[
     .one `ActualLocallyKanGroupoidalCoherentNerve,
     .one `ActualMappingCoreVertexCharacterization,
     .one `ActualNativeDaggerIntervalPresentation,
@@ -2716,7 +2795,9 @@ lean_lib DaggerModels where
     .one `ActualQWeightedAugmentationIsomorphisms,
     .one `ActualQWeightedAugmentationPushouts,
     .one `ActualQWeightedAugmentationSkeletonInduction,
-  ] ++ #[
+]
+
+private def globChunk03 : Array Lake.Glob := #[
     .one `ActualQWeightedCarrierColimits,
     .one `ActualQWeightedResolutionCells,
     .one `ActualQWeightedResolutionCofibrations,
@@ -2781,7 +2862,9 @@ lean_lib DaggerModels where
     .one `ActualWalkingIsoCategoricalCylinder,
     .one `ActualWalkingIsoCategoricalEquivalence,
     .one `AdjacentWordDeletions,
-  ] ++ #[
+]
+
+private def globChunk04 : Array Lake.Glob := #[
     .one `AdjacentWordInsertions,
     .one `AmalgamAttachmentCriterion,
     .one `AmalgamCollapse,
@@ -2846,7 +2929,9 @@ lean_lib DaggerModels where
     .one `AmalgamReduction,
     .one `AmalgamReductionDiamond,
     .one `AmalgamReductionEncoding,
-  ] ++ #[
+]
+
+private def globChunk05 : Array Lake.Glob := #[
     .one `AmalgamStageAnodyne,
     .one `AmalgamStageCoverage,
     .one `AmalgamStageEvaluation,
@@ -2911,7 +2996,9 @@ lean_lib DaggerModels where
     .one `ChosenFlagChosenHomCocone,
     .one `ChosenFlagChosenIdentity,
     .one `ChosenFlagChosenInverse,
-  ] ++ #[
+]
+
+private def globChunk06 : Array Lake.Glob := #[
     .one `ChosenFlagChosenIso,
     .one `ChosenFlagChosenNecklaceComparison,
     .one `ChosenFlagChosenPostcomp,
@@ -2976,7 +3063,9 @@ lean_lib DaggerModels where
     .one `ChosenNecklaceJointImages,
     .one `ChosenNecklaceLabelledPoint,
     .one `ChosenNecklaceMapInclusion,
-  ] ++ #[
+]
+
+private def globChunk07 : Array Lake.Glob := #[
     .one `ChosenNecklaceMapVertices,
     .one `ChosenNecklaceOrderLift,
     .one `ChosenNecklaceOrderMaps,
@@ -3041,7 +3130,9 @@ lean_lib DaggerModels where
     .one `CountableCrossedInverseColimit,
     .one `CountableCrossedInverseTargetSquare,
     .one `CountableCrossedWholeWitnessTarget,
-  ] ++ #[
+]
+
+private def globChunk08 : Array Lake.Glob := #[
     .one `CountableReplacementPreservation,
     .one `DaggerAdjunctionCompatibility,
     .one `DaggerCellHomTransfer,
@@ -3106,7 +3197,9 @@ lean_lib DaggerModels where
     .one `DaggerModels.FreeDaggerCell,
     .one `DaggerModels.FreeDaggerCofibration,
     .one `DaggerModels.FreeDaggerPushout,
-  ] ++ #[
+]
+
+private def globChunk09 : Array Lake.Glob := #[
     .one `DaggerModels.FreeDaggerSimplicialCategory,
     .one `DaggerModels.FreeDaggerSkeleton,
     .one `DaggerModels.FreeInvolution,
@@ -3171,7 +3264,9 @@ lean_lib DaggerModels where
     .one `DiagonalAttachingData,
     .one `DiagonalRowEvaluation,
     .one `DiagonalSuccessorMaps,
-  ] ++ #[
+]
+
+private def globChunk10 : Array Lake.Glob := #[
     .one `DiagonalSuccessorMembership,
     .one `DiagonalSuccessorPushout,
     .one `EdgeHomotopyCorrespondence,
@@ -3236,7 +3331,9 @@ lean_lib DaggerModels where
     .one `IsoTriangleFilteredStageLift,
     .one `IsoTriangleFiniteEquations,
     .one `LatchingEZMembership,
-  ] ++ #[
+]
+
+private def globChunk11 : Array Lake.Glob := #[
     .one `LatchingFiniteIntersections,
     .one `LatchingIntersectionNaturality,
     .one `LatchingOriginalData,
@@ -3301,7 +3398,9 @@ lean_lib DaggerModels where
     .one `NativeComponentMatchingGluing,
     .one `NativeComponentMatchingNaturality,
     .one `NativeComponentPartialMatchingComparison,
-  ] ++ #[
+]
+
+private def globChunk12 : Array Lake.Glob := #[
     .one `NativeComponentPartialMatchingPi,
     .one `NativeConnectedFamilyHom,
     .one `NativeConnectedHornsAndSimplex,
@@ -3366,7 +3465,9 @@ lean_lib DaggerModels where
     .one `NativeEdgeStableFullVertexFibration,
     .one `NativeEdgewiseMapWeak,
     .one `NativeEndomorphismCellSquares,
-  ] ++ #[
+]
+
+private def globChunk13 : Array Lake.Glob := #[
     .one `NativeEndomorphismConjugation,
     .one `NativeEndomorphismSimplexMaps,
     .one `NativeEnrichedHomRestrictionMonomorphism,
@@ -3431,7 +3532,9 @@ lean_lib DaggerModels where
     .one `NativeGeometricMappingNaturality,
     .one `NativeGeometricPiProjectionFibration,
     .one `NativeGeometricPiVertexPullback,
-  ] ++ #[
+]
+
+private def globChunk14 : Array Lake.Glob := #[
     .one `NativeGeometricPiWeakPullback,
     .one `NativeGeometricPointEvaluation,
     .one `NativeGeometricSphereClassFunctor,
@@ -3496,7 +3599,9 @@ lean_lib DaggerModels where
     .one `NativeInnerHornSimplexReconstruction,
     .one `NativeInnerHornUnionProd,
     .one `NativeInnerJoyalMappingWeak,
-  ] ++ #[
+]
+
+private def globChunk15 : Array Lake.Glob := #[
     .one `NativeInnerPairing,
     .one `NativeInnerPushoutIhom,
     .one `NativeInnerQuasicategoryWeakReplacement,
@@ -3561,7 +3666,9 @@ lean_lib DaggerModels where
     .one `NativeOriginalC2InvolutionAction,
     .one `NativeOriginalC2QSingularSpan,
     .one `NativeOriginalC2RealizationMapping,
-  ] ++ #[
+]
+
+private def globChunk16 : Array Lake.Glob := #[
     .one `NativeOriginalC2RealizationOpposite,
     .one `NativeOriginalCoherentUnitaryExistence,
     .one `NativeOriginalCompletedCoreUnitaryExistence,
@@ -3626,7 +3733,9 @@ lean_lib DaggerModels where
     .one `NativeOverNerveSimplexFamily,
     .one `NativeOverNerveWeakContractibility,
     .one `NativePalindromicDaggerEquivariance,
-  ] ++ #[
+]
+
+private def globChunk17 : Array Lake.Glob := #[
     .one `NativePalindromicVertexFold,
     .one `NativePartialFaceAttachmentAnodyne,
     .one `NativePartialFaceAttachmentComponents,
@@ -3691,7 +3800,9 @@ lean_lib DaggerModels where
     .one `NativeRealEdgewiseRealizationComparison,
     .one `NativeRealEdgewiseRealizationEquivariance,
     .one `NativeRealEdgewiseRealizationVertices,
-  ] ++ #[
+]
+
+private def globChunk18 : Array Lake.Glob := #[
     .one `NativeRealEdgewiseSSet,
     .one `NativeRealEdgewiseSingularHomotopy,
     .one `NativeRealEdgewiseStandardSimplexNerve,
@@ -3756,7 +3867,9 @@ lean_lib DaggerModels where
     .one `NativeSimplexIndexResolutionColumnInverse,
     .one `NativeSimplexIndexResolutionColumnRoundtrips,
     .one `NativeSimplexIndexResolutionNaturality,
-  ] ++ #[
+]
+
+private def globChunk19 : Array Lake.Glob := #[
     .one `NativeSimplexParameterWeakMap,
     .one `NativeSimplexPullbackFibrationDetection,
     .one `NativeSimplicialCategoryIsoHom,
@@ -3821,7 +3934,9 @@ lean_lib DaggerModels where
     .one `NativeWalkingInverseKanWeak,
     .one `NativeWalkingKanTensor,
     .one `NativeWalkingMarkedWordOperators,
-  ] ++ #[
+]
+
+private def globChunk20 : Array Lake.Glob := #[
     .one `NativeWalkingMonoPushout,
     .one `NativeWalkingNondegenerateInsertions,
     .one `NativeWalkingPositiveBoundaryPushout,
@@ -3886,7 +4001,9 @@ lean_lib DaggerModels where
     .one `OriginalActualCoherentUnitaryIdentityRecovered,
     .one `OriginalActualDaggerCofibrationClass,
     .one `OriginalActualDaggerFreeComparisonRecovered,
-  ] ++ #[
+]
+
+private def globChunk21 : Array Lake.Glob := #[
     .one `OriginalActualDaggerModelConstruction,
     .one `OriginalActualGeneratingWeakRightLiftingRecovered,
     .one `OriginalActualGlobalWeakDefinitionsRecovered,
@@ -3951,7 +4068,9 @@ lean_lib DaggerModels where
     .one `OriginalChosenHomMapFunctorialityReconciled,
     .one `OriginalChosenProductComparisonReconciledRecovered,
     .one `OriginalCodiscreteNerveInjective,
-  ] ++ #[
+]
+
+private def globChunk22 : Array Lake.Glob := #[
     .one `OriginalCofaceIntersectionAgreement,
     .one `OriginalCofibrantBrownPreservationChallengeProof,
     .one `OriginalCofibrantDegreeFreeRetract,
@@ -4016,7 +4135,9 @@ lean_lib DaggerModels where
     .one `OriginalCounitRightConeQBoundaryCofibrationsReconciled,
     .one `OriginalCounitRightConeQBoundaryFaceOverlapReconciled,
     .one `OriginalCounitRightConeQBoundaryMonoReconciled,
-  ] ++ #[
+]
+
+private def globChunk23 : Array Lake.Glob := #[
     .one `OriginalCounitRightConeQBoundaryRecognitionReconciled,
     .one `OriginalCounitRightConeQCenterSupportReconciled,
     .one `OriginalCounitRightConeQCofaceImageIntersectionReconciled,
@@ -4081,7 +4202,9 @@ lean_lib DaggerModels where
     .one `OriginalDaggerCoreKan,
     .one `OriginalDaggerCoreKanIdentity,
     .one `OriginalDaggerFreeComparisonRecovered,
-  ] ++ #[
+]
+
+private def globChunk24 : Array Lake.Glob := #[
     .one `OriginalDaggerHomotopyFixedPointWeakEquivalences,
     .one `OriginalDaggerMapArrowColimitsRecovered,
     .one `OriginalDaggerRealizationC2Action,
@@ -4146,7 +4269,9 @@ lean_lib DaggerModels where
     .one `OriginalEnrichedHomRetractRecovered,
     .one `OriginalEnrichedHomTransport,
     .one `OriginalEnrichedHomTransportRecovered,
-  ] ++ #[
+]
+
+private def globChunk25 : Array Lake.Glob := #[
     .one `OriginalEnrichedTranslationComparisonRecovered,
     .one `OriginalEquivalenceFactorizationTransport,
     .one `OriginalEquivalenceModelTransport,
@@ -4211,7 +4336,9 @@ lean_lib DaggerModels where
     .one `OriginalFixedObjectEnrichedCotensorNaturality,
     .one `OriginalFixedObjectFiniteLimits,
     .one `OriginalFixedObjectFreeDaggerGroupoidQuillen,
-  ] ++ #[
+]
+
+private def globChunk26 : Array Lake.Glob := #[
     .one `OriginalFixedObjectFreeDaggerMappingComparison,
     .one `OriginalFixedObjectFreeEC2Mapping,
     .one `OriginalFixedObjectFreeGroupoidQuillen,
@@ -4276,7 +4403,9 @@ lean_lib DaggerModels where
     .one `OriginalFlagDiagonalGeometricReconciledRecovered,
     .one `OriginalFlagDiscreteNerve,
     .one `OriginalFlagFiberContraction,
-  ] ++ #[
+]
+
+private def globChunk27 : Array Lake.Glob := #[
     .one `OriginalFlagFiberContractionChecks,
     .one `OriginalFlagFiberContractionData,
     .one `OriginalFlagFiberContractionPoint,
@@ -4341,7 +4470,9 @@ lean_lib DaggerModels where
     .one `OriginalFreeCofibrationGeneration,
     .one `OriginalFreeEC2DaggerGroupoidComparison,
     .one `OriginalFullVertexPathEndpoint,
-  ] ++ #[
+]
+
+private def globChunk28 : Array Lake.Glob := #[
     .one `OriginalFullVertexPathFiber,
     .one `OriginalFullVertexPathFiberIso,
     .one `OriginalFullVertexPathFiberModelConsequences,
@@ -4406,7 +4537,9 @@ lean_lib DaggerModels where
     .one `OriginalGlobalJRealizationRecovered,
     .one `OriginalGlobalLeftProperRecovered,
     .one `OriginalGlobalModelDataRecovered,
-  ] ++ #[
+]
+
+private def globChunk29 : Array Lake.Glob := #[
     .one `OriginalGlobalModelRecognitionGlueRecovered,
     .one `OriginalGlobalModelRecovered,
     .one `OriginalHomLoopActionTrivial,
@@ -4471,7 +4604,9 @@ lean_lib DaggerModels where
     .one `OriginalKanMappingHomotopyRecognition,
     .one `OriginalKanVertexCosliceFibration,
     .one `OriginalLabeledPathFiberNaturality,
-  ] ++ #[
+]
+
+private def globChunk30 : Array Lake.Glob := #[
     .one `OriginalLatchingFiniteUnionDataReconciledRecovered,
     .one `OriginalLatchingFiniteUnionGeometricReconciledRecovered,
     .one `OriginalLatchingFiniteUnionPushoutsReconciledRecovered,
@@ -4536,7 +4671,9 @@ lean_lib DaggerModels where
     .one `OriginalNonfinalHornTerminalKan,
     .one `OriginalNormalGeneratorWholeSolutions,
     .one `OriginalOrdinalJoinAssociativity,
-  ] ++ #[
+]
+
+private def globChunk31 : Array Lake.Glob := #[
     .one `OriginalOrdinalJoinLeft,
     .one `OriginalOrdinaryCellComparisonBoundaryGeometricRecovered,
     .one `OriginalOrdinaryCellComparisonGeometricRecovered,
@@ -4601,7 +4738,9 @@ lean_lib DaggerModels where
     .one `OriginalOrdinaryTotalEdgeOperationsStage,
     .one `OriginalOrdinaryTransfiniteHomDiagramReconciled,
     .one `OriginalOrdinaryTranslationRecovered,
-  ] ++ #[
+]
+
+private def globChunk32 : Array Lake.Glob := #[
     .one `OriginalOuterTwoHornInverses,
     .one `OriginalOverNerveFibreChallengeProof,
     .one `OriginalPairedCellComparisonRecovered,
@@ -4666,7 +4805,9 @@ lean_lib DaggerModels where
     .one `OriginalQuasicategoryOuterTwoHorns,
     .one `OriginalQuasicategoryPathEdgeRepresentatives,
     .one `OriginalQuasicategoryPathTriangleWitnesses,
-  ] ++ #[
+]
+
+private def globChunk33 : Array Lake.Glob := #[
     .one `OriginalQuasicategoryTetrahedronFillers,
     .one `OriginalQuillenACellsReconciledRecovered,
     .one `OriginalQuillenAColumnsReconciledRecovered,
@@ -4731,7 +4872,9 @@ lean_lib DaggerModels where
     .one `OriginalRecoveredSmithConeColimitsExpressionData,
     .one `OriginalRecoveredSmithLimitsExpressionData,
     .one `OriginalRecoveredSmithModelConstructionData,
-  ] ++ #[
+]
+
+private def globChunk34 : Array Lake.Glob := #[
     .one `OriginalRecoveredSmithSolutionExpressionData,
     .one `OriginalRecoveredUnitaryDiscreteCoherentAlgebraData,
     .one `OriginalRecoveredUnitaryEndpointCofData,
@@ -4796,7 +4939,9 @@ lean_lib DaggerModels where
     .one `OriginalSimplicialCategoryBarPullback,
     .one `OriginalSimplicialCategoryBarReplacementFibreComparison,
     .one `OriginalSimplicialCategoryBarRowHorizontalTransport,
-  ] ++ #[
+]
+
+private def globChunk35 : Array Lake.Glob := #[
     .one `OriginalSimplicialCategoryBarRowPullbackTransport,
     .one `OriginalSimplicialCategoryBarRowSimplexFamily,
     .one `OriginalSimplicialCategoryBarRowSimplexPullback,
@@ -4861,7 +5006,9 @@ lean_lib DaggerModels where
     .one `OriginalSimplicialPiZeroFunctor,
     .one `OriginalSimplicialPiZeroLaxMonoidal,
     .one `OriginalSimplicialPiZeroWeakEquivalence,
-  ] ++ #[
+]
+
+private def globChunk36 : Array Lake.Glob := #[
     .one `OriginalSimplicialPullbackPairs,
     .one `OriginalSimplicialSubcomplexOpposite,
     .one `OriginalSimplicialTrivialFibrationTensor,
@@ -4926,7 +5073,9 @@ lean_lib DaggerModels where
     .one `OriginalTaggedReverseAdjunctions,
     .one `OriginalTaggedReverseAntiPresheaf,
     .one `OriginalTaggedReverseFreeCompletion,
-  ] ++ #[
+]
+
+private def globChunk37 : Array Lake.Glob := #[
     .one `OriginalTaggedReverseGeneratorComparison,
     .one `OriginalTaggedReversePrecomposition,
     .one `OriginalTaggedReversePresheafInclusion,
@@ -4991,7 +5140,9 @@ lean_lib DaggerModels where
     .one `OriginalWalkingIsoCounitIntegerMapReconciled,
     .one `OriginalWalkingIsoIntegerObstruction,
     .one `OriginalWalkingIsoNerveComparison,
-  ] ++ #[
+]
+
+private def globChunk38 : Array Lake.Glob := #[
     .one `OriginalWeakInverseWitnessImage,
     .one `OriginalWeakTargetNativePiKan,
     .one `OriginalWedgeCutFlags,
@@ -5056,7 +5207,9 @@ lean_lib DaggerModels where
     .one `RectangularHomTriangleStageLift,
     .one `RectangularInverseDataPost,
     .one `RectangularInverseTransitionCast,
-  ] ++ #[
+]
+
+private def globChunk39 : Array Lake.Glob := #[
     .one `RectangularInverseWitnessData,
     .one `RectangularTrianglePrePost,
     .one `RelativeArrowStageFacs,
@@ -5121,7 +5274,9 @@ lean_lib DaggerModels where
     .one `TerminalArrowConnectedColimits,
     .one `ThickeningReversal,
     .one `ThinNerveAdjacentDegeneracy,
-  ] ++ #[
+]
+
+private def globChunk40 : Array Lake.Glob := #[
     .one `TopCatModelCategory.AlephZero,
     .one `TopCatModelCategory.Arrow,
     .one `TopCatModelCategory.AttachCells,
@@ -5186,7 +5341,9 @@ lean_lib DaggerModels where
     .one `TopCatModelCategory.SSet.AnodyneExtensionsAdjunctions,
     .one `TopCatModelCategory.SSet.AnodyneExtensionsDefs,
     .one `TopCatModelCategory.SSet.Basic,
-  ] ++ #[
+]
+
+private def globChunk41 : Array Lake.Glob := #[
     .one `TopCatModelCategory.SSet.Boundary,
     .one `TopCatModelCategory.SSet.CategoryWithFibrations,
     .one `TopCatModelCategory.SSet.CategoryWithWeakEquivalences,
@@ -5251,7 +5408,9 @@ lean_lib DaggerModels where
     .one `TopCatModelCategory.SSet.Pseudofunctor,
     .one `TopCatModelCategory.SSet.PtSimplex,
     .one `TopCatModelCategory.SSet.Pullback,
-  ] ++ #[
+]
+
+private def globChunk42 : Array Lake.Glob := #[
     .one `TopCatModelCategory.SSet.Quotient,
     .one `TopCatModelCategory.SSet.SimplexCategory,
     .one `TopCatModelCategory.SSet.Simplices,
@@ -5316,7 +5475,9 @@ lean_lib DaggerModels where
     .one `WalkingWordOperationRoundTrips,
     .one `WholeReplacementPrescribedStrongRanks,
     .one `WholeReplacementStrongRanks,
-  ] ++ #[
+]
+
+private def globChunk43 : Array Lake.Glob := #[
     .one `WholeSolutionStrongCommonRanks,
     .one `WholeWeakSolutionSets,
     .one `WholeWitnessBoundedBaseFamilies,
@@ -5336,7 +5497,97 @@ lean_lib DaggerModels where
     .one `WholeWitnessSmallFamilyRanks,
     .one `WholeWitnessTriangleStageLifts,
     .one `WitnessColimitInverse
-  ]
+]
+
+@[default_target]
+lean_lib DaggerModels where
+  roots := (#[
+    rootChunk00,
+    rootChunk01,
+    rootChunk02,
+    rootChunk03,
+    rootChunk04,
+    rootChunk05,
+    rootChunk06,
+    rootChunk07,
+    rootChunk08,
+    rootChunk09,
+    rootChunk10,
+    rootChunk11,
+    rootChunk12,
+    rootChunk13,
+    rootChunk14,
+    rootChunk15,
+    rootChunk16,
+    rootChunk17,
+    rootChunk18,
+    rootChunk19,
+    rootChunk20,
+    rootChunk21,
+    rootChunk22,
+    rootChunk23,
+    rootChunk24,
+    rootChunk25,
+    rootChunk26,
+    rootChunk27,
+    rootChunk28,
+    rootChunk29,
+    rootChunk30,
+    rootChunk31,
+    rootChunk32,
+    rootChunk33,
+    rootChunk34,
+    rootChunk35,
+    rootChunk36,
+    rootChunk37,
+    rootChunk38,
+  ] : Array (Array Lean.Name)).foldl (fun acc chunk => acc ++ chunk) #[]
+  globs := (#[
+    globChunk00,
+    globChunk01,
+    globChunk02,
+    globChunk03,
+    globChunk04,
+    globChunk05,
+    globChunk06,
+    globChunk07,
+    globChunk08,
+    globChunk09,
+    globChunk10,
+    globChunk11,
+    globChunk12,
+    globChunk13,
+    globChunk14,
+    globChunk15,
+    globChunk16,
+    globChunk17,
+    globChunk18,
+    globChunk19,
+    globChunk20,
+    globChunk21,
+    globChunk22,
+    globChunk23,
+    globChunk24,
+    globChunk25,
+    globChunk26,
+    globChunk27,
+    globChunk28,
+    globChunk29,
+    globChunk30,
+    globChunk31,
+    globChunk32,
+    globChunk33,
+    globChunk34,
+    globChunk35,
+    globChunk36,
+    globChunk37,
+    globChunk38,
+    globChunk39,
+    globChunk40,
+    globChunk41,
+    globChunk42,
+    globChunk43,
+  ] : Array (Array Lake.Glob)).foldl (fun acc chunk => acc ++ chunk) #[]
 
 /-- Build an explicit dependency order with one loaded workspace and one Lean job at a time. -/
 script buildSequential (args) do

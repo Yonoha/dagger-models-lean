@@ -201,11 +201,19 @@ def lakefile_for(modules: list[str]) -> str:
     root_names = sorted({name.split(".")[0] if "." in name else name
                          for name in modules})
     roots = [f"    `{name}," for name in root_names]
-    # Retain the exact registry and order, but avoid one deeply nested array
-    # literal overflowing a Linux Lean worker's default stack.
-    def chunked_array(rows: list[str]) -> str:
+    # Keep each literal in its own declaration so Lake's lean_lib elaborator
+    # sees only a short fold, while preserving every registered module.
+    def chunk_defs(rows: list[str], prefix: str, item_type: str) -> tuple[str, str]:
         chunks = [rows[i:i + 64] for i in range(0, len(rows), 64)]
-        return "#[\n" + "\n  ] ++ #[\n".join("\n".join(c) for c in chunks) + "\n  ]\n"
+        defs = "".join(
+            f"private def {prefix}{i:02d} : Array {item_type} := #[\n"
+            + "\n".join(chunk) + "\n]\n\n"
+            for i, chunk in enumerate(chunks)
+        )
+        refs = "\n".join(f"    {prefix}{i:02d}," for i in range(len(chunks)))
+        return defs, f"(#[\n{refs}\n  ] : Array (Array {item_type})).foldl (fun acc chunk => acc ++ chunk) #[]\n"
+    root_defs, root_value = chunk_defs(roots, "rootChunk", "Lean.Name")
+    glob_defs, glob_value = chunk_defs(globs, "globChunk", "Lake.Glob")
     return (
         "import Lake\nopen Lake DSL\n"
         "set_option maxRecDepth 20000\n"
@@ -214,10 +222,11 @@ def lakefile_for(modules: list[str]) -> str:
         "require mathlib from git\n"
         "  \"https://github.com/leanprover-community/mathlib4.git\" @\n"
         "    \"a3a10db0e9d66acbebf76c5e6a135066525ac900\"\n"
+        + root_defs + glob_defs +
         "@[default_target]\n"
         "lean_lib DaggerModels where\n"
-        "  roots := " + chunked_array(roots) +
-        "  globs := " + chunked_array(globs) +
+        "  roots := " + root_value +
+        "  globs := " + glob_value +
         "script buildSequential (args) do\n"
         "  let [orderFile] := args | throw <| IO.userError \"Expected a module-order file\"\n"
         "  let workspace ← getWorkspace\n"
