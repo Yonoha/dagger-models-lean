@@ -8,6 +8,8 @@ from pathlib import Path
 import jsonschema
 import yaml
 
+from source_layout import library_source_root
+
 
 FOUNDATION_REGISTRY = ".ci/metadata/foundation-results.json"
 FOUNDATION_REGISTRY_SHA256 = "8fa455a83b97b5b78f5f62b5ed548964b0c1077716b3ff2f3df870cf4bb1bded"
@@ -71,6 +73,7 @@ def read_report(path: Path) -> dict:
 def validate(candidate: Path, trusted: Path, report_path: Path, scope: str) -> None:
     candidate = candidate.resolve()
     trusted = trusted.resolve()
+    source_prefix = library_source_root(candidate).relative_to(candidate)
     metadata = yaml.safe_load(
         ordinary_file(candidate, "formalization.yaml").read_text(encoding="utf-8")
     )
@@ -175,7 +178,7 @@ def validate(candidate: Path, trusted: Path, report_path: Path, scope: str) -> N
         config = json.loads(ordinary_file(candidate, config_path).read_text())
         if name in public:
             trusted_config = json.loads(ordinary_file(trusted, PUBLIC_CONFIGS[name]).read_text())
-            if (result["file"] != "MainTheoremsBCD.lean" or
+            if (result["file"] != (source_prefix / "MainTheoremsBCD.lean").as_posix() or
                     config_path != PUBLIC_CONFIGS[name] or
                     trusted_config.get("kind") != "bcd_source_comparator_case" or
                     trusted_config.get("theorem_names") != [name] or
@@ -183,7 +186,7 @@ def validate(candidate: Path, trusted: Path, report_path: Path, scope: str) -> N
                 raise ValueError(f"Public BCD result has incorrect source or configuration: {name}")
         if name == A_RESULT and scope == "current":
             trusted_config = json.loads(ordinary_file(trusted, A_CONFIG).read_text())
-            if (result["file"] != "MainTheoremsA.lean" or
+            if (result["file"] != (source_prefix / "MainTheoremsA.lean").as_posix() or
                     config_path != A_CONFIG or
                     trusted_config != {"kind": "a_source_comparator_case",
                                        "case": "A", "theorem_names": [A_RESULT]} or

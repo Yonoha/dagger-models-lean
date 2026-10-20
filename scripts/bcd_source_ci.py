@@ -21,6 +21,7 @@ import subprocess
 import sys
 
 from lean_imports import header_imports
+from source_layout import library_source_root
 
 
 PACKAGE_MANIFEST_SHA256 = "42e1ed4e30b7988d797bf8afa040d4b77fe459f8f113539ab5d245ea6bebe690"
@@ -296,10 +297,11 @@ def stage(a: argparse.Namespace) -> Path:
         raise ValueError("Lean pin mismatch")
     project = a.work / "candidate-project"
     project.mkdir(parents=True)
+    source_root = library_source_root(a.candidate)
     source_hashes = {}
     for name in names:
         rel = Path(*name.split(".")).with_suffix(".lean")
-        src = ordinary_candidate_source(a.candidate, rel)
+        src = ordinary_candidate_source(source_root, rel)
         if a.source_profile == CURRENT_PROFILE:
             row = by_name[name]
             if row.get("path") != rel.as_posix() or src.stat().st_size != row.get("bytes"):

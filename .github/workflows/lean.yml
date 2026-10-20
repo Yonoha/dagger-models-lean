@@ -76,9 +76,9 @@ jobs:
       - name: Check all library proofs
         # The separate BCD workflow builds the full integrated source graph.
         # This job retains the published foundation barrel and its import closure.
-        run: lake build DaggerModels.lean
+        run: lake build +DaggerModels
       - name: Audit transitive axiom dependencies
-        run: lake env lean Audit.lean
+        run: lake env lean lean/Audit.lean
       - name: Check the audit rejects proof holes and extra axioms
         run: python3 scripts/check_audit.py
       - name: Check Challenge size, imports, and complete target coverage

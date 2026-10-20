@@ -5501,6 +5501,7 @@ private def globChunk43 : Array Lake.Glob := #[
 
 @[default_target]
 lean_lib DaggerModels where
+  srcDir := "lean"
   roots := (#[
     rootChunk00,
     rootChunk01,

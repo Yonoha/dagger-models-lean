@@ -2,16 +2,16 @@
 
 The local development now contains a universe-polymorphic bridge for manuscript
 Theorem A (`bg.thm.main` and `bg.thm.left-proper`).
-[ChallengeTheoremA.lean](ChallengeTheoremA.lean) specifies one model structure on
+[ChallengeTheoremA.lean](lean/ChallengeTheoremA.lean) specifies one model structure on
 the original dagger simplicial categories, its weak equivalences, cofibrations
 and fibrations, local finite presentability and small generating families with
 finitely presentable domains, the trivial-fibration characterization, and left
 properness for every pushout along an original cofibration.
-[ProofTheoremA.lean](ProofTheoremA.lean) applies the existing model construction
+[ProofTheoremA.lean](lean/ProofTheoremA.lean) applies the existing model construction
 and left-properness proofs; it does not infer A from Theorems B, C or D.
-[MainTheoremsA.lean](MainTheoremsA.lean) exposes
+[MainTheoremsA.lean](lean/MainTheoremsA.lean) exposes
 `DaggerComparator.mainA : DaggerTheoremAChallenge.statement.{u}`.
-[MainTheoremsABCD.lean](MainTheoremsABCD.lean) imports the A and B/C/D public names.
+[MainTheoremsABCD.lean](lean/MainTheoremsABCD.lean) imports the A and B/C/D public names.
 
 The three A modules passed serial Lean 4.27.0 compilation locally, using the
 previously accepted dependency `.olean` files. The final sources contain no

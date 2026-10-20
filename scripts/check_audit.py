@@ -7,7 +7,7 @@ import tempfile
 
 def main() -> None:
     root = Path(__file__).resolve().parent.parent
-    template = (root / "Audit.lean").read_text(encoding="utf-8")
+    template = (root / "lean/Audit.lean").read_text(encoding="utf-8")
     marker = "\n#audit_dagger_models\n"
     if template.count(marker) != 1:
         raise RuntimeError("Expected exactly one audit invocation")

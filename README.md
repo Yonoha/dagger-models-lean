@@ -9,11 +9,33 @@ This release candidate publishes the current A/B/C/D source snapshot, saved loca
 
 - **[English catalogue (PDF)](https://github.com/Yonoha/dagger-models-lean/releases/download/v0.2.0-rc1/part1-lean-formalization-companion-en.pdf)**: notation follows Part I; the opening page explicitly identifies the prose, English translation, and result summaries as AI-generated.
 - **[Catalogue source and build instructions](docs/formalization-companion/README.md)**.
-- **[Main A/B/C/D entry points](MainTheoremsABCD.lean)** and [the exact main-result statements](MAIN_THEOREMS.md).
+- **[Main A/B/C/D entry points](lean/MainTheoremsABCD.lean)** and [the exact main-result statements](MAIN_THEOREMS.md).
 - **[Saved local Linux receipts and owner-audit logs](verification/local-linux-20261018/README.md)**.
 - **[Publication scope](PUBLICATION.md)**, [third-party attribution and observed license scope](THIRD_PARTY_NOTICES.md), and [mathematical reuse](EXISTING_FORMALIZATIONS.md).
 
 For a paper citation, use the release tag or an exact commit rather than a moving branch. Version v0.1.0 is retained as the historical foundation milestone and does not contain the current main-theorem formalization.
+
+## Repository layout
+
+The Lean sources live under [`lean/`](lean/). Their module names and imports
+are unchanged; `lakefile.lean` sets the library source directory to `lean`.
+
+| Location | Contents |
+| --- | --- |
+| [`lean/MainTheoremsABCD.lean`](lean/MainTheoremsABCD.lean) | Entry point for the four Part I main results |
+| [`lean/DaggerModels/`](lean/DaggerModels/) | Foundation library and dagger-category constructions |
+| [`lean/TopCatModelCategory/`](lean/TopCatModelCategory/) | Compatibility port of reused model-category infrastructure |
+| [`docs/formalization-companion/`](docs/formalization-companion/) | English catalogue source and build instructions |
+| [`verification/`](verification/) | Saved local validation records |
+| [`scripts/`](scripts/) | Build, audit, and comparison tools |
+| [`.ci/`](.ci/) | Fixed Challenges, trusted input locks, and verification configuration |
+
+Run Lake commands from the repository root. For example, `lake build +DaggerModels`
+builds the foundation library, `lake build +MainTheoremsABCD` selects the main-result
+aggregate, and `lake env lean lean/Audit.lean` runs the foundation axiom audit.
+The saved receipts and release archives retain their original paths and revisions.
+The source-directory reorganization preserves every Lean source byte; it is not a
+new full verification run.
 
 ## Current Theorem A local verification
 
@@ -92,8 +114,8 @@ python3 replay_certificates.py --case all
 To check the retained foundation library in this repository:
 
 ```sh
-lake build DaggerModels.lean
-lake env lean Audit.lean
+lake build +DaggerModels
+lake env lean lean/Audit.lean
 python3 scripts/check_audit.py
 ```
 
@@ -159,37 +181,37 @@ and rigidification sends the standard simplex diagram to the standard thickening
 
 | Paper construction or argument | Lean content | Scope |
 | --- | --- | --- |
-| The reversal simplex category before `prop.sSetdag_is_equivalent_to_Fun` | [`ReverseSimplex`](DaggerModels/ReverseSimplex.lean) | Category of actual monotone or antitone functions, reversal involution, inclusion of the simplex category, reversal relation, and the ambiguity only on constant functions |
-| `def.dagger_simplicial_sets` and the following simplicial identities | [`DaggerSSet`](DaggerModels/SimplicialSet.lean) | Definition, dagger morphisms and their category, faithful forgetful functor, and reversal identities for face and degeneracy maps |
+| The reversal simplex category before `prop.sSetdag_is_equivalent_to_Fun` | [`ReverseSimplex`](lean/DaggerModels/ReverseSimplex.lean) | Category of actual monotone or antitone functions, reversal involution, inclusion of the simplex category, reversal relation, and the ambiguity only on constant functions |
+| `def.dagger_simplicial_sets` and the following simplicial identities | [`DaggerSSet`](lean/DaggerModels/SimplicialSet.lean) | Definition, dagger morphisms and their category, faithful forgetful functor, and reversal identities for face and degeneracy maps |
 | The opening nondegeneracy argument of `dj.lem.free-cof` | `dagger_mem_nonDegenerate_iff`, `nonDegenerateEquiv` | Dagger preserves and reflects nondegeneracy |
-| `dj.def.free-cof` and closure arguments of `dj.lem.free-cof` | [`FreeCofibration`](DaggerModels/FreeCofibration.lean), [`FreeCofibrationClosure`](DaggerModels/FreeCofibrationClosure.lean) | Original definition, underlying monicity comparison, identities, composition, coproducts, pushouts, continuous transfinite composition, and retracts |
-| `dj.cor.Fdag-free` and the closure direction of `dj.lem.free-cof` | [`FreeDaggerCofibration`](DaggerModels/FreeDaggerCofibration.lean), [`FreeBoundary`](DaggerModels/FreeBoundary.lean) | Every simplicial mono becomes free; actual boundary-generator saturation is contained in free cofibrations; exact underlying boundary lifting condition |
-| `dj.lem.free-cof` (both conclusions) | [`RelativeCellPresentation`](DaggerModels/RelativeCellPresentation.lean) | Every free cofibration is an actual relative free-boundary-cell complex; the saturation of the free boundary generators equals free cofibrations |
-| Skeletal construction in `dj.lem.free-cof` | [`RelativeSkeleton`](DaggerModels/RelativeSkeleton.lean), [`RelativeCellBoundary`](DaggerModels/RelativeCellBoundary.lean) | Actual dagger-stable relative stages, source and colimit identifications, boundary preimage, and unique nondegenerate ancestor/degeneracy map, used in the attachment pushouts |
-| The last obstruction in the proof of `dj.prop.counterexample` | [`WordObstruction`](DaggerModels/WordObstruction.lean) | The algebraic vertex-level argument: no self-adjoint word of length one, hence no dagger-preserving section of the length map |
-| `prop.sSetdag_is_equivalent_to_Fun` | [`Presheaf`](DaggerModels/Presheaf.lean), [`Presentable`](DaggerModels/Presentable.lean) | Actual category equivalence, all small limits and colimits, and local finite presentability, at every value universe |
-| Free–forgetful adjunction in `dj.not.adjunctions` | [`FreeDagger`](DaggerModels/FreeDagger.lean), [`FreeDaggerPushout`](DaggerModels/FreeDaggerPushout.lean), [`FreeDaggerSkeleton`](DaggerModels/FreeDaggerSkeleton.lean) | Actual left adjoint, naturally identified with the explicit zero-skeleton pushout; unit, swap and all small limits/colimits preservation by forget proved |
-| The common zero-skeleton in `dj.not.adjunctions` | [`Vertices`](DaggerModels/Vertices.lean) | Constant vertices identify with the actual zero-skeleton, preserving its inclusion; mathlib uses `skeleton 1` for the paper's `sk₀` |
-| Cofibration obstruction in `pointset.cor.cofibrant-obstruction` | [`NormalCofibrationObstruction`](DaggerModels/NormalCofibrationObstruction.lean) | Initial-to-point map is free but its anti-involutive image is not normal; model structures and Quillen claims are not assumed |
-| Parts (1)–(2) of `pointset.prop.weak-counterexample` | [`UnitaryObstruction`](DaggerModels/UnitaryObstruction.lean) | The actual integer dagger groupoid inclusion is an ordinary equivalence but is not unitarily essentially surjective |
-| `bg.def.dagger-scat` | [`DaggerSimplicialCategory`](DaggerModels/DaggerSimplicialCategory.lean) | Full simplicial mapping spaces, the identity-on-objects dagger and its inverse enriched opposite functor, and the category of dagger enriched functors |
-| `bg.def.dagger-graph` and the word construction in `bg.lem.presentable` | [`DaggerSimplicialGraph`](DaggerModels/DaggerSimplicialGraph.lean), [`FreeSimplicialPaths`](DaggerModels/FreeSimplicialPaths.lean) | Actual finite paths, including empty and singleton paths; edgewise simplicial operators and reversal with edge dagger |
-| Free universal property at the start of `bg.lem.presentable` | [`FreeDaggerSimplicialCategory`](DaggerModels/FreeDaggerSimplicialCategory.lean) | Actual free–forgetful adjunction, singleton-edge unit, and bijective restriction for every target |
-| Monadicity in `bg.lem.presentable` | [`DaggerSimplicialMonadicity`](DaggerModels/DaggerSimplicialMonadicity.lean) | Actual graph forgetful functor is monadic, using constructed graph-split coequalizers and isomorphism reflection |
-| Graph presentability in the proof of `bg.lem.presentable` | [`DaggerGraphPresheaf`](DaggerModels/DaggerGraphPresheaf.lean), [`DaggerGraphPresentable`](DaggerModels/DaggerGraphPresentable.lean) | Actual small-index presheaf equivalence, all small limits/colimits, and local finite presentability at every common value universe |
-| Word finitarity in the proof of `bg.lem.presentable` | [`FreeWordFinitary`](DaggerModels/FreeWordFinitary.lean) | The original free/forgetful endofunctor preserves all small filtered colimits; fixed-length endpoint fibers identify naturally with actual paths |
-| Consequences of monadicity and word finitarity | [`DaggerSimplicialLimits`](DaggerModels/DaggerSimplicialLimits.lean), [`DaggerSimplicialFilteredColimits`](DaggerModels/DaggerSimplicialFilteredColimits.lean) | All small limits and filtered colimits exist; the graph forgetful functor creates them. The different ordinary-category forgetful functor is treated separately below |
-| Final assertion of `bg.lem.presentable` | [`DaggerSemanticColimit`](DaggerModels/DaggerSemanticColimit.lean), [`DaggerFiniteGenerators`](DaggerModels/DaggerFiniteGenerators.lean), [`DaggerSimplicialPresentable`](DaggerModels/DaggerSimplicialPresentable.lean) | Actual small colimits and a small strong generator of finitely presentable objects give unconditional local finite presentability of the full dagger simplicial category at every common universe |
-| `bg.lem.creation` | [`DaggerOrdinaryCreation`](DaggerModels/DaggerOrdinaryCreation.lean) | The actual ordinary simplicial-category forgetful functor creates all small limits and colimits, with no existence premise or restriction on object maps |
-| `bg.not.cells`, `bg.eq.A-univ` and its finite compactness assertion | [`TwoObjectDaggerCell`](DaggerModels/TwoObjectDaggerCell.lean), [`TwoObjectCellPresentability`](DaggerModels/TwoObjectCellPresentability.lean) | Actual free two-object cell, unrestricted universal property and finite presentability when the simplicial set has finitely many nondegenerate simplices |
-| Ordinary colimits used in `bg.lem.reduction` | [`SimplicialColimits`](DaggerModels/SimplicialColimits.lean) | Actual colimits of all small ordinary simplicial-category diagrams, with arbitrary object maps and no existence premise |
-| `bg.lem.reduction` | [`TwoObjectCellReductionResolved`](DaggerModels/TwoObjectCellReductionResolved.lean) | Actual dagger attachment is isomorphic to two successive ordinary attachments along the given edge and its dagger, with both pushouts and all three comparison legs |
-| `bg.not.cells`, `bg.def.IJ` and generator lifting in `bg.lem.I-inj` | [`DaggerDiscreteObjects`](DaggerModels/DaggerDiscreteObjects.lean), [`TwoObjectCellLifting`](DaggerModels/TwoObjectCellLifting.lean), [`DaggerGeneratingCofibrations`](DaggerModels/DaggerGeneratingCofibrations.lean) | Actual initial-to-point generator and full boundary family detect object surjectivity plus boundary RLP on every hom; the trivial Kan comparison remains unproved |
-| Ordinary inputs to `bg.lem.I-inj` | [`SSetBoundaryFibration`](DaggerModels/SSetBoundaryFibration.lean), [`SSetBoundaryCells`](DaggerModels/SSetBoundaryCells.lean) | Boundary RLP implies actual Mathlib Kan fibrations; every mono is a genuine relative boundary-cell complex; boundary-cell closure equals monos and `I.rlp = monomorphisms.rlp` |
-| Section and homotopy input to `bg.lem.I-inj` | [`SSetMonoRLPRetraction`](DaggerModels/SSetMonoRLPRetraction.lean), [`SSetBoundaryRetraction`](DaggerModels/SSetBoundaryRetraction.lean) | The same section and cylinder homotopy satisfy all four equations for mono-RLP or boundary-RLP, with no Kan-object premise or weak-equivalence conclusion |
-| Local lifting in `bg.def.IJ` and `bg.lem.Iinj-in-Jinj` | [`DaggerLocalFibrations`](DaggerModels/DaggerLocalFibrations.lean) | Actual `J†loc` RLP is all-hom Mathlib Kan fibrations; actual `I†` RLP implies object surjectivity and this local condition; interval lifting remains open |
-| Small-object input to `bg.thm.main` | [`SmallObjectFiniteDomains`](DaggerModels/SmallObjectFiniteDomains.lean), [`DaggerSmallObject`](DaggerModels/DaggerSmallObject.lean) | General finite-domain bridge with explicit smallness/colimit premises; unconditional actual `I†` application and functorial factorization data; no model structure asserted |
-| Ordinary adjunction in `dj.not.adjunctions`, input to `dj.lem.lift` | [`OrdinaryRigidification`](DaggerModels/OrdinaryRigidification.lean) | Mathlib's actual thickening and coherent nerve, the left Kan extension adjunction, full natural comparison of nerves, and standard-simplex comparison, at every common universe |
+| `dj.def.free-cof` and closure arguments of `dj.lem.free-cof` | [`FreeCofibration`](lean/DaggerModels/FreeCofibration.lean), [`FreeCofibrationClosure`](lean/DaggerModels/FreeCofibrationClosure.lean) | Original definition, underlying monicity comparison, identities, composition, coproducts, pushouts, continuous transfinite composition, and retracts |
+| `dj.cor.Fdag-free` and the closure direction of `dj.lem.free-cof` | [`FreeDaggerCofibration`](lean/DaggerModels/FreeDaggerCofibration.lean), [`FreeBoundary`](lean/DaggerModels/FreeBoundary.lean) | Every simplicial mono becomes free; actual boundary-generator saturation is contained in free cofibrations; exact underlying boundary lifting condition |
+| `dj.lem.free-cof` (both conclusions) | [`RelativeCellPresentation`](lean/DaggerModels/RelativeCellPresentation.lean) | Every free cofibration is an actual relative free-boundary-cell complex; the saturation of the free boundary generators equals free cofibrations |
+| Skeletal construction in `dj.lem.free-cof` | [`RelativeSkeleton`](lean/DaggerModels/RelativeSkeleton.lean), [`RelativeCellBoundary`](lean/DaggerModels/RelativeCellBoundary.lean) | Actual dagger-stable relative stages, source and colimit identifications, boundary preimage, and unique nondegenerate ancestor/degeneracy map, used in the attachment pushouts |
+| The last obstruction in the proof of `dj.prop.counterexample` | [`WordObstruction`](lean/DaggerModels/WordObstruction.lean) | The algebraic vertex-level argument: no self-adjoint word of length one, hence no dagger-preserving section of the length map |
+| `prop.sSetdag_is_equivalent_to_Fun` | [`Presheaf`](lean/DaggerModels/Presheaf.lean), [`Presentable`](lean/DaggerModels/Presentable.lean) | Actual category equivalence, all small limits and colimits, and local finite presentability, at every value universe |
+| Free–forgetful adjunction in `dj.not.adjunctions` | [`FreeDagger`](lean/DaggerModels/FreeDagger.lean), [`FreeDaggerPushout`](lean/DaggerModels/FreeDaggerPushout.lean), [`FreeDaggerSkeleton`](lean/DaggerModels/FreeDaggerSkeleton.lean) | Actual left adjoint, naturally identified with the explicit zero-skeleton pushout; unit, swap and all small limits/colimits preservation by forget proved |
+| The common zero-skeleton in `dj.not.adjunctions` | [`Vertices`](lean/DaggerModels/Vertices.lean) | Constant vertices identify with the actual zero-skeleton, preserving its inclusion; mathlib uses `skeleton 1` for the paper's `sk₀` |
+| Cofibration obstruction in `pointset.cor.cofibrant-obstruction` | [`NormalCofibrationObstruction`](lean/DaggerModels/NormalCofibrationObstruction.lean) | Initial-to-point map is free but its anti-involutive image is not normal; model structures and Quillen claims are not assumed |
+| Parts (1)–(2) of `pointset.prop.weak-counterexample` | [`UnitaryObstruction`](lean/DaggerModels/UnitaryObstruction.lean) | The actual integer dagger groupoid inclusion is an ordinary equivalence but is not unitarily essentially surjective |
+| `bg.def.dagger-scat` | [`DaggerSimplicialCategory`](lean/DaggerModels/DaggerSimplicialCategory.lean) | Full simplicial mapping spaces, the identity-on-objects dagger and its inverse enriched opposite functor, and the category of dagger enriched functors |
+| `bg.def.dagger-graph` and the word construction in `bg.lem.presentable` | [`DaggerSimplicialGraph`](lean/DaggerModels/DaggerSimplicialGraph.lean), [`FreeSimplicialPaths`](lean/DaggerModels/FreeSimplicialPaths.lean) | Actual finite paths, including empty and singleton paths; edgewise simplicial operators and reversal with edge dagger |
+| Free universal property at the start of `bg.lem.presentable` | [`FreeDaggerSimplicialCategory`](lean/DaggerModels/FreeDaggerSimplicialCategory.lean) | Actual free–forgetful adjunction, singleton-edge unit, and bijective restriction for every target |
+| Monadicity in `bg.lem.presentable` | [`DaggerSimplicialMonadicity`](lean/DaggerModels/DaggerSimplicialMonadicity.lean) | Actual graph forgetful functor is monadic, using constructed graph-split coequalizers and isomorphism reflection |
+| Graph presentability in the proof of `bg.lem.presentable` | [`DaggerGraphPresheaf`](lean/DaggerModels/DaggerGraphPresheaf.lean), [`DaggerGraphPresentable`](lean/DaggerModels/DaggerGraphPresentable.lean) | Actual small-index presheaf equivalence, all small limits/colimits, and local finite presentability at every common value universe |
+| Word finitarity in the proof of `bg.lem.presentable` | [`FreeWordFinitary`](lean/DaggerModels/FreeWordFinitary.lean) | The original free/forgetful endofunctor preserves all small filtered colimits; fixed-length endpoint fibers identify naturally with actual paths |
+| Consequences of monadicity and word finitarity | [`DaggerSimplicialLimits`](lean/DaggerModels/DaggerSimplicialLimits.lean), [`DaggerSimplicialFilteredColimits`](lean/DaggerModels/DaggerSimplicialFilteredColimits.lean) | All small limits and filtered colimits exist; the graph forgetful functor creates them. The different ordinary-category forgetful functor is treated separately below |
+| Final assertion of `bg.lem.presentable` | [`DaggerSemanticColimit`](lean/DaggerModels/DaggerSemanticColimit.lean), [`DaggerFiniteGenerators`](lean/DaggerModels/DaggerFiniteGenerators.lean), [`DaggerSimplicialPresentable`](lean/DaggerModels/DaggerSimplicialPresentable.lean) | Actual small colimits and a small strong generator of finitely presentable objects give unconditional local finite presentability of the full dagger simplicial category at every common universe |
+| `bg.lem.creation` | [`DaggerOrdinaryCreation`](lean/DaggerModels/DaggerOrdinaryCreation.lean) | The actual ordinary simplicial-category forgetful functor creates all small limits and colimits, with no existence premise or restriction on object maps |
+| `bg.not.cells`, `bg.eq.A-univ` and its finite compactness assertion | [`TwoObjectDaggerCell`](lean/DaggerModels/TwoObjectDaggerCell.lean), [`TwoObjectCellPresentability`](lean/DaggerModels/TwoObjectCellPresentability.lean) | Actual free two-object cell, unrestricted universal property and finite presentability when the simplicial set has finitely many nondegenerate simplices |
+| Ordinary colimits used in `bg.lem.reduction` | [`SimplicialColimits`](lean/DaggerModels/SimplicialColimits.lean) | Actual colimits of all small ordinary simplicial-category diagrams, with arbitrary object maps and no existence premise |
+| `bg.lem.reduction` | [`TwoObjectCellReductionResolved`](lean/DaggerModels/TwoObjectCellReductionResolved.lean) | Actual dagger attachment is isomorphic to two successive ordinary attachments along the given edge and its dagger, with both pushouts and all three comparison legs |
+| `bg.not.cells`, `bg.def.IJ` and generator lifting in `bg.lem.I-inj` | [`DaggerDiscreteObjects`](lean/DaggerModels/DaggerDiscreteObjects.lean), [`TwoObjectCellLifting`](lean/DaggerModels/TwoObjectCellLifting.lean), [`DaggerGeneratingCofibrations`](lean/DaggerModels/DaggerGeneratingCofibrations.lean) | Actual initial-to-point generator and full boundary family detect object surjectivity plus boundary RLP on every hom; the trivial Kan comparison remains unproved |
+| Ordinary inputs to `bg.lem.I-inj` | [`SSetBoundaryFibration`](lean/DaggerModels/SSetBoundaryFibration.lean), [`SSetBoundaryCells`](lean/DaggerModels/SSetBoundaryCells.lean) | Boundary RLP implies actual Mathlib Kan fibrations; every mono is a genuine relative boundary-cell complex; boundary-cell closure equals monos and `I.rlp = monomorphisms.rlp` |
+| Section and homotopy input to `bg.lem.I-inj` | [`SSetMonoRLPRetraction`](lean/DaggerModels/SSetMonoRLPRetraction.lean), [`SSetBoundaryRetraction`](lean/DaggerModels/SSetBoundaryRetraction.lean) | The same section and cylinder homotopy satisfy all four equations for mono-RLP or boundary-RLP, with no Kan-object premise or weak-equivalence conclusion |
+| Local lifting in `bg.def.IJ` and `bg.lem.Iinj-in-Jinj` | [`DaggerLocalFibrations`](lean/DaggerModels/DaggerLocalFibrations.lean) | Actual `J†loc` RLP is all-hom Mathlib Kan fibrations; actual `I†` RLP implies object surjectivity and this local condition; interval lifting remains open |
+| Small-object input to `bg.thm.main` | [`SmallObjectFiniteDomains`](lean/DaggerModels/SmallObjectFiniteDomains.lean), [`DaggerSmallObject`](lean/DaggerModels/DaggerSmallObject.lean) | General finite-domain bridge with explicit smallness/colimit premises; unconditional actual `I†` application and functorial factorization data; no model structure asserted |
+| Ordinary adjunction in `dj.not.adjunctions`, input to `dj.lem.lift` | [`OrdinaryRigidification`](lean/DaggerModels/OrdinaryRigidification.lean) | Mathlib's actual thickening and coherent nerve, the left Kan extension adjunction, full natural comparison of nerves, and standard-simplex comparison, at every common universe |
 
 [CORRESPONDENCE.md](CORRESPONDENCE.md) explains the translation and what remains
 outside the verified statements. Labels refer to the Part I manuscript inspected
@@ -256,7 +278,7 @@ lake exe cache get \
   Mathlib.AlgebraicTopology.SimplicialNerve \
   Mathlib.CategoryTheory.Limits.Presheaf
 lake build
-lake env lean Audit.lean
+lake env lean lean/Audit.lean
 python3 scripts/check_audit.py
 ```
 
@@ -274,7 +296,7 @@ negative controls, not to check the mathematical proofs.
 
 ## Retained foundation audit
 
-[`Audit.lean`](Audit.lean) traverses the transitive axiom dependencies of every
+[`Audit.lean`](lean/Audit.lean) traverses the transitive axiom dependencies of every
 loaded declaration in the `DaggerModels` namespace, including definitions and
 generated declarations. It permits only Lean's standard `propext`,
 `Classical.choice`, and `Quot.sound`. In particular, `sorryAx` and additional

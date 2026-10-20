@@ -192,7 +192,7 @@ The latter constructs the left adjoint from a pointwise left Kan extension
 along `uliftYoneda`. The companion's already proved
 `DaggerModels.simplicialCatHasColimits` supplies ordinary simplicial-category
 colimits. This supplies the following bridge in
-`DaggerModels/OrdinaryRigidification.lean`:
+`lean/DaggerModels/OrdinaryRigidification.lean`:
 
 1. Bundle the existing standard thickening diagram at every common universe.
 2. Identify its restricted Yoneda functor naturally with the existing coherent

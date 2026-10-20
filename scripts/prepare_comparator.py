@@ -9,6 +9,7 @@ import subprocess
 
 from check_challenges import CHALLENGES, validate_challenges
 from lean_imports import header_imports
+from source_layout import library_source_root
 
 
 BASELINE = "dce8401a23588ba65b8aa4ca41de26cb0203d444"
@@ -48,7 +49,7 @@ def checked_imports(path: Path, allowed_modules: set[str], external: set[str]) -
 
 
 def copy_sources(source: Path, target: Path, control: Path) -> None:
-    source = source.resolve()
+    source = library_source_root(source).resolve()
     manifest_path = checked_source(control, FOUNDATION_MANIFEST)
     if digest(manifest_path) != FOUNDATION_MANIFEST_SHA256:
         raise ValueError("The retained foundation source manifest changed")

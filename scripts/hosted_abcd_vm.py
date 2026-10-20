@@ -23,6 +23,7 @@ import time
 from urllib.request import Request, urlopen
 
 from verify_debian_image import BUILD, IMAGE, extract_checked
+from source_layout import library_source_root
 
 
 HERE = Path(__file__).resolve().parent
@@ -150,6 +151,7 @@ def stage_candidate_data(candidate: Path, a_asset: Path,
     if output.exists():
         raise ValueError("candidate data output must be fresh")
     output.mkdir()
+    source_root = library_source_root(candidate)
     hashes = {}
     for row in rows:
         name = row["module"]
@@ -159,7 +161,7 @@ def stage_candidate_data(candidate: Path, a_asset: Path,
                 not re.fullmatch(r"[0-9a-f]{64}", row.get("sha256", "")) or
                 type(row.get("bytes")) is not int or row["bytes"] <= 0):
             raise ValueError(f"unsafe current source graph row: {name}")
-        source = candidate
+        source = source_root
         for part in rel.parts:
             source = source / part
             if source.is_symlink():

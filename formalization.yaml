@@ -205,403 +205,403 @@ status:
   axioms: ["propext", "Classical.choice", "Quot.sound"]
   main_results:
     - declaration: "DaggerModels.ReverseSimplex.reversal_comp_reversal"
-      file: "DaggerModels/ReverseSimplex.lean"
+      file: "lean/DaggerModels/ReverseSimplex.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/reverse_simplex.json"
       literature_dependencies: []
     - declaration: "DaggerModels.ReverseSimplex.monotone_antitone_iff_constant"
-      file: "DaggerModels/ReverseSimplex.lean"
+      file: "lean/DaggerModels/ReverseSimplex.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/reverse_simplex.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.dagger_map"
-      file: "DaggerModels/SimplicialSet.lean"
+      file: "lean/DaggerModels/SimplicialSet.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_set.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff"
-      file: "DaggerModels/SimplicialSet.lean"
+      file: "lean/DaggerModels/SimplicialSet.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_set.json"
       literature_dependencies: []
     - declaration: "DaggerModels.WordObstruction.no_dagger_preserving_section"
-      file: "DaggerModels/WordObstruction.lean"
+      file: "lean/DaggerModels/WordObstruction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/word_obstruction.json"
       literature_dependencies: []
     - declaration: "DaggerModels.nonempty_daggerSSetEquivalencePresheaf"
-      file: "DaggerModels/Presheaf.lean"
+      file: "lean/DaggerModels/Presheaf.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/presheaf.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSSetLocallyFinitelyPresentable"
-      file: "DaggerModels/Presentable.lean"
+      file: "lean/DaggerModels/Presentable.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/presheaf.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSSetLocallyPresentable"
-      file: "DaggerModels/Presentable.lean"
+      file: "lean/DaggerModels/Presentable.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/presheaf.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_freeDaggerAdjunction"
-      file: "DaggerModels/FreeDagger.lean"
+      file: "lean/DaggerModels/FreeDagger.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/presheaf.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetVertices.exists_skeletonIso"
-      file: "DaggerModels/Vertices.lean"
+      file: "lean/DaggerModels/Vertices.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/vertices.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeDagger_pushout"
-      file: "DaggerModels/FreeDaggerPushout.lean"
+      file: "lean/DaggerModels/FreeDaggerPushout.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_dagger_pushout.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeDagger_skeleton_pushout"
-      file: "DaggerModels/FreeDaggerSkeleton.lean"
+      file: "lean/DaggerModels/FreeDaggerSkeleton.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_dagger_pushout.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.mono_iff_mono_hom"
-      file: "DaggerModels/FreeCofibration.lean"
+      file: "lean/DaggerModels/FreeCofibration.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
-      file: "DaggerModels/FreeCofibration.lean"
+      file: "lean/DaggerModels/FreeCofibration.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
-      file: "DaggerModels/FreeCofibrationPushout.lean"
+      file: "lean/DaggerModels/FreeCofibrationPushout.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.forget_preservesColimits"
-      file: "DaggerModels/FreeDagger.lean"
+      file: "lean/DaggerModels/FreeDagger.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
-      file: "DaggerModels/NormalCofibrationObstruction.lean"
+      file: "lean/DaggerModels/NormalCofibrationObstruction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/normal_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
-      file: "DaggerModels/UnitaryObstruction.lean"
+      file: "lean/DaggerModels/UnitaryObstruction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/unitary_obstruction.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_coproduct"
-      file: "DaggerModels/FreeCofibrationCoproduct.lean"
+      file: "lean/DaggerModels/FreeCofibrationCoproduct.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.FreeCofibration.of_transfiniteCompositionOfShape"
-      file: "DaggerModels/FreeCofibrationTransfinite.lean"
+      file: "lean/DaggerModels/FreeCofibrationTransfinite.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.freeCofibrations_saturated"
-      file: "DaggerModels/FreeCofibrationClosure.lean"
+      file: "lean/DaggerModels/FreeCofibrationClosure.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.forget_reflectsColimits"
-      file: "DaggerModels/ForgetfulReflection.lean"
+      file: "lean/DaggerModels/ForgetfulReflection.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeDagger_nonDegenerate_not_fixed"
-      file: "DaggerModels/FreeDaggerCofibration.lean"
+      file: "lean/DaggerModels/FreeDaggerCofibration.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeDagger_map_freeCofibration"
-      file: "DaggerModels/FreeDaggerCofibration.lean"
+      file: "lean/DaggerModels/FreeDaggerCofibration.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeBoundarySaturation_le"
-      file: "DaggerModels/FreeBoundary.lean"
+      file: "lean/DaggerModels/FreeBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeCofibration_of_relativeCellComplex"
-      file: "DaggerModels/FreeBoundary.lean"
+      file: "lean/DaggerModels/FreeBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeBoundary_rlp_iff"
-      file: "DaggerModels/FreeBoundary.lean"
+      file: "lean/DaggerModels/FreeBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration"
-      file: "DaggerModels/RelativeSkeleton.lean"
+      file: "lean/DaggerModels/RelativeSkeleton.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/relative_skeleton.json"
       literature_dependencies: []
     - declaration: "DaggerModels.RelativeCellBoundary.characteristic_preimage_relativeSkeleton"
-      file: "DaggerModels/RelativeCellBoundary.lean"
+      file: "lean/DaggerModels/RelativeCellBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/relative_cell_boundary.json"
       literature_dependencies: []
     - declaration: "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff"
-      file: "DaggerModels/RelativeCellBoundary.lean"
+      file: "lean/DaggerModels/RelativeCellBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/relative_cell_boundary.json"
       literature_dependencies: []
     - declaration: "DaggerModels.RelativeCellBoundary.relative_stage_normal_form_unique"
-      file: "DaggerModels/RelativeCellBoundary.lean"
+      file: "lean/DaggerModels/RelativeCellBoundary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/relative_cell_boundary.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_relativeFreeBoundaryCellComplex"
-      file: "DaggerModels/RelativeCellPresentation.lean"
+      file: "lean/DaggerModels/RelativeCellPresentation.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.freeBoundarySaturation_eq"
-      file: "DaggerModels/RelativeCellPresentation.lean"
+      file: "lean/DaggerModels/RelativeCellPresentation.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_cofibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialStructure.daggerSimplex_map"
-      file: "DaggerModels/DaggerSimplicialCategory.lean"
+      file: "lean/DaggerModels/DaggerSimplicialCategory.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_category.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialStructure.daggerFunctor_comp_inverse"
-      file: "DaggerModels/DaggerSimplicialCategory.lean"
+      file: "lean/DaggerModels/DaggerSimplicialCategory.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_category.json"
       literature_dependencies: []
     - declaration: "DaggerModels.FreeSimplicialPaths.reverse_involutive"
-      file: "DaggerModels/FreeSimplicialPaths.lean"
+      file: "lean/DaggerModels/FreeSimplicialPaths.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_simplicial_paths.json"
       literature_dependencies: []
     - declaration: "DaggerModels.FreeSimplicialPaths.map_reverse"
-      file: "DaggerModels/FreeSimplicialPaths.lean"
+      file: "lean/DaggerModels/FreeSimplicialPaths.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_simplicial_paths.json"
       literature_dependencies: []
     - declaration: "DaggerModels.FreeSimplicialPaths.comp_dagger"
-      file: "DaggerModels/FreeSimplicialPaths.lean"
+      file: "lean/DaggerModels/FreeSimplicialPaths.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_simplicial_paths.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_freeDaggerSimplicialCategory"
-      file: "DaggerModels/FreeDaggerSimplicialCategory.lean"
+      file: "lean/DaggerModels/FreeDaggerSimplicialCategory.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/free_dagger_universal.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialCat.forgetGraph_reflectsIsomorphisms"
-      file: "DaggerModels/DaggerGraphReflection.lean"
+      file: "lean/DaggerModels/DaggerGraphReflection.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_monadicity.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
-      file: "DaggerModels/DaggerSimplicialMonadicity.lean"
+      file: "lean/DaggerModels/DaggerSimplicialMonadicity.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_monadicity.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_daggerGraphPresheafEquivalence"
-      file: "DaggerModels/DaggerGraphPresheaf.lean"
+      file: "lean/DaggerModels/DaggerGraphPresheaf.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerGraphHasLimits"
-      file: "DaggerModels/DaggerGraphPresentable.lean"
+      file: "lean/DaggerModels/DaggerGraphPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerGraphHasColimits"
-      file: "DaggerModels/DaggerGraphPresentable.lean"
+      file: "lean/DaggerModels/DaggerGraphPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerGraphLocallyFinitelyPresentable"
-      file: "DaggerModels/DaggerGraphPresentable.lean"
+      file: "lean/DaggerModels/DaggerGraphPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerGraphLocallyPresentable"
-      file: "DaggerModels/DaggerGraphPresentable.lean"
+      file: "lean/DaggerModels/DaggerGraphPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_graph_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
-      file: "DaggerModels/FreeWordFinitary.lean"
+      file: "lean/DaggerModels/FreeWordFinitary.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_monadicity.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSimplicialCatHasLimits"
-      file: "DaggerModels/DaggerSimplicialPresentable.lean"
+      file: "lean/DaggerModels/DaggerSimplicialPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSimplicialCatHasColimits"
-      file: "DaggerModels/DaggerSimplicialPresentable.lean"
+      file: "lean/DaggerModels/DaggerSimplicialPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSimplicialCatLocallyFinitelyPresentable"
-      file: "DaggerModels/DaggerSimplicialPresentable.lean"
+      file: "lean/DaggerModels/DaggerSimplicialPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.daggerSimplicialCatLocallyPresentable"
-      file: "DaggerModels/DaggerSimplicialPresentable.lean"
+      file: "lean/DaggerModels/DaggerSimplicialPresentable.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_simplicial_presentable.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialCat.forget_createsLimits"
-      file: "DaggerModels/DaggerOrdinaryCreation.lean"
+      file: "lean/DaggerModels/DaggerOrdinaryCreation.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_ordinary_creation.json"
       literature_dependencies: []
     - declaration: "DaggerModels.DaggerSimplicialCat.forget_createsColimits"
-      file: "DaggerModels/DaggerOrdinaryCreation.lean"
+      file: "lean/DaggerModels/DaggerOrdinaryCreation.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_ordinary_creation.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_twoObjectDaggerCell"
-      file: "DaggerModels/TwoObjectDaggerCellUniversal.lean"
+      file: "lean/DaggerModels/TwoObjectDaggerCellUniversal.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/two_object_dagger_cell.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell"
-      file: "DaggerModels/TwoObjectCellPresentability.lean"
+      file: "lean/DaggerModels/TwoObjectCellPresentability.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/finite_two_object_cell.json"
       literature_dependencies: []
     - declaration: "DaggerModels.simplicialCatHasColimits"
-      file: "DaggerModels/SimplicialColimits.lean"
+      file: "lean/DaggerModels/SimplicialColimits.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
       literature_dependencies: []
     - declaration: "DaggerModels.exists_daggerObjectGenerator"
-      file: "DaggerModels/DaggerDiscreteObjectsExistence.lean"
+      file: "lean/DaggerModels/DaggerDiscreteObjectsExistence.lean"
       sorry_count: 0
       axioms: ["Classical.choice", "Quot.sound", "propext"]
       comparator_config: ".ci/comparator/dagger_object_generator.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetBoundaryFibration.boundary_rlp_le_fibrations"
-      file: "DaggerModels/SSetBoundaryFibration.lean"
+      file: "lean/DaggerModels/SSetBoundaryFibration.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_fibration.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetBoundaryCells.exists_relativeCellComplex"
-      file: "DaggerModels/SSetBoundaryCells.lean"
+      file: "lean/DaggerModels/SSetBoundaryCells.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_cells.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetBoundaryCells.boundaryCells_eq_monomorphisms"
-      file: "DaggerModels/SSetBoundaryCells.lean"
+      file: "lean/DaggerModels/SSetBoundaryCells.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_cells.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp"
-      file: "DaggerModels/SSetBoundaryCells.lean"
+      file: "lean/DaggerModels/SSetBoundaryCells.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_cells.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy"
-      file: "DaggerModels/SSetMonoRLPRetraction.lean"
+      file: "lean/DaggerModels/SSetMonoRLPRetraction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_retraction.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp"
-      file: "DaggerModels/SSetBoundaryRetraction.lean"
+      file: "lean/DaggerModels/SSetBoundaryRetraction.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/sset_boundary_retraction.json"
       literature_dependencies: []
     - declaration: "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
-      file: "DaggerModels/SmallObjectFiniteDomains.lean"
+      file: "lean/DaggerModels/SmallObjectFiniteDomains.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/small_object_finite_domains.json"
       literature_dependencies: []
     - declaration: "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction"
-      file: "DaggerModels/OrdinaryRigidification.lean"
+      file: "lean/DaggerModels/OrdinaryRigidification.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
       literature_dependencies: []
     - declaration: "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib"
-      file: "DaggerModels/OrdinaryRigidification.lean"
+      file: "lean/DaggerModels/OrdinaryRigidification.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
       literature_dependencies: []
     - declaration: "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
-      file: "DaggerModels/OrdinaryRigidification.lean"
+      file: "lean/DaggerModels/OrdinaryRigidification.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/comparator/simplicial_colimits.json"
@@ -610,25 +610,25 @@ status:
     # Source-code reuse and unresolved upstream terms are recorded in
     # THIRD_PARTY_NOTICES.md and EXISTING_FORMALIZATIONS.md.
     - declaration: "DaggerComparator.mainB"
-      file: "MainTheoremsBCD.lean"
+      file: "lean/MainTheoremsBCD.lean"
       sorry_count: 0
       axioms: ["propext", "Quot.sound", "Classical.choice"]
       comparator_config: ".ci/bcd/main-b.json"
       literature_dependencies: []
     - declaration: "DaggerComparator.originalMainTheoremC"
-      file: "MainTheoremsBCD.lean"
+      file: "lean/MainTheoremsBCD.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: ".ci/bcd/original-main-c.json"
       literature_dependencies: []
     - declaration: "DaggerComparator.mainD"
-      file: "MainTheoremsBCD.lean"
+      file: "lean/MainTheoremsBCD.lean"
       sorry_count: 0
       axioms: ["propext", "Quot.sound", "Classical.choice"]
       comparator_config: ".ci/bcd/main-d.json"
       literature_dependencies: []
     - declaration: "DaggerComparator.mainA"
-      file: "MainTheoremsA.lean"
+      file: "lean/MainTheoremsA.lean"
       sorry_count: 0
       axioms: ["propext", "Quot.sound", "Classical.choice"]
       comparator_config: ".ci/a/main-a.json"
@@ -861,17 +861,17 @@ alignment:
   statements:
     - source: "bg.def.dagger-scat"
       lean: "DaggerModels.DaggerSimplicialStructure"
-      module: "DaggerModels/DaggerSimplicialCategory.lean"
+      module: "lean/DaggerModels/DaggerSimplicialCategory.lean"
       status: "definition-and-elementary-lemmas"
       note: "Full mapping-space dagger and actual enriched opposite functors, with independent universes."
     - source: "bg.def.dagger-graph"
       lean: "DaggerModels.DaggerSimplicialGraph"
-      module: "DaggerModels/DaggerSimplicialGraph.lean"
+      module: "lean/DaggerModels/DaggerSimplicialGraph.lean"
       status: "definition-and-elementary-lemmas"
       note: "Actual graph category with arbitrary vertex maps and dagger-compatible SSet edge maps."
     - source: "Free construction at the start of bg.lem.presentable"
       lean: "DaggerModels.exists_freeDaggerSimplicialCategory"
-      module: "DaggerModels/FreeDaggerSimplicialCategory.lean"
+      module: "lean/DaggerModels/FreeDaggerSimplicialCategory.lean"
       status: "proved"
       note: >-
         Concrete finite paths, actual adjunction, singleton-edge unit and full
@@ -880,7 +880,7 @@ alignment:
         The ordinary-category forgetful assertion in bg.lem.creation is recorded separately below.
     - source: "Monadicity assertion in bg.lem.presentable"
       lean: "DaggerModels.DaggerSimplicialCat.forgetGraph_monadic"
-      module: "DaggerModels/DaggerSimplicialMonadicity.lean"
+      module: "lean/DaggerModels/DaggerSimplicialMonadicity.lean"
       status: "proved"
       note: >-
         Actual graph forgetful functor is monadic by isomorphism reflection,
@@ -889,7 +889,7 @@ alignment:
         are retained. Local finite presentability is recorded separately below.
     - source: "Graph presentability ingredient in the proof of bg.lem.presentable"
       lean: "DaggerModels.daggerGraphLocallyFinitelyPresentable"
-      module: "DaggerModels/DaggerGraphPresentable.lean"
+      module: "lean/DaggerModels/DaggerGraphPresentable.lean"
       status: "proved"
       note: >-
         The complete original graph category is equivalent to presheaves on a
@@ -899,7 +899,7 @@ alignment:
         separately below.
     - source: "Word finitarity ingredient in the proof of bg.lem.presentable"
       lean: "DaggerModels.DaggerSimplicialCat.exists_finitary_freeDaggerSimplicialCategoryAdjunction"
-      module: "DaggerModels/FreeWordFinitary.lean"
+      module: "lean/DaggerModels/FreeWordFinitary.lean"
       status: "proved"
       note: >-
         The original free/forgetful composite preserves all small filtered
@@ -911,7 +911,7 @@ alignment:
         over graphs. General colimits and category LFP are recorded below.
     - source: "Local finite presentability conclusion of bg.lem.presentable"
       lean: "DaggerModels.daggerSimplicialCatLocallyFinitelyPresentable"
-      module: "DaggerModels/DaggerSimplicialPresentable.lean"
+      module: "lean/DaggerModels/DaggerSimplicialPresentable.lean"
       status: "proved"
       note: >-
         Actual small colimits are constructed using hom quotients of free
@@ -925,7 +925,7 @@ alignment:
         separate local B/C/D certificates were completed later.
     - source: "bg.lem.creation (limits)"
       lean: "DaggerModels.DaggerSimplicialCat.forget_createsLimits"
-      module: "DaggerModels/DaggerOrdinaryCreation.lean"
+      module: "lean/DaggerModels/DaggerOrdinaryCreation.lean"
       status: "proved"
       note: >-
         Full Mathlib CreatesLimitsOfSize data for the actual ordinary forgetful
@@ -935,7 +935,7 @@ alignment:
         Nonempty states existence of the complete Type-valued creation data.
     - source: "bg.lem.creation (colimits)"
       lean: "DaggerModels.DaggerSimplicialCat.forget_createsColimits"
-      module: "DaggerModels/DaggerOrdinaryCreation.lean"
+      module: "lean/DaggerModels/DaggerOrdinaryCreation.lean"
       status: "proved"
       note: >-
         Full Mathlib CreatesColimitsOfSize data for the actual ordinary forgetful
@@ -945,7 +945,7 @@ alignment:
         Actual isomorphism reflection supplies the required creation reflection.
     - source: "bg.not.cells and bg.eq.A-univ"
       lean: "DaggerModels.exists_twoObjectDaggerCell"
-      module: "DaggerModels/TwoObjectDaggerCellUniversal.lean"
+      module: "lean/DaggerModels/TwoObjectDaggerCellUniversal.lean"
       status: "proved"
       note: >-
         The witness is the original free dagger category on the literal two-object
@@ -955,7 +955,7 @@ alignment:
         arbitrary object maps and coincident target endpoints permitted.
     - source: "Finite compactness assertion following bg.eq.A-univ"
       lean: "DaggerModels.exists_finitelyPresentable_twoObjectDaggerCell"
-      module: "DaggerModels/TwoObjectCellPresentability.lean"
+      module: "lean/DaggerModels/TwoObjectCellPresentability.lean"
       status: "proved"
       note: >-
         The same actual universal cell is finitely presentable for K.Finite,
@@ -965,7 +965,7 @@ alignment:
         No connectedness, nonemptiness, or prior cell-presentability premise.
     - source: "Underlying free-cell decomposition within bg.lem.reduction"
       lean: "DaggerModels.TwoObjectCellPushout.isPushout"
-      module: "DaggerModels/TwoObjectCellPushout.lean"
+      module: "lean/DaggerModels/TwoObjectCellPushout.lean"
       status: "proved"
       note: >-
         Actual ordinary pushout of two one-edge cells over the discrete two-object
@@ -975,7 +975,7 @@ alignment:
         is recorded below.
     - source: "Colimit preservation used in bg.lem.reduction"
       lean: "DaggerModels.DaggerSimplicialCat.Cofree.forget_preservesColimitsOfSize"
-      module: "DaggerModels/DaggerSimplicialCofree.lean"
+      module: "lean/DaggerModels/DaggerSimplicialCofree.lean"
       status: "proved"
       note: >-
         An actual cofree right adjoint with hom C(x,y) times C(y,x) proves preservation
@@ -985,7 +985,7 @@ alignment:
         reduction are recorded below.
     - source: "Ordinary colimit existence used in bg.lem.reduction"
       lean: "DaggerModels.simplicialCatHasColimits"
-      module: "DaggerModels/SimplicialColimits.lean"
+      module: "lean/DaggerModels/SimplicialColimits.lean"
       status: "proved"
       note: >-
         Actual arbitrary-diagram colimits from Type object colimits, tagged edge
@@ -994,7 +994,7 @@ alignment:
         colimit or model-structure premise. Original root retained in the 99-line Challenge extended for ordinary rigidification.
     - source: "bg.lem.reduction"
       lean: "DaggerModels.TwoObjectCellReduction.exists_reduction"
-      module: "DaggerModels/TwoObjectCellReductionResolved.lean"
+      module: "lean/DaggerModels/TwoObjectCellReductionResolved.lean"
       status: "proved"
       note: >-
         The same witnesses give both actual ordinary pushouts, the isomorphism
@@ -1005,7 +1005,7 @@ alignment:
         separately reviewed, not a separate Comparator root.
     - source: "bg.not.cells and the object-generator clause of bg.lem.I-inj"
       lean: "DaggerModels.exists_daggerObjectGenerator"
-      module: "DaggerModels/DaggerDiscreteObjectsExistence.lean"
+      module: "lean/DaggerModels/DaggerDiscreteObjectsExistence.lean"
       status: "proved"
       note: >-
         Concrete empty and identity-only one-object dagger categories supply
@@ -1015,14 +1015,14 @@ alignment:
         and lifting result also retain independent object and hom universes.
     - source: "I-dagger in bg.def.IJ"
       lean: "DaggerModels.DaggerGeneratingCofibrations.generators"
-      module: "DaggerModels/DaggerGeneratingCofibrations.lean"
+      module: "lean/DaggerModels/DaggerGeneratingCofibrations.lean"
       status: "definition-and-elementary-lemmas"
       note: >-
         Literal supremum of actual free boundary maps in every natural-number
         dimension, including zero, and the actual empty-to-point singleton family.
     - source: "Boundary-RLP characterization within bg.lem.I-inj"
       lean: "DaggerModels.DaggerGeneratingCofibrations.generators_rlp_iff"
-      module: "DaggerModels/DaggerGeneratingCofibrations.lean"
+      module: "lean/DaggerModels/DaggerGeneratingCofibrations.lean"
       status: "proved"
       note: >-
         Actual I-dagger RLP equals object surjectivity and ordinary boundary RLP
@@ -1033,29 +1033,29 @@ alignment:
         this does not claim the full model-categorical source lemma.
     - source: "Index category preceding prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.ReverseSimplex"
-      module: "DaggerModels/ReverseSimplex.lean"
+      module: "lean/DaggerModels/ReverseSimplex.lean"
       status: "definition-and-elementary-lemmas"
     - source: "def.dagger_simplicial_sets"
       lean: "DaggerModels.DaggerSSet"
-      module: "DaggerModels/SimplicialSet.lean"
+      module: "lean/DaggerModels/SimplicialSet.lean"
       status: "definition-and-elementary-lemmas"
     - source: "Opening nondegeneracy argument in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.dagger_mem_nonDegenerate_iff"
-      module: "DaggerModels/SimplicialSet.lean"
+      module: "lean/DaggerModels/SimplicialSet.lean"
       status: "proved"
       note: "This is a subargument, not the whole cellular characterization."
     - source: "dj.def.free-cof"
       lean: "DaggerModels.DaggerSSet.FreeCofibration"
-      module: "DaggerModels/SimplicialSet.lean"
+      module: "lean/DaggerModels/SimplicialSet.lean"
       status: "definition-only"
     - source: "Vertex-level obstruction in dj.prop.counterexample"
       lean: "DaggerModels.WordObstruction.no_dagger_preserving_section"
-      module: "DaggerModels/WordObstruction.lean"
+      module: "lean/DaggerModels/WordObstruction.lean"
       status: "proved"
       note: "This does not prove the full model-categorical counterexample."
     - source: "prop.sSetdag_is_equivalent_to_Fun"
       lean: "DaggerModels.nonempty_daggerSSetEquivalencePresheaf"
-      module: "DaggerModels/Presheaf.lean"
+      module: "lean/DaggerModels/Presheaf.lean"
       status: "proved"
       note: >-
         The actual equivalence data are constructed. Presentable.lean additionally
@@ -1063,7 +1063,7 @@ alignment:
         hence the source proposition's local presentability clause.
     - source: "Free-forgetful adjunction on simplicial sets in dj.not.adjunctions"
       lean: "DaggerModels.exists_freeDaggerAdjunction"
-      module: "DaggerModels/FreeDagger.lean"
+      module: "lean/DaggerModels/FreeDagger.lean"
       status: "proved"
       note: >-
         Actual adjunction existence. The explicit pushout, swap and unit
@@ -1071,62 +1071,62 @@ alignment:
         FreeDaggerSkeleton.lean.
     - source: "Zero-skeleton common subcomplex in dj.not.adjunctions"
       lean: "DaggerModels.SSetVertices.exists_skeletonIso"
-      module: "DaggerModels/Vertices.lean"
+      module: "lean/DaggerModels/Vertices.lean"
       status: "proved"
       note: "The isomorphism preserves inclusion; mathlib skeleton 1 is the manuscript's sk_0."
     - source: "Explicit simplicial-set free-completion pushout in dj.not.adjunctions"
       lean: "DaggerModels.freeDagger_skeleton_pushout"
-      module: "DaggerModels/FreeDaggerSkeleton.lean"
+      module: "lean/DaggerModels/FreeDaggerSkeleton.lean"
       status: "proved"
       note: "Genuine pushout universal property, adjunction unit, natural right leg and both swap equations."
     - source: "Retract closure argument in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_retract"
-      module: "DaggerModels/FreeCofibration.lean"
+      module: "lean/DaggerModels/FreeCofibration.lean"
       status: "proved"
       note: "Retract closure is an ingredient of the full cellular characterization proved separately."
     - source: "Pushout closure argument in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.FreeCofibration.of_isPushout"
-      module: "DaggerModels/FreeCofibrationPushout.lean"
+      module: "lean/DaggerModels/FreeCofibrationPushout.lean"
       status: "proved"
       note: "Any genuine dagger-category pushout square; no additional monicity assumption on the other leg."
     - source: "Explicit predicate obstruction in pointset.cor.cofibrant-obstruction"
       lean: "DaggerModels.DaggerSSet.exists_freeCofibration_not_normalMono"
-      module: "DaggerModels/NormalCofibrationObstruction.lean"
+      module: "lean/DaggerModels/NormalCofibrationObstruction.lean"
       status: "proved"
       note: "The initial-to-point witness is proved; model cofibrancy and Theorem D are not."
     - source: "Parts (1)-(2) of pointset.prop.weak-counterexample"
       lean: "DaggerModels.UnitaryObstruction.exists_equivalence_not_unitarilyEssentiallySurjective"
-      module: "DaggerModels/UnitaryObstruction.lean"
+      module: "lean/DaggerModels/UnitaryObstruction.lean"
       status: "proved"
       note: "Actual integer dagger groupoid witness; part (3) and Quillen consequences remain unproved."
     - source: "Coproduct and transfinite closure in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.freeCofibrations_saturated"
-      module: "DaggerModels/FreeCofibrationClosure.lean"
+      module: "lean/DaggerModels/FreeCofibrationClosure.lean"
       status: "proved"
       note: "Closure of the original predicate under all stated saturation operations, at arbitrary u."
     - source: "dj.cor.Fdag-free"
       lean: "DaggerModels.freeDagger_map_freeCofibration"
-      module: "DaggerModels/FreeDaggerCofibration.lean"
+      module: "lean/DaggerModels/FreeDaggerCofibration.lean"
       status: "proved"
       note: "Every simplicial mono is sent to a free cofibration by any actual free adjunction."
     - source: "Saturation-to-free direction in dj.lem.free-cof"
       lean: "DaggerModels.freeBoundarySaturation_le"
-      module: "DaggerModels/FreeBoundary.lean"
+      module: "lean/DaggerModels/FreeBoundary.lean"
       status: "proved"
       note: "The generators are the actual F(boundary n).ι images; the reverse inclusion is proved separately."
     - source: "Relative skeletal filtration and colimit in dj.lem.free-cof"
       lean: "DaggerModels.DaggerSSet.exists_relativeSkeletonFiltration"
-      module: "DaggerModels/RelativeSkeleton.lean"
+      module: "lean/DaggerModels/RelativeSkeleton.lean"
       status: "proved"
       note: "Actual image-plus-skeleton stages with specified inclusions, source map and colimit."
     - source: "Boundary preimage and Eilenberg-Zilber step in dj.lem.free-cof"
       lean: "DaggerModels.RelativeCellBoundary.relative_stage_complement_iff"
-      module: "DaggerModels/RelativeCellBoundary.lean"
+      module: "lean/DaggerModels/RelativeCellBoundary.lean"
       status: "proved"
       note: "All degrees including zero; characteristic map is not assumed mono; ancestor and epi are unique."
     - source: "dj.lem.free-cof (cellular characterization)"
       lean: "DaggerModels.freeBoundarySaturation_eq"
-      module: "DaggerModels/RelativeCellPresentation.lean"
+      module: "lean/DaggerModels/RelativeCellPresentation.lean"
       status: "proved"
       note: >-
         The stated saturation of the actual free boundary inclusions equals
@@ -1135,7 +1135,7 @@ alignment:
         specialization.
     - source: "dj.lem.free-cof (every free cofibration is a relative cell complex)"
       lean: "DaggerModels.exists_relativeFreeBoundaryCellComplex"
-      module: "DaggerModels/RelativeCellPresentation.lean"
+      module: "lean/DaggerModels/RelativeCellPresentation.lean"
       status: "proved"
       note: >-
         Actual RelativeCellComplex data with the original map and target
@@ -1144,79 +1144,79 @@ alignment:
         premise or monicity of characteristic maps is assumed.
     - source: "Ordinary boundary-to-Kan input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetBoundaryFibration.boundary_rlp_le_fibrations"
-      module: "DaggerModels/SSetBoundaryFibration.lean"
+      module: "lean/DaggerModels/SSetBoundaryFibration.lean"
       status: "proved"
       note: >-
         Actual Mathlib boundary RLP implies its actual Kan fibration class at every value universe, with arbitrary source and target; no weak-equivalence conclusion.
     - source: "Ordinary relative boundary-cell input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetBoundaryCells.exists_relativeCellComplex"
-      module: "DaggerModels/SSetBoundaryCells.lean"
+      module: "lean/DaggerModels/SSetBoundaryCells.lean"
       status: "proved"
       note: >-
         Every original simplicial mono has actual countable RelativeCellComplex data; dimension zero and original source, target and map are retained.
     - source: "Ordinary boundary-cell closure input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetBoundaryCells.boundaryCells_eq_monomorphisms"
-      module: "DaggerModels/SSetBoundaryCells.lean"
+      module: "lean/DaggerModels/SSetBoundaryCells.lean"
       status: "proved"
       note: >-
         Actual transfinite compositions of pushouts of coproducts of Mathlib I equal all simplicial monomorphisms, at every value universe.
     - source: "Ordinary boundary lifting input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetBoundaryCells.I_rlp_eq_monomorphisms_rlp"
-      module: "DaggerModels/SSetBoundaryCells.lean"
+      module: "lean/DaggerModels/SSetBoundaryCells.lean"
       status: "proved"
       note: >-
         Actual Mathlib I.rlp equals monomorphisms.rlp; weak homotopy equivalences and trivial Kan fibrations are not yet identified.
     - source: "Ordinary mono lifting and homotopy input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy"
-      module: "DaggerModels/SSetMonoRLPRetraction.lean"
+      module: "lean/DaggerModels/SSetMonoRLPRetraction.lean"
       status: "proved"
       note: >-
         One section and one actual cylinder homotopy satisfy all four simultaneous equations, including the equation over the target; no Kan or model premise.
     - source: "Ordinary boundary lifting and homotopy input toward bg.lem.I-inj"
       lean: "DaggerModels.SSetMonoRLPRetraction.exists_section_homotopy_of_boundary_rlp"
-      module: "DaggerModels/SSetBoundaryRetraction.lean"
+      module: "lean/DaggerModels/SSetBoundaryRetraction.lean"
       status: "proved"
       note: >-
         The same four equations follow from actual boundary RLP by the proved class equality; no stationarity or weak-equivalence assertion.
     - source: "Local positive horn family in bg.def.IJ"
       lean: "DaggerModels.DaggerLocalFibrations.local_generators_rlp_iff"
-      module: "DaggerModels/DaggerLocalFibrations.lean"
+      module: "lean/DaggerModels/DaggerLocalFibrations.lean"
       status: "proved"
       note: >-
         Actual J-dagger-local RLP is exactly all-hom Kan fibrations; actual I-dagger RLP implies this local condition. Interval lifting remains unproved. Auxiliary audited result.
     - source: "Finite-domain small object input toward bg.thm.main"
       lean: "DaggerModels.SmallObjectFiniteDomains.hasSmallObjectArgument"
-      module: "DaggerModels/SmallObjectFiniteDomains.lean"
+      module: "lean/DaggerModels/SmallObjectFiniteDomains.lean"
       status: "proved"
       note: >-
         Actual small-object argument at aleph0, from smallness, finitely presentable domains and small colimits; category, hom and auxiliary universes remain independent.
     - source: "Actual I-dagger factorization input toward bg.thm.main"
       lean: "DaggerModels.DaggerSmallObject.generators_hasFunctorialFactorization"
-      module: "DaggerModels/DaggerSmallObject.lean"
+      module: "lean/DaggerModels/DaggerSmallObject.lean"
       status: "proved"
       note: >-
         Unconditional actual functorial factorization in I-dagger.rlp.llp and I-dagger.rlp, with actual factorization data for every morphism; no weak-equivalence or model-category assertion. Auxiliary audited result.
     - source: "Ordinary rigidification adjunction in dj.not.adjunctions"
       lean: "DaggerModels.OrdinaryRigidification.rigidification_coherentNerve_adjunction"
-      module: "DaggerModels/OrdinaryRigidification.lean"
+      module: "lean/DaggerModels/OrdinaryRigidification.lean"
       status: "proved"
       note: >-
         Actual left Kan extension of Mathlib's standard thickening is left adjoint to its restricted Yoneda nerve, using the proved ordinary colimits; arbitrary common universe, no existence or model premise.
     - source: "Coherent nerve in dj.not.adjunctions, ordinary input to dj.lem.lift"
       lean: "DaggerModels.OrdinaryRigidification.coherentNerve_iso_mathlib"
-      module: "DaggerModels/OrdinaryRigidification.lean"
+      module: "lean/DaggerModels/OrdinaryRigidification.lean"
       status: "proved"
       note: >-
         Full natural isomorphism to Mathlib's actual SimplicialNerve with postcomposition on all enriched functors; the same left adjoint is transported to this nerve. Opposite coherence and the dagger lift remain unproved.
     - source: "Standard-simplex values of ordinary rigidification in dj.not.adjunctions"
       lean: "DaggerModels.OrdinaryRigidification.rigidification_simplex_iso"
-      module: "DaggerModels/OrdinaryRigidification.lean"
+      module: "lean/DaggerModels/OrdinaryRigidification.lean"
       status: "proved"
       note: >-
         The standard simplex diagram followed by the same rigidification is naturally isomorphic to Mathlib's original thickening diagram; uliftYoneda is definitionally SSet.stdSimplex.
     - source: "bg.thm.main and bg.thm.left-proper (Theorem A)"
       lean: "DaggerComparator.mainA"
-      module: "MainTheoremsA.lean"
+      module: "lean/MainTheoremsA.lean"
       status: "current-2771-native-and-local-Linux-build-and-all-owner-audit-passed; A-Comparator-and-default-kernel-passed-with-all-negative-controls; restored-Linux-audit-aggregate-accepted; hosted-CI-pending"
       note: "Separate A certificate; 48-line project-import Challenge with a 366-module, 679416-line closure. Agent correspondence review only."
     - source: "dj.thm.main and dj.thm.equivalence (Theorem B)"

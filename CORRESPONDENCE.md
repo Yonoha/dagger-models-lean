@@ -34,7 +34,7 @@ status is given in the status table and final section.
 
 ## The reversal simplex category
 
-File: [DaggerModels/ReverseSimplex.lean](DaggerModels/ReverseSimplex.lean).
+File: [DaggerModels/ReverseSimplex.lean](lean/DaggerModels/ReverseSimplex.lean).
 Problem specification: [ReverseSimplexChallenge.lean](.ci/comparator/ReverseSimplexChallenge.lean).
 
 `ReverseSimplex` has an object for each natural number `n`, representing `[n]`.
@@ -56,7 +56,7 @@ Comparison with the appendix's tagged index category remains to implement.
 
 ## Dagger simplicial sets
 
-File: [DaggerModels/SimplicialSet.lean](DaggerModels/SimplicialSet.lean).
+File: [DaggerModels/SimplicialSet.lean](lean/DaggerModels/SimplicialSet.lean).
 Problem specification: [SimplicialSetChallenge.lean](.ci/comparator/SimplicialSetChallenge.lean).
 
 `DaggerSSet` implements `def.dagger_simplicial_sets` using mathlib's `SSet` and
@@ -91,11 +91,11 @@ characterization are described below.
 
 ## Elementary free-cofibration properties
 
-Files: [FreeCofibration.lean](DaggerModels/FreeCofibration.lean),
-[FreeCofibrationPushout.lean](DaggerModels/FreeCofibrationPushout.lean),
-[FreeCofibrationCoproduct.lean](DaggerModels/FreeCofibrationCoproduct.lean),
-[FreeCofibrationTransfinite.lean](DaggerModels/FreeCofibrationTransfinite.lean),
-[FreeCofibrationClosure.lean](DaggerModels/FreeCofibrationClosure.lean).
+Files: [FreeCofibration.lean](lean/DaggerModels/FreeCofibration.lean),
+[FreeCofibrationPushout.lean](lean/DaggerModels/FreeCofibrationPushout.lean),
+[FreeCofibrationCoproduct.lean](lean/DaggerModels/FreeCofibrationCoproduct.lean),
+[FreeCofibrationTransfinite.lean](lean/DaggerModels/FreeCofibrationTransfinite.lean),
+[FreeCofibrationClosure.lean](lean/DaggerModels/FreeCofibrationClosure.lean).
 Problem specification: [FreeCofibrationChallenge.lean](.ci/comparator/FreeCofibrationChallenge.lean).
 
 `mono_iff_mono_hom` proves that the original categorical monicity condition in
@@ -136,10 +136,10 @@ Together with existence and preservation, this proves reflection of colimits.
 
 ## Free boundary generators and the relative filtration
 
-Files: [FreeDaggerCofibration.lean](DaggerModels/FreeDaggerCofibration.lean),
-[FreeBoundary.lean](DaggerModels/FreeBoundary.lean),
-[RelativeSkeleton.lean](DaggerModels/RelativeSkeleton.lean),
-[RelativeCellBoundary.lean](DaggerModels/RelativeCellBoundary.lean).
+Files: [FreeDaggerCofibration.lean](lean/DaggerModels/FreeDaggerCofibration.lean),
+[FreeBoundary.lean](lean/DaggerModels/FreeBoundary.lean),
+[RelativeSkeleton.lean](lean/DaggerModels/RelativeSkeleton.lean),
+[RelativeCellBoundary.lean](lean/DaggerModels/RelativeCellBoundary.lean).
 Specifications: [FreeDaggerCofibrationChallenge.lean](.ci/comparator/FreeDaggerCofibrationChallenge.lean),
 [RelativeSkeletonChallenge.lean](.ci/comparator/RelativeSkeletonChallenge.lean),
 [RelativeCellBoundaryChallenge.lean](.ci/comparator/RelativeCellBoundaryChallenge.lean).
@@ -175,7 +175,7 @@ Eilenberg–Zilber results.
 
 ## The full cellular characterization
 
-Main file: [RelativeCellPresentation.lean](DaggerModels/RelativeCellPresentation.lean).
+Main file: [RelativeCellPresentation.lean](lean/DaggerModels/RelativeCellPresentation.lean).
 Problem specification: [FreeDaggerCofibrationChallenge.lean](.ci/comparator/FreeDaggerCofibrationChallenge.lean).
 
 `exists_relativeFreeBoundaryCellComplex` proves the relative-cell assertion of
@@ -185,31 +185,31 @@ The proof constructs actual `AttachCells` data at every successor stage of
 the original relative skeleton, retaining its source identification, original
 map, and target colimit.
 
-[FreeInvolution.lean](DaggerModels/FreeInvolution.lean) and
-[RelativeCellOrbits.lean](DaggerModels/RelativeCellOrbits.lean) construct the
+[FreeInvolution.lean](lean/DaggerModels/FreeInvolution.lean) and
+[RelativeCellOrbits.lean](lean/DaggerModels/RelativeCellOrbits.lean) construct the
 orbit quotient and select representatives using `Quotient.out`. In positive
 degrees, the original freeness condition makes each orbit a free pair.
 Degree zero is treated separately: the cells are indexed by individual new
 vertices, and no nonfixedness is asserted there.
 
-[FreeDaggerCell.lean](DaggerModels/FreeDaggerCell.lean) identifies the interiors
+[FreeDaggerCell.lean](lean/DaggerModels/FreeDaggerCell.lean) identifies the interiors
 of the actual free cells. A positive cell has two copies of epi simplex maps;
 the two copies of a zero-cell coincide. On the right copy, the characteristic
 map has value `map (rev α) (dagger σ)`, with the reversal retained.
-[RelativeCellMaps.lean](DaggerModels/RelativeCellMaps.lean) constructs the
+[RelativeCellMaps.lean](lean/DaggerModels/RelativeCellMaps.lean) constructs the
 characteristic and boundary maps by the actual free adjunction. Characteristic
 maps are never assumed monic.
 
-[RelativeCellIntersection.lean](DaggerModels/RelativeCellIntersection.lean),
-[RelativeCellCoverage.lean](DaggerModels/RelativeCellCoverage.lean), and
-[RelativeCellSeparation.lean](DaggerModels/RelativeCellSeparation.lean) prove
+[RelativeCellIntersection.lean](lean/DaggerModels/RelativeCellIntersection.lean),
+[RelativeCellCoverage.lean](lean/DaggerModels/RelativeCellCoverage.lean), and
+[RelativeCellSeparation.lean](lean/DaggerModels/RelativeCellSeparation.lean) prove
 the exact boundary intersection, coverage of the next stage, and uniqueness
 outside the boundaries. These imply actual degreewise pushouts and hence
 dagger-category pushouts, using
-[DegreewisePushout.lean](DaggerModels/DegreewisePushout.lean) and
-[CoproductAttachment.lean](DaggerModels/CoproductAttachment.lean).
+[DegreewisePushout.lean](lean/DaggerModels/DegreewisePushout.lean) and
+[CoproductAttachment.lean](lean/DaggerModels/CoproductAttachment.lean).
 
-[BoundaryCellTransport.lean](DaggerModels/BoundaryCellTransport.lean)
+[BoundaryCellTransport.lean](lean/DaggerModels/BoundaryCellTransport.lean)
 transports the cells from the explicit free functor to any actual left adjoint
 of the original forgetful functor. It also transports the countable stage
 order from `ℕ` to `ULift.{u} ℕ`, so the transfinite-composition universe remains
@@ -224,8 +224,8 @@ or establish main theorems A–D.
 
 ## Presheaf equivalence and presentability
 
-Files: [Presheaf.lean](DaggerModels/Presheaf.lean),
-[Presentable.lean](DaggerModels/Presentable.lean).
+Files: [Presheaf.lean](lean/DaggerModels/Presheaf.lean),
+[Presentable.lean](lean/DaggerModels/Presentable.lean).
 Problem specification: [PresheafChallenge.lean](.ci/comparator/PresheafChallenge.lean).
 
 `daggerSSetEquivalencePresheaf` constructs an actual
@@ -246,10 +246,10 @@ presentability hypothesis or restriction to `u = 0` is introduced.
 
 ## Free–forgetful adjunction
 
-Files: [FreeDagger.lean](DaggerModels/FreeDagger.lean),
-[Vertices.lean](DaggerModels/Vertices.lean),
-[FreeDaggerPushout.lean](DaggerModels/FreeDaggerPushout.lean),
-[FreeDaggerSkeleton.lean](DaggerModels/FreeDaggerSkeleton.lean).
+Files: [FreeDagger.lean](lean/DaggerModels/FreeDagger.lean),
+[Vertices.lean](lean/DaggerModels/Vertices.lean),
+[FreeDaggerPushout.lean](lean/DaggerModels/FreeDaggerPushout.lean),
+[FreeDaggerSkeleton.lean](lean/DaggerModels/FreeDaggerSkeleton.lean).
 Problem specifications: [PresheafChallenge.lean](.ci/comparator/PresheafChallenge.lean),
 [VerticesChallenge.lean](.ci/comparator/VerticesChallenge.lean),
 [FreeDaggerPushoutChallenge.lean](.ci/comparator/FreeDaggerPushoutChallenge.lean).
@@ -284,7 +284,7 @@ not establish them.
 
 ## The fixed-vertex cofibration obstruction
 
-File: [NormalCofibrationObstruction.lean](DaggerModels/NormalCofibrationObstruction.lean).
+File: [NormalCofibrationObstruction.lean](lean/DaggerModels/NormalCofibrationObstruction.lean).
 Problem specification: [NormalCofibrationChallenge.lean](.ci/comparator/NormalCofibrationChallenge.lean).
 
 `AntiInvolutiveSSet` has the same simplicial anti-involution data but omits the
@@ -303,8 +303,8 @@ and the comparison Kan-extension adjunctions remain unproved.
 
 ## Ordinary equivalence need not be unitary equivalence
 
-Files: [DaggerCategory.lean](DaggerModels/DaggerCategory.lean),
-[UnitaryObstruction.lean](DaggerModels/UnitaryObstruction.lean).
+Files: [DaggerCategory.lean](lean/DaggerModels/DaggerCategory.lean),
+[UnitaryObstruction.lean](lean/DaggerModels/UnitaryObstruction.lean).
 Problem specification: [UnitaryObstructionChallenge.lean](.ci/comparator/UnitaryObstructionChallenge.lean).
 
 The ordinary dagger category class fixes objects and reverses composition.
@@ -328,7 +328,7 @@ proofs in the problem specification.
 
 ## The vertex-level word obstruction
 
-File: [DaggerModels/WordObstruction.lean](DaggerModels/WordObstruction.lean).
+File: [DaggerModels/WordObstruction.lean](lean/DaggerModels/WordObstruction.lean).
 Problem specification: [WordObstructionChallenge.lean](.ci/comparator/WordObstructionChallenge.lean).
 
 This file uses only Lean's standard library. In the proof of
@@ -350,11 +350,11 @@ monoid are not constructed in this release.
 
 ## Dagger simplicial categories and their free construction
 
-Files: [DaggerSimplicialCategory.lean](DaggerModels/DaggerSimplicialCategory.lean),
-[DaggerSimplicialGraph.lean](DaggerModels/DaggerSimplicialGraph.lean),
-[FreeSimplicialPaths.lean](DaggerModels/FreeSimplicialPaths.lean),
-[FreeSimplicialLift.lean](DaggerModels/FreeSimplicialLift.lean), and
-[FreeDaggerSimplicialCategory.lean](DaggerModels/FreeDaggerSimplicialCategory.lean).
+Files: [DaggerSimplicialCategory.lean](lean/DaggerModels/DaggerSimplicialCategory.lean),
+[DaggerSimplicialGraph.lean](lean/DaggerModels/DaggerSimplicialGraph.lean),
+[FreeSimplicialPaths.lean](lean/DaggerModels/FreeSimplicialPaths.lean),
+[FreeSimplicialLift.lean](lean/DaggerModels/FreeSimplicialLift.lean), and
+[FreeDaggerSimplicialCategory.lean](lean/DaggerModels/FreeDaggerSimplicialCategory.lean).
 The three new problem specifications are
 [DaggerSimplicialCategoryChallenge.lean](.ci/comparator/DaggerSimplicialCategoryChallenge.lean),
 [FreeSimplicialPathsChallenge.lean](.ci/comparator/FreeSimplicialPathsChallenge.lean), and
@@ -408,11 +408,11 @@ this is not independent human review. No manuscript statement was edited.
 
 ## Monadicity over dagger simplicial graphs
 
-Files: [DaggerGraphReflection.lean](DaggerModels/DaggerGraphReflection.lean),
-[DaggerSplitCoequalizer.lean](DaggerModels/DaggerSplitCoequalizer.lean),
-[DaggerGraphDescent.lean](DaggerModels/DaggerGraphDescent.lean),
-[DaggerGraphCoequalizer.lean](DaggerModels/DaggerGraphCoequalizer.lean), and
-[DaggerSimplicialMonadicity.lean](DaggerModels/DaggerSimplicialMonadicity.lean).
+Files: [DaggerGraphReflection.lean](lean/DaggerModels/DaggerGraphReflection.lean),
+[DaggerSplitCoequalizer.lean](lean/DaggerModels/DaggerSplitCoequalizer.lean),
+[DaggerGraphDescent.lean](lean/DaggerModels/DaggerGraphDescent.lean),
+[DaggerGraphCoequalizer.lean](lean/DaggerModels/DaggerGraphCoequalizer.lean), and
+[DaggerSimplicialMonadicity.lean](lean/DaggerModels/DaggerSimplicialMonadicity.lean).
 Problem specification: [DaggerMonadicityChallenge.lean](.ci/comparator/DaggerMonadicityChallenge.lean).
 
 `forgetGraph_reflectsIsomorphisms` proves the reflection sentence in the second
@@ -454,10 +454,10 @@ existence statement. All prior comparison roots remain registered.
 
 ## Dagger graph presheaves and presentability
 
-Files: [DaggerGraphIndex.lean](DaggerModels/DaggerGraphIndex.lean),
-[DaggerGraphTotalSpace.lean](DaggerModels/DaggerGraphTotalSpace.lean),
-[DaggerGraphPresheaf.lean](DaggerModels/DaggerGraphPresheaf.lean), and
-[DaggerGraphPresentable.lean](DaggerModels/DaggerGraphPresentable.lean).
+Files: [DaggerGraphIndex.lean](lean/DaggerModels/DaggerGraphIndex.lean),
+[DaggerGraphTotalSpace.lean](lean/DaggerModels/DaggerGraphTotalSpace.lean),
+[DaggerGraphPresheaf.lean](lean/DaggerModels/DaggerGraphPresheaf.lean), and
+[DaggerGraphPresentable.lean](lean/DaggerModels/DaggerGraphPresentable.lean).
 Problem specification:
 [DaggerGraphPresentableChallenge.lean](.ci/comparator/DaggerGraphPresentableChallenge.lean).
 
@@ -503,11 +503,11 @@ theorems A–D had not been proved at that foundation milestone.
 
 ## Finitary words and limits over dagger graphs
 
-Files: [DaggerGraphFiniteWords.lean](DaggerModels/DaggerGraphFiniteWords.lean),
-[FreeSimplicialMap.lean](DaggerModels/FreeSimplicialMap.lean),
-[FreeWordFinitary.lean](DaggerModels/FreeWordFinitary.lean),
-[DaggerSimplicialLimits.lean](DaggerModels/DaggerSimplicialLimits.lean), and
-[DaggerSimplicialFilteredColimits.lean](DaggerModels/DaggerSimplicialFilteredColimits.lean).
+Files: [DaggerGraphFiniteWords.lean](lean/DaggerModels/DaggerGraphFiniteWords.lean),
+[FreeSimplicialMap.lean](lean/DaggerModels/FreeSimplicialMap.lean),
+[FreeWordFinitary.lean](lean/DaggerModels/FreeWordFinitary.lean),
+[DaggerSimplicialLimits.lean](lean/DaggerModels/DaggerSimplicialLimits.lean), and
+[DaggerSimplicialFilteredColimits.lean](lean/DaggerModels/DaggerSimplicialFilteredColimits.lean).
 Problem specification:
 [DaggerMonadicityChallenge.lean](.ci/comparator/DaggerMonadicityChallenge.lean).
 
@@ -555,13 +555,13 @@ finite presentability are proved next. At that foundation milestone, the main th
 
 ## Dagger simplicial category colimits and local finite presentability
 
-Files: [DaggerHomKernel.lean](DaggerModels/DaggerHomKernel.lean),
-[DaggerHomQuotient.lean](DaggerModels/DaggerHomQuotient.lean),
-[DaggerColimitKernel.lean](DaggerModels/DaggerColimitKernel.lean),
-[DaggerSemanticColimit.lean](DaggerModels/DaggerSemanticColimit.lean),
-[StrongGeneratorAdjunction.lean](DaggerModels/StrongGeneratorAdjunction.lean),
-[DaggerFiniteGenerators.lean](DaggerModels/DaggerFiniteGenerators.lean), and
-[DaggerSimplicialPresentable.lean](DaggerModels/DaggerSimplicialPresentable.lean).
+Files: [DaggerHomKernel.lean](lean/DaggerModels/DaggerHomKernel.lean),
+[DaggerHomQuotient.lean](lean/DaggerModels/DaggerHomQuotient.lean),
+[DaggerColimitKernel.lean](lean/DaggerModels/DaggerColimitKernel.lean),
+[DaggerSemanticColimit.lean](lean/DaggerModels/DaggerSemanticColimit.lean),
+[StrongGeneratorAdjunction.lean](lean/DaggerModels/StrongGeneratorAdjunction.lean),
+[DaggerFiniteGenerators.lean](lean/DaggerModels/DaggerFiniteGenerators.lean), and
+[DaggerSimplicialPresentable.lean](lean/DaggerModels/DaggerSimplicialPresentable.lean).
 Problem specification:
 [DaggerSimplicialPresentableChallenge.lean](.ci/comparator/DaggerSimplicialPresentableChallenge.lean).
 
@@ -616,15 +616,15 @@ in `bg.lem.creation` is proved next. At that foundation milestone, the main theo
 
 ## Creation over ordinary simplicial categories
 
-Files: [SimplicialOpposite.lean](DaggerModels/SimplicialOpposite.lean),
-[SimplicialObjectAdjunctions.lean](DaggerModels/SimplicialObjectAdjunctions.lean),
-[DaggerStructureFromOpposite.lean](DaggerModels/DaggerStructureFromOpposite.lean),
-[DaggerOppositeHom.lean](DaggerModels/DaggerOppositeHom.lean),
-[DaggerLimitOpposite.lean](DaggerModels/DaggerLimitOpposite.lean),
-[DaggerColimitOpposite.lean](DaggerModels/DaggerColimitOpposite.lean),
-[DaggerOrdinaryLimitCreation.lean](DaggerModels/DaggerOrdinaryLimitCreation.lean),
-[DaggerOrdinaryColimitCreation.lean](DaggerModels/DaggerOrdinaryColimitCreation.lean), and
-[DaggerOrdinaryCreation.lean](DaggerModels/DaggerOrdinaryCreation.lean).
+Files: [SimplicialOpposite.lean](lean/DaggerModels/SimplicialOpposite.lean),
+[SimplicialObjectAdjunctions.lean](lean/DaggerModels/SimplicialObjectAdjunctions.lean),
+[DaggerStructureFromOpposite.lean](lean/DaggerModels/DaggerStructureFromOpposite.lean),
+[DaggerOppositeHom.lean](lean/DaggerModels/DaggerOppositeHom.lean),
+[DaggerLimitOpposite.lean](lean/DaggerModels/DaggerLimitOpposite.lean),
+[DaggerColimitOpposite.lean](lean/DaggerModels/DaggerColimitOpposite.lean),
+[DaggerOrdinaryLimitCreation.lean](lean/DaggerModels/DaggerOrdinaryLimitCreation.lean),
+[DaggerOrdinaryColimitCreation.lean](lean/DaggerModels/DaggerOrdinaryColimitCreation.lean), and
+[DaggerOrdinaryCreation.lean](lean/DaggerModels/DaggerOrdinaryCreation.lean).
 Problem specification:
 [DaggerOrdinaryCreationChallenge.lean](.ci/comparator/DaggerOrdinaryCreationChallenge.lean).
 
@@ -676,11 +676,11 @@ main theorems A–D had not been proved.
 
 ## Two-object cells and finite compactness
 
-Files: [TwoObjectDaggerGraph](DaggerModels/TwoObjectDaggerGraph.lean),
-[TwoObjectDaggerCell](DaggerModels/TwoObjectDaggerCell.lean),
-[TwoObjectDaggerCellUniversal](DaggerModels/TwoObjectDaggerCellUniversal.lean),
-[TwoObjectGraphPresentability](DaggerModels/TwoObjectGraphPresentability.lean), and
-[TwoObjectCellPresentability](DaggerModels/TwoObjectCellPresentability.lean).
+Files: [TwoObjectDaggerGraph](lean/DaggerModels/TwoObjectDaggerGraph.lean),
+[TwoObjectDaggerCell](lean/DaggerModels/TwoObjectDaggerCell.lean),
+[TwoObjectDaggerCellUniversal](lean/DaggerModels/TwoObjectDaggerCellUniversal.lean),
+[TwoObjectGraphPresentability](lean/DaggerModels/TwoObjectGraphPresentability.lean), and
+[TwoObjectCellPresentability](lean/DaggerModels/TwoObjectCellPresentability.lean).
 
 The actual graph in `bg.not.cells` has two vertices `ULift Bool`, empty diagonal
 edge spaces, and off-diagonal copies of K exchanged by dagger. Its full graph
@@ -722,10 +722,10 @@ ordinary-colimits and object-generator registrations are described below.
 
 ## Ordinary cells and two ingredients of cell-attachment reduction
 
-Files: [OrdinaryTwoObjectCell](DaggerModels/OrdinaryTwoObjectCell.lean),
-[UnderlyingTwoObjectCell](DaggerModels/UnderlyingTwoObjectCell.lean),
-[TwoObjectCellPushout](DaggerModels/TwoObjectCellPushout.lean), and
-[DaggerSimplicialCofree](DaggerModels/DaggerSimplicialCofree.lean).
+Files: [OrdinaryTwoObjectCell](lean/DaggerModels/OrdinaryTwoObjectCell.lean),
+[UnderlyingTwoObjectCell](lean/DaggerModels/UnderlyingTwoObjectCell.lean),
+[TwoObjectCellPushout](lean/DaggerModels/TwoObjectCellPushout.lean), and
+[DaggerSimplicialCofree](lean/DaggerModels/DaggerSimplicialCofree.lean).
 
 The ordinary cell of `bg.not.cells` has terminal diagonal homs, forward hom K,
 and empty reverse hom. Its enriched identities and composition are explicitly
@@ -841,15 +841,15 @@ The nine new modules have the following roles.
 
 | File | Mathematical construction |
 | --- | --- |
-| [SSetBoundaryFibration.lean](DaggerModels/SSetBoundaryFibration.lean) | Actual horn-to-boundary pushout and boundary RLP implying the existing Mathlib Kan fibration property |
-| [SSetBoundaryCellsCore.lean](DaggerModels/SSetBoundaryCellsCore.lean) | Actual disjoint-union coproducts, relative skeleton, characteristic/boundary lifts, original source isomorphism and target colimit |
-| [SSetBoundaryCellsAttachment.lean](DaggerModels/SSetBoundaryCellsAttachment.lean) | Boundary intersection, coverage and interior uniqueness imply actual attachment pushouts |
-| [SSetBoundaryCells.lean](DaggerModels/SSetBoundaryCells.lean) | Every mono is an actual relative boundary-cell complex; closure and right lifting-class equalities |
-| [SSetMonoRLPRetraction.lean](DaggerModels/SSetMonoRLPRetraction.lean) | Mono-RLP gives a section and literal cylinder homotopy over the original target |
-| [SSetBoundaryRetraction.lean](DaggerModels/SSetBoundaryRetraction.lean) | The same simultaneous conclusion for actual boundary RLP |
-| [DaggerLocalFibrations.lean](DaggerModels/DaggerLocalFibrations.lean) | Actual positive horn family `J†loc` and its all-hom Kan lifting equivalence |
-| [SmallObjectFiniteDomains.lean](DaggerModels/SmallObjectFiniteDomains.lean) | General finite-domain bridge to Mathlib's `HasSmallObjectArgument` at the regular cardinal ℵ₀ |
-| [DaggerSmallObject.lean](DaggerModels/DaggerSmallObject.lean) | Unconditional small object argument and actual functorial factorization data for the original `I†` |
+| [SSetBoundaryFibration.lean](lean/DaggerModels/SSetBoundaryFibration.lean) | Actual horn-to-boundary pushout and boundary RLP implying the existing Mathlib Kan fibration property |
+| [SSetBoundaryCellsCore.lean](lean/DaggerModels/SSetBoundaryCellsCore.lean) | Actual disjoint-union coproducts, relative skeleton, characteristic/boundary lifts, original source isomorphism and target colimit |
+| [SSetBoundaryCellsAttachment.lean](lean/DaggerModels/SSetBoundaryCellsAttachment.lean) | Boundary intersection, coverage and interior uniqueness imply actual attachment pushouts |
+| [SSetBoundaryCells.lean](lean/DaggerModels/SSetBoundaryCells.lean) | Every mono is an actual relative boundary-cell complex; closure and right lifting-class equalities |
+| [SSetMonoRLPRetraction.lean](lean/DaggerModels/SSetMonoRLPRetraction.lean) | Mono-RLP gives a section and literal cylinder homotopy over the original target |
+| [SSetBoundaryRetraction.lean](lean/DaggerModels/SSetBoundaryRetraction.lean) | The same simultaneous conclusion for actual boundary RLP |
+| [DaggerLocalFibrations.lean](lean/DaggerModels/DaggerLocalFibrations.lean) | Actual positive horn family `J†loc` and its all-hom Kan lifting equivalence |
+| [SmallObjectFiniteDomains.lean](lean/DaggerModels/SmallObjectFiniteDomains.lean) | General finite-domain bridge to Mathlib's `HasSmallObjectArgument` at the regular cardinal ℵ₀ |
+| [DaggerSmallObject.lean](lean/DaggerModels/DaggerSmallObject.lean) | Unconditional small object argument and actual functorial factorization data for the original `I†` |
 
 For ordinary simplicial sets, `I` and `J` are the existing
 `SSet.modelCategoryQuillen.I` and `.J`, not new predicates. Filling the missing
@@ -934,7 +934,7 @@ fibrations, full `bg.lem.I-inj`, interval lifting in `J†`, and A–D had not b
 ## Ordinary rigidification using existing Mathlib results
 
 The ordinary adjunction recalled in `dj.not.adjunctions` is constructed in
-[`OrdinaryRigidification.lean`](DaggerModels/OrdinaryRigidification.lean).
+[`OrdinaryRigidification.lean`](lean/DaggerModels/OrdinaryRigidification.lean).
 It supplies an input to `dj.lem.lift`; the latter's opposite coherence and
 dagger lift are not asserted here. The reuse search and version decisions are
 recorded in [EXISTING_FORMALIZATIONS.md](EXISTING_FORMALIZATIONS.md).
