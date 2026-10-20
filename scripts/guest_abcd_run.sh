@@ -89,6 +89,12 @@ a_lock="$control/.ci/a/asset-lock.json"
 pinned_lean="$(cd "$control" && elan which lean)"
 [[ "$pinned_lean" == /*/bin/lean && -x "$pinned_lean" ]]
 export PATH="${pinned_lean%/lean}:$PATH"
+# Repeated compiler invocations must not page the entire Lean runtime through
+# 9p. Verify a complete trusted copy, then keep the exact logical prefix and
+# executable paths using a read-only ext4 bind mount. No candidate is involved.
+python3 "$control/scripts/stage_guest_lean.py" \
+  --source "${pinned_lean%/bin/lean}" \
+  --destination /opt/dagger-lean-v4.27.0
 [[ -x "$GITHUB_WORKSPACE/landrun/landrun" ]]
 [[ -x "$GITHUB_WORKSPACE/lean4export-legacy/.lake/build/bin/lean4export" ]]
 [[ -x "$RUNNER_TEMP/bcd-auditor/.lake/build/bin/bcdTrustedAudit" ]]

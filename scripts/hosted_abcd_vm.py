@@ -198,11 +198,33 @@ class Guest:
                          "runner@127.0.0.1"]
 
     def command(self, command: str, *, input: bytes | None = None,
-                capture: bool = False, check: bool = True):
+                capture: bool = False, check: bool = True,
+                timeout: float | None = None):
         return subprocess.run(self.ssh_base + [command], input=input,
                               stdout=subprocess.PIPE if capture else None,
                               stderr=subprocess.PIPE if capture else None,
-                              check=check)
+                              check=check, timeout=timeout)
+
+    def capture_progress(self, host_temp: Path) -> None:
+        """Observe trusted text logs without executing candidate artifacts."""
+        try:
+            result = self.command(
+                "python3 - " + shlex.quote(str(host_temp / "bcd-run")),
+                input=(HERE / "guest_progress.py").read_bytes(),
+                capture=True, check=False, timeout=5)
+            if result.returncode != 0 or len(result.stdout) > 131072:
+                print("GUEST_PROGRESS_UNAVAILABLE", flush=True)
+                return
+            report = json.loads(result.stdout)
+            if report.get("kind") != "GUEST_PROGRESS":
+                raise ValueError("unexpected diagnostic kind")
+            line = json.dumps(report, sort_keys=True) + "\n"
+            print(line, end="", flush=True)
+            diagnostics = host_temp / "bcd-vm-diagnostics"
+            diagnostics.mkdir(exist_ok=True)
+            (diagnostics / "guest-progress.log").write_text(line)
+        except (OSError, ValueError, subprocess.TimeoutExpired) as error:
+            print(f"GUEST_PROGRESS_UNAVAILABLE {type(error).__name__}", flush=True)
 
     def wait_for_ssh(self, timeout: int = 240) -> None:
         deadline = time.monotonic() + timeout
@@ -233,13 +255,18 @@ class Guest:
     def stream_script(self, script: Path, command: str, host_temp: Path) -> None:
         with script.open("rb") as stream:
             proc = subprocess.Popen(self.ssh_base + [command], stdin=stream)
+            next_progress = time.monotonic()
             try:
                 while proc.poll() is None:
                     if self.qemu.poll() is not None:
                         raise RuntimeError("QEMU exited while source runner was active")
                     if bytes_free(host_temp) < 1024**3:
                         raise RuntimeError("host disk fell below 1 GiB; fail closed")
+                    if time.monotonic() >= next_progress:
+                        self.capture_progress(host_temp)
+                        next_progress = time.monotonic() + 60
                     time.sleep(20)
+                self.capture_progress(host_temp)
                 if proc.returncode != 0:
                     raise subprocess.CalledProcessError(proc.returncode, command)
             finally:
@@ -613,8 +640,9 @@ def main() -> None:
                                   output / "audit-restored-owners.log")
                 guest.copy_output(output / "ci-candidate-result.json",
                                   output / "ci-candidate-result.json")
-            except Exception:
+            except BaseException:
                 failed = True
+                guest.capture_progress(runner_temp)
                 raise
             finally:
                 qemu.terminate()

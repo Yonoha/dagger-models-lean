@@ -327,7 +327,9 @@ def stage(a: argparse.Namespace) -> Path:
         raise ValueError("trusted advertised-result inventory changed")
     if inventory_names(a.audit_main, a.audit_main_sha256) != list(spec["main"]):
         raise ValueError("trusted main-result audit inventory changed")
+    print("GUEST_PHASE_START stage-source-and-cache", flush=True)
     shutil.copytree(a.cache_dotlake, project / ".lake", symlinks=False)
+    print("GUEST_PHASE_DONE stage-source-and-cache", flush=True)
     (a.work / "candidate-source-hashes.json").write_text(json.dumps(source_hashes, sort_keys=True, indent=2) + "\n")
     return project
 
@@ -348,6 +350,7 @@ def systemd(a: argparse.Namespace, cwd: Path, command: list[str],
     ]
     if lean_path is not None:
         common.append(f"--setenv=LEAN_PATH={lean_path}")
+    print(f"GUEST_PHASE_START log={log.name}", flush=True)
     with log.open("wb") as out:
         proc = subprocess.run(common + command, cwd=cwd, stdout=out,
                               stderr=subprocess.PIPE, timeout=timeout, check=False)
@@ -355,6 +358,7 @@ def systemd(a: argparse.Namespace, cwd: Path, command: list[str],
         log.with_suffix(log.suffix + ".stderr").write_bytes(proc.stderr)
     if proc.returncode != 0:
         raise RuntimeError(f"{command[0]} failed ({proc.returncode}); see {log}")
+    print(f"GUEST_PHASE_DONE log={log.name}", flush=True)
     return proc.returncode
 
 
@@ -763,6 +767,7 @@ def compare(a: argparse.Namespace, name: str, challenge: Path, solution: Path,
     config_file = a.work / f"config-{name}.json"
     config_file.write_text(json.dumps(config, indent=2) + "\n")
     log = a.work / f"compare-{name}.log"
+    print(f"GUEST_PHASE_START log={log.name}", flush=True)
     command = [
         "systemd-run", "--user", "--quiet", "--wait", "--collect", "--pipe",
         "--property=RestrictAddressFamilies=~AF_UNIX",
@@ -788,6 +793,7 @@ def compare(a: argparse.Namespace, name: str, challenge: Path, solution: Path,
         raise RuntimeError(f"unexpected Comparator result in {log}")
     if expected_exit == 0 and "Lean default kernel accepts the solution" not in output:
         raise RuntimeError(f"default kernel evidence absent in {log}")
+    print(f"GUEST_PHASE_DONE log={log.name}", flush=True)
     return {"case": name, "exit": result.returncode, "log_sha256": digest(log),
             "expected_exit": expected_exit, "expected_message": expected,
             "default_kernel_acceptance_required": expected_exit == 0,
