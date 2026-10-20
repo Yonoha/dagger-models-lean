@@ -8,8 +8,11 @@ local evidence; no hosted GitHub job or release is claimed.
 The mathematical source revision is
 `dfee9b568d8f67980b164fa830d189d106951a57`, with source graph SHA-256
 `0a3af50bbf1dbb6ae6ddd5b679cb6d0120306c3f3d34777bc358cfd84859943f`.
-Later documentation and packaging changes must retain all 2771 exact Lean
-source paths, sizes and hashes in `SOURCE_MANIFEST.json` to use this evidence.
+Later documentation and packaging changes must retain all 2771 Lean module
+names, source sizes and source hashes in `SOURCE_MANIFEST.json` to use this evidence.
+The current manifest locates these same sources under `lean/`; the saved receipts
+retain their original module-relative paths and remain tied to the revision above.
+This directory relocation is not a new full verification run.
 
 ## Completed gates
 

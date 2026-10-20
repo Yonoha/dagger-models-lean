@@ -3,6 +3,9 @@
 This working tree combines the previously published foundations with the saved
 formal proofs of the frozen Lean statements for Main Theorems B, C and D.
 `SOURCE_MANIFEST.json` records the exact local mathematical source inputs.
+Its current file paths include the `lean/` source-directory prefix.
+Historical verification archives retain their original module-relative paths;
+module names, source bytes, and source hashes are unchanged by this relocation.
 A manifest, a complete import graph, and a saved proof certificate are separate
 from a successful build of this entire source tree. The integrated source build
 is currently in progress. Public Linux CI has not yet checked this revision.
