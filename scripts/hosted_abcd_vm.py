@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Prepared single-command hosted current A/B/C/D CI; not yet VM-tested.
+"""Single-command hosted current A/B/C/D CI in a strict Linux guest.
 
 Run only from the trusted control checkout on a fresh GitHub-hosted Ubuntu
 24.04 x64 job after pinned checkouts, setup-go, and lean-action. Candidate
-checkout is data only. The scripts are installed; the workflow remains a preparation file until runtime verification.
+checkout is data only. Acceptance requires all runtime gates and receipts.
 """
 
 import argparse

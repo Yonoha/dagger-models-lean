@@ -10,7 +10,7 @@ source_failure_logs() {
   trap - EXIT
   set +e
   if [[ "$source_status" != 0 && -n "${RUNNER_TEMP:-}" ]]; then
-    for source_log in "$RUNNER_TEMP/bcd-run/"*.log "$RUNNER_TEMP/bcd-run/"*.log.stderr; do
+    for source_log in "$RUNNER_TEMP/bcd-run/"*.log "$RUNNER_TEMP/bcd-run/"*.stderr; do
       [[ -f "$source_log" && ! -L "$source_log" ]] || continue
       source_count=$((source_count + 1))
       [[ "$source_count" -le 40 ]] || break

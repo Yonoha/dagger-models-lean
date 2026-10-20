@@ -357,6 +357,9 @@ def systemd(a: argparse.Namespace, cwd: Path, command: list[str],
     if proc.stderr:
         log.with_suffix(log.suffix + ".stderr").write_bytes(proc.stderr)
     if proc.returncode != 0:
+        if proc.stderr:
+            print(proc.stderr[-16384:].decode("utf-8", errors="replace"),
+                  file=sys.stderr, flush=True)
         raise RuntimeError(f"{command[0]} failed ({proc.returncode}); see {log}")
     print(f"GUEST_PHASE_DONE log={log.name}", flush=True)
     return proc.returncode
@@ -561,7 +564,7 @@ def run_restored_owner_audit(a: argparse.Namespace, project: Path,
 def landrun(a: argparse.Namespace, project: Path, payload: list[str],
             *, writable: bool) -> list[str]:
     # Deliberately omit --best-effort. Unsupported Landlock must fail closed.
-    args = [str(a.landrun), "--ro", "/", "--rw", "/dev",
+    args = [str(a.landrun), "--log-level", "debug", "--ro", "/", "--rw", "/dev",
             "-ldd", "-add-exec", "--env", "PATH", "--env", "HOME",
             "--env", "LEAN_PATH", "--env", "LEAN_SYSROOT",
             "--env", "LEAN_ABORT_ON_PANIC", "--env", "BCD_AUDIT_SPOOF_PROBE",
@@ -581,6 +584,23 @@ def public_export_command(a: argparse.Namespace, project: Path, root: str) -> li
     return landrun(a, project,
                    [str(a.legacy_exporter), PUBLIC_MODULE,
                     "--", root, *AXIOMS, *PRIMITIVES], writable=False)
+
+
+def probe_trusted_exporter(a: argparse.Namespace, project: Path) -> None:
+    """Test the exact exporter wrapper on Lean's trusted Init before a cold build.
+
+    This adds a startup gate; it never replaces the candidate public exports.
+    """
+    output = a.work / "trusted-exporter-preflight.export"
+    command = landrun(a, project,
+                      [str(a.legacy_exporter), "Init", "--", "Nat.zero"],
+                      writable=False)
+    systemd(a, project, command, output, binary_output=True,
+            timeout=120, lean_path=a.audit_lean_path)
+    with output.open("rb") as stream:
+        if stream.readline().strip() != b"2.0.0":
+            raise RuntimeError("trusted exporter preflight lacks format-2 header")
+    print("TRUSTED_EXPORTER_INIT_PREFLIGHT_PASSED", flush=True)
 
 
 def prove_landlock_enforced(a: argparse.Namespace, project: Path) -> None:
@@ -862,6 +882,7 @@ def main() -> None:
     frozen = args.work / "frozen-exports"
     frozen.mkdir()
     prove_landlock_enforced(args, project)
+    probe_trusted_exporter(args, project)
     results = []
     # The two original 27-target negatives remain in the unchanged compare job.
     # Run the three portable package controls independently here as well.

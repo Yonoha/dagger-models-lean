@@ -33,7 +33,7 @@ def snapshot(work: Path) -> dict:
     if not work.is_symlink() and work.is_dir():
         report["work_exists"] = True
         paths = sorted(p for p in work.iterdir()
-                       if p.name.endswith((".log", ".log.stderr")))[:64]
+                       if p.name.endswith((".log", ".stderr")))[:64]
         report["logs"] = [entry for p in paths
                           if (entry := tail_regular(p)) is not None]
     try:
