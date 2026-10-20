@@ -564,7 +564,7 @@ def run_restored_owner_audit(a: argparse.Namespace, project: Path,
 def landrun(a: argparse.Namespace, project: Path, payload: list[str],
             *, writable: bool) -> list[str]:
     # Deliberately omit --best-effort. Unsupported Landlock must fail closed.
-    args = [str(a.landrun), "--log-level", "debug", "--ro", "/", "--rw", "/dev",
+    args = [str(a.landrun), "--ro", "/", "--rw", "/dev",
             "-ldd", "-add-exec", "--env", "PATH", "--env", "HOME",
             "--env", "LEAN_PATH", "--env", "LEAN_SYSROOT",
             "--env", "LEAN_ABORT_ON_PANIC", "--env", "BCD_AUDIT_SPOOF_PROBE",
@@ -600,6 +600,12 @@ def probe_trusted_exporter(a: argparse.Namespace, project: Path) -> None:
     with output.open("rb") as stream:
         if stream.readline().strip() != b"2.0.0":
             raise RuntimeError("trusted exporter preflight lacks format-2 header")
+    # Positive owner audits require absolutely quiet stderr. Check that
+    # protocol on this same wrapper before spending time on a cold build;
+    # diagnostic logging belongs in the host observer, not this wrapper.
+    stderr = output.with_suffix(output.suffix + ".stderr")
+    if stderr.exists() and stderr.stat().st_size:
+        raise RuntimeError(f"trusted readonly wrapper emitted stderr: {stderr}")
     print("TRUSTED_EXPORTER_INIT_PREFLIGHT_PASSED", flush=True)
 
 
