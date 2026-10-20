@@ -315,7 +315,24 @@ def prepare_host_tools(workspace: Path, temp: Path) -> None:
     run("lake", "build", "bcdTrustedAudit", cwd=temp / "bcd-auditor")
     print("HOST_AUDITOR_BUILT", flush=True)
     require_free(temp, 5)
-    run("lake", "build", "lean4export", cwd=exporter)
+    # The pinned legacy source declares 4.27.0-rc1 upstream. Its native
+    # executable must read the project's stable-4.27.0 oleans, so override
+    # Elan selection explicitly without changing the pinned source checkout.
+    project_toolchain = (a_asset / "pins/lean-toolchain").read_text().strip()
+    if project_toolchain != "leanprover/lean4:v4.27.0":
+        raise ValueError("unexpected project exporter toolchain")
+    run("elan", "run", project_toolchain, "lean", "--version", cwd=exporter)
+    run("elan", "run", project_toolchain, "lake", "build", "lean4export",
+        cwd=exporter)
+    smoke = temp / "bcd-host-exporter-init.export"
+    with smoke.open("xb") as output:
+        run("elan", "run", project_toolchain,
+            str(exporter / ".lake/build/bin/lean4export"), "Init", "--", "Nat.zero",
+            cwd=exporter, stdout=output)
+    with smoke.open("rb") as output:
+        if output.readline().strip() != b"2.0.0":
+            raise RuntimeError("host exporter Init smoke lacks format-2 header")
+    print("HOST_EXPORTER_STABLE_TOOLCHAIN_INIT_PASSED", flush=True)
     print("HOST_EXPORTER_BUILT", flush=True)
     require_free(temp, 4)
     # Resolve Elan in the trusted checkout, where the pinned lean-toolchain
